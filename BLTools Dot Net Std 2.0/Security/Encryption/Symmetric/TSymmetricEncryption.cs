@@ -12,7 +12,7 @@ namespace BLTools.Encryption {
   public static class TSymmetricEncryption {
 
     public static string EncryptToBase64(this string source, string password, TSymmetricEncryptionAlgorithm encryptionAlgorithm = TSymmetricEncryptionAlgorithm.AES, int keyLength = 256) {
-      return source.EncryptToBase64(password, Encoding.Default, encryptionAlgorithm, keyLength);
+      return source.EncryptToBase64(password, Encoding.UTF8, encryptionAlgorithm, keyLength);
     }
     public static string EncryptToBase64(this string source, string password, Encoding encoding, TSymmetricEncryptionAlgorithm encryptionAlgorithm = TSymmetricEncryptionAlgorithm.AES, int keyLength = 256) {
       #region Validate parameters
@@ -45,14 +45,16 @@ namespace BLTools.Encryption {
         case TSymmetricEncryptionAlgorithm.DES:
           PIVData = TPIV.Generate(password, 8, 8);
           using (DESCryptoServiceProvider DesEncoder = new DESCryptoServiceProvider()) {
-            RetVal = Convert.ToBase64String(EncryptToBytes(SourceBytes, DesEncoder, PIVData));
+            byte[] EncryptedValue = EncryptToBytes(SourceBytes, DesEncoder, PIVData);
+            RetVal = Convert.ToBase64String(EncryptedValue);
           }
           return RetVal;
 
         case TSymmetricEncryptionAlgorithm.TripleDES:
-          PIVData = TPIV.Generate(password, keyLength / 8, 8);
+          PIVData = TPIV.Generate(password, 24, 8);
           using (TripleDESCryptoServiceProvider TripleDesEncoder = new TripleDESCryptoServiceProvider()) {
-            RetVal = Convert.ToBase64String(EncryptToBytes(SourceBytes, TripleDesEncoder, PIVData));
+            byte[] EncryptedValue = EncryptToBytes(SourceBytes, TripleDesEncoder, PIVData);
+            RetVal = Convert.ToBase64String(EncryptedValue);
           }
           return RetVal;
 

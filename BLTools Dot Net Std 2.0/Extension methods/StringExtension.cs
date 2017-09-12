@@ -52,7 +52,7 @@ namespace BLTools {
     /// <returns>A bool as represented by the string (default=false)</returns>
     public static bool ToBool(this string booleanString, string trueValue = "true", string falseValue = "false", bool isCaseSensitive = false) {
       #region Validate parameters
-      if ( booleanString == null ) {
+      if ( string.IsNullOrWhiteSpace(booleanString) ) {
         return false;
       }
       #endregion Validate parameters
@@ -60,10 +60,11 @@ namespace BLTools {
       string ValueToCompare;
       string TrueValue;
       string FalseValue;
+
       if ( !isCaseSensitive ) {
-        ValueToCompare = booleanString.ToLower();
-        TrueValue = trueValue.ToLower();
-        FalseValue = falseValue.ToLower();
+        ValueToCompare = booleanString.ToLowerInvariant();
+        TrueValue = trueValue.ToLowerInvariant();
+        FalseValue = falseValue.ToLowerInvariant();
       } else {
         ValueToCompare = booleanString;
         TrueValue = trueValue;
@@ -72,12 +73,14 @@ namespace BLTools {
 
       if ( ValueToCompare == TrueValue ) {
         return true;
-      } else if ( ValueToCompare == FalseValue ) {
-        return false;
-      } else {
-        Trace.WriteLine(string.Format("Error: value to convert doesn't match any possible value : \"{0}\", \"{1}\", \"{2}\"", TrueValue, FalseValue, ValueToCompare));
+      }
+
+      if ( ValueToCompare == FalseValue ) {
         return false;
       }
+
+      Trace.WriteLine($"Error: value to convert doesn't match any possible value : \"{TrueValue}\", \"{FalseValue}\", \"{ValueToCompare}\"");
+      return false;
 
     }
 
@@ -94,6 +97,7 @@ namespace BLTools {
       #endregion Validate parameters
       return sourceString.Select<char, byte>(c => (byte)c).ToArray();
     }
+
     /// <summary>
     /// Convert a SecureString to a normal string
     /// </summary>
@@ -211,15 +215,16 @@ namespace BLTools {
       if ( sourceString == null ) {
         return null;
       }
-      #endregion Validate parameters
       if ( length < 0 ) {
         return sourceString;
       }
+      #endregion Validate parameters
+
       if ( sourceString.Length >= length ) {
         return sourceString.Substring(0, length);
-      } else {
-        return sourceString;
       }
+
+      return sourceString;
     }
 
     /// <summary>
@@ -233,17 +238,16 @@ namespace BLTools {
       if ( sourceString == null ) {
         return null;
       }
-      #endregion Validate parameters
-
       if ( length < 0 ) {
         return sourceString;
       }
+      #endregion Validate parameters
 
       if ( sourceString.Length >= length ) {
         return sourceString.Substring(sourceString.Length - length);
-      } else {
-        return sourceString;
       }
+
+      return sourceString;
     }
 
     /// <summary>
@@ -262,12 +266,12 @@ namespace BLTools {
       foreach ( string WordItem in Words ) {
         RetVal.AppendFormat("{0}{1} ", WordItem.Left(1).ToUpper(), WordItem.Substring(1).ToLower());
       }
-      RetVal.Remove(RetVal.Length - 1, 1);
+      RetVal.Truncate(1);
 
       return RetVal.ToString();
     }
 
-    
+
 
 
   }

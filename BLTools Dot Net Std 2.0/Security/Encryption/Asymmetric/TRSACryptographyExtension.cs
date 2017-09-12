@@ -18,13 +18,13 @@ namespace BLTools.Encryption {
 
     #region Encrypt
     /// <summary>
-    /// Encrypt a string to base64 using RSA and Encoding.Default
+    /// Encrypt a string to base64 using RSA and Encoding.UTF8
     /// </summary>
     /// <param name="source">The string to encrypt</param>
     /// <param name="targetPublicKeyXml">The public key to use, in XML string format</param>
     /// <returns>The encrypted base64 string</returns>
     public static string EncryptToRSABase64(this string source, TRSAPublicKey publicKey) {
-      return TRSAEncryptor.EncryptToBase64(source, publicKey, Encoding.Default);
+      return TRSAEncryptor.EncryptToBase64(source, publicKey, Encoding.UTF8);
     }
 
     /// <summary>
@@ -39,13 +39,13 @@ namespace BLTools.Encryption {
     }
 
     /// <summary>
-    /// Encrypt a string to base64 using RSA and Encoding.Default
+    /// Encrypt a string to base64 using RSA and Encoding.UTF8
     /// </summary>
     /// <param name="source">The string to encrypt</param>
     /// <param name="publicKey">The public key to use, in RSAParameters format</param>
     /// <returns>The encrypted base64 string</returns>
     public static string EncryptToRSABase64(this string source, RSAParameters publicKey) {
-      return TRSAEncryptor.EncryptToBase64(source, publicKey, Encoding.Default);
+      return TRSAEncryptor.EncryptToBase64(source, publicKey, Encoding.UTF8);
     }
 
     /// <summary>
@@ -62,13 +62,13 @@ namespace BLTools.Encryption {
 
     #region Decrypt
     /// <summary>
-    /// Decrypt a base64 RSA encrypted string using Encoding.Default
+    /// Decrypt a base64 RSA encrypted string using Encoding.UTF8
     /// </summary>
     /// <param name="base64Source">The base64 string to decrypt</param>
     /// <param name="privateKey">The private key to use</param>
     /// <returns>The decrypted string</returns>
     public static string DecryptFromRSABase64(this string base64Source, TRSAPrivateKey privateKey) {
-      return TRSAEncryptor.DecryptFromBase64(base64Source, privateKey, Encoding.Default);
+      return TRSAEncryptor.DecryptFromBase64(base64Source, privateKey, Encoding.UTF8);
     }
 
     /// <summary>
@@ -83,13 +83,13 @@ namespace BLTools.Encryption {
     }
 
     /// <summary>
-    /// Decrypt a base64 RSA encrypted string using Encoding.Default
+    /// Decrypt a base64 RSA encrypted string using Encoding.UTF8
     /// </summary>
     /// <param name="base64Source">The base64 string to decrypt</param>
     /// <param name="privateKey">The private key to use, in RSAParameters format</param>
     /// <returns>The decrypted string</returns>
     public static string DecryptFromRSABase64(this string base64Source, RSAParameters privateKey) {
-      return TRSAEncryptor.DecryptFromBase64(base64Source, privateKey, Encoding.Default);
+      return TRSAEncryptor.DecryptFromBase64(base64Source, privateKey, Encoding.UTF8);
     }
 
     /// <summary>
@@ -106,13 +106,13 @@ namespace BLTools.Encryption {
 
     #region Sign
     /// <summary>
-    /// Generate a signature in base64 using RSA and Encoding.Default
+    /// Generate a signature in base64 using RSA and Encoding.UTF8
     /// </summary>
     /// <param name="source">The text to sign</param>
     /// <param name="privateKey">The private key to use</param>
     /// <returns>A signature in base64</returns>
     public static string SignToRSABase64(this string source, TRSAPrivateKey privateKey) {
-      return TRSAEncryptor.SignToBase64(source, privateKey, Encoding.Default);
+      return TRSAEncryptor.SignToBase64(source, privateKey, Encoding.UTF8);
     }
 
     /// <summary>
@@ -127,13 +127,13 @@ namespace BLTools.Encryption {
     }
 
     /// <summary>
-    /// Generate a signature in base64 using RSA and Encoding.Default
+    /// Generate a signature in base64 using RSA and Encoding.UTF8
     /// </summary>
     /// <param name="source">The text to sign</param>
     /// <param name="privateKey">The private key to use, in RSAParameters format</param>
     /// <returns>A signature in base64</returns>
     public static string SignToRSABase64(this string source, RSAParameters privateKey) {
-      return TRSAEncryptor.SignToBase64(source, privateKey, Encoding.Default);
+      return TRSAEncryptor.SignToBase64(source, privateKey, Encoding.UTF8);
     }
 
     /// <summary>
@@ -150,14 +150,14 @@ namespace BLTools.Encryption {
 
     #region Validate signature
     /// <summary>
-    /// Validate a base64 signature using RSA and Encoding.Default
+    /// Validate a base64 signature using RSA and Encoding.UTF8
     /// </summary>
     /// <param name="source">The original text that was signed</param>
     /// <param name="signatureBase64ToValidate">The base64 signature to validate</param>
     /// <param name="publicKey">The public key to use</param>
     /// <returns>True if the signature is valid and original text has not been tampered. False otherwise.</returns>
     public static bool IsSignatureRSABase64Valid(this string source, string signatureBase64ToValidate, TRSAPublicKey publicKey) {
-      return TRSAEncryptor.IsSignatureBase64Valid(source, signatureBase64ToValidate, publicKey, Encoding.Default);
+      return TRSAEncryptor.IsSignatureBase64Valid(source, signatureBase64ToValidate, publicKey, Encoding.UTF8);
     }
 
     /// <summary>
@@ -173,14 +173,14 @@ namespace BLTools.Encryption {
     }
 
     /// <summary>
-    /// Validate a base64 signature using RSA and Encoding.Default
+    /// Validate a base64 signature using RSA and Encoding.UTF8
     /// </summary>
     /// <param name="source">The original text that was signed</param>
     /// <param name="signatureBase64ToValidate">The base64 signature to validate</param>
     /// <param name="publicKey">The public key to use, in RSAParameters format</param>
     /// <returns>True if the signature is valid and original text has not been tampered. False otherwise.</returns>
     public static bool IsSignatureRSABase64Valid(this string source, string signatureBase64ToValidate, RSAParameters publicKey) {
-      return TRSAEncryptor.IsSignatureBase64Valid(source, signatureBase64ToValidate, publicKey, Encoding.Default);
+      return TRSAEncryptor.IsSignatureBase64Valid(source, signatureBase64ToValidate, publicKey, Encoding.UTF8);
     }
 
     /// <summary>

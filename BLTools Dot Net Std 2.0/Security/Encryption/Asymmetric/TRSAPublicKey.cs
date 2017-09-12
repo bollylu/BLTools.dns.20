@@ -5,68 +5,53 @@ using System.Text;
 using System.Xml.Linq;
 using System.Diagnostics;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace BLTools.Encryption {
-  public class TRSAPublicKey : IToXml{
+  public class TRSAPublicKey : TRSAKey {
 
     #region Public properties
-    public string Name { get; set; }
-    public string Key { get; set; }
-    public string Filename {
+    public override string Filename {
       get {
-        return string.Format("{0}-pub.blkey", Name);
+        return $"{Name}-pub.blkey";
       }
     } 
     #endregion Public properties
 
     #region Constructor(s)
-    public TRSAPublicKey() {
-      Name = "";
-      Key = "";
+    public TRSAPublicKey() : base() {
     }
 
-    public TRSAPublicKey(string name, string key = "") {
-      Name = name;
-      Key = key;
-    } 
+    public TRSAPublicKey(string name) : base(name) {
+    }
+
+    public TRSAPublicKey(string name, RSAParameters parameters) : base(name, parameters) {
+    }
     #endregion Constructor(s)
 
     #region Converters
     public override string ToString() {
       StringBuilder RetVal = new StringBuilder();
-      RetVal.AppendFormat("Public Key: {0}", Key);
+      RetVal.Append("Public Key :");
+      RetVal.Append(base.ToString());
       return RetVal.ToString();
     }
 
-    public XElement ToXml() {
-      XElement RetVal = new XElement("public");
-      RetVal.SetAttributeValue("key", Key);
-      return RetVal;
-    } 
     #endregion Converters
 
     #region Public methods
-    public void Save(string pathname) {
-      string FullName = Path.Combine(pathname, Filename);
+    public override void Save(string pathname) {
+      
       try {
-        XDocument XmlPublicKeyFile = new XDocument();
-        XmlPublicKeyFile.Declaration = new XDeclaration("1.0", "UTF-8", "yes");
-        XmlPublicKeyFile.Add(new XElement("root"));
-        XmlPublicKeyFile.Root.Add(this.ToXml());
-        TextWriter XmlWriter = new StreamWriter(FullName, false, Encoding.UTF8);
-        XmlPublicKeyFile.Save(XmlWriter, SaveOptions.None);
-        XmlWriter.Close();
+        base.Save(pathname);
       } catch (Exception ex) {
         Trace.WriteLine(string.Format("Error while saving public key : {0}", ex.Message), Severity.Error);
       }
     }
 
-    public void Load(string pathname) {
-      string FullName = Path.Combine(pathname, Filename);
+    public override void Load(string pathname) {
       try {
-        XDocument XmlPrivateKeyFile = XDocument.Load(FullName);
-        XElement Root = XmlPrivateKeyFile.Root;
-        Key = Root.Element("public").SafeReadAttribute<string>("key", "");
+        base.Load(pathname);
       } catch (Exception ex) {
         Trace.WriteLine(string.Format("Error while reading public key : {0}", ex.Message), Severity.Error);
       }

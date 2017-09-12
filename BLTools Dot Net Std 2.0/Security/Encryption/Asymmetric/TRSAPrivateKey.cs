@@ -5,71 +5,57 @@ using System.Text;
 using System.Xml.Linq;
 using System.IO;
 using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace BLTools.Encryption {
-  public class TRSAPrivateKey : IToXml {
+  public class TRSAPrivateKey : TRSAKey {
+
     #region Public properties
-    public string Name { get; set; }
-    public string Key { get; set; }
-    public string Filename {
+    public override string Filename {
       get {
-        return string.Format("{0}-pvt.blkey", Name);
+        return $"{Name}-pvt.blkey";
       }
-    } 
+    }
     #endregion Public properties
 
     #region Constructor(s)
-    public TRSAPrivateKey() {
-      Name = "";
-      Key = "";
+    public TRSAPrivateKey() : base() {
     }
 
-    public TRSAPrivateKey(string name, string key = "") {
-      Name = name;
-      Key = key;
-    } 
+    public TRSAPrivateKey(string name) : base(name) {
+    }
+
+    public TRSAPrivateKey(string name, RSAParameters parameters) : base(name, parameters) {
+    }
     #endregion Constructor(s)
 
     #region Converters
     public override string ToString() {
       StringBuilder RetVal = new StringBuilder();
-      RetVal.AppendFormat("Private Key: {0}", Key);
+      RetVal.Append("Private Key :");
+      RetVal.Append(base.ToString());
       return RetVal.ToString();
     }
 
-    public XElement ToXml() {
-      XElement RetVal = new XElement("private");
-      RetVal.SetAttributeValue("key", Key);
-      return RetVal;
-    } 
     #endregion Converters
 
     #region Public methods
-    public void Save(string pathname) {
-      string FullName = Path.Combine(pathname, Filename);
+    public override void Save(string pathname) {
+
       try {
-        XDocument XmlPrivateKeyFile = new XDocument();
-        XmlPrivateKeyFile.Declaration = new XDeclaration("1.0", "UTF-8", "yes");
-        XmlPrivateKeyFile.Add(new XElement("root"));
-        XmlPrivateKeyFile.Root.Add(this.ToXml());
-        TextWriter XmlWriter = new StreamWriter(FullName, false, Encoding.UTF8);
-        XmlPrivateKeyFile.Save(XmlWriter, SaveOptions.None);
-        XmlWriter.Close();
-      } catch (Exception ex) {
+        base.Save(pathname);
+      } catch ( Exception ex ) {
         Trace.WriteLine(string.Format("Error while saving private key : {0}", ex.Message), Severity.Error);
       }
     }
 
-    public void Load(string pathname) {
-      string FullName = Path.Combine(pathname, Filename);
+    public override void Load(string pathname) {
       try {
-        XDocument XmlPrivateKeyFile = XDocument.Load(FullName);
-        XElement Root = XmlPrivateKeyFile.Root;
-        Key = Root.Element("private").SafeReadAttribute<string>("key", "");
-      } catch (Exception ex) {
+        base.Load(pathname);
+      } catch ( Exception ex ) {
         Trace.WriteLine(string.Format("Error while reading private key : {0}", ex.Message), Severity.Error);
       }
-    } 
+    }
     #endregion Public methods
 
     #region Public static methods
@@ -77,7 +63,8 @@ namespace BLTools.Encryption {
       TRSAPrivateKey RetVal = new TRSAPrivateKey(name);
       RetVal.Load(pathname);
       return RetVal;
-    } 
+    }
     #endregion Public static methods
   }
+
 }

@@ -10,52 +10,39 @@ using System.Diagnostics;
 namespace BLTools.Encryption {
   public class TRSAKeyPair : IToXml {
 
-    public enum KeyTypeEnum {
+    public enum EKeyType {
       Unknown,
-      User,
       Random
     }
 
     #region Public properties
     public string Name { get; set; }
-    public KeyTypeEnum KeyType { get; set; }
+    public EKeyType KeyType { get; set; }
     public int KeyLength { get; set; }
     public TRSAPrivateKey PrivateKey { get; set; }
-    public TRSAPublicKey PublicKey { get; set; } 
+    public TRSAPublicKey PublicKey { get; set; }
     #endregion Public properties
 
     #region Constructor(s)
     public TRSAKeyPair() {
       Name = "";
-      KeyType = KeyTypeEnum.Unknown;
+      KeyType = EKeyType.Unknown;
       PublicKey = new TRSAPublicKey();
       PrivateKey = new TRSAPrivateKey();
       KeyLength = 1024;
     }
 
-    public TRSAKeyPair(string keyname, KeyTypeEnum keyType, int keyLength = 1024, string publicKey = "", string privateKey = "") : this() {
+    public TRSAKeyPair(string keyname, int keyLength = 1024) {
       Name = keyname;
       KeyLength = keyLength;
-      KeyType = keyType;
-      switch (keyType) {
-        case KeyTypeEnum.Random:
-          using (RSACryptoServiceProvider RSACSP = new RSACryptoServiceProvider(keyLength)) {
-            PublicKey = new TRSAPublicKey(Name, RSACSP.ToXmlString(false));
-            PrivateKey = new TRSAPrivateKey(Name, RSACSP.ToXmlString(true));
-          }
-          break;
-        case KeyTypeEnum.User:
-          PublicKey = new TRSAPublicKey(Name, publicKey);
-          PrivateKey = new TRSAPrivateKey(Name, privateKey);
-          break;
+      KeyType = EKeyType.Random;
+      using ( RSACryptoServiceProvider RSACSP = new RSACryptoServiceProvider(keyLength) ) {
+        RSAParameters TempParams = RSACSP.ExportParameters(true);
+        PublicKey = new TRSAPublicKey(Name, TempParams);
+        PrivateKey = new TRSAPrivateKey(Name, TempParams);
       }
     }
 
-    public TRSAKeyPair(string name) : this() {
-      Name = name;
-      PublicKey = new TRSAPublicKey(name);
-      PrivateKey = new TRSAPrivateKey(name);
-    }
     #endregion Constructor(s)
 
     #region Converters
@@ -73,19 +60,19 @@ namespace BLTools.Encryption {
       return RetVal;
     }
 
-    public RSAParameters ToPublicRSAParameters() {
-      using (RSACryptoServiceProvider RSACSP = new RSACryptoServiceProvider()) {
-        RSACSP.FromXmlString(PublicKey.Key);
-        return RSACSP.ExportParameters(false);
-      }
-    }
+    //public RSAParameters ToPublicRSAParameters() {
+    //  using (RSACryptoServiceProvider RSACSP = new RSACryptoServiceProvider()) {
+    //    RSACSP.FromXmlString(PublicKey.Key);
+    //    return RSACSP.ExportParameters(false);
+    //  }
+    //}
 
-    public RSAParameters ToPrivateRSAParameters() {
-      using (RSACryptoServiceProvider RSACSP = new RSACryptoServiceProvider()) {
-        RSACSP.FromXmlString(PrivateKey.Key);
-        return RSACSP.ExportParameters(true);
-      }
-    } 
+    //public RSAParameters ToPrivateRSAParameters() {
+    //  using (RSACryptoServiceProvider RSACSP = new RSACryptoServiceProvider()) {
+    //    RSACSP.FromXmlString(PrivateKey.Key);
+    //    return RSACSP.ExportParameters(true);
+    //  }
+    //} 
     #endregion Converters
 
     public void Save(string pathname) {

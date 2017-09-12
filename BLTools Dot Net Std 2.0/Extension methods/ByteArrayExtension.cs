@@ -16,17 +16,20 @@ namespace BLTools {
     /// <param name="separator">An optional separator</param>
     /// <returns>The string of hex values</returns>
     public static string ToHexString(this byte[] rawData, string separator = "") {
-      StringBuilder sbTemp = new StringBuilder(rawData.Length * 3);
-      if (rawData.Length == 0) {
+
+      if ( rawData.Length == 0 ) {
         return "";
-      } else if (rawData.Length == 1) {
-        return string.Format("{0:X2}", rawData[0]);
-      } else {
-        foreach (byte ByteItem in rawData) {
-          sbTemp.AppendFormat("{0:X2}{1}", ByteItem, separator);
-        }
-        sbTemp.Remove(sbTemp.Length - separator.Length, separator.Length);
       }
+
+      if ( rawData.Length == 1 ) {
+        return $"{rawData[0]:X2}";
+      }
+
+      StringBuilder sbTemp = new StringBuilder(rawData.Length * 3);
+      foreach ( byte ByteItem in rawData ) {
+        sbTemp.Append($"{ByteItem:X2}{separator}");
+      }
+      sbTemp.Truncate(separator.Length);
       return sbTemp.ToString();
     }
 
@@ -36,15 +39,15 @@ namespace BLTools {
     /// <param name="rawData">The array to convert</param>
     /// <returns></returns>
     public static string ToCharString(this byte[] rawData) {
-      if (rawData.Length == 0) {
+      if ( rawData.Length == 0 ) {
         return "";
-      } else {
-        StringBuilder RetVal = new StringBuilder(rawData.Length);
-        foreach (byte ByteItem in rawData) {
-          RetVal.Append((char)ByteItem);
-        }
-        return RetVal.ToString();
       }
+
+      StringBuilder RetVal = new StringBuilder(rawData.Length);
+      foreach ( byte ByteItem in rawData ) {
+        RetVal.Append((char)ByteItem);
+      }
+      return RetVal.ToString();
     }
   }
 }

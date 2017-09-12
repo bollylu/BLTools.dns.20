@@ -62,7 +62,7 @@ namespace BLTools {
     /// <param name="datetime">The source Datetime</param>
     /// <returns>A UTC DateTime converted into local DateTime</returns>
     public static DateTime FromUTC(this DateTime datetime) {
-      return TimeZone.CurrentTimeZone.ToLocalTime(datetime);
+      return datetime.ToLocalTime();
     }
 
     /// <summary>

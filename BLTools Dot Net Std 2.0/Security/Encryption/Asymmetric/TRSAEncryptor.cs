@@ -12,7 +12,7 @@ namespace BLTools.Encryption {
     internal static string EncryptToBase64(string source, TRSAPublicKey publicKey, Encoding encoding) {
       string RetVal = null;
       using (RSACryptoServiceProvider TempRSACSP = new RSACryptoServiceProvider()) {
-        TempRSACSP.FromXmlString(publicKey.Key);
+        TempRSACSP.ImportParameters(publicKey.Parameters);
         RetVal = EncryptToBase64(source, TempRSACSP.ExportParameters(false), encoding);
       }
       return RetVal;
@@ -45,7 +45,7 @@ namespace BLTools.Encryption {
     internal static string DecryptFromBase64(string base64Source, TRSAPrivateKey privateKey, Encoding encoding) {
       string RetVal = null;
       using (RSACryptoServiceProvider TempRSACSP = new RSACryptoServiceProvider()) {
-        TempRSACSP.FromXmlString(privateKey.Key);
+        TempRSACSP.ImportParameters(privateKey.Parameters);
         RetVal = DecryptFromBase64(base64Source, TempRSACSP.ExportParameters(true), encoding);
       }
       return RetVal;
@@ -92,7 +92,7 @@ namespace BLTools.Encryption {
 
       string RetVal = null;
       using (RSACryptoServiceProvider TempRSACSP = new RSACryptoServiceProvider()) {
-        TempRSACSP.FromXmlString(privateKey.Key);
+        TempRSACSP.ImportParameters(privateKey.Parameters);
         RetVal = SignToBase64(source, TempRSACSP.ExportParameters(true), encoding);
       }
       return RetVal;
@@ -148,7 +148,7 @@ namespace BLTools.Encryption {
       bool RetVal = false;
 
       using (RSACryptoServiceProvider TempRSACSP = new RSACryptoServiceProvider()) {
-        TempRSACSP.FromXmlString(publicKey.Key);
+        TempRSACSP.ImportParameters(publicKey.Parameters);
         RetVal = IsSignatureBase64Valid(source, base64Signature, TempRSACSP.ExportParameters(false), encoding);
       }
       return RetVal;

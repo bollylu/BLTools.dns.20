@@ -38,7 +38,7 @@ namespace BLTools.Security.Authorization {
       #endregion Validate parameters
 
       XDocument Destination = new XDocument();
-      Destination.Declaration = new XDeclaration("1.0", Encoding.Default.EncodingName, "yes");
+      Destination.Declaration = new XDeclaration("1.0", Encoding.UTF8.EncodingName, "yes");
       Destination.Add(new XElement("Root"));
       Destination.Element("Root").Add(Users.ToXml());
       Destination.Element("Root").Add(Groups.ToXml());
