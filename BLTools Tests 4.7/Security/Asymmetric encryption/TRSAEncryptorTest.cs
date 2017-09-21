@@ -5,7 +5,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace UnitTest2015 {
+namespace BLTools.UnitTest.nf47 {
 
 
   /// <summary>

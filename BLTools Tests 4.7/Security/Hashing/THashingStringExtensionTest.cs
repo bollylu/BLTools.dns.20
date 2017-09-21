@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BLTools.Encryption;
 
-namespace UnitTest2015 {
+namespace BLTools.UnitTest.nf47 {
   [TestClass]
   public class THashingStringExtensionTest {
     #region MD5

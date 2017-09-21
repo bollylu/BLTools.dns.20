@@ -6,7 +6,7 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UnitTest2015 {
+namespace BLTools.UnitTest.nf47 {
 
 
   /// <summary>

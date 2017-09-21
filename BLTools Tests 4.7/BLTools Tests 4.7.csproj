@@ -7,7 +7,7 @@
     <ProjectGuid>{26536CDE-8E36-4E3D-B7CF-24E22B2CE80D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BLTools_Tests_4._7</RootNamespace>
+    <RootNamespace>BLTools.UnitTest.nf47</RootNamespace>
     <AssemblyName>BLTools Tests 4.7</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

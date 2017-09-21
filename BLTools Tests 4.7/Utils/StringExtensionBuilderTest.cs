@@ -4,7 +4,7 @@ using System;
 using System.Security;
 using System.Text;
 
-namespace UnitTest2015 {
+namespace BLTools.UnitTest.nf47 {
 
 
   /// <summary>

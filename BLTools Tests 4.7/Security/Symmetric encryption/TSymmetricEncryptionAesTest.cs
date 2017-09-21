@@ -4,7 +4,7 @@ using BLTools.Encryption;
 using System.Diagnostics;
 using System.Text;
 
-namespace UnitTest2015 {
+namespace BLTools.UnitTest.nf47 {
   [TestClass]
   public class TSymmetricEncryptionAesTest {
     [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("AES")]

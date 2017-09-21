@@ -4,7 +4,7 @@ using System;
 using System.Xml.Linq;
 using System.IO;
 
-namespace UnitTest2015 {
+namespace BLTools.UnitTest.nf47 {
 
 
   /// <summary>
