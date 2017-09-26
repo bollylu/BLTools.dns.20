@@ -24,8 +24,8 @@ namespace BLTools {
     private TimeSpan _ElapsedTimeMemory;
 
     public TChrono() {
-      StartTime = DateTime.Now;
       Reset();
+      StartTime = DateTime.Now;
     }
 
     public void Start() {

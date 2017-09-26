@@ -11,4 +11,8 @@
     <FileVersion>1.0</FileVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Debugging\" />
+  </ItemGroup>
+
 </Project>
