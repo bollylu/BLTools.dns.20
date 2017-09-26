@@ -4,7 +4,7 @@ using System;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace UnitTest2015 {
+namespace BLTools.UnitTest.Core20 {
 
 
   /// <summary>

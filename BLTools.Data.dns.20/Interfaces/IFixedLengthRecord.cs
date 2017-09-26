@@ -31,6 +31,6 @@ namespace BLTools.Data.FixedLength {
     /// Convert the raw data record to properties
     /// </summary>
     /// <param name="rawData"></param>
-    void FromRawData(byte[] rawData);
+    void FromRawData(byte[] rawData, Encoding encoding);
   }
 }

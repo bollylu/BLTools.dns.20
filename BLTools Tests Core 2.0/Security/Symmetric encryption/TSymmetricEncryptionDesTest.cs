@@ -4,7 +4,7 @@ using BLTools.Encryption;
 using System.Diagnostics;
 using System.Text;
 
-namespace UnitTest2015 {
+namespace BLTools.UnitTest.Core20 {
   [TestClass]
   public class TSymmetricEncryptionDesTest {
     [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("DES")]

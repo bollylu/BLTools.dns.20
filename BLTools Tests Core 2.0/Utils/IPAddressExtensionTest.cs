@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Net;
 
-namespace UnitTest2015 {
+namespace BLTools.UnitTest.Core20 {
 
   /// <summary>
   ///This is a test class for IPAddressExtensionTest and is intended

@@ -110,7 +110,7 @@ namespace BLTools.Data.Csv {
       Name = "";
       RecordType = typeof(T);
       HasHeaders = true;
-      DataEncoding = Encoding.Default;
+      DataEncoding = Encoding.UTF8;
       EmptyDatesValueBlank = true;
       SurroundString = true;
     }

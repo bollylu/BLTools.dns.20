@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using System.Diagnostics;
 using System.IO;
 
-namespace UnitTest2015 {
+namespace BLTools.UnitTest.Core20 {
 
 
   /// <summary>

@@ -6,10 +6,10 @@ using System.Text;
 using System.Diagnostics;
 using BLTools;
 
-//namespace BLToolsUnitTests
+//namespace BLTools.UnitTest.Core20
 //{
-    
-    
+
+
 //    /// <summary>
 //    ///This is a test class for TSymmetricSecurityExtensionTest and is intended
 //    ///to contain all TSymmetricSecurityExtensionTest Unit Tests

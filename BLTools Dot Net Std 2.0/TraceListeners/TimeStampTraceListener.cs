@@ -13,7 +13,7 @@ namespace BLTools {
     /// <summary>
     /// Defines the encoding used to write the log
     /// </summary>
-    public Encoding ListenerEncoding { get; set; } = Encoding.Default;
+    public Encoding ListenerEncoding { get; set; } = Encoding.UTF8;
 
     #region Constructors
     /// <summary>

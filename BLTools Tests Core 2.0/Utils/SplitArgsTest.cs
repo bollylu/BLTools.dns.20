@@ -6,7 +6,7 @@ using System.Collections.Specialized;
 using System.Globalization;
 using System.Web;
 
-namespace UnitTest2015 {
+namespace BLTools.UnitTest.Core20 {
 
 
   /// <summary>

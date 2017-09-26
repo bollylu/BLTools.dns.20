@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace UnitTest2015 {
+namespace BLTools.UnitTest.Core20 {
     
     
     /// <summary>

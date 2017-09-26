@@ -47,13 +47,13 @@ namespace BLTools.Data.FixedLength {
     #region Constructor(s)
     public TFixedLengthRecord() { }
     public TFixedLengthRecord(string rawData)
-      : this(rawData, Encoding.Default) {
+      : this(rawData, Encoding.UTF8) {
     }
     public TFixedLengthRecord(string rawData, Encoding encoding) {
-      FromRawData(encoding.GetBytes(rawData));
+      FromRawData(encoding.GetBytes(rawData), encoding);
     }
-    public TFixedLengthRecord(byte[] rawData) {
-      FromRawData(rawData);
+    public TFixedLengthRecord(byte[] rawData, Encoding encoding) {
+      FromRawData(rawData, encoding);
     }
     #endregion Constructor(s)
 
@@ -281,16 +281,16 @@ namespace BLTools.Data.FixedLength {
     public virtual void FromRawData(string data, Encoding encoding) {
       Trace.WriteLineIf(IsDebug, data);
       if (encoding == null) {
-        encoding = Encoding.Default;
+        encoding = Encoding.UTF8;
       }
-      FromRawData(encoding.GetBytes(data));
+      FromRawData(encoding.GetBytes(data), encoding);
     }
 
     /// <summary>
     /// Converts a raw record into fields
     /// </summary>
     /// <param name="rawData">The raw record as an array of bytes</param>
-    public virtual void FromRawData(byte[] rawData) {
+    public virtual void FromRawData(byte[] rawData, Encoding encoding) {
 
 
       foreach (PropertyInfo PropertyInfoItem in this.GetType()
@@ -301,7 +301,7 @@ namespace BLTools.Data.FixedLength {
           int StartPos = CurrentFieldAttribute.StartPos;
           int Length = CurrentFieldAttribute.Length;
           Type FieldType = PropertyInfoItem.PropertyType;
-          string RawFieldContent = rawData.Skip(StartPos).Take(Length).ToArray().ToCharString();
+          string RawFieldContent = encoding.GetString(rawData.Skip(StartPos).Take(Length).ToArray());
 
           if (IsDebug) {
             Trace.WriteLine(string.Format("Converting \"{0}\" to Field {1} ({2})", RawFieldContent, FieldType.Name, PropertyInfoItem.Name));

@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using BLTools;
 
-//namespace BLToolsUnitTests {
+//namespace BLTools.UnitTest.Core20 {
 
 
 //  /// <summary>

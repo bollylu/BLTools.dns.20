@@ -53,7 +53,7 @@ namespace BLTools.Data.FixedLength {
       : base() {
       Name = name;
       RecordType = typeof(T);
-      DataEncoding = Encoding.Default;
+      DataEncoding = Encoding.UTF8;
     }
 
     /// <summary>
@@ -254,7 +254,7 @@ namespace BLTools.Data.FixedLength {
           if (Record.Length == RecLen) {
             T NewRecord = RecordType.GetConstructor(Type.EmptyTypes).Invoke(null) as T;
             if (NewRecord != null) {
-              NewRecord.FromRawData(Record);
+              NewRecord.FromRawData(Record, Encoding.UTF8);
               Add(NewRecord);
             }
           } else {
