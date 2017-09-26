@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace BLTools {
+namespace BLTools.Data {
   public static class ReaderExtension {
 
     /// <summary>
@@ -31,6 +28,7 @@ namespace BLTools {
     public static T SafeRead<T>(this IDataReader reader, string fieldName, T defaultValue) {
       return SafeRead<T>(reader, fieldName, defaultValue, CultureInfo.CurrentCulture);
     }
+
     /// <summary>
     /// Read a field from an IDataReader, allowing a default value  in case the field is null or an exception occurs during the read.
     /// </summary>
