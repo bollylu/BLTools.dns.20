@@ -58,7 +58,7 @@ namespace BLTools.UnitTest.Core20 {
     //
     #endregion
 
-    [TestMethod(), TestCategory("SecurityController")]
+    [TestMethod(), TestCategory("NC20.SecurityController")]
     public void TSecurityMemoryController_ConstructorWithName_AllOK() {
       string Name = "test.xml";
       TSecurityController Target = new TSecurityController(new TSecurityStorageXml(Name));
@@ -68,7 +68,7 @@ namespace BLTools.UnitTest.Core20 {
       Assert.AreEqual(0, Target.LoggedInUsersCount);
     }
 
-    [TestMethod(), TestCategory("SecurityController")]
+    [TestMethod(), TestCategory("NC20.SecurityController")]
     public void TSecurityMemoryController_UnknonwUserLogonAttempt_LogonFailed() {
       string Name = "test.xml";
       TSecurityController Target = new TSecurityController(new TSecurityStorageXml(Name));
@@ -78,7 +78,7 @@ namespace BLTools.UnitTest.Core20 {
       Assert.IsFalse(Target.LogOn(User));
     }
 
-    [TestMethod(), TestCategory("SecurityController")]
+    [TestMethod(), TestCategory("NC20.SecurityController")]
     public void TSecurityMemoryController_UserLogonAttemptBadPassword_LogonFailed() {
       string Name = "test.xml";
       TSecurityController Target = new TSecurityController(new TSecurityStorageXml(Name));
@@ -89,7 +89,7 @@ namespace BLTools.UnitTest.Core20 {
       Assert.IsFalse(Target.LogOn(User));
     }
 
-    [TestMethod(), TestCategory("SecurityController")]
+    [TestMethod(), TestCategory("NC20.SecurityController")]
     public void TSecurityMemoryController_UserLogonAttempt_LogonOK() {
       string Name = "test.xml";
       TSecurityController Target = new TSecurityController(new TSecurityStorageXml(Name));
@@ -100,7 +100,7 @@ namespace BLTools.UnitTest.Core20 {
       Assert.IsTrue(Target.LogOn(User, "pass"));
     }
 
-    [TestMethod(), TestCategory("SecurityController")]
+    [TestMethod(), TestCategory("NC20.SecurityController")]
     public void TSecurityMemoryController_UserLogonAttemptAlreadyLoggedon_LogonOK() {
       string Name = "test.xml";
       TSecurityController Target = new TSecurityController(new TSecurityStorageXml(Name));
@@ -111,7 +111,7 @@ namespace BLTools.UnitTest.Core20 {
       Assert.IsTrue(Target.LogOn(User, "pass"));
     }
 
-    [TestMethod(), TestCategory("SecurityController")]
+    [TestMethod(), TestCategory("NC20.SecurityController")]
     public void TSecurityMemoryController_TestifLoggedUser_UserIsLoggedon() {
       string Name = "test.xml";
       TSecurityController Target = new TSecurityController(new TSecurityStorageXml(Name));
@@ -122,7 +122,7 @@ namespace BLTools.UnitTest.Core20 {
       Assert.IsTrue(Target.IsLoggedOn(User));
     }
 
-    [TestMethod(), TestCategory("SecurityController")]
+    [TestMethod(), TestCategory("NC20.SecurityController")]
     public void TSecurityMemoryController_TestifLoggedUser_UserIsNotLoggedon() {
       string Name = "test.xml";
       TSecurityController Target = new TSecurityController(new TSecurityStorageXml(Name));
@@ -134,7 +134,7 @@ namespace BLTools.UnitTest.Core20 {
       Assert.IsFalse(Target.IsLoggedOn(User2));
     }
 
-    [TestMethod(), TestCategory("SecurityController")]
+    [TestMethod(), TestCategory("NC20.SecurityController")]
     public void TSecurityMemoryController_UserLogoff_LogoffOK() {
       string Name = "test.xml";
       TSecurityController Target = new TSecurityController(new TSecurityStorageXml(Name));

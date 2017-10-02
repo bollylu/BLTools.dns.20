@@ -19,7 +19,7 @@ namespace BLTools.SQL {
         return _ConnectionTimeout;
       }
       set {
-        if (value <= 0) {
+        if ( value <= 0 ) {
           _ConnectionTimeout = DEFAULT_CONNECTION_TIMEOUT;
         } else {
           _ConnectionTimeout = Math.Min(value, MAX_CONNECTION_TIMEOUT);
@@ -44,7 +44,7 @@ namespace BLTools.SQL {
     /// </summary>
     public virtual string ServerName {
       get {
-        if (string.IsNullOrEmpty(_ServerName)) {
+        if ( string.IsNullOrEmpty(_ServerName) ) {
           return DEFAULT_SERVERNAME;
         } else {
           return _ServerName;
@@ -61,7 +61,7 @@ namespace BLTools.SQL {
     /// </summary>
     public virtual string DatabaseName {
       get {
-        if (string.IsNullOrEmpty(_DatabaseName)) {
+        if ( string.IsNullOrEmpty(_DatabaseName) ) {
           return DEFAULT_DATABASENAME;
         } else {
           return _DatabaseName;
@@ -135,55 +135,47 @@ namespace BLTools.SQL {
     #endregion Connection string parameters
 
     #region Private methods
-    private Dictionary<string, string> ParseConnectionString(string connectionString) {
-      Dictionary<string, string> RetVal = new Dictionary<string, string>();
+    private Dictionary<string, object> ParseConnectionString(string connectionString) {
+      Dictionary<string, object> RetVal = new Dictionary<string, object>();
       string[] ConnectionStringComponents = connectionString.Split(';');
 
-      foreach (string ComponentItem in ConnectionStringComponents) {
+      foreach ( string ComponentItem in ConnectionStringComponents ) {
         try {
           string[] ComponentKeyValuePair = ComponentItem.Split('=');
           RetVal.Add(ComponentKeyValuePair[0].ToLower(), ComponentKeyValuePair[1]);
-        } catch (Exception ex) {
-          Trace.WriteLine(string.Format("Error while parsing connection string \"{0}\" : {1}", connectionString, ex.Message));
+        } catch ( Exception ex ) {
+          Trace.WriteLine($"Error while parsing connection string \"{connectionString}\" : {ex.Message}", Severity.Warning);
         }
       }
-
-      AddDefaultKeyValue(RetVal, CS_SERVERNAME, DEFAULT_SERVERNAME);
-      AddDefaultKeyValue(RetVal, CS_DATABASENAME, DEFAULT_DATABASENAME);
-      AddDefaultKeyValue(RetVal, CS_USERID, DEFAULT_USERNAME);
-      AddDefaultKeyValue(RetVal, CS_USERNAME, DEFAULT_USERNAME);
-      AddDefaultKeyValue(RetVal, CS_PASSWORD, DEFAULT_PASSWORD);
-      AddDefaultKeyValue(RetVal, CS_USE_MARS, true.ToString());
-      AddDefaultKeyValue(RetVal, CS_INTEGRATED_SECURITY, DEFAULT_USE_INTEGRATED_SECURITY.ToString());
 
       return RetVal;
     }
 
-    private void AddDefaultKeyValue(Dictionary<string, string> dict, string key, string defaultValue) {
-      if (!dict.ContainsKey(key)) {
-        dict.Add(key, defaultValue);
-      }
-    }
+    private void InitConnection(Dictionary<string, object> parsedConnectionString) {
+      ServerName = parsedConnectionString.SafeGetValue(CS_SERVERNAME, DEFAULT_SERVERNAME);
+      DatabaseName = parsedConnectionString.SafeGetValue(CS_DATABASENAME, DEFAULT_DATABASENAME);
 
-    private void InitConnection(Dictionary<string, string> parsedConnectionString) {
-      ServerName = parsedConnectionString[CS_SERVERNAME];
-      DatabaseName = parsedConnectionString[CS_DATABASENAME];
-      UseIntegratedSecurity = parsedConnectionString[CS_INTEGRATED_SECURITY].ToBool();
-      if (!UseIntegratedSecurity) {
-        UserName = parsedConnectionString[CS_USERID] != "" ? parsedConnectionString[CS_USERID] : parsedConnectionString[CS_USERNAME];
-        Password = parsedConnectionString[CS_PASSWORD];
+      UseIntegratedSecurity = parsedConnectionString.SafeGetValue(CS_INTEGRATED_SECURITY, DEFAULT_USE_INTEGRATED_SECURITY);
+      if ( !UseIntegratedSecurity ) {
+        UserName = parsedConnectionString.SafeGetValue(CS_USERID, "");
+        if ( UserName == "" ) {
+          UserName = parsedConnectionString.SafeGetValue(CS_USERNAME, "");
+        }
+        Password = parsedConnectionString.SafeGetValue(CS_PASSWORD, "");
       }
 
-      UseMars = parsedConnectionString[CS_USE_MARS].ToBool();
-      if (_IsConnectionStringInvalid()) {
-        if (DebugMode) {
-          Trace.Write(string.Format("Missing information for database ConnectionString: {0}", ConnectionString), Severity.Warning);
+      UseMars = parsedConnectionString.SafeGetValue(CS_USE_MARS, DEFAULT_USE_MARS);
+      UsePooledConnections = DEFAULT_USE_POOLED_CONNECTIONS;
+
+      if ( _IsConnectionStringInvalid() ) {
+        if ( DebugMode ) {
+          Trace.Write($"Missing information for database ConnectionString: {ConnectionString}", Severity.Warning);
         }
       }
     }
 
     private bool _IsConnectionStringInvalid() {
-      if (ServerName == "" || DatabaseName == "") {
+      if ( ServerName == "" || DatabaseName == "" ) {
         return true;
       } else {
         return false;
@@ -192,8 +184,8 @@ namespace BLTools.SQL {
 
     private string _HidePasswordFromConnectionString(string connectionString) {
       string[] ConnectionStringItems = connectionString.Split(';');
-      for (int i = 0; i < ConnectionStringItems.Length; i++) {
-        if (ConnectionStringItems[i].StartsWith("Password=")) {
+      for ( int i = 0; i < ConnectionStringItems.Length; i++ ) {
+        if ( ConnectionStringItems[i].StartsWith("Password=") ) {
           ConnectionStringItems[i] = "Password=xxx(hidden)xxx";
         }
       }

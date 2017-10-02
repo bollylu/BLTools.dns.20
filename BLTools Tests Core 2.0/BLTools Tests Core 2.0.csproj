@@ -8,14 +8,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.1.18" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.2.0-beta3" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.2.0-beta3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BLTools Dot Net Std 2.0\BLTools Dot Net Std 2.0.csproj" />
     <ProjectReference Include="..\BLTools.Data.dns.20\BLTools.Data.dns.20.csproj" />
     <ProjectReference Include="..\BLTools.DataModels.dns.20\BLTools.DataModels.dns.20.csproj" />
+    <ProjectReference Include="..\BLTools.SQL.dns.20\BLTools.SQL.dns.20.csproj" />
   </ItemGroup>
 
 </Project>

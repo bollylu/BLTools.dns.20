@@ -26,6 +26,7 @@ namespace BLTools.SQL {
     public static string DEFAULT_USERNAME = "";
     public static string DEFAULT_PASSWORD = "";
     public static bool DEFAULT_USE_INTEGRATED_SECURITY = true;
+
     /// <summary>
     /// Default connection timeout in secs
     /// </summary>
@@ -35,7 +36,8 @@ namespace BLTools.SQL {
     /// <summary>
     /// This value will be used later to set UsePooledConnections when no specific value is passed
     /// </summary>
-    public static bool DEFAULT_USE_POOLED_CONNECTIONS = false;
+    public static bool DEFAULT_USE_POOLED_CONNECTIONS = true;
+
     /// <summary>
     /// This value will be used later to set UseMars when no specific value is passed
     /// </summary>

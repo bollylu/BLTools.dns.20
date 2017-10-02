@@ -6,7 +6,7 @@ namespace UnitTest2015 {
   [TestClass]
   public class TPersonNameTest {
 
-    [TestMethod, TestCategory("ComplexType")]
+    [TestMethod, TestCategory("FW47.ComplexType")]
     public void TestPersonName_ConstructorEmpty_DataInitialized() {
       TPersonName PersonName = new TPersonName();
       Assert.AreEqual<TPersonTitle.EAvailableCode>(TPersonTitle.EAvailableCode.Unknown, PersonName.Title.Code);
@@ -16,7 +16,7 @@ namespace UnitTest2015 {
       Assert.AreEqual<string>("", PersonName.FullName);
     }
 
-    [TestMethod, TestCategory("ComplexType")]
+    [TestMethod, TestCategory("FW47.ComplexType")]
     public void TestPersonName_ConstructorNotEmpty_DataInitialized() {
       TPersonName PersonName = new TPersonName("Emile", "Dupont");
       Assert.AreEqual<TPersonTitle.EAvailableCode>(TPersonTitle.EAvailableCode.Unknown, PersonName.Title.Code);
@@ -26,7 +26,7 @@ namespace UnitTest2015 {
       Assert.AreEqual<string>("Emile Dupont", PersonName.FullName);
     }
 
-    [TestMethod, TestCategory("ComplexType")]
+    [TestMethod, TestCategory("FW47.ComplexType")]
     public void TestPersonName_ConstructorNotEmptyDataAdded_DataInitialized() {
       TPersonName PersonName = new TPersonName("Emile", "Dupont");
       PersonName.MiddleName = "Jr";

@@ -7,7 +7,7 @@ using BLTools.Data;
 using BLTools.Data.FixedLength;
 
 namespace BLTools.UnitTest.Core20 {
-  public class TFixedLengthTestRecord : TFixedLengthRecord {
+  public class TFixedLengthRecordTest : TFixedLengthRecord {
 
     #region Data fields
     [TDataField(StartPos = 0, Length = 3)]
@@ -65,7 +65,7 @@ namespace BLTools.UnitTest.Core20 {
     public string CRLF { get; private set; }
     #endregion Data fields
 
-    public TFixedLengthTestRecord() {
+    public TFixedLengthRecordTest() {
       CRLF = "\r\n";
     }
   }

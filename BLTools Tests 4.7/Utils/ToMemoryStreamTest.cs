@@ -11,7 +11,7 @@ namespace BLTools.UnitTest.nf47 {
   public class MemoryStreamTest {
 
     #region --- String to stream --------------------------------------------
-    [TestMethod(), TestCategory("String to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.String to MemoryStream")]
     public void ToStream_EmptyString_ResultStream() {
       string SourceValue = "";
       MemoryStream Result = SourceValue.ToStream();
@@ -21,7 +21,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("String to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.String to MemoryStream")]
     public void ToStream_EmptyStringWithEncoding_ResultStream() {
       string SourceValue = "";
       MemoryStream Result = SourceValue.ToStream(Encoding.UTF8);
@@ -31,7 +31,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("String to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.String to MemoryStream")]
     public void ToStream_ValidString_ResultStreamOk() {
       string SourceValue = "123ABCéèà";
       MemoryStream TempStream = SourceValue.ToStream();
@@ -42,7 +42,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("String to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.String to MemoryStream")]
     public void ToStream_ValidStringWithEncoding_ResultStreamOk() {
       string SourceValue = "123ABCéèà";
       MemoryStream TempStream = SourceValue.ToStream(Encoding.UTF8);
@@ -53,7 +53,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("String to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.String to MemoryStream")]
     public void ToStream_ValidStringWithWrongEncoding_ResultStreamNotOk() {
       string SourceValue = "123ABCéèà";
       MemoryStream TempStream = SourceValue.ToStream(Encoding.ASCII);
@@ -65,7 +65,7 @@ namespace BLTools.UnitTest.nf47 {
     }
 
 
-    [TestMethod(), TestCategory("String to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.String to MemoryStream")]
     public async Task ToStreamAsync_EmptyString_ResultStream() {
       string SourceValue = "";
       MemoryStream Result = await SourceValue.ToStreamAsync();
@@ -75,7 +75,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("String to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.String to MemoryStream")]
     public async Task ToStreamAsync_EmptyStringWithEncoding_ResultStream() {
       string SourceValue = "";
       MemoryStream Result = await SourceValue.ToStreamAsync(Encoding.UTF8);
@@ -85,7 +85,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("String to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.String to MemoryStream")]
     public async Task ToStreamAsync_ValidString_ResultStreamOk() {
       string SourceValue = "123ABCéèà";
       MemoryStream TempStream = await SourceValue.ToStreamAsync();
@@ -96,7 +96,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("String to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.String to MemoryStream")]
     public async Task ToStreamAsync_ValidStringWithEncoding_ResultStreamOk() {
       string SourceValue = "123ABCéèà";
       MemoryStream TempStream = await SourceValue.ToStreamAsync(Encoding.UTF8);
@@ -107,7 +107,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("String to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.String to MemoryStream")]
     public async Task ToStreamAsync_ValidStringWithWrongEncoding_ResultStreamNotOk() {
       string SourceValue = "123ABCéèà";
       MemoryStream TempStream = await SourceValue.ToStreamAsync(Encoding.ASCII);
@@ -121,7 +121,7 @@ namespace BLTools.UnitTest.nf47 {
     #endregion --- String to stream --------------------------------------------
 
     #region --- Bytes to stream --------------------------------------------
-    [TestMethod(), TestCategory("IEnumerable<byte> to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.IEnumerable<byte> to MemoryStream")]
     public void ToStream_EmptyByteArray_ResultStreamOkButEmpty() {
       byte[] SourceValue = new byte[] { };
       MemoryStream Result = SourceValue.ToStream();
@@ -131,7 +131,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("IEnumerable<byte> to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.IEnumerable<byte> to MemoryStream")]
     public void ToStream_EmptyListOfBytes_ResultStreamOkButEmpty() {
       List<byte> SourceValue = new List<byte>();
       MemoryStream Result = SourceValue.ToStream();
@@ -141,7 +141,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("IEnumerable<byte> to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.IEnumerable<byte> to MemoryStream")]
     public void ToStream_ValidByteArray_ResultStreamOk() {
       byte[] SourceValue = new byte[] { 0x64, 0x65, 0x66 };
       MemoryStream Result = SourceValue.ToStream();
@@ -154,7 +154,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("IEnumerable<byte> to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.IEnumerable<byte> to MemoryStream")]
     public void ToStream_ValidListOfBytes_ResultStreamOk() {
       List<byte> SourceValue = new List<byte>() { 0x64, 0x65, 0x66 };
       MemoryStream Result = SourceValue.ToStream();
@@ -167,7 +167,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("IEnumerable<byte> to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.IEnumerable<byte> to MemoryStream")]
     public async Task ToStreamAsync_EmptyByteArray_ResultStreamOkButEmpty() {
       byte[] SourceValue = new byte[] { };
       MemoryStream Result = await SourceValue.ToStreamAsync();
@@ -177,7 +177,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("IEnumerable<byte> to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.IEnumerable<byte> to MemoryStream")]
     public async Task ToStreamAsync_EmptyListOfBytes_ResultStreamOkButEmpty() {
       List<byte> SourceValue = new List<byte>();
       MemoryStream Result = await SourceValue.ToStreamAsync();
@@ -187,7 +187,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("IEnumerable<byte> to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.IEnumerable<byte> to MemoryStream")]
     public async Task ToStreamAsync_ValidByteArray_ResultStreamOk() {
       byte[] SourceValue = new byte[] { 0x64, 0x65, 0x66 };
       MemoryStream Result = await SourceValue.ToStreamAsync();
@@ -200,7 +200,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("IEnumerable<byte> to MemoryStream")]
+    [TestMethod(), TestCategory("FW47.IEnumerable<byte> to MemoryStream")]
     public async Task ToStreamAsync_ValidListOfBytes_ResultStreamOk() {
       List<byte> SourceValue = new List<byte>() { 0x64, 0x65, 0x66 };
       MemoryStream Result = await SourceValue.ToStreamAsync();

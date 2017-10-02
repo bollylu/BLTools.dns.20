@@ -62,7 +62,7 @@ namespace BLTools.SQL {
     /// <summary>
     /// Builds a database object based on default values
     /// </summary>
-    public TSqlDatabase(bool integratedSecurity = false)
+    public TSqlDatabase(bool integratedSecurity = true)
       : this(DEFAULT_SERVERNAME, DEFAULT_DATABASENAME, DEFAULT_USERNAME, DEFAULT_PASSWORD) {
       UseIntegratedSecurity = integratedSecurity;
       if ( UseIntegratedSecurity ) {
@@ -76,6 +76,9 @@ namespace BLTools.SQL {
     /// </summary>
     /// <param name="connectionString">A standardized connection string</param>
     public TSqlDatabase(string connectionString) {
+      if (string.IsNullOrWhiteSpace(connectionString)) {
+        throw new ArgumentNullException(nameof(connectionString));
+      }
       InitConnection(ParseConnectionString(connectionString));
     }
 
@@ -85,9 +88,9 @@ namespace BLTools.SQL {
     /// <param name="serverName">Name of the server to connect (SERVER or SERVER\INSTANCE). Use "(local)" for server on local machine</param>
     /// <param name="databaseName">Name of the database to open</param>
     /// <param name="integratedSecurity">Indicates whether we use integrated security or not (default=false)</param>
-    public TSqlDatabase(string serverName, string databaseName, bool integratedSecurity = false)
+    public TSqlDatabase(string serverName, string databaseName)
       : this(serverName, databaseName, DEFAULT_USERNAME, DEFAULT_PASSWORD) {
-      UseIntegratedSecurity = integratedSecurity;
+      UseIntegratedSecurity = false;
       if ( UseIntegratedSecurity ) {
         UserName = "";
         Password = "";

@@ -222,13 +222,14 @@ namespace BLTools.SQL {
     }
     #endregion --- Select single value --------------------------------------------
 
-    public virtual bool ExecuteNonQuery(SqlTransaction transaction, params string[] sqlCommands) {
+    #region --- Execute non query commands --------------------------------------------
+    public virtual bool ExecuteNonQuery(IDbTransaction transaction, params string[] commands) {
       #region Validate parameters
-      if ( sqlCommands == null ) {
+      if ( commands == null ) {
         Trace.WriteLine("Unable to execute a Select with a null command");
         throw new ArgumentNullException("sqlCommands");
       }
-      if ( sqlCommands.Count() == 0 ) {
+      if ( commands.Count() == 0 ) {
         Trace.WriteLine("ExecuteNonQuery : Unable to execute command from an empty query list");
         throw new ArgumentOutOfRangeException("sqlCommands");
       }
@@ -237,16 +238,16 @@ namespace BLTools.SQL {
         throw new ArgumentNullException("transaction");
       }
       #endregion Validate parameters
-      return ExecuteNonQuery(transaction, sqlCommands.Select(x => new SqlCommand(x)));
+      return ExecuteNonQuery(transaction, commands.Select(x => new SqlCommand(x)));
     }
 
-    public virtual bool ExecuteNonQuery(SqlTransaction transaction, IEnumerable<string> sqlCommands) {
+    public virtual bool ExecuteNonQuery(IDbTransaction transaction, IEnumerable<string> commands) {
       #region Validate parameters
-      if ( sqlCommands == null ) {
+      if ( commands == null ) {
         Trace.WriteLine("Unable to execute a Select with a null command");
         throw new ArgumentNullException("sqlCommands");
       }
-      if ( sqlCommands.Count() == 0 ) {
+      if ( commands.Count() == 0 ) {
         Trace.WriteLine("ExecuteNonQuery : Unable to execute command from an empty query list");
         throw new ArgumentOutOfRangeException("sqlCommands");
       }
@@ -255,12 +256,12 @@ namespace BLTools.SQL {
         throw new ArgumentNullException("transaction");
       }
       #endregion Validate parameters
-      return ExecuteNonQuery(transaction, sqlCommands.Select(x => new SqlCommand(x)));
+      return ExecuteNonQuery(transaction, commands.Select(x => new SqlCommand(x)));
     }
 
-    public virtual bool ExecuteNonQuery(IDbTransaction transaction, params IDbCommand[] sqlCommands) {
+    public virtual bool ExecuteNonQuery(IDbTransaction transaction, params IDbCommand[] commands) {
       #region Validate parameters
-      if ( sqlCommands == null ) {
+      if ( commands == null ) {
         Trace.WriteLine("Unable to execute a Select with a null command");
         return false;
       }
@@ -269,8 +270,9 @@ namespace BLTools.SQL {
         throw new ArgumentNullException("transaction");
       }
       #endregion Validate parameters
-      return ExecuteNonQuery(transaction, sqlCommands);
+      return ExecuteNonQuery(transaction, commands);
     }
+
     public virtual bool ExecuteNonQuery(IDbTransaction transaction, IEnumerable<IDbCommand> commands) {
       #region Validate parameters
       if ( commands == null ) {
@@ -320,91 +322,80 @@ namespace BLTools.SQL {
       }
     }
 
-    public virtual bool ExecuteNonQuery(params string[] sqlCommands) {
+    public virtual bool ExecuteNonQuery(params string[] commands) {
       #region Validate parameters
-      if ( sqlCommands == null ) {
+      if ( commands == null ) {
         Trace.WriteLine("Unable to execute a Select with a null command");
         throw new ArgumentNullException("sqlCommands");
       }
-      if ( sqlCommands.Count() == 0 ) {
+      if ( commands.Count() == 0 ) {
         Trace.WriteLine("ExecuteNonQuery : Unable to execute command from an empty query list");
         throw new ArgumentOutOfRangeException("sqlCommands");
       }
       #endregion Validate parameters
-      return ExecuteNonQuery(sqlCommands.Select(x => new SqlCommand(x)));
+      return ExecuteNonQuery(commands.Select(x => new SqlCommand(x)));
     }
 
-    public virtual bool ExecuteNonQuery(IEnumerable<string> sqlCommands) {
+    public virtual bool ExecuteNonQuery(IEnumerable<string> commands) {
       #region Validate parameters
-      if ( sqlCommands == null ) {
+      if ( commands == null ) {
         Trace.WriteLine("Unable to execute a Select with a null command");
         throw new ArgumentNullException("sqlCommands");
       }
-      if ( sqlCommands.Count() == 0 ) {
+      if ( commands.Count() == 0 ) {
         Trace.WriteLine("ExecuteNonQuery : Unable to execute command from an empty query list");
         throw new ArgumentOutOfRangeException("sqlCommands");
       }
       #endregion Validate parameters
-      return ExecuteNonQuery(sqlCommands.Select(x => new SqlCommand(x)));
+      return ExecuteNonQuery(commands.Select(x => new SqlCommand(x)));
     }
 
-    public virtual bool ExecuteNonQuery(params IDbCommand[] sqlCommands) {
+    public virtual bool ExecuteNonQuery(params IDbCommand[] commands) {
       #region Validate parameters
-      if ( sqlCommands == null ) {
+      if ( commands == null ) {
         Trace.WriteLine("Unable to execute a Select with a null command");
         throw new ArgumentNullException("sqlCommands");
       }
-      if ( sqlCommands.Count() == 0 ) {
+      if ( commands.Count() == 0 ) {
         Trace.WriteLine("ExecuteNonQuery : Unable to execute command from an empty query list");
         throw new ArgumentOutOfRangeException("sqlCommands");
       }
       #endregion Validate parameters
-      return ExecuteNonQuery((IEnumerable<SqlCommand>)sqlCommands);
+      return ExecuteNonQuery((IEnumerable<SqlCommand>)commands);
     }
 
-    public virtual bool ExecuteNonQuery(IEnumerable<IDbCommand> sqlCommands) {
+    public virtual bool ExecuteNonQuery(IEnumerable<IDbCommand> commands) {
       #region Validate parameters
-      if ( sqlCommands == null ) {
+      if ( commands == null ) {
         Trace.WriteLine("Unable to execute a Select with a null command");
         throw new ArgumentNullException("sqlCommands");
       }
-      if ( sqlCommands.Count() == 0 ) {
+      if ( commands.Count() == 0 ) {
         Trace.WriteLine("ExecuteNonQuery : Unable to execute command from an empty query list");
         throw new ArgumentOutOfRangeException("sqlCommands");
       }
       #endregion Validate parameters
 
-      NotifySelectNonQuery(sqlCommands);
+      NotifySelectNonQuery(commands);
 
       StringBuilder Status = new StringBuilder("Execute non query commands : ");
 
       try {
         Trace.Indent();
 
-        #region Validate parameters
-        if ( sqlCommands == null ) {
-          Trace.WriteLine("Unable to create a record from a null SqlCommand");
-          return false;
-        }
-        if ( sqlCommands.Count() == 0 ) {
-          Trace.WriteLine("Unable to create a record from an empty query list");
-          return false;
-        }
-        #endregion Validate parameters
-
-        Status.Append($"{sqlCommands.Count()} command(s)\r\n=> ");
+        Status.Append($"{commands.Count()} command(s)\r\n=> ");
 
         try {
 
           TryOpen();
           StartTransaction();
 
-          foreach ( IDbCommand SqlCommandItem in sqlCommands ) {
-            SqlCommandItem.Connection = Connection;
-            SqlCommandItem.Transaction = Transaction;
-            if ( SqlCommandItem.ExecuteNonQuery() == 0 ) {
+          foreach ( IDbCommand CommandItem in commands ) {
+            CommandItem.Connection = Connection;
+            CommandItem.Transaction = Transaction;
+            if ( CommandItem.ExecuteNonQuery() == 0 ) {
               RollbackTransaction();
-              Status.AppendFormat("failed : {0}", SqlCommandItem.CommandText);
+              Status.AppendFormat("failed : {0}", CommandItem.CommandText);
               return false;
             }
           }
@@ -425,7 +416,8 @@ namespace BLTools.SQL {
         Trace.Unindent();
         Trace.WriteLine(Status.ToString());
       }
-    }
+    } 
+    #endregion --- Execute non query commands --------------------------------------------
 
     #endregion Records management
 

@@ -62,7 +62,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for ArgElement Constructor
     ///</summary>
-    [TestMethod(), TestCategory("SplitArgs")]
+    [TestMethod(), TestCategory("FW47.SplitArgs")]
     public void ArgElementConstructorTest() {
       int id = 0; 
       string name = "first";
@@ -76,7 +76,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for Id
     ///</summary>
-    [TestMethod(), TestCategory("SplitArgs")]
+    [TestMethod(), TestCategory("FW47.SplitArgs")]
     public void IdTest() {
       int id = 0;
       string name = "first";
@@ -88,7 +88,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for Name
     ///</summary>
-    [TestMethod(), TestCategory("SplitArgs")]
+    [TestMethod(), TestCategory("FW47.SplitArgs")]
     public void NameTest() {
       int id = 0;
       string name = "first";
@@ -100,7 +100,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for Value
     ///</summary>
-    [TestMethod(), TestCategory("SplitArgs")]
+    [TestMethod(), TestCategory("FW47.SplitArgs")]
     public void ValueTest() {
       int id = 0;
       string name = "first";

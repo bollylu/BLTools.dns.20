@@ -62,7 +62,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for ToHexString
     ///</summary>
-    [TestMethod(), TestCategory("Array")]
+    [TestMethod(), TestCategory("FW47.Array")]
     public void ToHexString_CommaSeparator_ResultOK() {
       byte[] rawData = new byte[] { 12, 23, 34, 45, 56 };
       string separator = ",";
@@ -75,7 +75,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for ToHexString
     ///</summary>
-    [TestMethod(), TestCategory("Array")]
+    [TestMethod(), TestCategory("FW47.Array")]
     public void ToHexString_NoSeparator_ResultOK() {
       byte[] rawData = new byte[] { 12, 23, 34, 45, 56 };
       string expected = "0C17222D38";
@@ -87,7 +87,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for ToCharString
     ///</summary>
-    [TestMethod(), TestCategory("Array")]
+    [TestMethod(), TestCategory("FW47.Array")]
     public void ToCharString_NormalCharacters_ResultOK() {
       byte[] rawData = "abcdef".ToByteArray();
       string expected = "abcdef";
@@ -99,7 +99,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for ToCharString
     ///</summary>
-    [TestMethod(), TestCategory("Array")]
+    [TestMethod(), TestCategory("FW47.Array")]
     public void ToCharString_EmptySource_ResultOK() {
       byte[] rawData = "".ToByteArray();
       string expected = "";
@@ -111,7 +111,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for ToCharString
     ///</summary>
-    [TestMethod(), TestCategory("Array")]
+    [TestMethod(), TestCategory("FW47.Array")]
     public void ToCharString_SpecialChars_ResultOK() {
       byte[] rawData = "Text\r\n".ToByteArray();
       string expected = "Text\r\n";

@@ -30,7 +30,7 @@ namespace BLTools.UnitTest.nf47 {
       }
     }
 
-    [TestMethod(), TestCategory("RSA")]
+    [TestMethod(), TestCategory("FW47.RSA")]
     public void TRSAEncryptor_EncryptToBase64thenDecrypt_ResultIsIdentical() {
       TRSAKeyPair KeyPair = new TRSAKeyPair("testkey");
       string SourceText = "this is a nice small text";
@@ -39,7 +39,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
-    [TestMethod(), TestCategory("RSA")]
+    [TestMethod(), TestCategory("FW47.RSA")]
     public void TRSAEncryptor_EncryptToBase64thenDecryptWithBadKey_ResultIsWrong() {
       TRSAKeyPair KeyPair1 = new TRSAKeyPair("testkey1");
       TRSAKeyPair KeyPair2 = new TRSAKeyPair("testkey2");
@@ -48,7 +48,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreNotEqual(SourceText, Target.DecryptFromRSABase64(KeyPair2.PrivateKey));
     }
 
-    [TestMethod(), TestCategory("RSA")]
+    [TestMethod(), TestCategory("FW47.RSA")]
     public void TRSAEncryptor_SignThenCheckSignature_SignatureIsOK() {
       TRSAKeyPair KeyPair = new TRSAKeyPair("testkey");
       string SourceText = "this is a nice small text";
@@ -56,7 +56,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.IsTrue(SourceText.IsSignatureRSABase64Valid(Signature, KeyPair.PublicKey, Encoding.UTF8));
     }
 
-    [TestMethod(), TestCategory("RSA")]
+    [TestMethod(), TestCategory("FW47.RSA")]
     public void TRSAEncryptor_SignThenModifyThenCheckSignature_SignatureIsBad() {
       TRSAKeyPair KeyPair = new TRSAKeyPair("testkey");
       string SourceText = "this is a nice small text";

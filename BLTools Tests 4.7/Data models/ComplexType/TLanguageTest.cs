@@ -6,7 +6,7 @@ namespace UnitTest2015 {
   [TestClass]
   public class TLanguageTest {
 
-    [TestMethod, TestCategory("ComplexType")]
+    [TestMethod, TestCategory("FW47.ComplexType")]
     public void TestLanguage_ConstructorEmpty_DataInitialized() {
       TLanguage Language = new TLanguage();
       Assert.AreEqual<TLanguage.EAvailableLanguage>(TLanguage.EAvailableLanguage.Unknown, Language.Code);
@@ -16,7 +16,7 @@ namespace UnitTest2015 {
       Assert.AreEqual<string>("Unknown", Language.GetName(EDescriptionLanguage.English));
     }
 
-    [TestMethod, TestCategory("ComplexType")]
+    [TestMethod, TestCategory("FW47.ComplexType")]
     public void TestLanguage_ConstructorFrench_DataInitialized() {
       TLanguage Language = new TLanguage(TLanguage.EAvailableLanguage.FR);
       Assert.AreEqual<TLanguage.EAvailableLanguage>(TLanguage.EAvailableLanguage.FR, Language.Code);
@@ -26,7 +26,7 @@ namespace UnitTest2015 {
       Assert.AreEqual<string>("French", Language.GetName(EDescriptionLanguage.English));
     }
 
-    [TestMethod, TestCategory("ComplexType")]
+    [TestMethod, TestCategory("FW47.ComplexType")]
     public void TestLanguage_ConstructorEnglish_DataInitialized() {
       TLanguage Language = new TLanguage(TLanguage.EAvailableLanguage.UK);
       Assert.AreEqual<TLanguage.EAvailableLanguage>(TLanguage.EAvailableLanguage.UK, Language.Code);

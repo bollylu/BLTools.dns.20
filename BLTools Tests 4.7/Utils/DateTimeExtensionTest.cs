@@ -63,7 +63,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for DateTime extension
     ///</summary>
-    [TestMethod(), TestCategory("DateTime")]
+    [TestMethod(), TestCategory("FW47.DateTime")]
     public void DateTimeToYMD_ResultOK() {
       DateTime Source = new DateTime(2015, 04, 28);
       string target = "2015-04-28";
@@ -73,7 +73,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for DateTime extension
     ///</summary>
-    [TestMethod(), TestCategory("DateTime")]
+    [TestMethod(), TestCategory("FW47.DateTime")]
     public void DateTimeToYMDHMS_ResultOK() {
       DateTime Source = new DateTime(2015, 04, 28, 18, 6, 30);
       string target = "2015-04-28 18:06:30";
@@ -83,7 +83,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for DateTime extension
     ///</summary>
-    [TestMethod(), TestCategory("DateTime")]
+    [TestMethod(), TestCategory("FW47.DateTime")]
     public void DateTimeToDMY_ResultOK() {
       DateTime Source = new DateTime(2015, 04, 28);
       string target = "28/04/2015";
@@ -93,7 +93,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for DateTime extension
     ///</summary>
-    [TestMethod(), TestCategory("DateTime")]
+    [TestMethod(), TestCategory("FW47.DateTime")]
     public void DateTimeToDMYHMS_ResultOK() {
       DateTime Source = new DateTime(2015, 04, 28, 18, 6, 30);
       string target = "28/04/2015 18:06:30";
@@ -103,7 +103,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for DateTime extension
     ///</summary>
-    [TestMethod(), TestCategory("DateTime")]
+    [TestMethod(), TestCategory("FW47.DateTime")]
     public void DateTimeToHMS_ResultOK() {
       DateTime Source = new DateTime(2015, 04, 28, 18, 6, 30);
       string target = "18:06:30";
@@ -113,7 +113,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for DateTime extension
     ///</summary>
-    [TestMethod(), TestCategory("DateTime")]
+    [TestMethod(), TestCategory("FW47.DateTime")]
     public void DateTimeFromUTC_ResultOK() {
       DateTime Source = new DateTime(2015, 04, 28, 18, 6, 30);
       DateTime target = Source.ToLocalTime();
@@ -123,7 +123,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for DateTime extension
     ///</summary>
-    [TestMethod(), TestCategory("DateTime")]
+    [TestMethod(), TestCategory("FW47.DateTime")]
     public void DateTimeEmptyDateAsDash_ResultOK() {
       DateTime Source = DateTime.MinValue;
       string target = "-";
@@ -133,7 +133,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for DateTime extension
     ///</summary>
-    [TestMethod(), TestCategory("DateTime")]
+    [TestMethod(), TestCategory("FW47.DateTime")]
     public void DateTimeEmptyDateAsBlank_ResultOK() {
       DateTime Source = DateTime.MinValue;
       string target = "";
@@ -143,7 +143,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for DateTime extension
     ///</summary>
-    [TestMethod(), TestCategory("DateTime")]
+    [TestMethod(), TestCategory("FW47.DateTime")]
     public void DateTimeEmptyDateAs_CustomValue_ResultOK() {
       DateTime Source = DateTime.MinValue;
       string target = "../../....";
@@ -153,7 +153,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for DateTime extension
     ///</summary>
-    [TestMethod(), TestCategory("DateTime")]
+    [TestMethod(), TestCategory("FW47.DateTime")]
     public void DateTime_TimeConsistent_ResultOK() {
       DateTime Source = new DateTime(2015, 3, 10, 10, 33, 0);
       DateTime target = DateTime.MinValue.Add(new TimeSpan(10, 33, 0));

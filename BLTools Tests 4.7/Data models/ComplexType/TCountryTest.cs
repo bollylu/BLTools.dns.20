@@ -6,7 +6,7 @@ namespace UnitTest2015 {
   [TestClass]
   public class TCountryTest {
 
-    [TestMethod, TestCategory("ComplexType")]
+    [TestMethod, TestCategory("FW47.ComplexType")]
     public void TestCountry_ConstructorEmpty_DataInitialized() {
       TCountry Country = new TCountry();
       Assert.AreEqual<TCountry.EAvailableCode>(TCountry.EAvailableCode.Unknown, Country.Code);
@@ -16,7 +16,7 @@ namespace UnitTest2015 {
       Assert.AreEqual<string>("Unknown", Country.GetName(EDescriptionLanguage.English));
     }
 
-    [TestMethod, TestCategory("ComplexType")]
+    [TestMethod, TestCategory("FW47.ComplexType")]
     public void TestCountry_ConstructorBE_DataInitialized() {
       TCountry Country = new TCountry(TCountry.EAvailableCode.BE);
       Assert.AreEqual<TCountry.EAvailableCode>(TCountry.EAvailableCode.BE, Country.Code);
@@ -26,7 +26,7 @@ namespace UnitTest2015 {
       Assert.AreEqual<string>("Belgium", Country.GetName(EDescriptionLanguage.English));
     }
 
-    [TestMethod, TestCategory("ComplexType")]
+    [TestMethod, TestCategory("FW47.ComplexType")]
     public void TestCountry_ConstructorUS_DataInitialized() {
       TCountry Country = new TCountry(TCountry.EAvailableCode.US);
       Assert.AreEqual<TCountry.EAvailableCode>(TCountry.EAvailableCode.US, Country.Code);

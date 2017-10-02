@@ -107,112 +107,112 @@ namespace BLTools.UnitTest.nf47 {
     }
 
     #region FromRawData
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_String_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, RecordEncoding);
       Assert.AreEqual(SupplierCode, TestRecord.SupplierCode);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_StringWithTrailingSpaces_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, RecordEncoding);
       Assert.AreEqual(Name, TestRecord.Name);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_StringWithAccentAndSpecials_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, Encoding.UTF8);
       Assert.AreEqual(Customer, TestRecord.Customer);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_Int_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, RecordEncoding);
       Assert.AreEqual(Quantity, TestRecord.Quantity);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_Long_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, RecordEncoding);
       Assert.AreEqual(OrderNumber, TestRecord.OrderNumber);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_FloatWithSeparator_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, RecordEncoding);
       Assert.AreEqual(FloatCost, TestRecord.FloatCost);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_FloatWithoutSeparator_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, RecordEncoding);
       Assert.AreEqual(FloatPrice, TestRecord.FloatPrice);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_DoubleWithSeparator_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, RecordEncoding);
       Assert.AreEqual(DoubleCost, TestRecord.DoubleCost);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_DoubleWithoutSeparator_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, RecordEncoding);
       Assert.AreEqual(DoublePrice, TestRecord.DoublePrice);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_DecimalWithSeparator_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, RecordEncoding);
       Assert.AreEqual(DecimalCost, TestRecord.DecimalCost);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_DecimalWithoutSeparator_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, RecordEncoding);
       Assert.AreEqual(DecimalPrice, TestRecord.DecimalPrice);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_BoolYN_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, RecordEncoding);
       Assert.AreEqual(IsGoodRecord, TestRecord.IsGoodRecord);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_BoolTF_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, RecordEncoding);
       Assert.AreEqual(IsAuthentic, TestRecord.IsAuthentic);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_BoolGoodOrBad_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, RecordEncoding);
       Assert.AreEqual(GoodOrBad, TestRecord.GoodOrBad);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_DateTimeDateOnly_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, RecordEncoding);
       Assert.AreEqual(OrderDate, TestRecord.OrderDate);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_FromRawData_DateTimeCustom_ResultOK() {
       TFixedLengthTestRecord TestRecord = new TFixedLengthTestRecord();
       TestRecord.FromRawData(RecordString, RecordEncoding);
@@ -221,7 +221,7 @@ namespace BLTools.UnitTest.nf47 {
     #endregion FromRawData
 
     #region ToRawData
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_String_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.ASCII);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();
@@ -231,7 +231,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(SupplierCode, ActualRecord.SupplierCode);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_StringWithTrailingSpaces_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.ASCII);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();
@@ -241,7 +241,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(Name, ActualRecord.Name);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_StringWithAccentAndSpecials_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.UTF8);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();
@@ -251,7 +251,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(Name, ActualRecord.Name);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_Int_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.ASCII);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();
@@ -261,7 +261,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(Quantity, ActualRecord.Quantity);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_Long_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.ASCII);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();
@@ -271,7 +271,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(OrderNumber, ActualRecord.OrderNumber);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_FloatWithSeparator_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.ASCII);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();
@@ -281,7 +281,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(FloatCost, ActualRecord.FloatCost);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_FloatWithoutSeparator_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.ASCII);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();
@@ -291,7 +291,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(FloatPrice, ActualRecord.FloatPrice);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_DoubleWithSeparator_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.ASCII);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();
@@ -301,7 +301,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(DoubleCost, ActualRecord.DoubleCost);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_DoubleWithoutSeparator_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.ASCII);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();
@@ -311,7 +311,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(DoublePrice, ActualRecord.DoublePrice);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_DecimalWithSeparator_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.ASCII);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();
@@ -321,7 +321,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(DecimalCost, ActualRecord.DecimalCost);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_DecimalWithoutSeparator_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.ASCII);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();
@@ -331,7 +331,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(DecimalPrice, ActualRecord.DecimalPrice);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_BoolYN_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.ASCII);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();
@@ -341,7 +341,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(IsGoodRecord, ActualRecord.IsGoodRecord);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_BoolTF_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.ASCII);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();
@@ -351,7 +351,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(IsAuthentic, ActualRecord.IsAuthentic);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_BoolGoodBad_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.ASCII);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();
@@ -361,7 +361,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(GoodOrBad, ActualRecord.GoodOrBad);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_DateTimeDateOnly_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.ASCII);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();
@@ -371,7 +371,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.AreEqual(OrderDate, ActualRecord.OrderDate);
     }
 
-    [TestMethod(), TestCategory("Data"), TestCategory("Fixed length record")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.Fixed length record")]
     public void FixedLengthRecord_ToRawData_DateTimeCustom_ResultOK() {
       byte[] RawData = SourceRecord.ToRawData(Encoding.ASCII);
       TFixedLengthTestRecord ActualRecord = new TFixedLengthTestRecord();

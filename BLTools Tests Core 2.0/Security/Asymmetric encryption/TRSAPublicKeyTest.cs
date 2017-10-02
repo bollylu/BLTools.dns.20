@@ -61,13 +61,13 @@ namespace BLTools.UnitTest.Core20 {
     #endregion
 
 
-    [TestMethod(), TestCategory("RSA")]
+    [TestMethod(), TestCategory("NC20.RSA")]
     public void TRSAPublicKey_ConstructorEmpty_KeyEmpty() {
       TRSAPublicKey target = new TRSAPublicKey();
       Assert.IsNull(target.Parameters.P);
     }
 
-    //[TestMethod(), TestCategory("RSA")]
+    //[TestMethod(), TestCategory("NC20.RSA")]
     //public void TRSAPublicKey_ConstructorValidString_KeyValidString() {
     //  string key = "0263489516513216541";
     //  TRSAPublicKey target = new TRSAPublicKey("testkey", key);
@@ -77,7 +77,7 @@ namespace BLTools.UnitTest.Core20 {
     ///// <summary>
     /////A test for Save
     /////</summary>
-    //[TestMethod(), TestCategory("RSA")]
+    //[TestMethod(), TestCategory("NC20.RSA")]
     //public void TRSAPublicKey_SaveKey_KeyIsSaved() {
     //  string Key = "0263489516513216541";
     //  TRSAPublicKey Target = new TRSAPublicKey("testkey", Key);
@@ -91,7 +91,7 @@ namespace BLTools.UnitTest.Core20 {
     ///// <summary>
     /////A test for Load
     /////</summary>
-    //[TestMethod(), TestCategory("RSA")]
+    //[TestMethod(), TestCategory("NC20.RSA")]
     //public void TRSAPublicKey_KeyIsSavedThenLoaded_KeyIsOK() {
     //  string Key = "0263489516513216541";
     //  TRSAPublicKey Source = new TRSAPublicKey("testkey", Key);
@@ -107,7 +107,7 @@ namespace BLTools.UnitTest.Core20 {
     ///// <summary>
     /////A test for Load
     /////</summary>
-    //[TestMethod(), TestCategory("RSA")]
+    //[TestMethod(), TestCategory("NC20.RSA")]
     //public void TRSAPublicKey_KeyIsLoadedViaStatic_KeyIsOK() {
     //  string Key = "0263489516513216541";
     //  TRSAPublicKey Source = new TRSAPublicKey("testkey", Key);

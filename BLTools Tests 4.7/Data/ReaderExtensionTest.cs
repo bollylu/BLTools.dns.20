@@ -72,7 +72,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for SafeRead
     ///</summary>
-    [TestMethod(), TestCategory("Data"), TestCategory("DataReader")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.DataReader")]
     public void SafeRead_ReadString_ResultOK() {
       string actual;
       using ( IDataReader reader = Data.CreateDataReader() ) {
@@ -85,7 +85,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for SafeRead
     ///</summary>
-    [TestMethod(), TestCategory("Data"), TestCategory("DataReader")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.DataReader")]
     public void SafeRead_ReadInt_ResultOK() {
       int actual;
       using ( IDataReader reader = Data.CreateDataReader() ) {
@@ -98,7 +98,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for SafeRead
     ///</summary>
-    [TestMethod(), TestCategory("Data"), TestCategory("DataReader")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.DataReader")]
     public void SafeRead_ReadFloat_ResultOK() {
       float actual;
       using ( IDataReader reader = Data.CreateDataReader() ) {
@@ -111,7 +111,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for SafeRead
     ///</summary>
-    [TestMethod(), TestCategory("Data"), TestCategory("DataReader")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.DataReader")]
     public void SafeRead_ReadDouble_ResultOK() {
       double actual;
       using ( IDataReader reader = Data.CreateDataReader() ) {
@@ -124,7 +124,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for SafeRead
     ///</summary>
-    [TestMethod(), TestCategory("Data"), TestCategory("DataReader")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.DataReader")]
     public void SafeRead_ReadDateTime_ResultOK() {
       DateTime actual;
       using ( IDataReader reader = Data.CreateDataReader() ) {
@@ -137,7 +137,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for SafeRead
     ///</summary>
-    [TestMethod(), TestCategory("Data"), TestCategory("DataReader")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.DataReader")]
     public void SafeRead_ReadString_ResultDefault() {
       string actual;
       using ( IDataReader reader = Data.CreateDataReader() ) {
@@ -153,7 +153,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for SafeRead
     ///</summary>
-    [TestMethod(), TestCategory("Data"), TestCategory("DataReader")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.DataReader")]
     public void SafeRead_ReadInt_ResultDefault() {
       int actual;
       using ( IDataReader reader = Data.CreateDataReader() ) {
@@ -167,7 +167,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for SafeRead
     ///</summary>
-    [TestMethod(), TestCategory("Data"), TestCategory("DataReader")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.DataReader")]
     public void SafeRead_ReadFloat_ResultDefault() {
       float actual;
       using ( IDataReader reader = Data.CreateDataReader() ) {
@@ -182,7 +182,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for SafeRead
     ///</summary>
-    [TestMethod(), TestCategory("Data"), TestCategory("DataReader")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.DataReader")]
     public void SafeRead_ReadDouble_ResultDefault() {
       double actual;
       using ( IDataReader reader = Data.CreateDataReader() ) {
@@ -197,7 +197,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for SafeRead
     ///</summary>
-    [TestMethod(), TestCategory("Data"), TestCategory("DataReader")]
+    [TestMethod(), TestCategory("FW47.Data"), TestCategory("FW47.DataReader")]
     public void SafeRead_ReadDateTimeDBNull_ResultDefault() {
       DateTime actual;
       using ( IDataReader reader = Data.CreateDataReader() ) {

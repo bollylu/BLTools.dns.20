@@ -5,7 +5,7 @@ using BLTools.Encryption;
 namespace BLTools.UnitTest.nf47 {
   [TestClass]
   public class THashMacExtensionStringTest {
-    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("MD5")]
+    [TestMethod(), TestCategory("FW47.Security"), TestCategory("FW47.Hash"), TestCategory("FW47.MD5")]
     public void TestHMACMD5_StandardString_HMacIsOK() {
       string SourceString = "The quick brown fox jumps over the lazy dog";
       string Key = "key";
@@ -13,7 +13,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.IsTrue(SourceString.VerifyHMACFromBase64(Key, Base64HMac, THashingMethods.MD5));
     }
 
-    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA1")]
+    [TestMethod(), TestCategory("FW47.Security"), TestCategory("FW47.Hash"), TestCategory("FW47.SHA1")]
     public void TestHMACSHA1_StandardString_HMacIsOK() {
       string SourceString = "The quick brown fox jumps over the lazy dog";
       string Key = "key";
@@ -21,7 +21,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.IsTrue(SourceString.VerifyHMACFromBase64(Key, Base64HMac, THashingMethods.SHA1));
     }
 
-    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA256")]
+    [TestMethod(), TestCategory("FW47.Security"), TestCategory("FW47.Hash"), TestCategory("FW47.SHA256")]
     public void TestHMACSHA256_StandardString_HMacIsOK() {
       string SourceString = "The quick brown fox jumps over the lazy dog";
       string Key = "key";
@@ -29,7 +29,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.IsTrue(SourceString.VerifyHMACFromBase64(Key, Base64HMac, THashingMethods.SHA256));
     }
 
-    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA384")]
+    [TestMethod(), TestCategory("FW47.Security"), TestCategory("FW47.Hash"), TestCategory("FW47.SHA384")]
     public void TestHMACSHA384_StandardString_HMacIsOK() {
       string SourceString = "The quick brown fox jumps over the lazy dog";
       string Key = "key";
@@ -37,7 +37,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.IsTrue(SourceString.VerifyHMACFromBase64(Key, Base64HMac, THashingMethods.SHA384));
     }
 
-    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA512")]
+    [TestMethod(), TestCategory("FW47.Security"), TestCategory("FW47.Hash"), TestCategory("FW47.SHA512")]
     public void TestHMACSHA512_StandardString_HMacIsOK() {
       string SourceString = "The quick brown fox jumps over the lazy dog";
       string Key = "key";
@@ -45,7 +45,7 @@ namespace BLTools.UnitTest.nf47 {
       Assert.IsTrue(SourceString.VerifyHMACFromBase64(Key, Base64HMac, THashingMethods.SHA512));
     }
 
-    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA256")]
+    [TestMethod(), TestCategory("FW47.Security"), TestCategory("FW47.Hash"), TestCategory("FW47.SHA256")]
     public void TestHMACSHA256_StandardStringWrongKeyForDecode_VerifyIsFalse() {
       string SourceString = "The quick brown fox jumps over the lazy dog";
       string Key = "key";

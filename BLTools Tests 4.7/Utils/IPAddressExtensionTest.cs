@@ -31,7 +31,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for GetSubnet
     ///</summary>
-    [TestMethod(), TestCategory("Network")]
+    [TestMethod(), TestCategory("FW47.Network")]
     public void GetSubnet_NetmaskAsIPAddress_ResultOk() {
       IPAddress ipAddress = new IPAddress(new byte[] { 10, 100, 200, 28 });
       IPAddress netmask = new IPAddress(new byte[] { 255, 255, 255, 0 });
@@ -43,7 +43,7 @@ namespace BLTools.UnitTest.nf47 {
     /// <summary>
     ///A test for GetSubnet
     ///</summary>
-    [TestMethod(), TestCategory("Network")]
+    [TestMethod(), TestCategory("FW47.Network")]
     public void GetSubnet_NetmaskAsByteArray_ResultOk() {
       IPAddress ipAddress = new IPAddress(new byte[] { 10, 100, 200, 28 });
       byte[] netmask = new byte[] { 255, 255, 255, 0 };
