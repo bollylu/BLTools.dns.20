@@ -2,15 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>BLTools.Data</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="2.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BLTools Dot Net Std 2.0\BLTools Dot Net Std 2.0.csproj" />
+    <ProjectReference Include="..\BLTools.Data.dns.20\BLTools.Data.dns.20.csproj" />
   </ItemGroup>
 
 </Project>

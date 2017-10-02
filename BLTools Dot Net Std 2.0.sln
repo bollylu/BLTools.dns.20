@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLTools Tests Core 2.0", "B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLTools.Data.dns.20", "BLTools.Data.dns.20\BLTools.Data.dns.20.csproj", "{8ECBBA40-045C-4BA1-A0AB-7CFF4593581A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLTools.DataModels.dns.20", "BLTools.DataModels.dns.20\BLTools.DataModels.dns.20.csproj", "{C076CD3F-E425-46FD-95FC-D24B0EDC4AF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLTools.DataModels.dns.20", "BLTools.DataModels.dns.20\BLTools.DataModels.dns.20.csproj", "{C076CD3F-E425-46FD-95FC-D24B0EDC4AF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLTools.SQL.dns.20", "BLTools.SQL.dns.20\BLTools.SQL.dns.20.csproj", "{BAAF5E42-6469-4AC4-820A-BBB28C10FF15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{C076CD3F-E425-46FD-95FC-D24B0EDC4AF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C076CD3F-E425-46FD-95FC-D24B0EDC4AF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C076CD3F-E425-46FD-95FC-D24B0EDC4AF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAAF5E42-6469-4AC4-820A-BBB28C10FF15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAAF5E42-6469-4AC4-820A-BBB28C10FF15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAAF5E42-6469-4AC4-820A-BBB28C10FF15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAAF5E42-6469-4AC4-820A-BBB28C10FF15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
