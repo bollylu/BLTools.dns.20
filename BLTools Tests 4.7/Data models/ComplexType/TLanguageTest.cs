@@ -2,7 +2,7 @@
 using BLTools.DataModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTest2015 {
+namespace BLTools.UnitTest.nf47 {
   [TestClass]
   public class TLanguageTest {
 
