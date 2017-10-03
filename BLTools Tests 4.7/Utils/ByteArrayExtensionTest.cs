@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace BLTools.UnitTest.nf47 {
+namespace BLTools.UnitTest.FW47.Extensions {
 
 
   /// <summary>

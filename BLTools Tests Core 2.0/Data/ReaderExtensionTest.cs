@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Data;
 
-namespace BLTools.UnitTest.Core20 {
+namespace BLTools.UnitTest.Core20.Data {
 
   /// <summary>
   ///This is a test class for ReaderExtensionTest and is intended

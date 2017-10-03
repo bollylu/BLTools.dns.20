@@ -6,7 +6,7 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLTools.UnitTest.nf47 {
+namespace BLTools.UnitTest.FW47.Extensions {
 
 
   /// <summary>

@@ -4,7 +4,7 @@ using System;
 using System.Xml.Linq;
 using System.IO;
 
-namespace BLTools.UnitTest.Core20 {
+namespace BLTools.UnitTest.Core20.Security {
 
 
   /// <summary>

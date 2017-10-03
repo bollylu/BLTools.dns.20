@@ -4,7 +4,7 @@ using System;
 using System.Security;
 using System.Text;
 
-namespace BLTools.UnitTest.nf47 {
+namespace BLTools.UnitTest.FW47.Extensions {
 
 
   /// <summary>

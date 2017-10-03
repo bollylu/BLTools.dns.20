@@ -4,7 +4,7 @@ using System;
 using System.Xml.Linq;
 using System.IO;
 
-namespace BLTools.UnitTest.nf47 {
+namespace BLTools.UnitTest.FW47.Security {
 
 
   /// <summary>

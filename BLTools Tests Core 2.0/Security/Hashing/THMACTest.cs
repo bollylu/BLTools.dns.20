@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BLTools.Encryption;
 
-namespace BLTools.UnitTest.Core20 {
+namespace BLTools.UnitTest.Core20.Security {
   [TestClass]
   public class THashMacExtensionStringTest {
     [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.MD5")]

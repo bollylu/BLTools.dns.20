@@ -4,7 +4,7 @@ using System;
 using System.Security;
 using System.Text;
 
-namespace BLTools.UnitTest.Core20 {
+namespace BLTools.UnitTest.Core20.Extensions {
 
 
   /// <summary>

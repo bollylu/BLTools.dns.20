@@ -6,7 +6,7 @@ using System.Collections.Specialized;
 using System.Globalization;
 using System.Web;
 
-namespace BLTools.UnitTest.nf47 {
+namespace BLTools.UnitTest.FW47.Utils {
 
 
   /// <summary>

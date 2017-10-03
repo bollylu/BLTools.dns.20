@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BLTools.UnitTest.FW47 {
+namespace BLTools.UnitTest.FW47.Extensions {
   [TestClass()]
   public class DictionaryExtensionTest {
 

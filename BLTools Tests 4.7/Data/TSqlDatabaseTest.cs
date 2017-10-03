@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using System.Globalization;
 using BLTools.SQL;
 
-namespace BLTools.UnitTest.nf47 {
+namespace BLTools.UnitTest.FW47.Data.Sql {
 
   [TestClass()]
   public class TSqlDatabaseTest {

@@ -4,7 +4,7 @@ using System;
 using System.Xml.Linq;
 using System.Globalization;
 
-namespace BLTools.UnitTest.nf47 {
+namespace BLTools.UnitTest.FW47.Data.Xml {
 
   /// <summary>
   ///This is a test class for XElementExtensionTest and is intended
