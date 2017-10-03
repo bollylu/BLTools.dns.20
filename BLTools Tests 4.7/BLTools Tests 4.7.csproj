@@ -84,6 +84,7 @@
     <Compile Include="Utils\ArgElementTest.cs" />
     <Compile Include="Utils\ByteArrayExtensionTest.cs" />
     <Compile Include="Utils\DateTimeExtensionTest.cs" />
+    <Compile Include="Utils\DictionaryExtensionTest.cs" />
     <Compile Include="Utils\IPAddressExtensionTest.cs" />
     <Compile Include="Utils\SplitArgsTest.cs" />
     <Compile Include="Utils\StringExtensionBuilderTest.cs" />

@@ -8,7 +8,8 @@ namespace BLTools {
   public static class DictionaryExtension {
 
     public static T SafeGetValue<K, T>(this IDictionary source, K key, T defaultValue) {
-      if ( key.Equals(default(K)) ) {
+
+      if ( key == null ) {
         return defaultValue;
       }
 
