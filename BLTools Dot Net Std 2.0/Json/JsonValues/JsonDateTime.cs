@@ -5,25 +5,25 @@ using System.Text;
 namespace BLTools.Json {
   public class JsonDateTime : IJsonValue {
 
-    public DateTime? Content { get; set; }
+    public DateTime? Value { get; set; }
 
     public JsonDateTime(DateTime jsonDateTime) {
-      Content = jsonDateTime;
+      Value = jsonDateTime;
     }
 
     public JsonDateTime(JsonDateTime jsonDateTime) {
-      Content = jsonDateTime.Content;
+      Value = jsonDateTime.Value;
     }
 
     public void Dispose() {
-      Content = null;
+      Value = null;
     }
 
     public string RenderAsString() {
-      if ( Content == null ) {
+      if ( Value == null ) {
         return "null";
       }
-      return $"\"{( (DateTime)Content ).ToString("s")}\"";
+      return $"\"{( (DateTime)Value ).ToString("s")}\"";
     }
   }
 }

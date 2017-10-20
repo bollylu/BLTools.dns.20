@@ -5,25 +5,25 @@ using System.Text;
 namespace BLTools.Json {
   public class JsonBool : IJsonValue {
 
-    public bool? Content { get; set; }
+    public bool? Value { get; set; }
 
     public JsonBool(bool jsonBool) {
-      Content = jsonBool;
+      Value = jsonBool;
     }
 
     public JsonBool(JsonBool jsonBool) {
-      Content = jsonBool.Content;
+      Value = jsonBool.Value;
     }
 
     public void Dispose() {
-      Content = null;
+      Value = null;
     }
 
     public string RenderAsString() {
-      if ( Content == null ) {
+      if ( Value == null ) {
         return "null";
       }
-      return (bool)Content ? "true" : "false";
+      return (bool)Value ? "true" : "false";
     }
   }
 }

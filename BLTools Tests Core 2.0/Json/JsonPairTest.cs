@@ -94,13 +94,12 @@ namespace BLTools.UnitTest.Core20.Json {
     #endregion 
     #endregion --- Tests support --------------------------------------------
 
-
     [TestMethod(), TestCategory("NC20.Json")]
     public void CreateJsonPair_String_ValueOk() {
       JsonPair<JsonString> Actual = new JsonPair<JsonString>(TEST_STRING_NAME, new JsonString(TEST_STRING));
       Assert.IsNotNull(Actual.Content);
       Assert.AreEqual(TEST_STRING_NAME, Actual.Key);
-      Assert.AreEqual(TEST_STRING, Actual.Content.Content);
+      Assert.AreEqual(TEST_STRING, Actual.Content.Value);
       Assert.AreEqual(TEST_STRING_JSON, Actual.Content.RenderAsString());
     }
 
@@ -109,11 +108,40 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonPair<JsonInt> Actual = new JsonPair<JsonInt>(TEST_INT_NAME, new JsonInt(TEST_INT));
       Assert.IsNotNull(Actual.Content);
       Assert.AreEqual(TEST_INT_NAME, Actual.Key);
-      Assert.AreEqual(TEST_INT, Actual.Content.Content);
+      Assert.AreEqual(TEST_INT, Actual.Content.Value);
       Assert.AreEqual(TEST_INT_JSON, Actual.Content.RenderAsString());
     }
 
+    [TestMethod(), TestCategory("NC20.Json")]
+    public void CreateJsonPair_DirectString_ValueOk() {
+      JsonPair<JsonString> Actual = new JsonPair<JsonString>(TEST_STRING_NAME, TEST_STRING);
+      Assert.IsNotNull(Actual.Content);
+      Assert.AreEqual(TEST_STRING_NAME, Actual.Key);
+      Assert.AreEqual(TEST_STRING, Actual.Content.Value);
+      Assert.AreEqual(TEST_STRING_JSON, Actual.Content.RenderAsString());
+    }
 
+    [TestMethod(), TestCategory("NC20.Json")]
+    public void CreateJsonPair_DirectInt_ValueOk() {
+      JsonPair<JsonInt> Actual = new JsonPair<JsonInt>(TEST_INT_NAME, TEST_INT);
+      Assert.IsNotNull(Actual.Content);
+      Assert.AreEqual(TEST_INT_NAME, Actual.Key);
+      Assert.AreEqual(TEST_INT, Actual.Content.Value);
+      Assert.AreEqual(TEST_INT_JSON, Actual.Content.RenderAsString());
+    }
+
+    [TestMethod(), TestCategory("NC20.Json")]
+    public void CreateJsonPair_JsonArray_ValueOk() {
+      JsonString Source1 = new JsonString(TEST_STRING);
+      JsonInt Source2 = new JsonInt(TEST_INT);
+      JsonArray SourceArray = new JsonArray(Source1, Source2);
+
+      JsonPair<JsonArray> Actual = new JsonPair<JsonArray>("TestArray", SourceArray);
+      Assert.IsNotNull(Actual.Content);
+      Assert.AreEqual("TestArray", Actual.Key);
+      Assert.AreEqual(2, Actual.Content.Items.Count);
+      Assert.AreEqual($"\"TestArray\":[\"{TEST_STRING}\",{TEST_INT_JSON}]", Actual.RenderAsString());
+    }
 
   }
 }

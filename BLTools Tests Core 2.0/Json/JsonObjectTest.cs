@@ -99,34 +99,39 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonString Source = new JsonString(TEST_STRING);
       JsonPair<JsonString> PairSource = new JsonPair<JsonString>(TEST_STRING_NAME, Source);
       JsonObject Actual = new JsonObject(PairSource);
-      Assert.IsNotNull(Actual.Items);
-      Assert.AreEqual(1, Actual.Items.Count);
+      Assert.IsNotNull(Actual.KeyValuePairs);
+      Assert.AreEqual(1, Actual.KeyValuePairs.Count);
+      Assert.AreEqual(TEST_STRING_JSON_OBJECT, Actual.RenderAsString());
+    }
+
+    [TestMethod(), TestCategory("NC20.Json")]
+    public void CreateJsonObject_OneStringDirect_DataOk() {
+      JsonPair<JsonString> PairSource = new JsonPair<JsonString>(TEST_STRING_NAME, TEST_STRING);
+      JsonObject Actual = new JsonObject(PairSource);
+      Assert.IsNotNull(Actual.KeyValuePairs);
+      Assert.AreEqual(1, Actual.KeyValuePairs.Count);
       Assert.AreEqual(TEST_STRING_JSON_OBJECT, Actual.RenderAsString());
     }
 
     [TestMethod(), TestCategory("NC20.Json")]
     public void CreateJsonObject_TwoStrings_DataOk() {
-      JsonString Source1 = new JsonString(TEST_STRING);
-      JsonString Source2 = new JsonString($"+++{TEST_STRING}+++");
-      JsonPair<JsonString> PairSource1 = new JsonPair<JsonString>(TEST_STRING_NAME, Source1);
-      JsonPair<JsonString> PairSource2 = new JsonPair<JsonString>(TEST_STRING_NAME, Source2);
+      JsonPair<JsonString> PairSource1 = new JsonPair<JsonString>(TEST_STRING_NAME, TEST_STRING);
+      JsonPair<JsonString> PairSource2 = new JsonPair<JsonString>(TEST_STRING_NAME, $"+++{TEST_STRING}+++");
       JsonObject Actual = new JsonObject(PairSource1);
       Actual.AddItem(PairSource2);
-      Assert.IsNotNull(Actual.Items);
-      Assert.AreEqual(2, Actual.Items.Count);
+      Assert.IsNotNull(Actual.KeyValuePairs);
+      Assert.AreEqual(2, Actual.KeyValuePairs.Count);
       Assert.AreEqual("{\"StringField\":\"TestContent\",\"StringField\":\"+++TestContent+++\"}", Actual.RenderAsString());
     }
 
     [TestMethod(), TestCategory("NC20.Json")]
     public void CreateJsonObject_OneStringOneInt_DataOk() {
-      JsonString Source1 = new JsonString(TEST_STRING);
-      JsonInt Source2 = new JsonInt(TEST_INT);
-      JsonPair<JsonString> PairSource1 = new JsonPair<JsonString>(TEST_STRING_NAME, Source1);
-      JsonPair<JsonInt> PairSource2 = new JsonPair<JsonInt>(TEST_INT_NAME, Source2);
+      JsonPair<JsonString> PairSource1 = new JsonPair<JsonString>(TEST_STRING_NAME, TEST_STRING);
+      JsonPair<JsonInt> PairSource2 = new JsonPair<JsonInt>(TEST_INT_NAME, TEST_INT);
       JsonObject Actual = new JsonObject(PairSource1);
       Actual.AddItem(PairSource2);
-      Assert.IsNotNull(Actual.Items);
-      Assert.AreEqual(2, Actual.Items.Count);
+      Assert.IsNotNull(Actual.KeyValuePairs);
+      Assert.AreEqual(2, Actual.KeyValuePairs.Count);
       Assert.AreEqual($"{{{TEST_STRING_JSON_PAIR},{TEST_INT_JSON_PAIR}}}", Actual.RenderAsString());
     }
 

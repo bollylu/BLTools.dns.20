@@ -98,36 +98,36 @@ namespace BLTools.UnitTest.Core20.Json {
     [TestMethod(), TestCategory("NC20.Json")]
     public void CreateJsonValue_EmptyString_ValueOk() {
       JsonString Actual = new JsonString("");
-      Assert.IsNotNull(Actual.Content);
-      Assert.AreEqual("", Actual.Content);
+      Assert.IsNotNull(Actual.Value);
+      Assert.AreEqual("", Actual.Value);
     }
 
     [TestMethod(), TestCategory("NC20.Json")]
     public void CreateJsonValue_NonEmptyString_ValueOk() {
       JsonString Actual = new JsonString(TEST_STRING);
-      Assert.IsNotNull(Actual.Content);
-      Assert.AreEqual(TEST_STRING, Actual.Content);
+      Assert.IsNotNull(Actual.Value);
+      Assert.AreEqual(TEST_STRING, Actual.Value);
     }
 
     [TestMethod(), TestCategory("NC20.Json")]
     public void CreateJsonValue_Int_ValueOk() {
       JsonInt Actual = new JsonInt(TEST_INT);
-      Assert.IsNotNull(Actual.Content);
-      Assert.AreEqual(TEST_INT, Actual.Content);
+      Assert.IsNotNull(Actual.Value);
+      Assert.AreEqual(TEST_INT, Actual.Value);
     }
 
     [TestMethod(), TestCategory("NC20.Json")]
     public void CreateJsonValue_Float_ValueOk() {
       JsonDouble Actual = new JsonDouble(TEST_FLOAT);
-      Assert.IsNotNull(Actual.Content);
-      Assert.AreEqual(TEST_FLOAT, Actual.Content);
+      Assert.IsNotNull(Actual.Value);
+      Assert.AreEqual(TEST_FLOAT, Actual.Value);
     }
 
     [TestMethod(), TestCategory("NC20.Json")]
     public void CreateJsonValue_Double_ValueOk() {
       JsonDouble Actual = new JsonDouble(TEST_DOUBLE);
-      Assert.IsNotNull(Actual.Content);
-      Assert.AreEqual(TEST_DOUBLE, Actual.Content);
+      Assert.IsNotNull(Actual.Value);
+      Assert.AreEqual(TEST_DOUBLE, Actual.Value);
     }
 
     [TestMethod(), TestCategory("NC20.Json")]

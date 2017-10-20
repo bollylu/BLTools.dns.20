@@ -5,25 +5,25 @@ using System.Text;
 namespace BLTools.Json {
   public class JsonFloat : IJsonValue {
 
-    public float? Content { get; set; }
+    public float? Value { get; set; }
 
 
     public JsonFloat(float jsonFloat) {
-      Content = jsonFloat;
+      Value = jsonFloat;
     }
 
     public JsonFloat(JsonFloat jsonFloat) {
-      Content = jsonFloat.Content;
+      Value = jsonFloat.Value;
     }
     public void Dispose() {
-      Content = null;
+      Value = null;
     }
 
     public string RenderAsString() {
-      if ( Content == null ) {
+      if ( Value == null ) {
         return "NaN";
       }
-      return Content.ToString();
+      return Value.ToString();
     }
 
   }

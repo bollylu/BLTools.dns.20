@@ -7,42 +7,42 @@ using System.Linq;
 namespace BLTools.Json {
   public class JsonObject : IJsonValue {
 
-    public readonly JsonPairCollection Items = new JsonPairCollection();
+    public readonly JsonPairCollection KeyValuePairs = new JsonPairCollection();
 
     private object _JsonLock = new object();
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
     public JsonObject(IJsonPair jsonPair) {
-      Items.Add(jsonPair);
+      KeyValuePairs.Add(jsonPair);
     }
 
     public JsonObject(JsonObject jsonObject) {
-      foreach(IJsonPair JsonPairItem in jsonObject.Items) {
-        Items.Add(JsonPairItem);
+      foreach(IJsonPair JsonPairItem in jsonObject.KeyValuePairs) {
+        KeyValuePairs.Add(JsonPairItem);
       }
     }
 
     public void Dispose() {
       lock ( _JsonLock ) {
-        Items.Dispose();
+        KeyValuePairs.Dispose();
       }
     }
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
     public virtual void AddItem(IJsonPair jsonObject) {
       lock ( _JsonLock ) {
-        Items.Add(jsonObject);
+        KeyValuePairs.Add(jsonObject);
       }
     }
 
     public void Clear() {
       lock ( _JsonLock ) {
-        Items.Clear();
+        KeyValuePairs.Clear();
       }
     }
 
     public string RenderAsString() {
-      if ( Items.Count() == 0 ) {
+      if ( KeyValuePairs.Count() == 0 ) {
         return "null";
       }
 
@@ -51,7 +51,7 @@ namespace BLTools.Json {
 
         RetVal.Append("{");
 
-        foreach ( IJsonPair JsonPairItem in Items ) {
+        foreach ( IJsonPair JsonPairItem in KeyValuePairs ) {
           RetVal.Append(JsonPairItem.RenderAsString());
           RetVal.Append(",");
         }
