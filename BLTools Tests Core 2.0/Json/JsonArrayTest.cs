@@ -11,7 +11,7 @@ namespace BLTools.UnitTest.Core20.Json {
   ///to contain all ArgElementTest Unit Tests
   ///</summary>
   [TestClass()]
-  public class JsonValueTest {
+  public class JsonArrayTest {
 
     #region --- Constants --------------------------------------------
     private const string TEST_STRING_NAME = "StringField";
@@ -20,34 +20,29 @@ namespace BLTools.UnitTest.Core20.Json {
     private const string TEST_STRING_JSON_OBJECT = "{\"TestContent\"}";
     private const string DEFAULT_STRING = "(default)";
 
-    private const string TEST_INT_NAME = "IntField";
+    private const string TEST_INT_NAME = "StringField";
     private const int TEST_INT = 98765;
     private const string TEST_INT_JSON = "98765";
     private const string TEST_INT_JSON_OBJECT = "{98765}";
     private const int DEFAULT_INT = -1;
 
-    private const string TEST_FLOAT_NAME = "FloatField";
     private const float TEST_FLOAT = 123.456f;
     private const string TEST_FLOAT_JSON = "123.456";
     private const float DEFAULT_FLOAT = -1.0f;
 
-    private const string TEST_DOUBLE_NAME = "DoubleField";
     private const double TEST_DOUBLE = 123.456789d;
     private const string TEST_DOUBLE_JSON = "123.456789";
     private const double DEFAULT_DOUBLE = -1.0d;
 
-    private const string TEST_DATETIME_NAME = "DateTimeField";
     private static DateTime TEST_DATETIME = DateTime.Today;
-    private static string TEST_DATETIME_JSON = $"\"{DateTime.Today.ToString("s")}\"";
+    private static string TEST_DATETIME_JSON = $"\"{DateTime.Today.ToString()}\"";
     private static DateTime DEFAULT_DATETIME = DateTime.MinValue;
 
-    private const string TEST_BOOL_NAME = "BoolField";
     private const bool TEST_BOOL = true;
     private static string TEST_BOOL_JSON = "true";
     private const bool DEFAULT_BOOL = false;
     #endregion --- Constants --------------------------------------------
 
-    #region --- Tests support --------------------------------------------
     private TestContext testContextInstance;
 
     /// <summary>
@@ -91,68 +86,66 @@ namespace BLTools.UnitTest.Core20.Json {
     //{
     //}
     //
-    #endregion 
-    #endregion --- Tests support --------------------------------------------
+    #endregion
 
 
     [TestMethod(), TestCategory("NC20.Json")]
-    public void CreateJsonValue_EmptyString_ValueOk() {
-      JsonString Actual = new JsonString("");
-      Assert.IsNotNull(Actual.Content);
-      Assert.AreEqual("", Actual.Content);
+    public void CreateJsonArray_EmptyConstructor_DefaultData() {
+      JsonArray Actual = new JsonArray();
+      Assert.AreEqual(0, Actual.Items.Count);
     }
 
     [TestMethod(), TestCategory("NC20.Json")]
-    public void CreateJsonValue_NonEmptyString_ValueOk() {
-      JsonString Actual = new JsonString(TEST_STRING);
-      Assert.IsNotNull(Actual.Content);
-      Assert.AreEqual(TEST_STRING, Actual.Content);
+    public void CreateJsonArray_ConstructorParams_DataOk() {
+      JsonString Source1 = new JsonString(TEST_STRING);
+      JsonInt Source2 = new JsonInt(TEST_INT);
+      JsonArray Actual = new JsonArray(Source1, Source2);
+      Assert.AreEqual(2, Actual.Items.Count);
+      Assert.AreEqual($"[\"{TEST_STRING}\",{TEST_INT_JSON}]", Actual.RenderAsString());
     }
 
     [TestMethod(), TestCategory("NC20.Json")]
-    public void CreateJsonValue_Int_ValueOk() {
-      JsonInt Actual = new JsonInt(TEST_INT);
-      Assert.IsNotNull(Actual.Content);
-      Assert.AreEqual(TEST_INT, Actual.Content);
+    public void CreateJsonArray_ConstructorEmptyAdd_DataOk() {
+      JsonString Source1 = new JsonString(TEST_STRING);
+      JsonInt Source2 = new JsonInt(TEST_INT);
+      JsonArray Actual = new JsonArray();
+      Actual.Items.Add(Source1);
+      Actual.Items.Add(Source2);
+      Assert.AreEqual(2, Actual.Items.Count);
+      Assert.AreEqual($"[\"{TEST_STRING}\",{TEST_INT_JSON}]", Actual.RenderAsString());
     }
 
     [TestMethod(), TestCategory("NC20.Json")]
-    public void CreateJsonValue_Float_ValueOk() {
-      JsonDouble Actual = new JsonDouble(TEST_FLOAT);
-      Assert.IsNotNull(Actual.Content);
-      Assert.AreEqual(TEST_FLOAT, Actual.Content);
+    public void CreateJsonArray_ConstructorEmptyAddArrayInside_DataOk() {
+      JsonString Source1 = new JsonString(TEST_STRING);
+      JsonInt Source2 = new JsonInt(TEST_INT);
+      JsonArray Actual = new JsonArray();
+      Actual.Items.Add(Source1);
+      Actual.Items.Add(Source2);
+      JsonArray Source3 = new JsonArray(Actual);
+      Actual.Items.Add(Source3);
+      Assert.AreEqual(3, Actual.Items.Count);
+      Assert.AreEqual($"[\"{TEST_STRING}\",{TEST_INT_JSON},[\"{TEST_STRING}\",{TEST_INT_JSON}]]", Actual.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json")]
-    public void CreateJsonValue_Double_ValueOk() {
-      JsonDouble Actual = new JsonDouble(TEST_DOUBLE);
-      Assert.IsNotNull(Actual.Content);
-      Assert.AreEqual(TEST_DOUBLE, Actual.Content);
-    }
+    //#region --- Int --------------------------------------------
+    //[TestMethod(), TestCategory("NC20.Json")]
+    //public void CreateJsonArray_AddMultipleArray_DataOk() {
+    //  JsonObject Source1 = new JsonObject(TEST_STRING_NAME, TEST_STRING);
+    //  JsonObject Source2 = new JsonObject(TEST_STRING_NAME, TEST_INT);
+    //  JsonObject Source3 = new JsonObject("TestBool", TEST_BOOL);
+    //  JsonArray SourceArray1 = new JsonArray(Source1, Source2);
+    //  JsonArray SourceArray2 = new JsonArray(Source1, Source2);
+    //  JsonArray SourceArray3 = new JsonArray(Source1, Source2, Source3);
+    //  JsonArray SourceArray4 = new JsonArray(SourceArray1, SourceArray2, SourceArray3);
+    //  JsonObject Actual = new JsonObject("Items", SourceArray4);
+    //  Assert.IsNotNull(Actual.JsonKey);
+    //  Assert.AreEqual("Items", Actual.JsonKey);
+    //  Assert.IsNotNull(Actual.JsonContent);
+    //  Assert.AreEqual($"{{\"Items\":[\"{TEST_STRING_NAME}\":{TEST_STRING_JSON},\"{TEST_INT_NAME}\":{TEST_INT_JSON}]}}", Actual.ToJsonObjectString());
+    //}
+    //#endregion --- Int --------------------------------------------
 
-    [TestMethod(), TestCategory("NC20.Json")]
-    public void CreateJsonValue_String_ConvertToJsonOk() {
-      JsonString Actual = new JsonString(TEST_STRING);
-      Assert.AreEqual(TEST_STRING_JSON, Actual.RenderAsString());
-    }
-
-    [TestMethod(), TestCategory("NC20.Json")]
-    public void CreateJsonValue_Int_ConvertToJsonOk() {
-      JsonInt Actual = new JsonInt(TEST_INT);
-      Assert.AreEqual(TEST_INT_JSON, Actual.RenderAsString());
-    }
-
-    [TestMethod(), TestCategory("NC20.Json")]
-    public void CreateJsonValue_Bool_ConvertToJsonOk() {
-      JsonBool Actual = new JsonBool(TEST_BOOL);
-      Assert.AreEqual(TEST_BOOL_JSON, Actual.RenderAsString());
-    }
-
-    [TestMethod(), TestCategory("NC20.Json")]
-    public void CreateJsonValue_DateTime_ConvertToJsonOk() {
-      JsonDateTime Actual = new JsonDateTime(TEST_DATETIME);
-      Assert.AreEqual(TEST_DATETIME_JSON, Actual.RenderAsString());
-    }
 
   }
 }
