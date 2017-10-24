@@ -279,9 +279,37 @@ namespace BLTools.UnitTest.Core20.Extensions {
       SecureString actual = "1234 5".ConvertToSecureString();
       Assert.IsFalse(SourceValue.ConvertToSecureString().IsEqualTo(actual));
     }
+
+    [TestMethod(), TestCategory("NC20.String")]
+    public void RemoveExternalQuotes_EmptyString_ResultEmptyString() {
+      string SourceValue = "";
+      string Actual = SourceValue.RemoveExternalQuotes();
+      Assert.AreEqual("", Actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String")]
+    public void RemoveExternalQuotes_NormalString_ResultNormalString() {
+      string SourceValue = "this is a message";
+      string Actual = SourceValue.RemoveExternalQuotes();
+      Assert.AreEqual(SourceValue, Actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String")]
+    public void RemoveExternalQuotes_StringWithQuotes_ResultNormalString() {
+      string SourceValue = "\"this is a message\"";
+      string Actual = SourceValue.RemoveExternalQuotes();
+      Assert.AreEqual("this is a message", Actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String")]
+    public void RemoveExternalQuotes_QuotesInside_ResultNormalString() {
+      string SourceValue = "\"this is \"a\" message\"";
+      string Actual = SourceValue.RemoveExternalQuotes();
+      Assert.AreEqual("this is \"a\" message", Actual);
+    }
     #endregion SecureString
 
-    
+
 
   }
 }

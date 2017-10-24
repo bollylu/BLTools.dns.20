@@ -23,7 +23,7 @@ namespace BLTools.Json {
       if ( Value == null ) {
         return "null";
       }
-      return $"\"{Value}\"";
+      return $"\"{Value.Replace("\"", "\\\"")}\"";
     }
   }
 }

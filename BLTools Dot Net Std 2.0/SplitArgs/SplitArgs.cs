@@ -45,9 +45,9 @@ namespace BLTools {
     /// <param name="cmdLine">The command line</param>
     public SplitArgs(string cmdLine) {
       #region Validate parameters
-      if (cmdLine == null) {
+      if ( cmdLine == null ) {
         throw new ArgumentNullException("cmdLine", "you must pass a valid string cmdLine argument");
-      } 
+      }
       #endregion Validate parameters
 
       string PreprocessedLine = cmdLine.Trim();
@@ -57,27 +57,39 @@ namespace BLTools {
       int i = 0;
       bool InQuote = false;
 
-      while ( i < PreprocessedLine.Length ) {
-      
+      int PreprocessedLineLength = PreprocessedLine.Length;
+
+      while ( i < PreprocessedLineLength ) {
+
         if ( PreprocessedLine[i] == '"' ) {
           InQuote = !( InQuote );
+          i++;
+          continue;
         }
 
         if ( PreprocessedLine[i] == ' ' ) {
           if ( InQuote ) {
             TempStr.Append(PreprocessedLine[i]);
-          } else {
-            if ( !( TempStr.Length == 0 ) ) {
-              CmdLineValues.Add(TempStr.ToString());
-              TempStr = new StringBuilder("");
-            }
+            i++;
+            continue;
+
           }
-        } else {
-          if ( PreprocessedLine[i] != '"' ) {
-            TempStr.Append(PreprocessedLine[i]);
+
+          if ( !( TempStr.Length == 0 ) ) {
+            CmdLineValues.Add(TempStr.ToString());
+            TempStr.Clear();
+            i++;
+            continue;
           }
+
         }
-        i++;
+
+        if ( PreprocessedLine[i] != '"' ) {
+          TempStr.Append(PreprocessedLine[i]);
+          i++;
+          continue;
+        }
+
       }
 
       if ( !( TempStr.Length == 0 ) ) {
@@ -99,10 +111,10 @@ namespace BLTools {
     /// </summary>
     /// <param name="queryStringItems">A Request.QueryString</param>
     public SplitArgs(NameValueCollection queryStringItems) {
-      if (queryStringItems == null || queryStringItems.Count == 0) {
+      if ( queryStringItems == null || queryStringItems.Count == 0 ) {
         return;
       }
-      foreach (string QueryStringItem in queryStringItems) {
+      foreach ( string QueryStringItem in queryStringItems ) {
         this.Add(new ArgElement(0, QueryStringItem, queryStringItems[QueryStringItem]));
       }
     }
@@ -453,7 +465,7 @@ namespace BLTools {
         return false;
       }
       string KeyLower = key.ToLower(CultureInfo.CurrentCulture);
-      ArgElement CurrentElement = Find((a) => a.Name.ToLower() == KeyLower);
+      ArgElement CurrentElement = Find((a) => a.Name.ToLower(CultureInfo.CurrentCulture) == KeyLower);
       if ( CurrentElement != null ) {
         return true;
       } else {

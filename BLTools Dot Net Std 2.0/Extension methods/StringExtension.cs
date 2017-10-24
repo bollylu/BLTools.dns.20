@@ -161,6 +161,14 @@ namespace BLTools {
       return Regex.IsMatch(sourceValue, @"^[-\d][\d\.,]*$");
     }
     /// <summary>
+    /// Indicates if a string contains only numeric characters (0-9) or separators (-.,)
+    /// </summary>
+    /// <param name="sourceValue">The source string</param>
+    /// <returns>True if the assertion succeeds</returns>
+    public static bool IsNumericOnly(this string sourceValue) {
+      return Regex.IsMatch(sourceValue, @"^[-\d][\d]*$");
+    }
+    /// <summary>
     /// Indicates if a string contains only alphabetic characters (A-Z and a-z) or blank
     /// </summary>
     /// <param name="sourceValue">The source string</param>
@@ -271,7 +279,32 @@ namespace BLTools {
       return RetVal.ToString();
     }
 
+    /// <summary>
+    /// Removes external quotes from a string (ex. "\"MyString\"" => "MyString")
+    /// </summary>
+    /// <param name="sourceValue">The source string</param>
+    /// <returns>The string without quotes</returns>
+    public static string RemoveExternalQuotes(this string sourceValue) {
+      if ( string.IsNullOrWhiteSpace(sourceValue) ) {
+        return "";
+      }
 
+      if (!sourceValue.Contains('"')) {
+        return sourceValue;
+      }
+
+      StringBuilder RetVal = new StringBuilder(sourceValue);
+
+      if (sourceValue.StartsWith("\"")) {
+        RetVal.Remove(0, 1);
+      }
+
+      if (sourceValue.EndsWith("\"")) {
+        RetVal.Truncate(1);
+      }
+
+      return RetVal.ToString();
+    }
 
 
   }

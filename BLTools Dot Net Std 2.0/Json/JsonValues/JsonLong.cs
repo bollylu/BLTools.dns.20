@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace BLTools.Json {
@@ -13,6 +14,15 @@ namespace BLTools.Json {
 
     public JsonLong(JsonLong jsonLong) {
       Value = jsonLong.Value;
+    }
+
+    public JsonLong(string jsonLong) {
+      try {
+        Value = long.Parse(jsonLong);
+      } catch ( Exception ex ) {
+        Trace.WriteLine($"Unable to parse long : {jsonLong} : {ex.Message}");
+        Value = null;
+      }
     }
 
     public void Dispose() {

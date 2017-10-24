@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 
 namespace BLTools.Json {
@@ -15,6 +17,16 @@ namespace BLTools.Json {
     public JsonDouble(JsonDouble jsonDouble) {
       Value = jsonDouble.Value;
     }
+
+    public JsonDouble(string jsonDouble) {
+      try {
+        Value = double.Parse(jsonDouble, CultureInfo.InvariantCulture);
+      } catch ( Exception ex ) {
+        Trace.WriteLine($"Unable to parse double : {jsonDouble} : {ex.Message}");
+        Value = null;
+      }
+    }
+
     public void Dispose() {
       Value = null;
     }
@@ -23,7 +35,7 @@ namespace BLTools.Json {
       if ( Value == null ) {
         return "NaN";
       }
-      return Value.ToString();
+      return ( (double)Value ).ToString(CultureInfo.InvariantCulture);
     }
 
   }

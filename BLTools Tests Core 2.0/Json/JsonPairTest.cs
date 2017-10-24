@@ -91,10 +91,11 @@ namespace BLTools.UnitTest.Core20.Json {
     //{
     //}
     //
-    #endregion 
+    #endregion
     #endregion --- Tests support --------------------------------------------
 
-    [TestMethod(), TestCategory("NC20.Json")]
+    #region --- Tests for constructors --------------------------------------------
+    [TestMethod(), TestCategory("NC20.Json.Pair")]
     public void CreateJsonPair_String_ValueOk() {
       JsonPair<JsonString> Actual = new JsonPair<JsonString>(TEST_STRING_NAME, new JsonString(TEST_STRING));
       Assert.IsNotNull(Actual.Content);
@@ -103,7 +104,7 @@ namespace BLTools.UnitTest.Core20.Json {
       Assert.AreEqual(TEST_STRING_JSON, Actual.Content.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json")]
+    [TestMethod(), TestCategory("NC20.Json.Pair")]
     public void CreateJsonPair_Int_ValueOk() {
       JsonPair<JsonInt> Actual = new JsonPair<JsonInt>(TEST_INT_NAME, new JsonInt(TEST_INT));
       Assert.IsNotNull(Actual.Content);
@@ -112,7 +113,7 @@ namespace BLTools.UnitTest.Core20.Json {
       Assert.AreEqual(TEST_INT_JSON, Actual.Content.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json")]
+    [TestMethod(), TestCategory("NC20.Json.Pair")]
     public void CreateJsonPair_DirectString_ValueOk() {
       JsonPair<JsonString> Actual = new JsonPair<JsonString>(TEST_STRING_NAME, TEST_STRING);
       Assert.IsNotNull(Actual.Content);
@@ -121,7 +122,7 @@ namespace BLTools.UnitTest.Core20.Json {
       Assert.AreEqual(TEST_STRING_JSON, Actual.Content.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json")]
+    [TestMethod(), TestCategory("NC20.Json.Pair")]
     public void CreateJsonPair_DirectInt_ValueOk() {
       JsonPair<JsonInt> Actual = new JsonPair<JsonInt>(TEST_INT_NAME, TEST_INT);
       Assert.IsNotNull(Actual.Content);
@@ -130,7 +131,7 @@ namespace BLTools.UnitTest.Core20.Json {
       Assert.AreEqual(TEST_INT_JSON, Actual.Content.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json")]
+    [TestMethod(), TestCategory("NC20.Json.Pair")]
     public void CreateJsonPair_JsonArray_ValueOk() {
       JsonString Source1 = new JsonString(TEST_STRING);
       JsonInt Source2 = new JsonInt(TEST_INT);
@@ -142,6 +143,159 @@ namespace BLTools.UnitTest.Core20.Json {
       Assert.AreEqual(2, Actual.Content.Items.Count);
       Assert.AreEqual($"\"TestArray\":[\"{TEST_STRING}\",{TEST_INT_JSON}]", Actual.RenderAsString());
     }
+    #endregion --- Tests for constructors --------------------------------------------
 
+    [TestMethod(), TestCategory("NC20.Json.Pair.Parse")]
+    public void ParseJsonPair_StringString_ValueOk() {
+      string Source = "\"Identifier\":\"Data\"";
+
+      JsonPair<JsonString> Actual = JsonPair<JsonString>.Parse(Source, new JsonString(""));
+      Assert.AreEqual("Identifier", Actual.Key);
+      Assert.IsInstanceOfType(Actual.Content, typeof(JsonString));
+      Assert.AreEqual("Data", Actual.Content.Value);
+    }
+
+    [TestMethod(), TestCategory("NC20.Json.Pair.Parse")]
+    public void ParseJsonPair_StringInt_ValueOk() {
+      string Source = "\"Identifier\":123456";
+
+      JsonPair<JsonInt> Actual = JsonPair<JsonInt>.Parse(Source, new JsonInt(-1));
+      Assert.AreEqual("Identifier", Actual.Key);
+      Assert.IsInstanceOfType(Actual.Content, typeof(JsonInt));
+      Assert.AreEqual(123456, Actual.Content.Value);
+    }
+
+    [TestMethod(), TestCategory("NC20.Json.Pair.Parse")]
+    public void ParseJsonPair_StringLong_ValueOk() {
+      string Source = "\"Identifier\":123456789123";
+
+      JsonPair<JsonLong> Actual = JsonPair<JsonLong>.Parse(Source, new JsonLong(-1));
+      Assert.AreEqual("Identifier", Actual.Key);
+      Assert.IsInstanceOfType(Actual.Content, typeof(JsonLong));
+      Assert.AreEqual(123456789123L, Actual.Content.Value);
+    }
+
+    [TestMethod(), TestCategory("NC20.Json.Pair.Parse")]
+    public void ParseJsonPair_StringFloat_ValueOk() {
+      string Source = "\"Identifier\":123456.789123";
+
+      JsonPair<JsonFloat> Actual = JsonPair<JsonFloat>.Parse(Source, new JsonFloat(-1.0f));
+      Assert.AreEqual("Identifier", Actual.Key);
+      Assert.IsInstanceOfType(Actual.Content, typeof(JsonFloat));
+      Assert.AreEqual(123456.789123f, Actual.Content.Value);
+    }
+
+    [TestMethod(), TestCategory("NC20.Json.Pair.Parse")]
+    public void ParseJsonPair_StringDouble_ValueOk() {
+      string Source = "\"Identifier\":123456.789123456789";
+
+      JsonPair<JsonDouble> Actual = JsonPair<JsonDouble>.Parse(Source, new JsonDouble(-1.0d));
+      Assert.AreEqual("Identifier", Actual.Key);
+      Assert.IsInstanceOfType(Actual.Content, typeof(JsonDouble));
+      Assert.AreEqual(123456.789123456789d, Actual.Content.Value);
+    }
+
+    [TestMethod(), TestCategory("NC20.Json.Pair.Parse")]
+    public void ParseJsonPair_StringBool_ValueOk() {
+      string Source = "\"Identifier\":true";
+
+      JsonPair<JsonBool> Actual = JsonPair<JsonBool>.Parse(Source, new JsonBool(false));
+      Assert.AreEqual("Identifier", Actual.Key);
+      Assert.IsInstanceOfType(Actual.Content, typeof(JsonBool));
+      Assert.AreEqual(true, Actual.Content.Value);
+    }
+
+    [TestMethod(), TestCategory("NC20.Json.Pair.Parse")]
+    public void ParseJsonPair_StringBoolWithInnerSpaces_ValueOk() {
+      string Source = "\"Identifier\" : true";
+
+      JsonPair<JsonBool> Actual = JsonPair<JsonBool>.Parse(Source, new JsonBool(false));
+      Assert.AreEqual("Identifier", Actual.Key);
+      Assert.IsInstanceOfType(Actual.Content, typeof(JsonBool));
+      Assert.AreEqual(true, Actual.Content.Value);
+    }
+
+    [TestMethod(), TestCategory("NC20.Json.Pair.Parse")]
+    public void ParseJsonPair_StringArrayOfBool_ValueOk() {
+      string Source = "\"Identifier\":[true,false]";
+
+      JsonPair<JsonArray> Actual = JsonPair<JsonArray>.Parse(Source, JsonArray.Empty);
+      Assert.AreEqual("Identifier", Actual.Key);
+      Assert.IsInstanceOfType(Actual.Content, typeof(JsonArray));
+      Assert.AreEqual(Source, Actual.RenderAsString());
+    }
+
+    [TestMethod(), TestCategory("NC20.Json.Pair.Parse")]
+    public void ParseJsonPair_StringArrayOfString_ValueOk() {
+      string Source = "\"Identifier\":[\"Blue\",\"Red\"]";
+      JsonPair<JsonArray> Actual = JsonPair<JsonArray>.Parse(Source, JsonArray.Empty);
+      Assert.AreEqual("Identifier", Actual.Key);
+      Assert.IsInstanceOfType(Actual.Content, typeof(JsonArray));
+      Assert.AreEqual(Source, Actual.RenderAsString());
+    }
+
+    [TestMethod(), TestCategory("NC20.Json.Pair.Parse")]
+    public void ParseJsonPair_StringArrayOfInt_ValueOk() {
+      string Source = "\"Identifier\":[12,36,48]";
+
+      JsonPair<JsonArray> Actual = JsonPair<JsonArray>.Parse(Source, JsonArray.Empty);
+      Assert.AreEqual("Identifier", Actual.Key);
+      Assert.IsInstanceOfType(Actual.Content, typeof(JsonArray));
+      Assert.AreEqual(Source, Actual.RenderAsString());
+    }
+
+    [TestMethod(), TestCategory("NC20.Json.Pair.Parse")]
+    public void ParseJsonPair_StringArrayOfFloat_ValueOk() {
+      string Source = "\"Identifier\":[12.98,36.78,48.21]";
+
+      JsonPair<JsonArray> Actual = JsonPair<JsonArray>.Parse(Source, JsonArray.Empty);
+      Assert.AreEqual("Identifier", Actual.Key);
+      Assert.IsInstanceOfType(Actual.Content, typeof(JsonArray));
+      Assert.AreEqual(Source, Actual.RenderAsString());
+    }
+
+    [TestMethod(), TestCategory("NC20.Json.Pair.Parse")]
+    public void ParseJsonPair_StringArrayOfMulti_ValueOk() {
+      string Source = "\"Identifier\":[12.98,\"toto\",48,true]";
+
+      JsonPair<JsonArray> Actual = JsonPair<JsonArray>.Parse(Source, JsonArray.Empty);
+      Assert.AreEqual("Identifier", Actual.Key);
+      Assert.IsInstanceOfType(Actual.Content, typeof(JsonArray));
+      Assert.AreEqual(Source, Actual.RenderAsString());
+      Assert.IsInstanceOfType(Actual.Content.Items[0], typeof(JsonDouble));
+      Assert.IsInstanceOfType(Actual.Content.Items[1], typeof(JsonString));
+      Assert.IsInstanceOfType(Actual.Content.Items[2], typeof(JsonLong));
+      Assert.IsInstanceOfType(Actual.Content.Items[3], typeof(JsonBool));
+    }
+
+    [TestMethod(), TestCategory("NC20.Json.Pair.Parse")]
+    public void ParseJsonPair_StringArrayOfMultiLevels_ValueOk() {
+      string Source = "\"Identifier\":[12.98,\"toto\",48,true,[\"second level 1\",\"second level 2\"]]";
+
+      JsonPair<JsonArray> Actual = JsonPair<JsonArray>.Parse(Source, JsonArray.Empty);
+      Assert.AreEqual("Identifier", Actual.Key);
+      Assert.IsInstanceOfType(Actual.Content, typeof(JsonArray));
+      Assert.AreEqual(Source, Actual.RenderAsString());
+      Assert.IsInstanceOfType(Actual.Content.Items[0], typeof(JsonDouble));
+      Assert.IsInstanceOfType(Actual.Content.Items[1], typeof(JsonString));
+      Assert.IsInstanceOfType(Actual.Content.Items[2], typeof(JsonLong));
+      Assert.IsInstanceOfType(Actual.Content.Items[3], typeof(JsonBool));
+      Assert.IsInstanceOfType(Actual.Content.Items[4], typeof(JsonArray));
+    }
+
+    [TestMethod(), TestCategory("NC20.Json.Pair.Parse")]
+    public void ParseJsonPair_StringArrayWithReservedCharsInString_ValueOk() {
+      string Source = "\"Identifier\":[12.98,\"toto\",48,true,\"[\\\"second level, no 1\\\",\\\"second level : 2\\\"]\"]";
+
+      JsonPair<JsonArray> Actual = JsonPair<JsonArray>.Parse(Source, JsonArray.Empty);
+      Assert.AreEqual("Identifier", Actual.Key);
+      Assert.IsInstanceOfType(Actual.Content, typeof(JsonArray));
+      Assert.AreEqual(Source, Actual.RenderAsString());
+      Assert.IsInstanceOfType(Actual.Content.Items[0], typeof(JsonDouble));
+      Assert.IsInstanceOfType(Actual.Content.Items[1], typeof(JsonString));
+      Assert.IsInstanceOfType(Actual.Content.Items[2], typeof(JsonLong));
+      Assert.IsInstanceOfType(Actual.Content.Items[3], typeof(JsonBool));
+      Assert.IsInstanceOfType(Actual.Content.Items[4], typeof(JsonString));
+    }
   }
 }

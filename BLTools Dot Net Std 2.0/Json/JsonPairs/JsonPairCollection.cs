@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace BLTools.Json {
   public class JsonPairCollection : List<IJsonPair>, IDisposable {
-    //public readonly List<IJsonPair> Items = new List<IJsonPair>();
 
     public void Dispose() {
       foreach(IJsonPair ItemItem in this) {

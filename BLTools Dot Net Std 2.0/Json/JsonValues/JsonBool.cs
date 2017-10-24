@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace BLTools.Json {
@@ -13,6 +14,10 @@ namespace BLTools.Json {
 
     public JsonBool(JsonBool jsonBool) {
       Value = jsonBool.Value;
+    }
+
+    public JsonBool(string jsonBool) {
+      Value = jsonBool.ToBool();
     }
 
     public void Dispose() {
