@@ -2,6 +2,7 @@
 using BLTools.Json;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics;
 
 namespace BLTools.UnitTest.Core20.Json {
 
@@ -47,6 +48,8 @@ namespace BLTools.UnitTest.Core20.Json {
     private const bool TEST_BOOL = true;
     private static string TEST_BOOL_JSON = "true";
     private const bool DEFAULT_BOOL = false;
+
+    private static string CRLF = Environment.NewLine;
     #endregion --- Constants --------------------------------------------
 
     private TestContext testContextInstance;
@@ -94,49 +97,81 @@ namespace BLTools.UnitTest.Core20.Json {
     //
     #endregion
 
-    [TestMethod(), TestCategory("NC20.Json")]
+    [TestMethod(), TestCategory("NC20.Json.Object")]
     public void CreateJsonObject_OneString_DataOk() {
       JsonString Source = new JsonString(TEST_STRING);
-      JsonPair<JsonString> PairSource = new JsonPair<JsonString>(TEST_STRING_NAME, Source);
+      JsonPair PairSource = new JsonPair(TEST_STRING_NAME, Source);
       JsonObject Actual = new JsonObject(PairSource);
-      Assert.IsNotNull(Actual.KeyValuePairs);
-      Assert.AreEqual(1, Actual.KeyValuePairs.Count);
+      Assert.IsNotNull(Actual.Items);
+      Assert.AreEqual(1, Actual.Items.Count);
       Assert.AreEqual(TEST_STRING_JSON_OBJECT, Actual.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json")]
+    [TestMethod(), TestCategory("NC20.Json.Object")]
     public void CreateJsonObject_OneStringDirect_DataOk() {
-      JsonPair<JsonString> PairSource = new JsonPair<JsonString>(TEST_STRING_NAME, TEST_STRING);
+      JsonPair PairSource = new JsonPair(TEST_STRING_NAME, TEST_STRING);
       JsonObject Actual = new JsonObject(PairSource);
-      Assert.IsNotNull(Actual.KeyValuePairs);
-      Assert.AreEqual(1, Actual.KeyValuePairs.Count);
+      Assert.IsNotNull(Actual.Items);
+      Assert.AreEqual(1, Actual.Items.Count);
       Assert.AreEqual(TEST_STRING_JSON_OBJECT, Actual.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json")]
+    [TestMethod(), TestCategory("NC20.Json.Object")]
     public void CreateJsonObject_TwoStrings_DataOk() {
-      JsonPair<JsonString> PairSource1 = new JsonPair<JsonString>(TEST_STRING_NAME, TEST_STRING);
-      JsonPair<JsonString> PairSource2 = new JsonPair<JsonString>(TEST_STRING_NAME, $"+++{TEST_STRING}+++");
+      JsonPair PairSource1 = new JsonPair(TEST_STRING_NAME, TEST_STRING);
+      JsonPair PairSource2 = new JsonPair(TEST_STRING_NAME, $"+++{TEST_STRING}+++");
       JsonObject Actual = new JsonObject(PairSource1);
       Actual.AddItem(PairSource2);
-      Assert.IsNotNull(Actual.KeyValuePairs);
-      Assert.AreEqual(2, Actual.KeyValuePairs.Count);
+      Assert.IsNotNull(Actual.Items);
+      Assert.AreEqual(2, Actual.Items.Count);
       Assert.AreEqual("{\"StringField\":\"TestContent\",\"StringField\":\"+++TestContent+++\"}", Actual.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json")]
+    [TestMethod(), TestCategory("NC20.Json.Object")]
     public void CreateJsonObject_OneStringOneInt_DataOk() {
-      JsonPair<JsonString> PairSource1 = new JsonPair<JsonString>(TEST_STRING_NAME, TEST_STRING);
-      JsonPair<JsonInt> PairSource2 = new JsonPair<JsonInt>(TEST_INT_NAME, TEST_INT);
+      JsonPair PairSource1 = new JsonPair(TEST_STRING_NAME, TEST_STRING);
+      JsonPair PairSource2 = new JsonPair(TEST_INT_NAME, TEST_INT);
       JsonObject Actual = new JsonObject(PairSource1);
       Actual.AddItem(PairSource2);
-      Assert.IsNotNull(Actual.KeyValuePairs);
-      Assert.AreEqual(2, Actual.KeyValuePairs.Count);
+      Assert.IsNotNull(Actual.Items);
+      Assert.AreEqual(2, Actual.Items.Count);
       Assert.AreEqual($"{{{TEST_STRING_JSON_PAIR},{TEST_INT_JSON_PAIR}}}", Actual.RenderAsString());
     }
 
+    [TestMethod(), TestCategory("NC20.Json.Object.Parse")]
+    public void ParseJsonObject_StringString_ValueOk() {
+      string Source = "{\"Identifier\":\"Data\"}";
 
+      JsonObject Actual = JsonObject.Parse(Source);
+      Assert.AreEqual(1, Actual.Items.Count);
+      Assert.AreEqual("Identifier", Actual.Items[0].Key);
+      Assert.IsInstanceOfType(Actual.Items[0].Content, typeof(JsonString));
+      Assert.AreEqual("Data", Actual.Items[0].StringContent.Value);
+    }
 
+    [TestMethod(), TestCategory("NC20.Json.Object.Parse")]
+    public void ParseJsonObject_MultiplePairs_ValueOk() {
+      string Source = "{\"Identifier\":\"Data\",\"numeric\":3.14}";
+
+      JsonObject Actual = JsonObject.Parse(Source);
+      Assert.AreEqual(2, Actual.Items.Count);
+      Assert.AreEqual("Identifier", Actual.Items[0].Key);
+      Assert.AreEqual("numeric", Actual.Items[1].Key);
+      Assert.IsInstanceOfType(Actual.Items[0].Content, typeof(JsonString));
+      Assert.IsInstanceOfType(Actual.Items[1].Content, typeof(JsonDouble));
+      Assert.AreEqual(3.14d, Actual.Items[1].DoubleContent.Value);
+      Assert.AreEqual(Source, Actual.RenderAsString());
+    }
+
+    [TestMethod(), TestCategory("NC20.Json.Object.RenderAsStringFormatted")]
+    public void CreateJsonObject_MultiplePairs_OutputIsFormatted() {
+      string Source = $"{{{CRLF}  \"Identifier\" : \"Data\",{CRLF}  \"numeric\" : 3.14{CRLF}}}";
+
+      JsonObject Actual = JsonObject.Parse(Source);
+      Assert.AreEqual(2, Actual.Items.Count);
+      Assert.AreEqual(Source, Actual.RenderAsString(true));
+      Debug.WriteLine(Actual.RenderAsString(true));
+    }
 
 
 

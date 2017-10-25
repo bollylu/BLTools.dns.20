@@ -5,54 +5,78 @@ using System.Text;
 using System.Linq;
 
 namespace BLTools.Json {
-  public class JsonPair<T> : IDisposable, IJsonPair where T : IJsonValue {
+  public class JsonPair : IDisposable, IJsonPair {
+
+    public static JsonPair Default => new JsonPair("(default)", new JsonNull());
 
     public string Key { get; private set; }
 
-    public T Content { get; private set; }
+    public IJsonValue Content { get; private set; }
+
+    public JsonString StringContent => Content is JsonString Temp ? Temp : null;
+
+    public JsonInt IntContent => Content is JsonInt Temp ? Temp : null;
+
+    public JsonLong LongContent => Content is JsonLong Temp ? Temp : null;
+
+    public JsonFloat FloatContent => Content is JsonFloat Temp ? Temp : null;
+
+    public JsonDouble DoubleContent => Content is JsonDouble Temp ? Temp : null;
+
+    public JsonBool BoolContent => Content is JsonBool Temp ? Temp : null;
+
+    public JsonDateTime DateTimeContent => Content is JsonDateTime Temp ? Temp : null;
+
+    public JsonArray ArrayContent => Content is JsonArray Temp ? Temp : null;
+
+    public JsonObject ObjectContent => Content is JsonObject Temp ? Temp : null;
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
-    public JsonPair(string key, T jsonValue) {
+    public JsonPair() { }
+
+    public JsonPair(string key, IJsonValue jsonValue) {
       Key = key;
       Content = jsonValue;
     }
 
-    public JsonPair(JsonPair<T> jsonPair) {
-      _Initialize(jsonPair);
+    public JsonPair(IJsonPair jsonPair) {
+      Key = jsonPair.Key;
+      Content = jsonPair.Content;
     }
 
     public JsonPair(string key, string content) {
-      _Initialize(new JsonPair<T>(key, (T)Convert.ChangeType(new JsonString(content), typeof(T))));
+      Key = key;
+      Content = new JsonString(content);
     }
 
     public JsonPair(string key, int content) {
-      _Initialize(new JsonPair<T>(key, (T)Convert.ChangeType(new JsonInt(content), typeof(T))));
+      Key = key;
+      Content = new JsonInt(content);
     }
 
     public JsonPair(string key, long content) {
-      _Initialize(new JsonPair<T>(key, (T)Convert.ChangeType(new JsonLong(content), typeof(T))));
+      Key = key;
+      Content = new JsonLong(content);
     }
 
     public JsonPair(string key, float content) {
-      _Initialize(new JsonPair<T>(key, (T)Convert.ChangeType(new JsonFloat(content), typeof(T))));
+      Key = key;
+      Content = new JsonFloat(content);
     }
 
     public JsonPair(string key, double content) {
-      _Initialize(new JsonPair<T>(key, (T)Convert.ChangeType(new JsonDouble(content), typeof(T))));
+      Key = key;
+      Content = new JsonDouble(content);
     }
 
     public JsonPair(string key, DateTime content) {
-      _Initialize(new JsonPair<T>(key, (T)Convert.ChangeType(new JsonDateTime(content), typeof(T))));
+      Key = key;
+      Content = new JsonDateTime(content);
     }
 
     public JsonPair(string key, bool content) {
-      _Initialize(new JsonPair<T>(key, (T)Convert.ChangeType(new JsonBool(content), typeof(T))));
-    }
-
-    private JsonPair<T> _Initialize(JsonPair<T> jsonPair) {
-      Key = jsonPair.Key;
-      Content = jsonPair.Content;
-      return this;
+      Key = key;
+      Content = new JsonBool(content);
     }
 
     public void Dispose() {
@@ -61,30 +85,41 @@ namespace BLTools.Json {
     }
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
-    public string RenderAsString() {
+    public string RenderAsString(bool formatted = false, int indent = 0) {
       StringBuilder RetVal = new StringBuilder();
-      RetVal.Append($"\"{Key}\":");
-      RetVal.Append(Content.RenderAsString());
+
+      if ( formatted ) {
+        RetVal.Append($"{StringExtension.Spaces(indent)}");
+      }
+
+      RetVal.Append($"\"{Key}\" : ");
+      RetVal.Append(Content.RenderAsString(false));
+
       return RetVal.ToString();
     }
 
-    public static JsonPair<T> Parse(string source, IJsonValue defaultValue) {
+    public static IJsonPair Parse(string source) {
+
+      return Parse(source, Default);
+
+    }
+    public static IJsonPair Parse(string source, IJsonPair defaultValue) {
       #region === Validate parameters ===
       if ( string.IsNullOrWhiteSpace(source) ) {
         Trace.WriteLine("Unable to parse Json string : source is null or empty");
-        return null;
+        return defaultValue;
       }
 
       if ( !source.Contains(":") ) {
         Trace.WriteLine("Unable to parse Json string : source is invalid");
-        return null;
+        return defaultValue;
       }
 
       string ProcessedSource = source.Trim();
 
       if ( !ProcessedSource.StartsWith("\"") ) {
         Trace.WriteLine("Unable to parse Json string : source is invalid");
-        return null;
+        return defaultValue;
       }
       #endregion === Validate parameters ===
 
@@ -110,7 +145,7 @@ namespace BLTools.Json {
             break;
           } else {
             Trace.WriteLine("Unable to parse Json string : source is invalid");
-            return null;
+            return defaultValue;
           }
         }
 
@@ -127,7 +162,7 @@ namespace BLTools.Json {
 
       if ( _InQuote ) {
         Trace.WriteLine("Unable to parse Json string : source is invalid");
-        return null;
+        return defaultValue;
       }
       #endregion --- Get the key --------------------------------------------
 
@@ -138,44 +173,22 @@ namespace BLTools.Json {
 
       if ( ProcessedSource[i] != ':' ) {
         Trace.WriteLine("Unable to parse Json string : source is invalid");
-        return null;
+        return defaultValue;
       }
 
       #region --- Get the value --------------------------------------------
       _Content = ProcessedSource.Substring(i + 1).TrimStart();
       #endregion --- Get the value --------------------------------------------
 
-      if ( typeof(T) == typeof(JsonString) ) {
-        return new JsonPair<T>(_Key.ToString(), (T)Convert.ChangeType(new JsonString(_Content.RemoveExternalQuotes()), typeof(T)));
-      }
+      JsonPair RetVal = new JsonPair();
 
-      if ( typeof(T) == typeof(JsonInt) ) {
-        return new JsonPair<T>(_Key.ToString(), (T)Convert.ChangeType(new JsonInt(_Content), typeof(T)));
-      }
+      RetVal.Key = _Key.ToString();
+      RetVal.Content = JsonValue.Parse(_Content);
 
-      if ( typeof(T) == typeof(JsonLong) ) {
-        return new JsonPair<T>(_Key.ToString(), (T)Convert.ChangeType(new JsonLong(_Content), typeof(T)));
-      }
-
-      if ( typeof(T) == typeof(JsonFloat) ) {
-        return new JsonPair<T>(_Key.ToString(), (T)Convert.ChangeType(new JsonFloat(_Content), typeof(T)));
-      }
-
-      if ( typeof(T) == typeof(JsonDouble) ) {
-        return new JsonPair<T>(_Key.ToString(), (T)Convert.ChangeType(new JsonDouble(_Content), typeof(T)));
-      }
-
-      if ( typeof(T) == typeof(JsonBool) ) {
-        return new JsonPair<T>(_Key.ToString(), (T)Convert.ChangeType(new JsonBool(_Content), typeof(T)));
-      }
-
-      if ( typeof(T) == typeof(JsonArray) ) {
-        return new JsonPair<T>(_Key.ToString(), (T)Convert.ChangeType(new JsonArray(_Content), typeof(T)));
-      }
-
-      return new JsonPair<T>(_Key.ToString(), (T)Convert.ChangeType(defaultValue, typeof(T)));
-
+      return RetVal;
     }
 
   }
+
+
 }

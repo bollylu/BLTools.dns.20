@@ -306,6 +306,12 @@ namespace BLTools {
       return RetVal.ToString();
     }
 
+    public static string Spaces(int number) {
+      if (number<=0) {
+        return "";
+      }
+      return new string(' ', number);
+    }
 
   }
 }

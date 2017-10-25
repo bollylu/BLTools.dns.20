@@ -31,11 +31,19 @@ namespace BLTools.Json {
       Value = null;
     }
 
-    public string RenderAsString() {
-      if ( Value == null ) {
-        return "NaN";
+    public string RenderAsString(bool formatted = false, int indent = 0) {
+      StringBuilder RetVal = new StringBuilder();
+
+      if ( formatted ) {
+        RetVal.Append($"{StringExtension.Spaces(indent)}");
       }
-      return ( (float)Value ).ToString(CultureInfo.InvariantCulture);
+      if ( Value == null ) {
+        RetVal.Append("NaN");
+      } else {
+        RetVal.Append(( (float)Value ).ToString(CultureInfo.InvariantCulture));
+      }
+
+      return RetVal.ToString();
     }
 
   }

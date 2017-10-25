@@ -19,11 +19,15 @@ namespace BLTools.Json {
       Value = null;
     }
 
-    public string RenderAsString() {
-      if ( Value == null ) {
-        return "null";
+    public string RenderAsString(bool formatted = false, int indent = 0) {
+      StringBuilder RetVal = new StringBuilder();
+
+      if ( formatted ) {
+        RetVal.Append($"{StringExtension.Spaces(indent)}");
       }
-      return $"\"{( (DateTime)Value ).ToString("s")}\"";
+      RetVal.Append($"\"{( (DateTime)Value ).ToString("s")}\"");
+
+      return RetVal.ToString();
     }
   }
 }

@@ -5,6 +5,19 @@ using System.Text;
 namespace BLTools.Json {
   public interface IJsonPair : IDisposable {
     string Key { get; }
-    string RenderAsString();
+    IJsonValue Content { get; }
+
+    JsonString StringContent { get; }
+    JsonInt IntContent { get; }
+    JsonLong LongContent { get; }
+    JsonFloat FloatContent { get; }
+    JsonDouble DoubleContent { get; }
+    JsonBool BoolContent { get; }
+    JsonDateTime DateTimeContent { get; }
+    JsonArray ArrayContent { get; }
+    JsonObject ObjectContent { get; }
+
+    string RenderAsString(bool formatted = false, int indent = 0);
+    
   }
 }

@@ -11,5 +11,7 @@ namespace BLTools.Json {
 
     public const char OuterFieldSeparator = ',';
 
+    public const int DEFAULT_INDENT = 2;
+
   }
 }

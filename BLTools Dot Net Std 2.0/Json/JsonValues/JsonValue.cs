@@ -25,6 +25,10 @@ namespace BLTools.Json {
       }
 
       if (ProcessedSource.IsNumericOnly()) {
+        int Dummy;
+        if (int.TryParse(ProcessedSource, out Dummy)) {
+          return new JsonInt(ProcessedSource);
+        }
         return new JsonLong(ProcessedSource);
       }
 
@@ -33,11 +37,11 @@ namespace BLTools.Json {
       }
 
       if ( ProcessedSource.StartsWith("[") && ProcessedSource.EndsWith("]") ) {
-        return new JsonArray(ProcessedSource);
+        return JsonArray.Parse(ProcessedSource);
       }
 
       if ( ProcessedSource.StartsWith("{") && ProcessedSource.EndsWith("}") ) {
-        return new JsonObject(ProcessedSource);
+        return JsonObject.Parse(ProcessedSource);
       }
 
       return new JsonNull();

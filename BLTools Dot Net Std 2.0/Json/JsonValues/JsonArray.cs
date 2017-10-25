@@ -9,9 +9,9 @@ namespace BLTools.Json {
 
     public static JsonArray Empty => new JsonArray();
 
-    private object _JsonLock = new object();
-
     public readonly JsonValueCollection Items = new JsonValueCollection();
+
+    private object _JsonLock = new object();
 
     #region --- Constructor(s) --------------------------------------------
     public JsonArray() { }
@@ -53,29 +53,6 @@ namespace BLTools.Json {
       }
     }
 
-    public JsonArray(string values) {
-      #region === Validate parameters ===
-      if ( string.IsNullOrWhiteSpace(values) ) {
-        Trace.WriteLine("Unable to parse Json string : source is null or empty");
-        return;
-      }
-
-      if ( !values.TrimStart().StartsWith("[") || !values.TrimEnd().EndsWith("]") ) {
-        Trace.WriteLine("Unable to parse Json string : source is not an array");
-        return;
-      }
-
-      // Remove the start and final brackets
-      StringBuilder Temp = new StringBuilder(values.Trim().Substring(1));
-      Temp.Truncate(1);
-      string arrayContent = Temp.ToString();
-      #endregion === Validate parameters ===
-
-      foreach ( string ValueItem in _GetNextValue(arrayContent) ) {
-        Items.Add(JsonValue.Parse(ValueItem));
-      }
-    }
-
     public void Dispose() {
       Items.Clear();
       Items.Dispose();
@@ -83,21 +60,52 @@ namespace BLTools.Json {
     #endregion --- Constructor(s) --------------------------------------------
 
     #region Public methods
-    public string RenderAsString() {
+
+    public void AddItem(IJsonValue newValue) {
+      lock ( _JsonLock ) {
+        Items.Add(newValue);
+      }
+    }
+
+    public string RenderAsString(bool formatted = false, int indent = 0) {
       if ( Items.Count() == 0 ) {
-        return "[]";
+        if ( formatted ) {
+          return $"{StringExtension.Spaces(indent)}[]";
+        } else {
+          return "[]";
+        }
       }
 
       lock ( _JsonLock ) {
         StringBuilder RetVal = new StringBuilder();
 
+        if (formatted && indent>=Json.DEFAULT_INDENT) {
+          RetVal.Append($"{StringExtension.Spaces(indent)}");
+        }
         RetVal.Append("[");
 
-        foreach ( IJsonValue JsonValueItem in Items ) {
-          RetVal.Append(JsonValueItem.RenderAsString());
-          RetVal.Append(",");
+        if ( formatted ) {
+          RetVal.AppendLine();
         }
-        RetVal.Truncate(1);
+
+        foreach ( IJsonValue JsonValueItem in Items ) {
+          RetVal.Append(JsonValueItem.RenderAsString(formatted, indent + Json.DEFAULT_INDENT));
+          RetVal.Append(",");
+          if ( formatted ) {
+            RetVal.AppendLine();
+          }
+        }
+
+        if ( formatted ) {
+          RetVal.Truncate(Environment.NewLine.Length + 1);
+          RetVal.AppendLine();
+        } else {
+          RetVal.Truncate(1);
+        }
+
+        if ( formatted && indent >= Json.DEFAULT_INDENT ) {
+          RetVal.Append($"{StringExtension.Spaces(indent)}");
+        }
 
         RetVal.Append("]");
 
@@ -106,9 +114,35 @@ namespace BLTools.Json {
     }
     #endregion Public methods
 
+    public static JsonArray Parse(string source) {
 
+      #region === Validate parameters ===
+      if ( string.IsNullOrWhiteSpace(source) ) {
+        Trace.WriteLine("Unable to parse Json string : source is null or empty");
+        return null;
+      }
 
-    private IEnumerable<string> _GetNextValue(string arrayContent) {
+      if ( !source.TrimStart().StartsWith("[") || !source.TrimEnd().EndsWith("]") ) {
+        Trace.WriteLine("Unable to parse Json string : source is not an array");
+        return null;
+      }
+
+      // Remove the start and final brackets
+      StringBuilder Temp = new StringBuilder(source.Trim().Substring(1));
+      Temp.Truncate(1);
+      string arrayContent = Temp.ToString();
+      #endregion === Validate parameters ===
+
+      JsonArray RetVal = new JsonArray();
+
+      foreach ( string ValueItem in _GetNextValue(arrayContent) ) {
+        RetVal.AddItem(JsonValue.Parse(ValueItem));
+      }
+
+      return RetVal;
+    }
+
+    private static IEnumerable<string> _GetNextValue(string arrayContent) {
       #region === Validate parameters ===
       if ( string.IsNullOrWhiteSpace(arrayContent) ) {
         Trace.WriteLine("Unable to read content of json string array : invalid format : string is null or empty");
@@ -148,7 +182,7 @@ namespace BLTools.Json {
 
           if ( CurrentChar == '"' ) {
 
-            if (PossibleControlChar) {
+            if ( PossibleControlChar ) {
               PossibleControlChar = false;
               RetVal.Append(CurrentChar);
               i++;
@@ -174,28 +208,28 @@ namespace BLTools.Json {
           }
 
           if ( CurrentChar == '[' ) {
-              InArrayLevel++;
+            InArrayLevel++;
             RetVal.Append(CurrentChar);
             i++;
             continue;
           }
 
           if ( CurrentChar == ']' ) {
-              InArrayLevel--;
+            InArrayLevel--;
             RetVal.Append(CurrentChar);
             i++;
             continue;
           }
 
           if ( CurrentChar == '{' ) {
-              InObjectLevel++;
+            InObjectLevel++;
             RetVal.Append(CurrentChar);
             i++;
             continue;
           }
 
           if ( CurrentChar == '}' ) {
-              InObjectLevel--;
+            InObjectLevel--;
             RetVal.Append(CurrentChar);
             i++;
             continue;
@@ -212,7 +246,7 @@ namespace BLTools.Json {
           }
 
           if ( CurrentChar == Json.OuterFieldSeparator ) {
-            if ( InArrayLevel > 0 || InObjectLevel > 0  ) {
+            if ( InArrayLevel > 0 || InObjectLevel > 0 ) {
               RetVal.Append(CurrentChar);
               i++;
               continue;
@@ -237,13 +271,5 @@ namespace BLTools.Json {
       yield break;
     }
 
-    private class StringAndPointer {
-      public string StringValue;
-      public int StartPosition;
-      public StringAndPointer(string stringValue, int pointer) {
-        StringValue = stringValue;
-        StartPosition = pointer;
-      }
-    }
   }
 }
