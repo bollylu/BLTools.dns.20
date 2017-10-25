@@ -90,9 +90,11 @@ namespace BLTools.Json {
 
       if ( formatted ) {
         RetVal.Append($"{StringExtension.Spaces(indent)}");
+        RetVal.Append($"\"{Key}\" : ");
+      } else {
+        RetVal.Append($"\"{Key}\":");
       }
 
-      RetVal.Append($"\"{Key}\" : ");
       RetVal.Append(Content.RenderAsString(false));
 
       return RetVal.ToString();
