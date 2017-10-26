@@ -206,7 +206,7 @@ namespace BLTools.Json {
             return (T)Convert.ChangeType(DoubleContent.Value, typeof(T));
           case "datetime":
             return (T)Convert.ChangeType(DateTimeContent.Value, typeof(T));
-          case "bool":
+          case "boolean":
             return (T)Convert.ChangeType(BoolContent.Value, typeof(T));
           default:
             return defaultValue;
