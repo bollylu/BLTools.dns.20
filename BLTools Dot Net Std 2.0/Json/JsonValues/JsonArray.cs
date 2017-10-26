@@ -159,7 +159,7 @@ namespace BLTools.Json {
 
       int i = 0;
       bool InQuote = false;
-      bool PossibleControlChar = false;
+      bool NextCharIsControlChar = false;
       int InArrayLevel = 0;
       int InObjectLevel = 0;
       int LengthOfSource = ProcessedSource.Length;
@@ -174,20 +174,22 @@ namespace BLTools.Json {
 
           char CurrentChar = ProcessedSource[i];
 
-          if ( CurrentChar == '\\' ) {
-            PossibleControlChar = true;
+          if ( !NextCharIsControlChar && CurrentChar == '\\' ) {
+            NextCharIsControlChar = true;
             i++;
             continue;
           }
 
-          if ( CurrentChar == '"' ) {
+          if ( NextCharIsControlChar && "\"\\\t\b\r\n\f".Contains(CurrentChar) ) {
+            NextCharIsControlChar = false;
+            RetVal.Append('\\');
+            RetVal.Append(CurrentChar);
+            i++;
+            continue;
+          }
 
-            if ( PossibleControlChar ) {
-              PossibleControlChar = false;
-              RetVal.Append(CurrentChar);
-              i++;
-              continue;
-            }
+
+          if ( CurrentChar == '"' ) {
 
             RetVal.Append(CurrentChar);
             InQuote = !InQuote;

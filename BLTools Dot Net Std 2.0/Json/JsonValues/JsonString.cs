@@ -28,7 +28,7 @@ namespace BLTools.Json {
       if ( Value == null ) {
         RetVal.Append("null");
       } else {
-        RetVal.Append($"\"{Value.Replace("\"", "\\\"")}\"");
+        RetVal.Append($"\"{Value}\"");
       }
       return RetVal.ToString();
     }
