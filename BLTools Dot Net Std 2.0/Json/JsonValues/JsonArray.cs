@@ -79,7 +79,7 @@ namespace BLTools.Json {
       lock ( _JsonLock ) {
         StringBuilder RetVal = new StringBuilder();
 
-        if (formatted && indent>=Json.DEFAULT_INDENT) {
+        if ( formatted && indent >= Json.DEFAULT_INDENT ) {
           RetVal.Append($"{StringExtension.Spaces(indent)}");
         }
         RetVal.Append("[");
@@ -271,5 +271,21 @@ namespace BLTools.Json {
       yield break;
     }
 
+    public static implicit operator Dictionary<string, IJsonValue>(JsonArray source) {
+      if ( source == null ) {
+        return null;
+      }
+
+      Dictionary<string, IJsonValue> RetVal = new Dictionary<string, IJsonValue>();
+      if ( source.Items.Count == 0 ) {
+        return RetVal;
+      }
+
+      foreach ( IJsonPair PairItem in source.Items ) {
+        RetVal.Add(PairItem.Key, PairItem.Content);
+      }
+
+      return RetVal;
+    }
   }
 }

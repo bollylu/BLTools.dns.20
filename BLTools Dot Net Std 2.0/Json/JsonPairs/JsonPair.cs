@@ -190,6 +190,33 @@ namespace BLTools.Json {
       return RetVal;
     }
 
+    public T SafeGetValue<T>(T defaultValue) {
+      try {
+        switch ( typeof(T).Name.ToLowerInvariant() ) {
+          case "string":
+            return (T)Convert.ChangeType(StringContent.Value, typeof(T));
+          case "int32":
+          case "int64":
+            return (T)Convert.ChangeType(IntContent.Value, typeof(T));
+          case "long":
+            return (T)Convert.ChangeType(LongContent.Value, typeof(T));
+          case "float":
+            return (T)Convert.ChangeType(FloatContent.Value, typeof(T));
+          case "double":
+            return (T)Convert.ChangeType(DoubleContent.Value, typeof(T));
+          case "datetime":
+            return (T)Convert.ChangeType(DateTimeContent.Value, typeof(T));
+          case "bool":
+            return (T)Convert.ChangeType(BoolContent.Value, typeof(T));
+          default:
+            return defaultValue;
+        }
+
+      } catch {
+        return defaultValue;
+      }
+    }
+
   }
 
 

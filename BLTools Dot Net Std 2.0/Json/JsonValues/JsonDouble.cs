@@ -9,7 +9,6 @@ namespace BLTools.Json {
 
     public double? Value { get; set; }
 
-
     public JsonDouble(double jsonDouble) {
       Value = jsonDouble;
     }

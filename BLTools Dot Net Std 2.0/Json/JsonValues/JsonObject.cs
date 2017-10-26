@@ -99,6 +99,75 @@ namespace BLTools.Json {
       }
 
     }
+
+    public T SafeGetValueFirst<T>(Func<IJsonPair, bool> predicate) {
+      return SafeGetValueFirst<T>(predicate, default(T));
+    }
+    public T SafeGetValueFirst<T>(Func<IJsonPair, bool> predicate, T defaultValue) {
+      if ( predicate == null ) {
+        return defaultValue;
+      }
+
+      IJsonPair SelectedItem = Items.FirstOrDefault(predicate);
+      if ( SelectedItem == null ) {
+        return defaultValue;
+      }
+
+      return SelectedItem.SafeGetValue<T>(defaultValue);
+    }
+
+    public T SafeGetValueLast<T>(Func<IJsonPair, bool> predicate) {
+      return SafeGetValueLast<T>(predicate, default(T));
+    }
+    public T SafeGetValueLast<T>(Func<IJsonPair, bool> predicate, T defaultValue) {
+      if ( predicate == null ) {
+        return defaultValue;
+      }
+
+      IJsonPair SelectedItem = Items.LastOrDefault(predicate);
+      if ( SelectedItem == null ) {
+        return defaultValue;
+      }
+
+      return SelectedItem.SafeGetValue<T>(defaultValue);
+    }
+
+    public T SafeGetValueSingle<T>(Func<IJsonPair, bool> predicate) {
+      return SafeGetValueSingle<T>(predicate, default(T));
+    }
+    public T SafeGetValueSingle<T>(Func<IJsonPair, bool> predicate, T defaultValue) {
+      if ( predicate == null ) {
+        return defaultValue;
+      }
+
+      IJsonPair SelectedItem = Items.SingleOrDefault(predicate);
+      if ( SelectedItem == null ) {
+        return defaultValue;
+      }
+
+      return SelectedItem.SafeGetValue<T>(defaultValue);
+    }
+
+    public T SafeGetValueFirst<T>(string key) {
+      return SafeGetValueFirst<T>(key, default(T));
+    }
+    public T SafeGetValueFirst<T>(string key, T defaultValue) {
+      return SafeGetValueFirst<T>(x => x.Key.ToLowerInvariant() == key.ToLowerInvariant(), defaultValue);
+    }
+
+    public T SafeGetValueLast<T>(string key) {
+      return SafeGetValueLast<T>(key, default(T));
+    }
+    public T SafeGetValueLast<T>(string key, T defaultValue) {
+      return SafeGetValueLast<T>(x => x.Key.ToLowerInvariant() == key.ToLowerInvariant(), defaultValue);
+    }
+
+    public T SafeGetValueSingle<T>(string key) {
+      return SafeGetValueSingle<T>(key, default(T));
+    }
+    public T SafeGetValueSingle<T>(string key, T defaultValue) {
+      return SafeGetValueFirst<T>(x => x.Key.ToLowerInvariant() == key.ToLowerInvariant(), defaultValue);
+    }
     #endregion Public methods
 
     public static JsonObject Parse(string source) {

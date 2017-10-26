@@ -9,7 +9,6 @@ namespace BLTools.Json {
 
     public float? Value { get; set; }
 
-
     public JsonFloat(float jsonFloat) {
       Value = jsonFloat;
     }
