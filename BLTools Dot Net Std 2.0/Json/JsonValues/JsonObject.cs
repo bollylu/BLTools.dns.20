@@ -136,10 +136,12 @@ namespace BLTools.Json {
               }
             }
 
-            Writer.BaseStream.Position--;
-            if ( formatted ) {
-              Writer.BaseStream.Position -= Environment.NewLine.Length;
-              Writer.WriteLine();
+            if ( Items.Count > 0 ) {
+              Writer.BaseStream.Position--;
+              if ( formatted ) {
+                Writer.BaseStream.Position -= Environment.NewLine.Length;
+                Writer.WriteLine();
+              }
             }
 
             if ( formatted && indent >= Json.DEFAULT_INDENT ) {
