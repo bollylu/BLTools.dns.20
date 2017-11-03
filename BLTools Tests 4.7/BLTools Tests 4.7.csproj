@@ -87,7 +87,7 @@
     <Compile Include="Utils\DictionaryExtensionTest.cs" />
     <Compile Include="Utils\IPAddressExtensionTest.cs" />
     <Compile Include="Utils\SplitArgsTest.cs" />
-    <Compile Include="Utils\StringExtensionBuilderTest.cs" />
+    <Compile Include="Utils\StringBuilderExtensionTest.cs" />
     <Compile Include="Utils\StringExtensionTest.cs" />
     <Compile Include="Utils\ToMemoryStreamTest.cs" />
   </ItemGroup>

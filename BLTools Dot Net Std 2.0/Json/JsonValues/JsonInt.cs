@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 
 namespace BLTools.Json {
@@ -44,5 +45,23 @@ namespace BLTools.Json {
       return RetVal.ToString();
     }
 
+    public byte[] RenderAsBytes(bool formatted = false, int indent = 0) {
+
+      using ( MemoryStream RetVal = new MemoryStream() ) {
+        using ( StreamWriter Writer = new StreamWriter(RetVal) ) {
+
+          if ( formatted ) {
+            Writer.Write($"{StringExtension.Spaces(indent)}");
+          }
+          if ( Value == null ) {
+            Writer.Write("NaN");
+          } else {
+            Writer.Write(Value.ToString());
+          }
+
+          return RetVal.ToArray();
+        }
+      }
+    }
   }
 }

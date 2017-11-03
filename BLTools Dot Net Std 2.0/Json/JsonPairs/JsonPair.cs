@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Linq;
+using System.IO;
 
 namespace BLTools.Json {
   public class JsonPair : IDisposable, IJsonPair {
@@ -85,6 +86,13 @@ namespace BLTools.Json {
     }
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
+
+    public override string ToString() {
+      StringBuilder RetVal = new StringBuilder();
+      RetVal.Append($"{Key} : {Content.ToString()}");
+      return RetVal.ToString();
+    }
+
     public string RenderAsString(bool formatted = false, int indent = 0) {
       StringBuilder RetVal = new StringBuilder();
 
@@ -95,9 +103,28 @@ namespace BLTools.Json {
         RetVal.Append($"\"{Key}\":");
       }
 
-      RetVal.Append(Content.RenderAsString(false));
+      RetVal.Append(Content.RenderAsString(formatted));
 
       return RetVal.ToString();
+    }
+
+    public byte[] RenderAsBytes(bool formatted = false, int indent = 0) {
+
+      using ( MemoryStream RetVal = new MemoryStream() ) {
+        using ( StreamWriter Writer = new StreamWriter(RetVal) ) {
+
+          if ( formatted ) {
+            Writer.Write($"{StringExtension.Spaces(indent)}");
+            Writer.Write($"\"{Key}\" : ");
+          } else {
+            Writer.Write($"\"{Key}\":");
+          }
+
+          Writer.Write(Content.RenderAsString(formatted));
+
+          return RetVal.ToArray();
+        }
+      }
     }
 
     public static IJsonPair Parse(string source) {

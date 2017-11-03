@@ -309,7 +309,60 @@ namespace BLTools.UnitTest.Core20.Extensions {
     }
     #endregion SecureString
 
+    [TestMethod(), TestCategory("NC20.String")]
+    public void ReplaceControlChars_EmptyString_EmptyString() {
+      string SourceValue = "";
+      string actual = SourceValue.ReplaceControlChars();
+      Assert.AreEqual(SourceValue, actual);
+    }
 
+    [TestMethod(), TestCategory("NC20.String")]
+    public void ReplaceControlChars_NoControlChars_ResultOk() {
+      string SourceValue = "AbC 123 =+";
+      string actual = SourceValue.ReplaceControlChars();
+      Assert.AreEqual(SourceValue, actual);
+    }
 
+    [TestMethod(), TestCategory("NC20.String")]
+    public void ReplaceControlChars_RawControlCharsTabAndCRLF_ResultOk() {
+      string SourceValue = "AbC\t123\r\n=+";
+      string actual = SourceValue.ReplaceControlChars();
+      Assert.AreEqual(SourceValue, actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String")]
+    public void ReplaceControlChars_EncodedControlCharsTabAndCRLF_ResultOk() {
+      string SourceValue = "AbC\\\t123\\\r\\\n=+";
+      string actual = SourceValue.ReplaceControlChars();
+      Assert.AreEqual("AbC\t123\r\n=+", actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String")]
+    public void ReplaceControlChars_EncodedControlCharsQuotes_ResultOk() {
+      string SourceValue = "AbC\\\"123\\\"=+";
+      string actual = SourceValue.ReplaceControlChars();
+      Assert.AreEqual("AbC\"123\"=+", actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String")]
+    public void ReplaceControlChars_EncodedControlCharsQuoteInquotes_ResultOk() {
+      string SourceValue = "AbC\\\"1\\\"23\\\"=+";
+      string actual = SourceValue.ReplaceControlChars();
+      Assert.AreEqual("AbC\"1\"23\"=+", actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String")]
+    public void ReplaceControlChars_EncodedControlCharsQuotesInquotes_ResultOk() {
+      string SourceValue = "AbC\\\"1\\\"2\\\"3\\\"=+";
+      string actual = SourceValue.ReplaceControlChars();
+      Assert.AreEqual("AbC\"1\"2\"3\"=+", actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String")]
+    public void ReplaceControlChars_EncodedControlCharsRawQuoteInquotes_ResultOk() {
+      string SourceValue = "AbC\"1\\\"2\\\"3\\\"=+";
+      string actual = SourceValue.ReplaceControlChars();
+      Assert.AreEqual("AbC\"1\\\"2\"3\"=+", actual);
+    }
   }
 }

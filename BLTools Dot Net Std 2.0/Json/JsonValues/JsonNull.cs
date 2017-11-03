@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace BLTools.Json {
@@ -14,6 +15,21 @@ namespace BLTools.Json {
         return $"{StringExtension.Spaces(indent)}null";
       } else {
         return "null";
+      }
+    }
+
+    public byte[] RenderAsBytes(bool formatted = false, int indent = 0) {
+
+      using ( MemoryStream RetVal = new MemoryStream() ) {
+        using ( StreamWriter Writer = new StreamWriter(RetVal) ) {
+          if ( formatted ) {
+            Writer.Write($"{StringExtension.Spaces(indent)}null");
+            return RetVal.ToArray();
+          } else {
+            Writer.Write("null");
+            return RetVal.ToArray();
+          }
+        }
       }
     }
   }

@@ -18,6 +18,8 @@ namespace BLTools.Json {
     JsonObject ObjectContent { get; }
 
     string RenderAsString(bool formatted = false, int indent = 0);
+    byte[] RenderAsBytes(bool formatted = false, int indent = 0);
+
     T SafeGetValue<T>(T defaultValue);
     
   }

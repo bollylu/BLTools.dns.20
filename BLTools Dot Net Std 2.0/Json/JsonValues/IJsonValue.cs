@@ -6,6 +6,7 @@ namespace BLTools.Json {
   public interface IJsonValue : IDisposable {
 
     string RenderAsString(bool formatted = false, int indent = 0);
+    byte[] RenderAsBytes(bool formatted = false, int indent = 0);
 
   }
 }

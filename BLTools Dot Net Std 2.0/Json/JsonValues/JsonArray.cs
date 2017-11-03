@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Linq;
+using System.IO;
 
 namespace BLTools.Json {
   public class JsonArray : IJsonValue {
@@ -112,6 +113,59 @@ namespace BLTools.Json {
         return RetVal.ToString();
       }
     }
+
+    public byte[] RenderAsBytes(bool formatted = false, int indent = 0) {
+
+      using ( MemoryStream RetVal = new MemoryStream() ) {
+        using ( StreamWriter Writer = new StreamWriter(RetVal) ) {
+
+          if ( Items.Count() == 0 ) {
+            if ( formatted ) {
+              Writer.Write($"{StringExtension.Spaces(indent)}[]");
+              return RetVal.ToArray();
+            } else {
+              Writer.Write("[]");
+              return RetVal.ToArray();
+            }
+
+          }
+
+          lock ( _JsonLock ) {
+
+            if ( formatted && indent >= Json.DEFAULT_INDENT ) {
+              Writer.Write($"{StringExtension.Spaces(indent)}");
+            }
+            Writer.Write("[");
+
+            if ( formatted ) {
+              Writer.WriteLine();
+            }
+
+            foreach ( IJsonValue JsonValueItem in Items ) {
+              Writer.Write(JsonValueItem.RenderAsString(formatted, indent + Json.DEFAULT_INDENT));
+              Writer.Write(",");
+              if ( formatted ) {
+                Writer.WriteLine();
+              }
+            }
+
+            Writer.BaseStream.Position--;
+            if ( formatted ) {
+              Writer.BaseStream.Position -= Environment.NewLine.Length;
+              Writer.WriteLine();
+            }
+
+            if ( formatted && indent >= Json.DEFAULT_INDENT ) {
+              Writer.Write($"{StringExtension.Spaces(indent)}");
+            }
+
+            Writer.Write("]");
+
+            return RetVal.ToArray();
+          }
+        }
+      }
+    }
     #endregion Public methods
 
     public static JsonArray Parse(string source) {
@@ -190,7 +244,6 @@ namespace BLTools.Json {
 
 
           if ( CurrentChar == '"' ) {
-
             RetVal.Append(CurrentChar);
             InQuote = !InQuote;
             i++;

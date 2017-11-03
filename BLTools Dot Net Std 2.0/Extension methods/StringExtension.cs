@@ -289,25 +289,68 @@ namespace BLTools {
         return "";
       }
 
-      if (!sourceValue.Contains('"')) {
+      if ( !sourceValue.Contains('"') ) {
         return sourceValue;
       }
 
       StringBuilder RetVal = new StringBuilder(sourceValue);
 
-      if (sourceValue.StartsWith("\"")) {
+      if ( sourceValue.StartsWith("\"") ) {
         RetVal.Remove(0, 1);
       }
 
-      if (sourceValue.EndsWith("\"")) {
+      if ( sourceValue.EndsWith("\"") ) {
         RetVal.Truncate(1);
       }
 
       return RetVal.ToString();
     }
 
+    public static string ReplaceControlChars(this string sourceValue) {
+      if ( string.IsNullOrWhiteSpace(sourceValue) ) {
+        return "";
+      }
+
+      StringBuilder RetVal = new StringBuilder(sourceValue.Length);
+
+      int i = 0;
+      int SourceLength = sourceValue.Length;
+      bool InQuotes = false;
+      bool NextCharIsControlChar = false;
+
+      while ( i < SourceLength ) {
+
+        char CurrentChar = sourceValue[i];
+
+        if ( !InQuotes && !NextCharIsControlChar && CurrentChar == '\\' ) {
+          NextCharIsControlChar = true;
+          i++;
+          continue;
+        }
+
+        if ( !InQuotes && NextCharIsControlChar && "\"\\\t\b\r\n\f".Contains(CurrentChar) ) {
+          NextCharIsControlChar = false;
+          RetVal.Append(CurrentChar);
+          i++;
+          continue;
+        }
+
+        if(CurrentChar == '"') {
+          RetVal.Append(CurrentChar);
+          InQuotes = !InQuotes;
+          i++;
+          continue;
+        }
+
+        RetVal.Append(CurrentChar);
+        i++;
+      }
+
+      return RetVal.ToString();
+    }
+
     public static string Spaces(int number) {
-      if (number<=0) {
+      if ( number <= 0 ) {
         return "";
       }
       return new string(' ', number);

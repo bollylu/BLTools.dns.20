@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 
 namespace BLTools.Json {
@@ -31,11 +32,30 @@ namespace BLTools.Json {
         RetVal.Append($"{StringExtension.Spaces(indent)}");
       }
       if ( Value == null ) {
-        RetVal.Append("null");
+        RetVal.Append(new JsonNull().RenderAsBytes());
       } else {
         RetVal.Append((bool)Value ? "true" : "false");
       }
       return RetVal.ToString();
+    }
+
+    public byte[] RenderAsBytes(bool formatted = false, int indent = 0) {
+
+      using ( MemoryStream RetVal = new MemoryStream() ) {
+        using ( StreamWriter Writer = new StreamWriter(RetVal) ) {
+
+          if ( formatted ) {
+            Writer.Write($"{StringExtension.Spaces(indent)}");
+          }
+          if ( Value == null ) {
+            Writer.Write(new JsonNull().RenderAsBytes());
+          } else {
+            Writer.Write((bool)Value ? "true" : "false");
+          }
+
+          return RetVal.ToArray();
+        }
+      }
     }
   }
 }
