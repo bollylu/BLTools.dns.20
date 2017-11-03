@@ -104,17 +104,19 @@ namespace BLTools.Json {
     public byte[] RenderAsBytes(bool formatted = false, int indent = 0) {
 
       using ( MemoryStream RetVal = new MemoryStream() ) {
-        using ( StreamWriter Writer = new StreamWriter(RetVal) ) {
+        using ( JsonWriter Writer = new JsonWriter(RetVal) ) {
+
+          Writer.Seek(0, SeekOrigin.Begin);
 
           if ( Items.Count() == 0 ) {
             if ( formatted ) {
               Writer.Write($"{StringExtension.Spaces(indent)}{{}}");
               return RetVal.ToArray();
             } else {
-              Writer.Write("{}");
+              Writer.Write('{');
+              Writer.Write('}');
               return RetVal.ToArray();
             }
-
           }
 
           lock ( _JsonLock ) {
@@ -123,23 +125,26 @@ namespace BLTools.Json {
               Writer.Write($"{StringExtension.Spaces(indent)}");
             }
 
-            Writer.Write("{");
+            Writer.Write('{');
             if ( formatted ) {
               Writer.WriteLine();
             }
 
             foreach ( IJsonPair JsonPairItem in Items ) {
               Writer.Write(JsonPairItem.RenderAsBytes(formatted, indent + Json.DEFAULT_INDENT));
-              Writer.Write(",");
+              Writer.Write(',');
               if ( formatted ) {
                 Writer.WriteLine();
               }
             }
 
             if ( Items.Count > 0 ) {
-              Writer.BaseStream.Position--;
+              RetVal.Flush();
+              RetVal.SetLength(RetVal.Length - 1);
+              RetVal.Seek(0, SeekOrigin.End);
               if ( formatted ) {
-                Writer.BaseStream.Position -= Environment.NewLine.Length;
+                RetVal.SetLength(RetVal.Length - Environment.NewLine.Length);
+                RetVal.Seek(0, SeekOrigin.End);
                 Writer.WriteLine();
               }
             }
@@ -148,7 +153,7 @@ namespace BLTools.Json {
               Writer.Write($"{StringExtension.Spaces(indent)}");
             }
 
-            Writer.Write("}");
+            Writer.Write('}');
 
             return RetVal.ToArray();
           }

@@ -117,7 +117,7 @@ namespace BLTools.Json {
     public byte[] RenderAsBytes(bool formatted = false, int indent = 0) {
 
       using ( MemoryStream RetVal = new MemoryStream() ) {
-        using ( StreamWriter Writer = new StreamWriter(RetVal) ) {
+        using ( JsonWriter Writer = new JsonWriter(RetVal) ) {
 
           if ( Items.Count() == 0 ) {
             if ( formatted ) {
@@ -142,7 +142,7 @@ namespace BLTools.Json {
             }
 
             foreach ( IJsonValue JsonValueItem in Items ) {
-              Writer.Write(JsonValueItem.RenderAsString(formatted, indent + Json.DEFAULT_INDENT));
+              Writer.Write(JsonValueItem.RenderAsBytes(formatted, indent + Json.DEFAULT_INDENT));
               Writer.Write(",");
               if ( formatted ) {
                 Writer.WriteLine();
@@ -150,9 +150,11 @@ namespace BLTools.Json {
             }
 
             if ( Items.Count > 0 ) {
-              Writer.BaseStream.Position--;
+              Writer.Flush();
+              RetVal.Flush();
+              RetVal.SetLength(RetVal.Length - 1);
               if ( formatted ) {
-                Writer.BaseStream.Position -= Environment.NewLine.Length;
+                RetVal.SetLength(RetVal.Length - Environment.NewLine.Length);
                 Writer.WriteLine();
               }
             }

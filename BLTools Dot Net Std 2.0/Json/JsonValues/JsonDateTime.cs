@@ -38,7 +38,7 @@ namespace BLTools.Json {
     public byte[] RenderAsBytes(bool formatted = false, int indent = 0) {
 
       using ( MemoryStream RetVal = new MemoryStream() ) {
-        using ( StreamWriter Writer = new StreamWriter(RetVal) ) {
+        using ( JsonWriter Writer = new JsonWriter(RetVal) ) {
 
           if ( formatted ) {
             Writer.Write($"{StringExtension.Spaces(indent)}");

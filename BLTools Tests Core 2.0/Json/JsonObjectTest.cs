@@ -3,6 +3,7 @@ using BLTools.Json;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
+using System.Text;
 
 namespace BLTools.UnitTest.Core20.Json {
 
@@ -173,7 +174,19 @@ namespace BLTools.UnitTest.Core20.Json {
       Debug.WriteLine(Actual.RenderAsString(true));
     }
 
-
-
+    [TestMethod(), TestCategory("NC20.Json.Object")]
+    public void RenderAsBytes_OneString_DataOk() {
+      JsonString Source = new JsonString(TEST_STRING);
+      JsonPair PairSource = new JsonPair(TEST_STRING_NAME, Source);
+      JsonObject Actual = new JsonObject(PairSource);
+      Assert.IsNotNull(Actual.Items);
+      Assert.AreEqual(1, Actual.Items.Count);
+      byte[] SourceAsBytes = TEST_STRING_JSON_OBJECT.ToByteArray();
+      byte[] ActualAsBytes = Actual.RenderAsBytes();
+      Assert.AreEqual(Encoding.UTF8.GetBytes(TEST_STRING_JSON_OBJECT).Length, ActualAsBytes.Length);
+      for(int i=0; i<ActualAsBytes.Length; i++ ) {
+        Assert.AreEqual(SourceAsBytes[i], ActualAsBytes[i]);
+      }
+    }
   }
 }
