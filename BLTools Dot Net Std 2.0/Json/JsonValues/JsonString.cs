@@ -37,7 +37,7 @@ namespace BLTools.Json {
       if ( Value == null ) {
         RetVal.Append(new JsonNull().RenderAsString());
       } else {
-        RetVal.Append($"\"{Value}\"");
+        RetVal.Append($"\"{Value.JsonEncode()}\"");
       }
       return RetVal.ToString();
     }
@@ -54,7 +54,7 @@ namespace BLTools.Json {
           if ( Value == null ) {
             Writer.Write(new JsonNull().RenderAsBytes());
           } else {
-            Writer.Write($"\"{Value}\"");
+            Writer.Write($"\"{Value.JsonEncode()}\"");
           }
 
           return RetVal.ToArray();

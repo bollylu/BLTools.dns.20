@@ -288,7 +288,7 @@ namespace BLTools.UnitTest.Core20.Json {
       IJsonPair Actual = JsonPair.Parse(Source);
       Assert.AreEqual("Identifier", Actual.Key);
       Assert.IsInstanceOfType(Actual.Content, typeof(JsonArray));
-      Assert.AreEqual(Source, Actual.RenderAsString());
+      Assert.AreEqual(Source.JsonEncode(), Actual.RenderAsString());
       Assert.IsInstanceOfType(Actual.ArrayContent.Items[0], typeof(JsonDouble));
       Assert.IsInstanceOfType(Actual.ArrayContent.Items[1], typeof(JsonString));
       Assert.IsInstanceOfType(Actual.ArrayContent.Items[2], typeof(JsonInt));
