@@ -16,5 +16,12 @@ namespace BLTools.Json {
     public void WriteLine() {
       base.Write(Environment.NewLine.ToArray());
     }
+
+    public void WriteLine(string value) {
+      if (!string.IsNullOrEmpty(value)) {
+        base.Write(value.ToArray());
+      }
+      base.Write(Environment.NewLine.ToArray());
+    }
   }
 }
