@@ -13,6 +13,8 @@ namespace BLTools.Json {
     public readonly JsonValueCollection Items = new JsonValueCollection();
 
     private object _JsonLock = new object();
+    private const char CHR_BACKSLASH = '\\';
+    private const char CHR_DOUBLE_QUOTE = '\"';
 
     #region --- Constructor(s) --------------------------------------------
     public JsonArray() { }
@@ -223,36 +225,34 @@ namespace BLTools.Json {
       int LengthOfSource = ProcessedSource.Length;
       StringBuilder RetVal = new StringBuilder();
 
-      while ( i < LengthOfSource ) {
+      do {
 
         RetVal.Clear();
         bool GotOneItem = false;
 
-        while ( i < LengthOfSource && !GotOneItem ) {
+        do {
 
           char CurrentChar = ProcessedSource[i];
 
-          if ( !NextCharIsControlChar && CurrentChar == '\\' ) {
+          if ( !NextCharIsControlChar && CurrentChar == CHR_BACKSLASH ) {
             NextCharIsControlChar = true;
             i++;
             continue;
           }
 
-          if ( NextCharIsControlChar && "\"\\\t\b\r\n\f".Contains(CurrentChar) ) {
-            NextCharIsControlChar = false;
-            RetVal.Append('\\');
-            RetVal.Append(CurrentChar);
-            i++;
-            continue;
-          }
 
-
-          if ( CurrentChar == '"' ) {
+          if ( CurrentChar == CHR_DOUBLE_QUOTE && !NextCharIsControlChar ) {
             RetVal.Append(CurrentChar);
             InQuote = !InQuote;
             i++;
             continue;
+          }
 
+          if ( CurrentChar == CHR_DOUBLE_QUOTE && NextCharIsControlChar ) {
+            RetVal.Append(CHR_BACKSLASH).Append(CHR_DOUBLE_QUOTE);
+            NextCharIsControlChar = false;
+            i++;
+            continue;
           }
 
           if ( InQuote ) {
@@ -319,13 +319,13 @@ namespace BLTools.Json {
 
           RetVal.Append(CurrentChar);
           i++;
-        }
+        } while ( i < LengthOfSource && !GotOneItem );
 
         if ( i == LengthOfSource && RetVal.Length > 0 ) {
           yield return RetVal.ToString();
         }
 
-      }
+      } while ( i < LengthOfSource );
 
       yield break;
     }

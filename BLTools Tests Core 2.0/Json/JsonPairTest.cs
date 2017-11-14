@@ -283,11 +283,11 @@ namespace BLTools.UnitTest.Core20.Json {
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Pair.Parse")]
     public void ParseJsonPair_StringArrayWithReservedCharsInString_ValueOk() {
-      string Source = "\"Identifier\":[12.98,\"toto\",48,true,\"[\\\"second level, no 1\\\",\\\"second level : 2\\\"]\"]";
-      IJsonPair Actual = JsonPair.Parse(Source);
+      string Source = @"{""Identifier"":[12.98,""toto"",48,true,""[\""second level, no 1\"",\""second level : 2\""]""]}";
+      JsonObject SourceObject = JsonValue.Parse(Source) as JsonObject;
+      IJsonPair Actual = SourceObject.Items[0];
       Assert.AreEqual("Identifier", Actual.Key);
       Assert.IsInstanceOfType(Actual.Content, typeof(JsonArray));
-      Assert.AreEqual(Source, Actual.RenderAsString());
       Assert.IsInstanceOfType(Actual.ArrayContent.Items[0], typeof(JsonDouble));
       Assert.IsInstanceOfType(Actual.ArrayContent.Items[1], typeof(JsonString));
       Assert.IsInstanceOfType(Actual.ArrayContent.Items[2], typeof(JsonInt));

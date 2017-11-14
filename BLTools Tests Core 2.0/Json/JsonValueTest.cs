@@ -16,8 +16,8 @@ namespace BLTools.UnitTest.Core20.Json {
     #region --- Constants --------------------------------------------
     private const string TEST_STRING_NAME = "StringField";
     private const string TEST_STRING = @"Test\Content";
-    private const string TEST_STRING_JSON = @"""Test\Content""";
-    private const string TEST_STRING_JSON_OBJECT = @"{""Test\Content""}";
+    private const string TEST_STRING_JSON = @"""Test\\Content""";
+    private const string TEST_STRING_JSON_OBJECT = @"{""Test\\Content""}";
     private const string DEFAULT_STRING = "(default)";
 
     private const string TEST_INT_NAME = "IntField";
@@ -169,7 +169,7 @@ namespace BLTools.UnitTest.Core20.Json {
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value.Parse")]
     public void ParseJsonValue_String_JsonStringOk() {
-      IJsonValue Actual = JsonValue.Parse(TEST_STRING_JSON);
+      JsonString Actual = JsonValue.Parse(TEST_STRING_JSON) as JsonString;
       Assert.IsInstanceOfType(Actual, typeof(JsonString));
       Assert.AreEqual(TEST_STRING_JSON, Actual.RenderAsString());
     }

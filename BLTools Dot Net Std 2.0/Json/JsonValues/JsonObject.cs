@@ -13,6 +13,8 @@ namespace BLTools.Json {
     public readonly JsonPairCollection Items = new JsonPairCollection();
 
     private object _JsonLock = new object();
+    private const char CHR_BACKSLASH = '\\';
+    private const char CHR_DOUBLE_QUOTE = '\"';
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
     public JsonObject() {
@@ -96,7 +98,7 @@ namespace BLTools.Json {
       lock ( _JsonLock ) {
         Items.Add(new JsonPair(key, jsonValue));
       }
-    } 
+    }
     #endregion --- AddItem --------------------------------------------
 
     public void Clear() {
@@ -280,7 +282,7 @@ namespace BLTools.Json {
     }
     public T SafeGetValueSingle<T>(string key, T defaultValue) {
       return SafeGetValueFirst<T>(x => x.Key.ToLowerInvariant() == key.ToLowerInvariant(), defaultValue);
-    } 
+    }
     #endregion --- SafeGetValue --------------------------------------------
 
     #endregion Public methods
@@ -331,180 +333,161 @@ namespace BLTools.Json {
       int LengthOfSource = ProcessedSource.Length;
       StringBuilder RetVal = new StringBuilder();
 
-      while ( i < LengthOfSource ) {
+      do {
         RetVal.Clear();
         bool GotOneItem = false;
 
-        while ( i < LengthOfSource && !GotOneItem ) {
+        #region --- Get the key --------------------------------------------
+        bool GotTheKey = false;
+        do {
 
-          #region --- Get the key --------------------------------------------
-          bool GotTheKey = false;
-          while ( i < LengthOfSource && !GotTheKey ) {
+          char CurrentChar = ProcessedSource[i];
 
-            char CurrentChar = ProcessedSource[i];
-
-            if ( !NextCharIsControlChar && CurrentChar == '\\' ) {
-              NextCharIsControlChar = true;
-              i++;
-              continue;
-            }
-
-            if ( NextCharIsControlChar && "\"\\\t\b\r\n\f".Contains(CurrentChar) ) {
-              NextCharIsControlChar = false;
-              RetVal.Append('\\');
-              RetVal.Append(CurrentChar);
-              i++;
-              continue;
-            }
-
-
-            if ( CurrentChar == '"' ) {
-              RetVal.Append(CurrentChar);
-              InQuote = !InQuote;
-              i++;
-              if ( !InQuote ) {
-                GotTheKey = true;
-              }
-              continue;
-            }
-
-            if ( InQuote ) {
-              RetVal.Append(CurrentChar);
-              i++;
-              continue;
-            }
-
-            if ( Json.WhiteSpaces.Contains(CurrentChar) ) {
-              i++;
-              continue;
-            }
-          }
-          #endregion --- Get the key --------------------------------------------
-
-          if ( i >= LengthOfSource && InQuote ) {
-            Trace.WriteLine("Unable to parse Json string : source is invalid");
-            yield break;
-          }
-
-          #region --- Between key and value --------------------------------------------
-          // Skip white spaces
-          while ( i < ProcessedSource.Length && Json.WhiteSpaces.Contains(ProcessedSource[i]) ) {
+          if ( CurrentChar == '"' ) {
+            RetVal.Append(CurrentChar);
+            InQuote = !InQuote;
             i++;
+            if ( !InQuote ) {
+              GotTheKey = true;
+            }
+            continue;
           }
 
-          if ( ProcessedSource[i++] != Json.InnerFieldSeparator ) {
-            Trace.WriteLine("Unable to parse Json string : source is invalid");
-            yield break;
-          }
-
-          RetVal.Append(Json.InnerFieldSeparator);
-          // Skip white spaces
-          while ( i < ProcessedSource.Length && Json.WhiteSpaces.Contains(ProcessedSource[i]) ) {
-            i++;
-          }
-          #endregion --- Between key and value --------------------------------------------
-
-          #region --- Get the value --------------------------------------------
-          while ( i < LengthOfSource && !GotOneItem ) {
-
-            char CurrentChar = ProcessedSource[i];
-
-            if ( !NextCharIsControlChar && CurrentChar == '\\' ) {
-              NextCharIsControlChar = true;
-              i++;
-              continue;
-            }
-
-            if ( NextCharIsControlChar && "\"\\\t\b\r\n\f".Contains(CurrentChar) ) {
-              NextCharIsControlChar = false;
-              RetVal.Append('\\');
-              RetVal.Append(CurrentChar);
-              i++;
-              continue;
-            }
-
-
-            if ( CurrentChar == '"' ) {
-              RetVal.Append(CurrentChar);
-              InQuote = !InQuote;
-              i++;
-              continue;
-            }
-
-            if ( InQuote ) {
-              RetVal.Append(CurrentChar);
-              i++;
-              continue;
-            }
-
-            if ( Json.WhiteSpaces.Contains(CurrentChar) ) {
-              i++;
-              continue;
-            }
-
-            if ( CurrentChar == '[' ) {
-              InArrayLevel++;
-              RetVal.Append(CurrentChar);
-              i++;
-              continue;
-            }
-
-            if ( CurrentChar == ']' ) {
-              InArrayLevel--;
-              RetVal.Append(CurrentChar);
-              i++;
-              continue;
-            }
-
-            if ( CurrentChar == '{' ) {
-              InObjectLevel++;
-              RetVal.Append(CurrentChar);
-              i++;
-              continue;
-            }
-
-            if ( CurrentChar == '}' ) {
-              InObjectLevel--;
-              RetVal.Append(CurrentChar);
-              i++;
-              continue;
-            }
-
-            if ( CurrentChar == Json.InnerFieldSeparator ) {
-              if ( InObjectLevel == 0 ) {
-                Trace.WriteLine($"Unable to read content of json string array : invalid format at position {i}");
-                yield break;
-              }
-              RetVal.Append(Json.InnerFieldSeparator);
-              i++;
-              continue;
-            }
-
-            if ( CurrentChar == Json.OuterFieldSeparator ) {
-              if ( InArrayLevel > 0 || InObjectLevel > 0 ) {
-                RetVal.Append(CurrentChar);
-                i++;
-                continue;
-              } else {
-                i++;
-                GotOneItem = true;
-                yield return RetVal.ToString();
-                continue;
-              }
-            }
-
+          if ( InQuote ) {
             RetVal.Append(CurrentChar);
             i++;
+            continue;
           }
 
-          if ( i == LengthOfSource && RetVal.Length > 0 ) {
-            yield return RetVal.ToString();
+          if ( Json.WhiteSpaces.Contains(CurrentChar) ) {
+            i++;
+            continue;
           }
-          #endregion --- Get the value --------------------------------------------
+        } while ( i < LengthOfSource && !GotTheKey );
+        #endregion --- Get the key --------------------------------------------
 
+        if ( i >= LengthOfSource || InQuote ) {
+          Trace.WriteLine("Unable to parse Json string : source is invalid");
+          yield break;
         }
 
-      }
+        #region --- Between key and value --------------------------------------------
+        // Skip white spaces
+        while ( i < LengthOfSource && Json.WhiteSpaces.Contains(ProcessedSource[i]) ) {
+          i++;
+        }
+
+        if ( ProcessedSource[i++] != Json.InnerFieldSeparator ) {
+          Trace.WriteLine("Unable to parse Json string : source is invalid");
+          yield break;
+        }
+
+        RetVal.Append(Json.InnerFieldSeparator);
+
+        // Skip white spaces
+        while ( i < LengthOfSource && Json.WhiteSpaces.Contains(ProcessedSource[i]) ) {
+          i++;
+        }
+        #endregion --- Between key and value --------------------------------------------
+
+        #region --- Get the value --------------------------------------------
+        while ( i < LengthOfSource && !GotOneItem ) {
+
+          char CurrentChar = ProcessedSource[i];
+
+          if ( !NextCharIsControlChar && CurrentChar == CHR_BACKSLASH ) {
+            NextCharIsControlChar = true;
+            i++;
+            continue;
+          }
+
+
+          if ( CurrentChar == CHR_DOUBLE_QUOTE && !NextCharIsControlChar) {
+            RetVal.Append(CurrentChar);
+            InQuote = !InQuote;
+            i++;
+            continue;
+          }
+
+          if ( CurrentChar == CHR_DOUBLE_QUOTE && NextCharIsControlChar ) {
+            RetVal.Append(CHR_BACKSLASH).Append(CHR_DOUBLE_QUOTE);
+            NextCharIsControlChar = false;
+            i++;
+            continue;
+          }
+
+          if ( InQuote ) {
+            RetVal.Append(CurrentChar);
+            i++;
+            continue;
+          }
+
+          if ( Json.WhiteSpaces.Contains(CurrentChar) ) {
+            i++;
+            continue;
+          }
+
+          if ( CurrentChar == '[' ) {
+            InArrayLevel++;
+            RetVal.Append(CurrentChar);
+            i++;
+            continue;
+          }
+
+          if ( CurrentChar == ']' ) {
+            InArrayLevel--;
+            RetVal.Append(CurrentChar);
+            i++;
+            continue;
+          }
+
+          if ( CurrentChar == '{' ) {
+            InObjectLevel++;
+            RetVal.Append(CurrentChar);
+            i++;
+            continue;
+          }
+
+          if ( CurrentChar == '}' ) {
+            InObjectLevel--;
+            RetVal.Append(CurrentChar);
+            i++;
+            continue;
+          }
+
+          if ( CurrentChar == Json.InnerFieldSeparator ) {
+            if ( InObjectLevel == 0 ) {
+              Trace.WriteLine($"Unable to read content of json string array : invalid format at position {i}");
+              yield break;
+            }
+            RetVal.Append(Json.InnerFieldSeparator);
+            i++;
+            continue;
+          }
+
+          if ( CurrentChar == Json.OuterFieldSeparator ) {
+            if ( InArrayLevel > 0 || InObjectLevel > 0 ) {
+              RetVal.Append(CurrentChar);
+              i++;
+              continue;
+            } else {
+              i++;
+              GotOneItem = true;
+              yield return RetVal.ToString();
+              continue;
+            }
+          }
+
+          RetVal.Append(CurrentChar);
+          i++;
+        }
+
+        if ( i == LengthOfSource && RetVal.Length > 0 ) {
+          yield return RetVal.ToString();
+        }
+        #endregion --- Get the value --------------------------------------------
+
+      } while ( i < LengthOfSource );
       yield break;
 
     }

@@ -10,7 +10,7 @@ namespace BLTools.Json {
     public string Value { get; set; }
 
     public JsonString(string jsonString)  {
-      Value = jsonString;
+      Value = jsonString.JsonDecode();
     }
 
     public JsonString(JsonString jsonString) {
@@ -37,7 +37,7 @@ namespace BLTools.Json {
       if ( Value == null ) {
         RetVal.Append(new JsonNull().RenderAsString());
       } else {
-        RetVal.Append($"\"{Value}\"".JsonEncode());
+        RetVal.Append($@"""{Value.JsonEncode()}""");
       }
       return RetVal.ToString();
     }
@@ -54,7 +54,7 @@ namespace BLTools.Json {
           if ( Value == null ) {
             Writer.Write(new JsonNull().RenderAsBytes());
           } else {
-            Writer.Write($"\"{Value}\"".JsonEncode());
+            Writer.Write($"\"{Value.JsonEncode()}\"");
           }
 
           return RetVal.ToArray();

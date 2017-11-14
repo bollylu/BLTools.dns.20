@@ -71,8 +71,8 @@ namespace BLTools.UnitTest.Core20.Json {
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.JsonEncode")]
     public void JsonEncode_StringWithControlChars_ResultIsEncoded() {
-      string Actual = @"""this\tis\fan\\encoding/test""".JsonEncode();
-      Assert.AreEqual(@"""this\tis\fan\\encoding\/test""", Actual);
+      string Actual = @"""this\tis\fan\encoding/test""".JsonEncode();
+      Assert.AreEqual(@"""this\\tis\\fan\\encoding\/test""", Actual);
     }
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.JsonEncode")]
@@ -85,19 +85,26 @@ namespace BLTools.UnitTest.Core20.Json {
     public void JsonEncode_StringWithQuotesAndControlChars_ResultIsEncoded() {
       string Source = @"""this ""is\\a"" test""";
       string Actual = Source.JsonEncode();
-      Assert.AreEqual(@"""this ""is\\a"" test""", Actual);
+      Assert.AreEqual(@"""this ""is\\\\a"" test""", Actual);
     }
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.JsonEncode")]
     public void JsonEncode_ObjectWithQuotesAndControlChars_ResultIsEncoded() {
-      string Actual = @"{""t"":""{\\""a\\"":1,\\""b\\"":\\""a sample text\\""}"",""c"":2,""r"":""some text""}".JsonEncode();
-      Assert.AreEqual(@"{""t"":""{\\""a\\"":1,\\""b\\"":\\""a sample text\\""}"",""c"":2,""r"":""some text""}", Actual);
+      string Source = @"{""t"":""{\""a\"":1,\""b\"":\""a sample text\""}"",""c"":2,""r"":""some text""}";
+      string Actual = Source.JsonEncode();
+      Assert.AreEqual(@"{""t"":""{\\\""a\\\"":1,\\\""b\\\"":\\\""a sample text\\\""}"",""c"":2,""r"":""some text""}", Actual);
     }
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.JsonEncode")]
     public void JsonEncode_ArrayWithStrings_ResultIsEncoded() {
       string Actual = @"[""Item1"",""Item2""]".JsonEncode();
       Assert.AreEqual(@"[""Item1"",""Item2""]", Actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.JsonEncode")]
+    public void JsonEncode_FolderPath_ResultIsEncoded() {
+      string Actual = @"c:\windows\test /param".JsonEncode();
+      Assert.AreEqual(@"c:\\windows\\test \/param", Actual);
     }
   }
 }

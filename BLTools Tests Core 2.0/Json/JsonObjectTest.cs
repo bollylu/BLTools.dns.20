@@ -18,9 +18,9 @@ namespace BLTools.UnitTest.Core20.Json {
     #region --- Constants --------------------------------------------
     private const string TEST_STRING_NAME = "StringField";
     private const string TEST_STRING = "TestContent";
-    private const string TEST_STRING_JSON_VALUE = "\"TestContent\"";
-    private const string TEST_STRING_JSON_PAIR = "\"StringField\":\"TestContent\"";
-    private const string TEST_STRING_JSON_OBJECT = "{\"StringField\":\"TestContent\"}";
+    private static string TEST_STRING_JSON_VALUE = $@"""{TEST_STRING}""";
+    private static string TEST_STRING_JSON_PAIR = $@"""{TEST_STRING_NAME}"":{TEST_STRING_JSON_VALUE}";
+    private static string TEST_STRING_JSON_OBJECT = $@"{{{TEST_STRING_JSON_PAIR}}}";
     private const string DEFAULT_STRING = "(default)";
 
     private const string TEST_INT_NAME = "IntField";

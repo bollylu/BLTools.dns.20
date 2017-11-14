@@ -18,8 +18,8 @@ namespace BLTools.UnitTest.Core20.Json {
     #region --- Constants --------------------------------------------
     private const string TEST_STRING_NAME = "StringField";
     private const string TEST_STRING = @"Test\Content";
-    private const string TEST_STRING_JSON = @"""Test\Content""";
-    private const string TEST_STRING_JSON_OBJECT = @"{""Test\Content""}";
+    private const string TEST_STRING_JSON = @"""Test\\Content""";
+    private const string TEST_STRING_JSON_OBJECT = @"{""Test\\Content""}";
     private const string DEFAULT_STRING = "(default)";
 
     private const string TEST_INT_NAME = "IntField";

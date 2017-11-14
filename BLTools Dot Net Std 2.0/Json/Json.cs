@@ -36,10 +36,23 @@ namespace BLTools.Json {
         return "";
       }
 
-      StringBuilder Temp = new StringBuilder(source);
-      using ( StringWriter Writer = new StringWriter(Temp.Replace("/", "\\/")) ) {
-        return Writer.ToString();
-      }
+      string ProcessedSource = source.Replace("\\", "\\\\")
+                                     .Replace("/", "\\/")
+                                     .Replace("\t", "\\t")
+                                     .Replace("\n", "\\n")
+                                     .Replace("\r", "\\r")
+                                     .Replace("\f", "\\f")
+                                     .Replace("\b", "\\b")
+                                     .Replace("\\\"", "\\\\\"")
+                                     ;
+      return ProcessedSource;
+
+      //StringBuilder RetVal = new StringBuilder();
+      //using ( StringWriter Writer = new StringWriter(RetVal) ) {
+      //  Writer.Write(ProcessedSource);
+      //  Writer.Flush();
+      //  return Writer.ToString();
+      //}
 
       //int i = 0;
 
@@ -149,62 +162,24 @@ namespace BLTools.Json {
 
     public static string JsonDecode(this string source) {
 
-      if ( string.IsNullOrEmpty(source) ) {
+      if ( source == null ) {
+        return null;
+      }
+
+      if ( source == "" ) {
         return "";
       }
 
-      StringBuilder RetVal = new StringBuilder();
-
-      int i = 0;
-      bool InQuote = false;
-      bool NextCharIsControlChar = false;
-      int LengthOfSource = source.Length;
-
-      while ( i < LengthOfSource ) {
-
-        char CurrentChar = source[i];
-
-        if ( InQuote ) {
-
-          if ( !NextCharIsControlChar && CurrentChar == '\\' ) {
-            NextCharIsControlChar = true;
-            i++;
-            continue;
-          }
-
-          if ( NextCharIsControlChar && "\"\\\t\b\r\n\f/".Contains(CurrentChar) ) {
-            NextCharIsControlChar = false;
-            RetVal.Append(CurrentChar);
-            i++;
-            continue;
-          }
-
-
-
-          if ( CurrentChar == '"' ) {
-            RetVal.Append(CurrentChar);
-            InQuote = false;
-            i++;
-            continue;
-          }
-
-          if ( CurrentChar == '"' ) {
-            RetVal.Append(CurrentChar);
-            InQuote = true;
-            i++;
-            continue;
-          }
-
-          RetVal.Append(CurrentChar);
-          i++;
-          continue;
-        }
-
-        RetVal.Append(CurrentChar);
-        i++;
-      }
-
-      return RetVal.ToString();
+      string ProcessedSource = source.Replace("\\\\", "\\")
+                                     .Replace("\\/", "/")
+                                     .Replace("\\t", "\t")
+                                     .Replace("\\n", "\n")
+                                     .Replace("\\r", "\r")
+                                     .Replace("\\f", "\f")
+                                     .Replace("\\b", "\b")
+                                     .Replace("\\\"", "\"")
+                                     ;
+      return ProcessedSource;
 
     }
   }
