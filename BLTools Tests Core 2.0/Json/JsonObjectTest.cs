@@ -98,7 +98,7 @@ namespace BLTools.UnitTest.Core20.Json {
     //
     #endregion
 
-    [TestMethod(), TestCategory("NC20.Json.Object")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Object")]
     public void CreateJsonObject_OneString_DataOk() {
       JsonString Source = new JsonString(TEST_STRING);
       JsonPair PairSource = new JsonPair(TEST_STRING_NAME, Source);
@@ -108,7 +108,7 @@ namespace BLTools.UnitTest.Core20.Json {
       Assert.AreEqual(TEST_STRING_JSON_OBJECT, Actual.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Object")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Object")]
     public void CreateJsonObject_OneStringDirect_DataOk() {
       JsonPair PairSource = new JsonPair(TEST_STRING_NAME, TEST_STRING);
       JsonObject Actual = new JsonObject(PairSource);
@@ -117,7 +117,7 @@ namespace BLTools.UnitTest.Core20.Json {
       Assert.AreEqual(TEST_STRING_JSON_OBJECT, Actual.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Object")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Object")]
     public void CreateJsonObject_TwoStrings_DataOk() {
       JsonPair PairSource1 = new JsonPair(TEST_STRING_NAME, TEST_STRING);
       JsonPair PairSource2 = new JsonPair(TEST_STRING_NAME, $"+++{TEST_STRING}+++");
@@ -128,7 +128,7 @@ namespace BLTools.UnitTest.Core20.Json {
       Assert.AreEqual("{\"StringField\":\"TestContent\",\"StringField\":\"+++TestContent+++\"}", Actual.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Object")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Object")]
     public void CreateJsonObject_OneStringOneInt_DataOk() {
       JsonPair PairSource1 = new JsonPair(TEST_STRING_NAME, TEST_STRING);
       JsonPair PairSource2 = new JsonPair(TEST_INT_NAME, TEST_INT);
@@ -139,7 +139,7 @@ namespace BLTools.UnitTest.Core20.Json {
       Assert.AreEqual($"{{{TEST_STRING_JSON_PAIR},{TEST_INT_JSON_PAIR}}}", Actual.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Object.Parse")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Object.Parse")]
     public void ParseJsonObject_StringString_ValueOk() {
       string Source = "{\"Identifier\":\"Data\"}";
 
@@ -150,7 +150,7 @@ namespace BLTools.UnitTest.Core20.Json {
       Assert.AreEqual("Data", Actual.Items[0].StringContent.Value);
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Object.Parse")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Object.Parse")]
     public void ParseJsonObject_MultiplePairs_ValueOk() {
       string Source = "{\"Identifier\":\"Data\",\"numeric\":3.14}";
 
@@ -164,7 +164,7 @@ namespace BLTools.UnitTest.Core20.Json {
       Assert.AreEqual(Source, Actual.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Object.RenderAsStringFormatted")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Object.RenderAsStringFormatted")]
     public void CreateJsonObject_MultiplePairs_OutputIsFormatted() {
       string Source = $"{{{CRLF}  \"Identifier\" : \"Data\",{CRLF}  \"numeric\" : 3.14{CRLF}}}";
 
@@ -174,7 +174,7 @@ namespace BLTools.UnitTest.Core20.Json {
       Debug.WriteLine(Actual.RenderAsString(true));
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Object")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Object")]
     public void RenderAsBytes_OneString_DataOk() {
       JsonString Source = new JsonString(TEST_STRING);
       JsonPair PairSource = new JsonPair(TEST_STRING_NAME, Source);

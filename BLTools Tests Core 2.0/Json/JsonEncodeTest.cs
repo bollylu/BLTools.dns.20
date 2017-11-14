@@ -57,40 +57,47 @@ namespace BLTools.UnitTest.Core20.Json {
     #endregion --- Tests support --------------------------------------------
 
 
-    [TestMethod(), TestCategory("NC20.Json.JsonEncode")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.JsonEncode")]
     public void JsonEncode_EmptyString_ResultEmpty() {
       string Actual = "".JsonEncode();
       Assert.AreEqual("", Actual);
     }
 
-    [TestMethod(), TestCategory("NC20.Json.JsonEncode")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.JsonEncode")]
     public void JsonEncode_SimpleString_ResultIsTheSame() {
       string Actual = "this is a test".JsonEncode();
       Assert.AreEqual("this is a test", Actual);
     }
 
-    [TestMethod(), TestCategory("NC20.Json.JsonEncode")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.JsonEncode")]
     public void JsonEncode_StringWithControlChars_ResultIsEncoded() {
       string Actual = @"""this\tis\fan\\encoding/test""".JsonEncode();
       Assert.AreEqual(@"""this\tis\fan\\encoding\/test""", Actual);
     }
 
-    [TestMethod(), TestCategory("NC20.Json.JsonEncode")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.JsonEncode")]
     public void JsonEncode_StringWithQuotes_ResultIsEncoded() {
-      string Actual = "this \"is a\" test".JsonEncode();
-      Assert.AreEqual("this \"is a\" test", Actual);
+      string Actual = @"this ""is a"" test".JsonEncode();
+      Assert.AreEqual(@"this ""is a"" test", Actual);
     }
 
-    [TestMethod(), TestCategory("NC20.Json.JsonEncode")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.JsonEncode")]
     public void JsonEncode_StringWithQuotesAndControlChars_ResultIsEncoded() {
-      string Actual = @"""this ""is\\a"" test""".JsonEncode();
+      string Source = @"""this ""is\\a"" test""";
+      string Actual = Source.JsonEncode();
       Assert.AreEqual(@"""this ""is\\a"" test""", Actual);
     }
 
-    [TestMethod(), TestCategory("NC20.Json.JsonEncode")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.JsonEncode")]
     public void JsonEncode_ObjectWithQuotesAndControlChars_ResultIsEncoded() {
       string Actual = @"{""t"":""{\\""a\\"":1,\\""b\\"":\\""a sample text\\""}"",""c"":2,""r"":""some text""}".JsonEncode();
       Assert.AreEqual(@"{""t"":""{\\""a\\"":1,\\""b\\"":\\""a sample text\\""}"",""c"":2,""r"":""some text""}", Actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.JsonEncode")]
+    public void JsonEncode_ArrayWithStrings_ResultIsEncoded() {
+      string Actual = @"[""Item1"",""Item2""]".JsonEncode();
+      Assert.AreEqual(@"[""Item1"",""Item2""]", Actual);
     }
   }
 }

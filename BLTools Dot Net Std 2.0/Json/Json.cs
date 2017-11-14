@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using BLTools;
+using System.IO;
 
 namespace BLTools.Json {
   public static class Json {
@@ -19,87 +20,132 @@ namespace BLTools.Json {
     private const char CHR_SLASH = '/';
     private const char CHR_BACKSLASH = '\\';
     private const char CHR_DOUBLE_QUOTE = '\"';
+    private const char CHR_BACKSPACE = '\b';
+    private const char CHR_TAB = '\t';
+    private const char CHR_LF = '\n';
+    private const char CHR_CR = '\r';
+    private const char CHR_FORMFEED = '\f';
 
     public static string JsonEncode(this string source) {
 
-      if ( string.IsNullOrEmpty(source) ) {
+      if ( source == null ) {
+        return null;
+      }
+
+      if ( source == "" ) {
         return "";
       }
 
-      StringBuilder RetVal = new StringBuilder();
+      StringBuilder Temp = new StringBuilder(source);
+      using ( StringWriter Writer = new StringWriter(Temp.Replace("/", "\\/")) ) {
+        return Writer.ToString();
+      }
 
-      int i = 0;
-      int LengthOfSource = source.Length;
-      bool InQuote = false;
-      bool IsEscapeChar = false;
+      //int i = 0;
 
-      do {
+      //int InQuoteLevel = 0;
+      ////bool IsEscapeChar = false;
 
-        char CurrentChar = source[i];
-        Trace.WriteLine($"Found [{CurrentChar.ToString().ToByteArray().ToHexString()}],[{CurrentChar}]");
+      //string ProcessedSource = source.ToString();
+      //int LengthOfSource = ProcessedSource.Length;
+
+      //do {
+
+      //  char CurrentChar = ProcessedSource[i];
+      //  Trace.WriteLine($"Found [{CurrentChar.ToString().ToByteArray().ToHexString()}],[{CurrentChar}]");
 
 
-        if ( CurrentChar == CHR_DOUBLE_QUOTE && !InQuote ) {
-          InQuote = true;
-          Trace.WriteLine("InQuote=true");
-          RetVal.Append(CHR_DOUBLE_QUOTE);
-          i++;
-          continue;
-        }
+      //  if ( CurrentChar == CHR_DOUBLE_QUOTE && InQuoteLevel == 0 ) {
+      //    InQuoteLevel++;
+      //    Trace.WriteLine("InQuote=true");
+      //    RetVal.Append(CHR_DOUBLE_QUOTE);
+      //    i++;
+      //    continue;
+      //  }
 
-        if ( CurrentChar == CHR_BACKSLASH && InQuote && IsEscapeChar) {
-          RetVal.Append(CHR_BACKSLASH);
-          IsEscapeChar = false;
-          Trace.WriteLine("IsEscapeChar=false");
-          i++;
-          continue;
-        }
+      //  //if ( CurrentChar == CHR_BACKSLASH && !InQuoteLevel ) {
+      //  //  Trace.WriteLine("Unable to JsonEncode string : invalid json string");
+      //  //  return null;
+      //  //}
 
-        if (CurrentChar == CHR_BACKSLASH && InQuote) {
-          IsEscapeChar = true;
-          RetVal.Append(CHR_BACKSLASH);
-          Trace.WriteLine("IsEscapeChar=true");
-          i++;
-          continue;
-        }
+      //  #region --- Control chars --------------------------------------------
+      //  if ( CurrentChar == CHR_BACKSLASH ) {
+      //    i++;
+      //    if (i<LengthOfSource) {
+      //      CurrentChar = ProcessedSource[i];
+      //      if ( CurrentChar == '"' ) {
+      //        RetVal.Append(CHR_BACKSLASH).Append(CHR_BACKSLASH).Append(CHR_BACKSLASH).Append(CHR_DOUBLE_QUOTE);
+      //        i++;
+      //        continue;
+      //      }
+      //    }
+      //    RetVal.Append(CHR_BACKSLASH).Append(CHR_BACKSLASH);
+      //    i++;
+      //    continue;
+      //  }
 
-        if ( "\t\b\r\n\f/".Contains(CurrentChar) && InQuote) {
-          RetVal = RetVal.Append(CHR_BACKSLASH).Append(CurrentChar);
-          Trace.WriteLine($"Adding control char {CurrentChar.ToString()}");
-          i++;
-          continue;
-        }
-        if ( "tbrnf/".Contains(CurrentChar) && IsEscapeChar ) {
-          RetVal = RetVal.Append(CurrentChar);
-          Trace.WriteLine($"Adding control char {CurrentChar.ToString()}");
-          i++;
-          continue;
-        }
+      //  if ( CurrentChar == CHR_LF ) {
+      //    RetVal.Append(CHR_BACKSLASH).Append('n');
+      //    i++;
+      //    continue;
+      //  }
 
-        if ( CurrentChar == CHR_DOUBLE_QUOTE && InQuote && IsEscapeChar) {
-          RetVal.Append(CHR_DOUBLE_QUOTE);
-          Trace.WriteLine("Adding double quote inside quote");
-          i++;
-          continue;
-        }
+      //  if ( CurrentChar == CHR_CR ) {
+      //    RetVal.Append(CHR_BACKSLASH).Append('r');
+      //    i++;
+      //    continue;
+      //  }
 
-        if ( CurrentChar == CHR_DOUBLE_QUOTE && InQuote) {
-          InQuote = false;
-          Trace.WriteLine("InQuote=false");
-          RetVal.Append(CHR_DOUBLE_QUOTE);
-          i++;
-          continue;
-        }
+      //  if ( CurrentChar == CHR_TAB ) {
+      //    RetVal.Append(CHR_BACKSLASH).Append('t');
+      //    i++;
+      //    continue;
+      //  }
 
-        RetVal = RetVal.Append(CurrentChar);
-        i++;
+      //  if ( CurrentChar == CHR_FORMFEED ) {
+      //    RetVal.Append(CHR_BACKSLASH).Append('f');
+      //    i++;
+      //    continue;
+      //  }
 
-        Trace.WriteLine($"{RetVal.ToString()}");
+      //  if ( CurrentChar == CHR_BACKSPACE ) {
+      //    RetVal.Append(CHR_BACKSLASH).Append('b');
+      //    i++;
+      //    continue;
+      //  }
 
-      } while ( i < LengthOfSource );
+      //  if ( CurrentChar == CHR_SLASH ) {
+      //    RetVal.Append(CHR_BACKSLASH).Append(CHR_SLASH);
+      //    i++;
+      //    continue;
+      //  }
+      //  #endregion --- Control chars --------------------------------------------
 
-      return RetVal.ToString();
-    } 
+      //  if ( CurrentChar == CHR_DOUBLE_QUOTE ) {
+      //    InQuoteLevel--;
+      //    RetVal.Append(CHR_BACKSLASH).Append(CHR_DOUBLE_QUOTE);
+      //    Trace.WriteLine("Adding double quote inside quote");
+      //    i++;
+      //    continue;
+      //  }
+
+      //  //if ( CurrentChar == CHR_DOUBLE_QUOTE && InQuoteLevel ) {
+      //  //  InQuoteLevel--;
+      //  //  Trace.WriteLine("InQuote=false");
+      //  //  RetVal.Append(CHR_DOUBLE_QUOTE);
+      //  //  i++;
+      //  //  continue;
+      //  //}
+
+      //  RetVal = RetVal.Append(CurrentChar);
+      //  i++;
+
+      //  Trace.WriteLine(RetVal.ToString());
+
+      //} while ( i < LengthOfSource );
+
+      //return RetVal.ToString();
+    }
 
     public static string JsonDecode(this string source) {
 

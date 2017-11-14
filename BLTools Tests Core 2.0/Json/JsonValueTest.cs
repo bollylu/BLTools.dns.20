@@ -15,9 +15,9 @@ namespace BLTools.UnitTest.Core20.Json {
 
     #region --- Constants --------------------------------------------
     private const string TEST_STRING_NAME = "StringField";
-    private const string TEST_STRING = "TestContent";
-    private const string TEST_STRING_JSON = "\"TestContent\"";
-    private const string TEST_STRING_JSON_OBJECT = "{\"TestContent\"}";
+    private const string TEST_STRING = @"Test\Content";
+    private const string TEST_STRING_JSON = @"""Test\Content""";
+    private const string TEST_STRING_JSON_OBJECT = @"{""Test\Content""}";
     private const string DEFAULT_STRING = "(default)";
 
     private const string TEST_INT_NAME = "IntField";
@@ -101,80 +101,80 @@ namespace BLTools.UnitTest.Core20.Json {
     #endregion --- Tests support --------------------------------------------
 
 
-    [TestMethod(), TestCategory("NC20.Json.Value")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value")]
     public void CreateJsonValue_EmptyString_ValueOk() {
       JsonString Actual = new JsonString("");
       Assert.IsNotNull(Actual.Value);
       Assert.AreEqual("", Actual.Value);
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Value")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value")]
     public void CreateJsonValue_NonEmptyString_ValueOk() {
       JsonString Actual = new JsonString(TEST_STRING);
       Assert.IsNotNull(Actual.Value);
       Assert.AreEqual(TEST_STRING, Actual.Value);
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Value")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value")]
     public void CreateJsonValue_Int_ValueOk() {
       JsonInt Actual = new JsonInt(TEST_INT);
       Assert.IsNotNull(Actual.Value);
       Assert.AreEqual(TEST_INT, Actual.Value);
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Value")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value")]
     public void CreateJsonValue_Long_ValueOk() {
       JsonLong Actual = new JsonLong(TEST_LONG);
       Assert.IsNotNull(Actual.Value);
       Assert.AreEqual(TEST_LONG, Actual.Value);
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Value")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value")]
     public void CreateJsonValue_Float_ValueOk() {
       JsonFloat Actual = new JsonFloat(TEST_FLOAT);
       Assert.IsNotNull(Actual.Value);
       Assert.AreEqual(TEST_FLOAT, Actual.Value);
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Value")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value")]
     public void CreateJsonValue_Double_ValueOk() {
       JsonDouble Actual = new JsonDouble(TEST_DOUBLE);
       Assert.IsNotNull(Actual.Value);
       Assert.AreEqual(TEST_DOUBLE, Actual.Value);
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Value")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value")]
     public void CreateJsonValue_String_ConvertToJsonOk() {
       JsonString Actual = new JsonString(TEST_STRING);
       Assert.AreEqual(TEST_STRING_JSON, Actual.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Value")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value")]
     public void CreateJsonValue_Int_ConvertToJsonOk() {
       JsonInt Actual = new JsonInt(TEST_INT);
       Assert.AreEqual(TEST_INT_JSON, Actual.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Value")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value")]
     public void CreateJsonValue_Bool_ConvertToJsonOk() {
       JsonBool Actual = new JsonBool(TEST_BOOL);
       Assert.AreEqual(TEST_BOOL_JSON, Actual.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Value")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value")]
     public void CreateJsonValue_DateTime_ConvertToJsonOk() {
       JsonDateTime Actual = new JsonDateTime(TEST_DATETIME);
       Assert.AreEqual(TEST_DATETIME_JSON, Actual.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Value.Parse")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value.Parse")]
     public void ParseJsonValue_String_JsonStringOk() {
       IJsonValue Actual = JsonValue.Parse(TEST_STRING_JSON);
       Assert.IsInstanceOfType(Actual, typeof(JsonString));
       Assert.AreEqual(TEST_STRING_JSON, Actual.RenderAsString());
     }
 
-    [TestMethod(), TestCategory("NC20.Json.Value.Parse")]
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value.Parse")]
     public void ParseJsonValue_Int_JsonLongOk() {
       IJsonValue Actual = JsonValue.Parse(TEST_INT_JSON);
       Assert.IsInstanceOfType(Actual, typeof(JsonInt));

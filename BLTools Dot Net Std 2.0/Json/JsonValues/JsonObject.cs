@@ -42,11 +42,62 @@ namespace BLTools.Json {
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
     #region Public methods
+
+    #region --- AddItem --------------------------------------------
     public virtual void AddItem(IJsonPair jsonPair) {
       lock ( _JsonLock ) {
         Items.Add(jsonPair);
       }
     }
+
+    public virtual void AddItem(string key, IJsonValue jsonValue) {
+      lock ( _JsonLock ) {
+        Items.Add(new JsonPair(key, jsonValue));
+      }
+    }
+
+    public virtual void AddItem(string key, string jsonValue) {
+      lock ( _JsonLock ) {
+        Items.Add(new JsonPair(key, jsonValue));
+      }
+    }
+
+    public virtual void AddItem(string key, int jsonValue) {
+      lock ( _JsonLock ) {
+        Items.Add(new JsonPair(key, jsonValue));
+      }
+    }
+
+    public virtual void AddItem(string key, long jsonValue) {
+      lock ( _JsonLock ) {
+        Items.Add(new JsonPair(key, jsonValue));
+      }
+    }
+
+    public virtual void AddItem(string key, float jsonValue) {
+      lock ( _JsonLock ) {
+        Items.Add(new JsonPair(key, jsonValue));
+      }
+    }
+
+    public virtual void AddItem(string key, double jsonValue) {
+      lock ( _JsonLock ) {
+        Items.Add(new JsonPair(key, jsonValue));
+      }
+    }
+
+    public virtual void AddItem(string key, bool jsonValue) {
+      lock ( _JsonLock ) {
+        Items.Add(new JsonPair(key, jsonValue));
+      }
+    }
+
+    public virtual void AddItem(string key, DateTime jsonValue) {
+      lock ( _JsonLock ) {
+        Items.Add(new JsonPair(key, jsonValue));
+      }
+    } 
+    #endregion --- AddItem --------------------------------------------
 
     public void Clear() {
       lock ( _JsonLock ) {
@@ -161,6 +212,7 @@ namespace BLTools.Json {
       }
     }
 
+    #region --- SafeGetValue --------------------------------------------
     public T SafeGetValueFirst<T>(Func<IJsonPair, bool> predicate) {
       return SafeGetValueFirst<T>(predicate, default(T));
     }
@@ -228,7 +280,9 @@ namespace BLTools.Json {
     }
     public T SafeGetValueSingle<T>(string key, T defaultValue) {
       return SafeGetValueFirst<T>(x => x.Key.ToLowerInvariant() == key.ToLowerInvariant(), defaultValue);
-    }
+    } 
+    #endregion --- SafeGetValue --------------------------------------------
+
     #endregion Public methods
 
     public static JsonObject Parse(string source) {
