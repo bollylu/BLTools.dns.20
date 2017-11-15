@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace BLTools.Json {
-  public class JsonValueCollection : List<IJsonValue>, IDisposable {
+  internal class JsonValueCollection : List<IJsonValue>, IDisposable {
 
     private object _LockCollection = new object();
 

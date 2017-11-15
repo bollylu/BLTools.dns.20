@@ -4,7 +4,7 @@ using System.Text;
 using System.Linq;
 
 namespace BLTools.Json {
-  public class JsonPairCollection : List<IJsonPair>, IDisposable {
+  internal class JsonPairCollection : List<IJsonPair>, IDisposable {
 
     public void Dispose() {
       foreach(IJsonPair ItemItem in this) {
