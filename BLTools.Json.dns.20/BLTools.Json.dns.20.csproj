@@ -2,8 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>BLTools.Json</AssemblyName>
+    <AssemblyName>BLTools.Json.dns.20</AssemblyName>
     <RootNamespace>BLTools.Json</RootNamespace>
+    <Authors>Luc Bolly</Authors>
+    <Company />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

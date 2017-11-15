@@ -286,7 +286,7 @@ namespace BLTools.UnitTest.Core20.Json {
     public void ParseJsonPair_StringArrayWithReservedCharsInString_ValueOk() {
       string Source = @"{""Identifier"":[12.98,""toto"",48,true,""[\""second level, no 1\"",\""second level : 2\""]""]}";
       JsonObject SourceObject = JsonValue.Parse(Source) as JsonObject;
-      IJsonPair Actual = SourceObject.Items[0];
+      IJsonPair Actual = SourceObject[0];
       Assert.AreEqual("Identifier", Actual.Key);
       Assert.IsInstanceOfType(Actual.Content, typeof(JsonArray));
       Assert.IsInstanceOfType(Actual.ArrayContent[0], typeof(JsonDouble));

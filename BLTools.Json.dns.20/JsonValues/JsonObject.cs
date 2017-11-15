@@ -9,10 +9,9 @@ using System.Collections;
 namespace BLTools.Json {
   public class JsonObject : IJsonValue, IEnumerable<IJsonPair> {
 
-    public static JsonObject Empty = new JsonObject();
+    public readonly static JsonObject Empty = new JsonObject();
 
-    public readonly JsonPairCollection Items = new JsonPairCollection();
-
+    private readonly JsonPairCollection Items = new JsonPairCollection();
     private object _JsonLock = new object();
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
@@ -42,58 +41,57 @@ namespace BLTools.Json {
     }
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
-    #region Public methods
-
+    #region --- Items management --------------------------------------------
     #region --- AddItem --------------------------------------------
-    public virtual void AddItem(IJsonPair jsonPair) {
+    public virtual void Add(IJsonPair jsonPair) {
       lock ( _JsonLock ) {
         Items.Add(jsonPair);
       }
     }
 
-    public virtual void AddItem(string key, IJsonValue jsonValue) {
+    public virtual void Add(string key, IJsonValue jsonValue) {
       lock ( _JsonLock ) {
         Items.Add(new JsonPair(key, jsonValue));
       }
     }
 
-    public virtual void AddItem(string key, string jsonValue) {
+    public virtual void Add(string key, string jsonValue) {
       lock ( _JsonLock ) {
         Items.Add(new JsonPair(key, jsonValue));
       }
     }
 
-    public virtual void AddItem(string key, int jsonValue) {
+    public virtual void Add(string key, int jsonValue) {
       lock ( _JsonLock ) {
         Items.Add(new JsonPair(key, jsonValue));
       }
     }
 
-    public virtual void AddItem(string key, long jsonValue) {
+    public virtual void Add(string key, long jsonValue) {
       lock ( _JsonLock ) {
         Items.Add(new JsonPair(key, jsonValue));
       }
     }
 
-    public virtual void AddItem(string key, float jsonValue) {
+    public virtual void Add(string key, float jsonValue) {
       lock ( _JsonLock ) {
         Items.Add(new JsonPair(key, jsonValue));
       }
     }
 
-    public virtual void AddItem(string key, double jsonValue) {
+    public virtual void Add(string key, double jsonValue) {
       lock ( _JsonLock ) {
         Items.Add(new JsonPair(key, jsonValue));
       }
     }
 
-    public virtual void AddItem(string key, bool jsonValue) {
+    public virtual void Add(string key, bool jsonValue) {
       lock ( _JsonLock ) {
         Items.Add(new JsonPair(key, jsonValue));
       }
     }
 
-    public virtual void AddItem(string key, DateTime jsonValue) {
+    public virtual void Add(string key, DateTime jsonValue) {
       lock ( _JsonLock ) {
         Items.Add(new JsonPair(key, jsonValue));
       }
@@ -104,8 +102,10 @@ namespace BLTools.Json {
       lock ( _JsonLock ) {
         Items.Clear();
       }
-    }
+    } 
+    #endregion --- Items management --------------------------------------------
 
+    #region --- Rendering --------------------------------------------
     public string RenderAsString(bool formatted = false, int indent = 0) {
       if ( Items.Count() == 0 ) {
         if ( formatted ) {
@@ -211,7 +211,8 @@ namespace BLTools.Json {
           }
         }
       }
-    }
+    } 
+    #endregion --- Rendering --------------------------------------------
 
     #region --- SafeGetValue --------------------------------------------
     public T SafeGetValueFirst<T>(Func<IJsonPair, bool> predicate) {
@@ -284,8 +285,7 @@ namespace BLTools.Json {
     }
     #endregion --- SafeGetValue --------------------------------------------
 
-    #endregion Public methods
-
+    #region --- Parsing from a string --------------------------------------------
     public static JsonObject Parse(string source) {
 
       #region === Validate parameters ===
@@ -308,7 +308,7 @@ namespace BLTools.Json {
       JsonObject RetVal = new JsonObject();
 
       foreach ( string PairItem in _GetNextPair(objectContent) ) {
-        RetVal.AddItem(JsonPair.Parse(PairItem));
+        RetVal.Add(JsonPair.Parse(PairItem));
       }
 
       return RetVal;
@@ -401,7 +401,7 @@ namespace BLTools.Json {
           }
 
 
-          if ( CurrentChar == Json.CHR_DOUBLE_QUOTE && !NextCharIsControlChar) {
+          if ( CurrentChar == Json.CHR_DOUBLE_QUOTE && !NextCharIsControlChar ) {
             RetVal.Append(CurrentChar);
             InQuote = !InQuote;
             i++;
@@ -490,6 +490,43 @@ namespace BLTools.Json {
       yield break;
 
     }
+    #endregion --- Parsing from a string --------------------------------------------
+
+    #region --- Operators --------------------------------------------
+    public static implicit operator Dictionary<string, IJsonValue>(JsonObject source) {
+      if ( source == null ) {
+        return null;
+      }
+
+      Dictionary<string, IJsonValue> RetVal = new Dictionary<string, IJsonValue>();
+      if ( source.Count() == 0 ) {
+        return RetVal;
+      }
+
+      foreach ( IJsonPair JsonPairItem in source ) {
+        RetVal.Add(JsonPairItem.Key, JsonPairItem.Content);
+      }
+
+      return RetVal;
+    }
+
+    public static implicit operator Dictionary<string, string>(JsonObject source) {
+      if ( source == null ) {
+        return null;
+      }
+
+      Dictionary<string, string> RetVal = new Dictionary<string, string>();
+      if ( source.Count() == 0 ) {
+        return RetVal;
+      }
+
+      foreach ( IJsonPair JsonPairItem in source ) {
+        RetVal.Add(JsonPairItem.Key, JsonPairItem.Content.RenderAsString());
+      }
+
+      return RetVal;
+    } 
+    #endregion --- Operators --------------------------------------------
 
     #region --- IEnumerable<IJsonValue> --------------------------------------------
     public IEnumerator<IJsonPair> GetEnumerator() {
@@ -500,5 +537,24 @@ namespace BLTools.Json {
       return ( (IEnumerable<IJsonPair>)Items ).GetEnumerator();
     }
     #endregion --- IEnumerable<IJsonValue> --------------------------------------------
+
+    #region --- Indexer(s) --------------------------------------------
+    public IJsonPair this[int index] {
+      get {
+        if ( index < 0 || index > Items.Count ) {
+          return null;
+        }
+        return Items[index];
+      }
+    }
+    public IJsonValue this[string key] {
+      get {
+        if ( key == null ) {
+          return null;
+        }
+        return Items[key].Content;
+      }
+    } 
+    #endregion --- Indexer(s) --------------------------------------------
   }
 }

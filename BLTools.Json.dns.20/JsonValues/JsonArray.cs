@@ -9,10 +9,9 @@ using System.Collections;
 namespace BLTools.Json {
   public class JsonArray : IJsonValue, IEnumerable<IJsonValue> {
 
-    public static JsonArray Empty => new JsonArray();
+    public readonly static JsonArray Empty = new JsonArray();
 
     private readonly JsonValueCollection Items = new JsonValueCollection();
-
     private object _JsonLock = new object();
 
     #region --- Constructor(s) --------------------------------------------
@@ -73,8 +72,7 @@ namespace BLTools.Json {
     }
     #endregion --- Constructor(s) --------------------------------------------
 
-    #region Public methods
-
+    #region --- Items management --------------------------------------------
     public void Add(params IJsonValue[] newValue) {
       if ( newValue == null ) {
         return;
@@ -91,6 +89,14 @@ namespace BLTools.Json {
       }
     }
 
+    public void Clear() {
+      lock ( _JsonLock ) {
+        Items.Clear();
+      }
+    }
+    #endregion --- Items management --------------------------------------------
+
+    #region --- Rendering --------------------------------------------
     public string RenderAsString(bool formatted = false, int indent = 0) {
       if ( Items.Count() == 0 ) {
         if ( formatted ) {
@@ -192,8 +198,8 @@ namespace BLTools.Json {
           }
         }
       }
-    }
-    #endregion Public methods
+    } 
+    #endregion --- Rendering --------------------------------------------
 
     #region --- Parsing from a string --------------------------------------------
     public static JsonArray Parse(string source) {
@@ -359,11 +365,11 @@ namespace BLTools.Json {
       }
 
       List<IJsonValue> RetVal = new List<IJsonValue>();
-      if ( source.Items.Count == 0 ) {
+      if ( source.Count() == 0 ) {
         return RetVal;
       }
 
-      foreach ( IJsonValue ValueItem in source.Items ) {
+      foreach ( IJsonValue ValueItem in source ) {
         RetVal.Add(ValueItem);
       }
 
@@ -375,14 +381,14 @@ namespace BLTools.Json {
         return null;
       }
 
-      int ItemsCount = source.Items.Count;
+      int ItemsCount = source.Count();
       IJsonValue[] RetVal = new IJsonValue[ItemsCount];
       if ( ItemsCount == 0 ) {
         return RetVal;
       }
 
       for ( int i = 0; i < ItemsCount; i++ ) {
-        RetVal[i] = source.Items[i];
+        RetVal[i] = source[i];
       }
 
       return RetVal;
@@ -399,6 +405,7 @@ namespace BLTools.Json {
     }
     #endregion --- IEnumerable<IJsonValue> --------------------------------------------
 
+    #region --- Indexer(s) --------------------------------------------
     public IJsonValue this[int index] {
       get {
         if ( index < 0 || index > Items.Count ) {
@@ -406,6 +413,7 @@ namespace BLTools.Json {
         }
         return Items[index];
       }
-    }
+    } 
+    #endregion --- Indexer(s) --------------------------------------------
   }
 }

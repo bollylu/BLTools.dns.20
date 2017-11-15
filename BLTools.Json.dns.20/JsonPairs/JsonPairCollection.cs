@@ -23,6 +23,17 @@ namespace BLTools.Json {
       return RetVal.ToString();
     }
 
-
+    public IJsonPair this[string key] {
+      get {
+        if ( key == null ) {
+          return null;
+        }
+        int Index = this.FindIndex(x => x.Key == key);
+        if (Index==-1) {
+          return null;
+        }
+        return this[Index];
+      }
+    }
   }
 }

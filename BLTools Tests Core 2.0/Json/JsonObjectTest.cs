@@ -3,6 +3,7 @@ using BLTools.Json;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 namespace BLTools.UnitTest.Core20.Json {
@@ -103,8 +104,7 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonString Source = new JsonString(TEST_STRING);
       JsonPair PairSource = new JsonPair(TEST_STRING_NAME, Source);
       JsonObject Actual = new JsonObject(PairSource);
-      Assert.IsNotNull(Actual.Items);
-      Assert.AreEqual(1, Actual.Items.Count);
+      Assert.AreEqual(1, Actual.Count());
       Assert.AreEqual(TEST_STRING_JSON_OBJECT, Actual.RenderAsString());
     }
 
@@ -112,8 +112,7 @@ namespace BLTools.UnitTest.Core20.Json {
     public void CreateJsonObject_OneStringDirect_DataOk() {
       JsonPair PairSource = new JsonPair(TEST_STRING_NAME, TEST_STRING);
       JsonObject Actual = new JsonObject(PairSource);
-      Assert.IsNotNull(Actual.Items);
-      Assert.AreEqual(1, Actual.Items.Count);
+      Assert.AreEqual(1, Actual.Count());
       Assert.AreEqual(TEST_STRING_JSON_OBJECT, Actual.RenderAsString());
     }
 
@@ -122,9 +121,8 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonPair PairSource1 = new JsonPair(TEST_STRING_NAME, TEST_STRING);
       JsonPair PairSource2 = new JsonPair(TEST_STRING_NAME, $"+++{TEST_STRING}+++");
       JsonObject Actual = new JsonObject(PairSource1);
-      Actual.AddItem(PairSource2);
-      Assert.IsNotNull(Actual.Items);
-      Assert.AreEqual(2, Actual.Items.Count);
+      Actual.Add(PairSource2);
+      Assert.AreEqual(2, Actual.Count());
       Assert.AreEqual("{\"StringField\":\"TestContent\",\"StringField\":\"+++TestContent+++\"}", Actual.RenderAsString());
     }
 
@@ -133,9 +131,8 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonPair PairSource1 = new JsonPair(TEST_STRING_NAME, TEST_STRING);
       JsonPair PairSource2 = new JsonPair(TEST_INT_NAME, TEST_INT);
       JsonObject Actual = new JsonObject(PairSource1);
-      Actual.AddItem(PairSource2);
-      Assert.IsNotNull(Actual.Items);
-      Assert.AreEqual(2, Actual.Items.Count);
+      Actual.Add(PairSource2);
+      Assert.AreEqual(2, Actual.Count());
       Assert.AreEqual($"{{{TEST_STRING_JSON_PAIR},{TEST_INT_JSON_PAIR}}}", Actual.RenderAsString());
     }
 
@@ -144,10 +141,10 @@ namespace BLTools.UnitTest.Core20.Json {
       string Source = "{\"Identifier\":\"Data\"}";
 
       JsonObject Actual = JsonObject.Parse(Source);
-      Assert.AreEqual(1, Actual.Items.Count);
-      Assert.AreEqual("Identifier", Actual.Items[0].Key);
-      Assert.IsInstanceOfType(Actual.Items[0].Content, typeof(JsonString));
-      Assert.AreEqual("Data", Actual.Items[0].StringContent.Value);
+      Assert.AreEqual(1, Actual.Count());
+      Assert.AreEqual("Identifier", Actual[0].Key);
+      Assert.IsInstanceOfType(Actual[0].Content, typeof(JsonString));
+      Assert.AreEqual("Data", Actual[0].StringContent.Value);
     }
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Object.Parse")]
@@ -155,12 +152,12 @@ namespace BLTools.UnitTest.Core20.Json {
       string Source = "{\"Identifier\":\"Data\",\"numeric\":3.14}";
 
       JsonObject Actual = JsonObject.Parse(Source);
-      Assert.AreEqual(2, Actual.Items.Count);
-      Assert.AreEqual("Identifier", Actual.Items[0].Key);
-      Assert.AreEqual("numeric", Actual.Items[1].Key);
-      Assert.IsInstanceOfType(Actual.Items[0].Content, typeof(JsonString));
-      Assert.IsInstanceOfType(Actual.Items[1].Content, typeof(JsonDouble));
-      Assert.AreEqual(3.14d, Actual.Items[1].DoubleContent.Value);
+      Assert.AreEqual(2, Actual.Count());
+      Assert.AreEqual("Identifier", Actual[0].Key);
+      Assert.AreEqual("numeric", Actual[1].Key);
+      Assert.IsInstanceOfType(Actual[0].Content, typeof(JsonString));
+      Assert.IsInstanceOfType(Actual[1].Content, typeof(JsonDouble));
+      Assert.AreEqual(3.14d, Actual[1].DoubleContent.Value);
       Assert.AreEqual(Source, Actual.RenderAsString());
     }
 
@@ -169,7 +166,7 @@ namespace BLTools.UnitTest.Core20.Json {
       string Source = $"{{{CRLF}  \"Identifier\" : \"Data\",{CRLF}  \"numeric\" : 3.14{CRLF}}}";
 
       JsonObject Actual = JsonObject.Parse(Source);
-      Assert.AreEqual(2, Actual.Items.Count);
+      Assert.AreEqual(2, Actual.Count());
       Assert.AreEqual(Source, Actual.RenderAsString(true));
       Debug.WriteLine(Actual.RenderAsString(true));
     }
@@ -179,12 +176,11 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonString Source = new JsonString(TEST_STRING);
       JsonPair PairSource = new JsonPair(TEST_STRING_NAME, Source);
       JsonObject Actual = new JsonObject(PairSource);
-      Assert.IsNotNull(Actual.Items);
-      Assert.AreEqual(1, Actual.Items.Count);
+      Assert.AreEqual(1, Actual.Count());
       byte[] SourceAsBytes = TEST_STRING_JSON_OBJECT.ToByteArray();
       byte[] ActualAsBytes = Actual.RenderAsBytes();
       Assert.AreEqual(Encoding.UTF8.GetBytes(TEST_STRING_JSON_OBJECT).Length, ActualAsBytes.Length);
-      for(int i=0; i<ActualAsBytes.Length; i++ ) {
+      for ( int i = 0; i < ActualAsBytes.Length; i++ ) {
         Assert.AreEqual(SourceAsBytes[i], ActualAsBytes[i]);
       }
     }
