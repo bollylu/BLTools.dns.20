@@ -44,7 +44,7 @@ namespace BLTools.UnitTest.Core20.Json {
 
     private const string TEST_DATETIME_NAME = "DateTimeField";
     private static DateTime TEST_DATETIME = DateTime.Today;
-    private static string TEST_DATETIME_JSON = $"\"{DateTime.Today.ToString("s")}\"";
+    private static string TEST_DATETIME_JSON = $"\"{TEST_DATETIME.ToString("s")}\"";
     private static DateTime DEFAULT_DATETIME = DateTime.MinValue;
 
     private const string TEST_BOOL_NAME = "BoolField";
@@ -98,6 +98,7 @@ namespace BLTools.UnitTest.Core20.Json {
     //}
     //
     #endregion 
+
     #endregion --- Tests support --------------------------------------------
 
 
@@ -145,31 +146,31 @@ namespace BLTools.UnitTest.Core20.Json {
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value")]
     public void CreateJsonValue_String_ConvertToJsonOk() {
-      JsonString Actual = new JsonString(TEST_STRING);
+      IJsonValue Actual = new JsonString(TEST_STRING);
       Assert.AreEqual(TEST_STRING_JSON, Actual.RenderAsString());
     }
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value")]
     public void CreateJsonValue_Int_ConvertToJsonOk() {
-      JsonInt Actual = new JsonInt(TEST_INT);
+      IJsonValue Actual = new JsonInt(TEST_INT);
       Assert.AreEqual(TEST_INT_JSON, Actual.RenderAsString());
     }
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value")]
     public void CreateJsonValue_Bool_ConvertToJsonOk() {
-      JsonBool Actual = new JsonBool(TEST_BOOL);
+      IJsonValue Actual = new JsonBool(TEST_BOOL);
       Assert.AreEqual(TEST_BOOL_JSON, Actual.RenderAsString());
     }
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value")]
     public void CreateJsonValue_DateTime_ConvertToJsonOk() {
-      JsonDateTime Actual = new JsonDateTime(TEST_DATETIME);
+      IJsonValue Actual = new JsonDateTime(TEST_DATETIME);
       Assert.AreEqual(TEST_DATETIME_JSON, Actual.RenderAsString());
     }
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Value.Parse")]
     public void ParseJsonValue_String_JsonStringOk() {
-      JsonString Actual = JsonValue.Parse(TEST_STRING_JSON) as JsonString;
+      IJsonValue Actual = JsonValue.Parse(TEST_STRING_JSON);
       Assert.IsInstanceOfType(Actual, typeof(JsonString));
       Assert.AreEqual(TEST_STRING_JSON, Actual.RenderAsString());
     }

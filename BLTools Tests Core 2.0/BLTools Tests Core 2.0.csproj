@@ -18,6 +18,7 @@
     <ProjectReference Include="..\BLTools Dot Net Std 2.0\BLTools Dot Net Std 2.0.csproj" />
     <ProjectReference Include="..\BLTools.Data.dns.20\BLTools.Data.dns.20.csproj" />
     <ProjectReference Include="..\BLTools.DataModels.dns.20\BLTools.DataModels.dns.20.csproj" />
+    <ProjectReference Include="..\BLTools.Json.dns.20\BLTools.Json.dns.20.csproj" />
     <ProjectReference Include="..\BLTools.SQL.dns.20\BLTools.SQL.dns.20.csproj" />
   </ItemGroup>
 

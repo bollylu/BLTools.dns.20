@@ -2,6 +2,7 @@
 using BLTools.Json;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace BLTools.UnitTest.Core20.Json {
 
@@ -141,7 +142,7 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonPair Actual = new JsonPair("TestArray", SourceArray);
       Assert.IsNotNull(Actual.Content);
       Assert.AreEqual("TestArray", Actual.Key);
-      Assert.AreEqual(2, Actual.ArrayContent.Items.Count);
+      Assert.AreEqual(2, Actual.ArrayContent.Count());
       Assert.AreEqual($"\"TestArray\":[\"{TEST_STRING}\",{TEST_INT_JSON}]", Actual.RenderAsString());
     }
     #endregion --- Tests for constructors --------------------------------------------
@@ -260,10 +261,10 @@ namespace BLTools.UnitTest.Core20.Json {
       Assert.AreEqual("Identifier", Actual.Key);
       Assert.IsInstanceOfType(Actual.Content, typeof(JsonArray));
       Assert.AreEqual(Source, Actual.RenderAsString());
-      Assert.IsInstanceOfType(Actual.ArrayContent.Items[0], typeof(JsonDouble));
-      Assert.IsInstanceOfType(Actual.ArrayContent.Items[1], typeof(JsonString));
-      Assert.IsInstanceOfType(Actual.ArrayContent.Items[2], typeof(JsonInt));
-      Assert.IsInstanceOfType(Actual.ArrayContent.Items[3], typeof(JsonBool));
+      Assert.IsInstanceOfType(Actual.ArrayContent[0], typeof(JsonDouble));
+      Assert.IsInstanceOfType(Actual.ArrayContent[1], typeof(JsonString));
+      Assert.IsInstanceOfType(Actual.ArrayContent[2], typeof(JsonInt));
+      Assert.IsInstanceOfType(Actual.ArrayContent[3], typeof(JsonBool));
     }
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Pair.Parse")]
@@ -274,11 +275,11 @@ namespace BLTools.UnitTest.Core20.Json {
       Assert.AreEqual("Identifier", Actual.Key);
       Assert.IsInstanceOfType(Actual.Content, typeof(JsonArray));
       Assert.AreEqual(Source, Actual.RenderAsString());
-      Assert.IsInstanceOfType(Actual.ArrayContent.Items[0], typeof(JsonDouble));
-      Assert.IsInstanceOfType(Actual.ArrayContent.Items[1], typeof(JsonString));
-      Assert.IsInstanceOfType(Actual.ArrayContent.Items[2], typeof(JsonInt));
-      Assert.IsInstanceOfType(Actual.ArrayContent.Items[3], typeof(JsonBool));
-      Assert.IsInstanceOfType(Actual.ArrayContent.Items[4], typeof(JsonArray));
+      Assert.IsInstanceOfType(Actual.ArrayContent[0], typeof(JsonDouble));
+      Assert.IsInstanceOfType(Actual.ArrayContent[1], typeof(JsonString));
+      Assert.IsInstanceOfType(Actual.ArrayContent[2], typeof(JsonInt));
+      Assert.IsInstanceOfType(Actual.ArrayContent[3], typeof(JsonBool));
+      Assert.IsInstanceOfType(Actual.ArrayContent[4], typeof(JsonArray));
     }
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Pair.Parse")]
@@ -288,11 +289,11 @@ namespace BLTools.UnitTest.Core20.Json {
       IJsonPair Actual = SourceObject.Items[0];
       Assert.AreEqual("Identifier", Actual.Key);
       Assert.IsInstanceOfType(Actual.Content, typeof(JsonArray));
-      Assert.IsInstanceOfType(Actual.ArrayContent.Items[0], typeof(JsonDouble));
-      Assert.IsInstanceOfType(Actual.ArrayContent.Items[1], typeof(JsonString));
-      Assert.IsInstanceOfType(Actual.ArrayContent.Items[2], typeof(JsonInt));
-      Assert.IsInstanceOfType(Actual.ArrayContent.Items[3], typeof(JsonBool));
-      Assert.IsInstanceOfType(Actual.ArrayContent.Items[4], typeof(JsonString));
+      Assert.IsInstanceOfType(Actual.ArrayContent[0], typeof(JsonDouble));
+      Assert.IsInstanceOfType(Actual.ArrayContent[1], typeof(JsonString));
+      Assert.IsInstanceOfType(Actual.ArrayContent[2], typeof(JsonInt));
+      Assert.IsInstanceOfType(Actual.ArrayContent[3], typeof(JsonBool));
+      Assert.IsInstanceOfType(Actual.ArrayContent[4], typeof(JsonString));
     }
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Pair.Parse")]

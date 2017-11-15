@@ -3,7 +3,9 @@ using BLTools.Json;
 using BLTools.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace BLTools.UnitTest.Core20.Json {
 
@@ -97,7 +99,7 @@ namespace BLTools.UnitTest.Core20.Json {
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Array")]
     public void CreateJsonArray_EmptyConstructor_DefaultData() {
       JsonArray Actual = new JsonArray();
-      Assert.AreEqual(0, Actual.Items.Count);
+      Assert.AreEqual(0, Actual.Count());
     }
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Array")]
@@ -105,7 +107,7 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonString Source1 = new JsonString(TEST_STRING);
       JsonInt Source2 = new JsonInt(TEST_INT);
       JsonArray Actual = new JsonArray(Source1, Source2);
-      Assert.AreEqual(2, Actual.Items.Count);
+      Assert.AreEqual(2, Actual.Count());
       Assert.AreEqual($@"[{TEST_STRING_JSON},{TEST_INT_JSON}]", Actual.RenderAsString());
     }
 
@@ -114,9 +116,9 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonString Source1 = new JsonString(TEST_STRING);
       JsonInt Source2 = new JsonInt(TEST_INT);
       JsonArray Actual = new JsonArray();
-      Actual.Items.Add(Source1);
-      Actual.Items.Add(Source2);
-      Assert.AreEqual(2, Actual.Items.Count);
+      Actual.Add(Source1);
+      Actual.Add(Source2);
+      Assert.AreEqual(2, Actual.Count());
       Assert.AreEqual($@"[{TEST_STRING_JSON},{TEST_INT_JSON}]", Actual.RenderAsString());
     }
 
@@ -125,9 +127,9 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonString Source1 = new JsonString(TEST_STRING);
       JsonString Source2 = new JsonString(TEST_STRING);
       JsonArray Actual = new JsonArray();
-      Actual.Items.Add(Source1);
-      Actual.Items.Add(Source2);
-      Assert.AreEqual(2, Actual.Items.Count);
+      Actual.Add(Source1);
+      Actual.Add(Source2);
+      Assert.AreEqual(2, Actual.Count());
       Assert.AreEqual($"[{TEST_STRING_JSON},{TEST_STRING_JSON}]", Actual.RenderAsString());
     }
 
@@ -135,12 +137,9 @@ namespace BLTools.UnitTest.Core20.Json {
     public void CreateJsonArray_ConstructorEmptyAddArrayInside_DataOk() {
       JsonString Source1 = new JsonString(TEST_STRING);
       JsonInt Source2 = new JsonInt(TEST_INT);
-      JsonArray Actual = new JsonArray();
-      Actual.Items.Add(Source1);
-      Actual.Items.Add(Source2);
-      JsonArray Source3 = new JsonArray(Actual);
-      Actual.Items.Add(Source3);
-      Assert.AreEqual(3, Actual.Items.Count);
+      JsonArray SourceArray = new JsonArray(Source1, Source2);
+      JsonArray Actual = new JsonArray(Source1, Source2, SourceArray);
+      Assert.AreEqual(3, Actual.Count());
       Assert.AreEqual($"[{TEST_STRING_JSON},{TEST_INT_JSON},[{TEST_STRING_JSON},{TEST_INT_JSON}]]", Actual.RenderAsString());
     }
 
@@ -153,7 +152,7 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonArray SourceArray2 = new JsonArray(Source1, Source2);
       JsonArray SourceArray3 = new JsonArray(Source1, Source2, Source3);
       JsonArray Actual = new JsonArray(SourceArray1, SourceArray2, SourceArray3);
-      Assert.AreEqual(3, Actual.Items.Count);
+      Assert.AreEqual(3, Actual.Count());
       TestContext.WriteLine(Actual.RenderAsString());
       Assert.AreEqual($@"[[{{""{TEST_STRING_NAME}"":{TEST_STRING_JSON}}},{{""{TEST_INT_NAME}"":{TEST_INT_JSON}}}],[{{""{TEST_STRING_NAME}"":{TEST_STRING_JSON}}},{{""{TEST_INT_NAME}"":{TEST_INT_JSON}}}],[{{""{TEST_STRING_NAME}"":{TEST_STRING_JSON}}},{{""{TEST_INT_NAME}"":{TEST_INT_JSON}}},{{""{TEST_BOOL_NAME}"":{TEST_BOOL_JSON}}}]]", Actual.RenderAsString());
     }
@@ -166,7 +165,7 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonArray SourceArray2 = new JsonArray(Source2, Source1);
       JsonArray SourceArray3 = new JsonArray(SourceArray1, SourceArray2);
       JsonArray Actual = new JsonArray(SourceArray1, SourceArray2, SourceArray3);
-      Assert.AreEqual(3, Actual.Items.Count);
+      Assert.AreEqual(3, Actual.Count());
       Debug.WriteLine(Actual.RenderAsString());
     }
 
@@ -175,7 +174,7 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonString Source1 = new JsonString(TEST_STRING);
       JsonInt Source2 = new JsonInt(TEST_INT);
       JsonArray Actual = new JsonArray(Source1, Source2);
-      Assert.AreEqual(2, Actual.Items.Count);
+      Assert.AreEqual(2, Actual.Count());
       Trace.WriteLine(TextBox.BuildDynamic(Actual.RenderAsString(true), 0, TextBox.StringAlignmentEnum.Left));
       Assert.AreEqual($"[{CRLF}  {TEST_STRING_JSON},{CRLF}  {TEST_INT_JSON}{CRLF}]", Actual.RenderAsString(true));
     }
@@ -190,7 +189,7 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonArray Actual = new JsonArray(SourceArray1, SourceArray2, SourceArray3);
       Trace.WriteLine(TextBox.BuildDynamic(Actual.RenderAsString(true), 0, TextBox.StringAlignmentEnum.Left));
 
-      Assert.AreEqual(3, Actual.Items.Count);
+      Assert.AreEqual(3, Actual.Count());
     }
 
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Array.RenderAsStringFormatted")]
@@ -202,9 +201,62 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonArray SourceArray2 = new JsonArray(Source1, Source2);
       JsonArray SourceArray3 = new JsonArray(Source1, Source2, Source3);
       JsonArray Actual = new JsonArray(SourceArray1, SourceArray2, SourceArray3);
-      Assert.AreEqual(3, Actual.Items.Count);
+      Assert.AreEqual(3, Actual.Count());
       Debug.WriteLine(Actual.RenderAsString(true));
       Assert.AreEqual($"[{CRLF}  [{CRLF}    {{{CRLF}      \"{TEST_STRING_NAME}\" : {TEST_STRING_JSON}{CRLF}    }},{CRLF}    {{{CRLF}      \"{TEST_INT_NAME}\" : {TEST_INT_JSON}{CRLF}    }}{CRLF}  ],{CRLF}  [{CRLF}    {{{CRLF}      \"{TEST_STRING_NAME}\" : {TEST_STRING_JSON}{CRLF}    }},{CRLF}    {{{CRLF}      \"{TEST_INT_NAME}\" : {TEST_INT_JSON}{CRLF}    }}{CRLF}  ],{CRLF}  [{CRLF}    {{{CRLF}      \"{TEST_STRING_NAME}\" : {TEST_STRING_JSON}{CRLF}    }},{CRLF}    {{{CRLF}      \"{TEST_INT_NAME}\" : {TEST_INT_JSON}{CRLF}    }},{CRLF}    {{{CRLF}      \"{TEST_BOOL_NAME}\" : {TEST_BOOL_JSON}{CRLF}    }}{CRLF}  ]{CRLF}]", Actual.RenderAsString(true));
+    }
+
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Array.ImplicitConversion")]
+    public void JsonArrayEmpty_ConvertToArray_ConvertedOk() {
+      JsonArray Source = JsonArray.Empty;
+      IJsonValue[] Actual = Source;
+      Assert.IsNotNull(Actual);
+      Assert.AreEqual(0, Actual.Length);
+    }
+
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Array.ImplicitConversion")]
+    public void JsonArrayWithContent_ConvertToArray_ConvertedOk() {
+      JsonArray Source = new JsonArray();
+      JsonString SourceString = new JsonString(TEST_STRING);
+      JsonInt SourceInt = new JsonInt(TEST_INT);
+      Source.Add(SourceString, SourceInt);
+      IJsonValue[] Actual = Source;
+      Assert.IsNotNull(Actual);
+      Assert.AreEqual(2, Actual.Length);
+      Assert.IsInstanceOfType(Actual[0], typeof(JsonString));
+      Assert.IsInstanceOfType(Actual[1], typeof(JsonInt));
+    }
+
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Array.ImplicitConversion")]
+    public void JsonArrayEmpty_ConvertToList_ConvertedOk() {
+      JsonArray Source = JsonArray.Empty;
+      List<IJsonValue> Actual = Source;
+      Assert.IsNotNull(Actual);
+      Assert.AreEqual(0, Actual.Count);
+    }
+
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Array.ImplicitConversion")]
+    public void JsonArrayWithContent_ConvertToList_ConvertedOk() {
+      JsonArray Source = new JsonArray();
+      JsonString SourceString = new JsonString(TEST_STRING);
+      JsonInt SourceInt = new JsonInt(TEST_INT);
+      Source.Add(SourceString, SourceInt);
+      List<IJsonValue> Actual = Source;
+      Assert.IsNotNull(Actual);
+      Assert.AreEqual(2, Actual.Count);
+      Assert.IsInstanceOfType(Actual.First(), typeof(JsonString));
+      Assert.IsInstanceOfType(Actual.Last(), typeof(JsonInt));
+    }
+
+    [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Array.Linq")]
+    public void JsonArrayWithContent_Linq_LinqOk() {
+      JsonArray Actual = new JsonArray();
+      JsonString SourceString = new JsonString(TEST_STRING);
+      JsonInt SourceInt = new JsonInt(TEST_INT);
+      Actual.Add(SourceString, SourceInt);
+      Assert.IsInstanceOfType(Actual.First(), typeof(JsonString));
+      Assert.IsInstanceOfType(Actual.Last(), typeof(JsonInt));
+      Assert.AreEqual(1, Actual.OfType<JsonString>().Count());
     }
   }
 }
