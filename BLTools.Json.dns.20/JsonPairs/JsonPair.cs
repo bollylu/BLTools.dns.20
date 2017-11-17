@@ -237,6 +237,9 @@ namespace BLTools.Json {
             return (T)Convert.ChangeType(DateTimeContent.Value, typeof(T));
           case "boolean":
             return (T)Convert.ChangeType(BoolContent.Value, typeof(T));
+          case "jsonarray":
+          case "jsonobject":
+            return (T)Convert.ChangeType(Content, typeof(T));
           default:
             return defaultValue;
         }
