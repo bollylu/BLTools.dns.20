@@ -400,7 +400,6 @@ namespace BLTools.Json {
             continue;
           }
 
-
           if ( CurrentChar == Json.CHR_DOUBLE_QUOTE && !NextCharIsControlChar ) {
             RetVal.Append(CurrentChar);
             InQuote = !InQuote;
@@ -410,6 +409,13 @@ namespace BLTools.Json {
 
           if ( CurrentChar == Json.CHR_DOUBLE_QUOTE && NextCharIsControlChar ) {
             RetVal.Append(Json.CHR_BACKSLASH).Append(Json.CHR_DOUBLE_QUOTE);
+            NextCharIsControlChar = false;
+            i++;
+            continue;
+          }
+
+          if ( CurrentChar == Json.CHR_SLASH && NextCharIsControlChar ) {
+            RetVal.Append(Json.CHR_BACKSLASH).Append(Json.CHR_SLASH);
             NextCharIsControlChar = false;
             i++;
             continue;
@@ -455,10 +461,6 @@ namespace BLTools.Json {
           }
 
           if ( CurrentChar == Json.InnerFieldSeparator ) {
-            if ( InObjectLevel == 0 ) {
-              Trace.WriteLine($"Unable to read content of json string array : invalid format at position {i}");
-              yield break;
-            }
             RetVal.Append(Json.InnerFieldSeparator);
             i++;
             continue;

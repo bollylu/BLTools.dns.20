@@ -267,7 +267,6 @@ namespace BLTools.Json {
             continue;
           }
 
-
           if ( CurrentChar == Json.CHR_DOUBLE_QUOTE && !NextCharIsControlChar ) {
             RetVal.Append(CurrentChar);
             InQuote = !InQuote;
@@ -277,6 +276,13 @@ namespace BLTools.Json {
 
           if ( CurrentChar == Json.CHR_DOUBLE_QUOTE && NextCharIsControlChar ) {
             RetVal.Append(Json.CHR_BACKSLASH).Append(Json.CHR_DOUBLE_QUOTE);
+            NextCharIsControlChar = false;
+            i++;
+            continue;
+          }
+
+          if ( CurrentChar == Json.CHR_SLASH && NextCharIsControlChar ) {
+            RetVal.Append(Json.CHR_BACKSLASH).Append(Json.CHR_SLASH);
             NextCharIsControlChar = false;
             i++;
             continue;

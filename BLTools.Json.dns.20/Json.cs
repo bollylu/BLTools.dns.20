@@ -17,6 +17,7 @@ namespace BLTools.Json {
 
     public const int DEFAULT_INDENT = 2;
 
+    internal const char CHR_SLASH = '/';
     internal const char CHR_BACKSLASH = '\\';
     internal const char CHR_DOUBLE_QUOTE = '\"';
 
