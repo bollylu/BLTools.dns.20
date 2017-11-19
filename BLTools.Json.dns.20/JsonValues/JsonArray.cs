@@ -414,7 +414,7 @@ namespace BLTools.Json {
     #region --- Indexer(s) --------------------------------------------
     public IJsonValue this[int index] {
       get {
-        if ( index < 0 || index > Items.Count ) {
+        if ( index < 0 || index >= Items.Count ) {
           return null;
         }
         return Items[index];

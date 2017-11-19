@@ -543,7 +543,7 @@ namespace BLTools.Json {
     #region --- Indexer(s) --------------------------------------------
     public IJsonPair this[int index] {
       get {
-        if ( index < 0 || index > Items.Count ) {
+        if ( index < 0 || index >= Items.Count ) {
           return null;
         }
         return Items[index];
