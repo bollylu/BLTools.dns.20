@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BLTools.Json {
@@ -7,27 +8,30 @@ namespace BLTools.Json {
 
     public static IJsonValue Parse(string source) {
 
-      if (string.IsNullOrWhiteSpace(source)) {
+      if ( string.IsNullOrWhiteSpace(source) ) {
         return JsonNull.Default;
       }
 
       string ProcessedSource = source.Trim();
 
-      if ( ProcessedSource == "true" || ProcessedSource == "false" ) {
+      if ( ProcessedSource == Json.TRUE_VALUE || ProcessedSource == Json.FALSE_VALUE ) {
         return new JsonBool(ProcessedSource.ToBool());
       }
 
-      if ( ProcessedSource == "null" ) {
+      if ( ProcessedSource == Json.NULL_VALUE ) {
         return JsonNull.Default;
       }
 
-      if ( ProcessedSource.StartsWith("\"") && ProcessedSource.EndsWith("\"")) {
+      char FirstChar = ProcessedSource.First();
+      char LastChar = ProcessedSource.Last();
+
+      if ( FirstChar == Json.CHR_DOUBLE_QUOTE && LastChar == Json.CHR_DOUBLE_QUOTE ) {
         return new JsonString(ProcessedSource.RemoveExternalQuotes());
       }
 
-      if (ProcessedSource.IsNumericOnly()) {
+      if ( ProcessedSource.IsNumericOnly() ) {
         int Dummy;
-        if (int.TryParse(ProcessedSource, out Dummy)) {
+        if ( int.TryParse(ProcessedSource, out Dummy) ) {
           return new JsonInt(ProcessedSource);
         }
         return new JsonLong(ProcessedSource);
@@ -37,11 +41,11 @@ namespace BLTools.Json {
         return new JsonDouble(ProcessedSource);
       }
 
-      if ( ProcessedSource.StartsWith("[") && ProcessedSource.EndsWith("]") ) {
+      if ( FirstChar == Json.START_OF_ARRAY && LastChar == Json.END_OF_ARRAY ) {
         return JsonArray.Parse(ProcessedSource);
       }
 
-      if ( ProcessedSource.StartsWith("{") && ProcessedSource.EndsWith("}") ) {
+      if ( FirstChar == Json.START_OF_OBJECT && LastChar == Json.END_OF_OBJECT ) {
         return JsonObject.Parse(ProcessedSource);
       }
 

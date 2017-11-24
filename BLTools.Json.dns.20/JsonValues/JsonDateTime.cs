@@ -8,6 +8,20 @@ namespace BLTools.Json {
 
     public DateTime? Value { get; set; }
 
+    public const string DEFAULT_RENDER_FORMAT = "s";
+    public static string RenderFormat {
+      get {
+        if (string.IsNullOrWhiteSpace(_RenderFormat)) {
+          return DEFAULT_RENDER_FORMAT;
+        }
+        return _RenderFormat;
+      }
+      set {
+        _RenderFormat = value;
+      }
+    }
+    private static string _RenderFormat;
+
     #region --- Constructor(s) ---------------------------------------------------------------------------------
     public JsonDateTime(DateTime jsonDateTime) {
       Value = jsonDateTime;
@@ -37,7 +51,7 @@ namespace BLTools.Json {
       if ( Value == null ) {
         RetVal.Append(JsonNull.Default.RenderAsString());
       } else {
-        RetVal.Append($"\"{( (DateTime)Value ).ToString("s")}\"");
+        RetVal.Append($"\"{( (DateTime)Value ).ToString(RenderFormat)}\"");
       }
 
       return RetVal.ToString();
@@ -54,7 +68,7 @@ namespace BLTools.Json {
           if ( Value == null ) {
             Writer.Write(JsonNull.Default.RenderAsBytes());
           } else {
-            Writer.Write($"\"{( (DateTime)Value ).ToString("s")}\"");
+            Writer.Write($"\"{( (DateTime)Value ).ToString(RenderFormat)}\"");
           }
 
           return RetVal.ToArray();

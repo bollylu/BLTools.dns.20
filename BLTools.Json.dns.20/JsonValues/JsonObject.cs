@@ -109,9 +109,9 @@ namespace BLTools.Json {
     public string RenderAsString(bool formatted = false, int indent = 0) {
       if ( Items.Count() == 0 ) {
         if ( formatted ) {
-          return $"{StringExtension.Spaces(indent)}{{}}";
+          return $"{StringExtension.Spaces(indent)}{Json.START_OF_OBJECT}{Json.END_OF_OBJECT}";
         } else {
-          return "{}";
+          return $"{Json.START_OF_OBJECT}{Json.END_OF_OBJECT}";
         }
 
       }
@@ -123,14 +123,14 @@ namespace BLTools.Json {
           RetVal.Append($"{StringExtension.Spaces(indent)}");
         }
 
-        RetVal.Append("{");
+        RetVal.Append(Json.START_OF_OBJECT);
         if ( formatted ) {
           RetVal.AppendLine();
         }
 
         foreach ( IJsonPair JsonPairItem in Items ) {
           RetVal.Append(JsonPairItem.RenderAsString(formatted, indent + Json.DEFAULT_INDENT));
-          RetVal.Append(",");
+          RetVal.Append(Json.OUTER_FIELD_SEPARATOR);
           if ( formatted ) {
             RetVal.AppendLine();
           }
@@ -146,7 +146,7 @@ namespace BLTools.Json {
           RetVal.Append($"{StringExtension.Spaces(indent)}");
         }
 
-        RetVal.Append("}");
+        RetVal.Append(Json.END_OF_OBJECT);
 
         return RetVal.ToString();
       }
@@ -165,8 +165,8 @@ namespace BLTools.Json {
               Writer.Write($"{StringExtension.Spaces(indent)}{{}}");
               return RetVal.ToArray();
             } else {
-              Writer.Write('{');
-              Writer.Write('}');
+              Writer.Write(Json.START_OF_OBJECT);
+              Writer.Write(Json.END_OF_OBJECT);
               return RetVal.ToArray();
             }
           }
@@ -177,14 +177,14 @@ namespace BLTools.Json {
               Writer.Write($"{StringExtension.Spaces(indent)}");
             }
 
-            Writer.Write('{');
+            Writer.Write(Json.START_OF_OBJECT);
             if ( formatted ) {
               Writer.WriteLine();
             }
 
             foreach ( IJsonPair JsonPairItem in Items ) {
               Writer.Write(JsonPairItem.RenderAsBytes(formatted, indent + Json.DEFAULT_INDENT));
-              Writer.Write(',');
+              Writer.Write(Json.OUTER_FIELD_SEPARATOR);
               if ( formatted ) {
                 Writer.WriteLine();
               }
@@ -205,7 +205,7 @@ namespace BLTools.Json {
               Writer.Write($"{StringExtension.Spaces(indent)}");
             }
 
-            Writer.Write('}');
+            Writer.Write(Json.END_OF_OBJECT);
 
             return RetVal.ToArray();
           }
@@ -342,7 +342,7 @@ namespace BLTools.Json {
 
           char CurrentChar = ProcessedSource[i];
 
-          if ( CurrentChar == '"' ) {
+          if ( CurrentChar == Json.CHR_DOUBLE_QUOTE ) {
             RetVal.Append(CurrentChar);
             InQuote = !InQuote;
             i++;
@@ -358,7 +358,7 @@ namespace BLTools.Json {
             continue;
           }
 
-          if ( Json.WhiteSpaces.Contains(CurrentChar) ) {
+          if ( Json.WHITE_SPACES.Contains(CurrentChar) ) {
             i++;
             continue;
           }
@@ -372,19 +372,19 @@ namespace BLTools.Json {
 
         #region --- Between key and value --------------------------------------------
         // Skip white spaces
-        while ( i < LengthOfSource && Json.WhiteSpaces.Contains(ProcessedSource[i]) ) {
+        while ( i < LengthOfSource && Json.WHITE_SPACES.Contains(ProcessedSource[i]) ) {
           i++;
         }
 
-        if ( ProcessedSource[i++] != Json.InnerFieldSeparator ) {
+        if ( ProcessedSource[i++] != Json.INNER_FIELD_SEPARATOR ) {
           Trace.WriteLine("Unable to parse Json string : source is invalid");
           yield break;
         }
 
-        RetVal.Append(Json.InnerFieldSeparator);
+        RetVal.Append(Json.INNER_FIELD_SEPARATOR);
 
         // Skip white spaces
-        while ( i < LengthOfSource && Json.WhiteSpaces.Contains(ProcessedSource[i]) ) {
+        while ( i < LengthOfSource && Json.WHITE_SPACES.Contains(ProcessedSource[i]) ) {
           i++;
         }
         #endregion --- Between key and value --------------------------------------------
@@ -427,48 +427,48 @@ namespace BLTools.Json {
             continue;
           }
 
-          if ( Json.WhiteSpaces.Contains(CurrentChar) ) {
+          if ( Json.WHITE_SPACES.Contains(CurrentChar) ) {
             i++;
             continue;
           }
 
-          if ( CurrentChar == '[' ) {
+          if ( CurrentChar == Json.START_OF_ARRAY ) {
             InArrayLevel++;
             RetVal.Append(CurrentChar);
             i++;
             continue;
           }
 
-          if ( CurrentChar == ']' ) {
+          if ( CurrentChar == Json.END_OF_ARRAY ) {
             InArrayLevel--;
             RetVal.Append(CurrentChar);
             i++;
             continue;
           }
 
-          if ( CurrentChar == '{' ) {
+          if ( CurrentChar == Json.START_OF_OBJECT ) {
             InObjectLevel++;
             RetVal.Append(CurrentChar);
             i++;
             continue;
           }
 
-          if ( CurrentChar == '}' ) {
+          if ( CurrentChar == Json.END_OF_OBJECT ) {
             InObjectLevel--;
             RetVal.Append(CurrentChar);
             i++;
             continue;
           }
 
-          if ( CurrentChar == Json.InnerFieldSeparator ) {
-            RetVal.Append(Json.InnerFieldSeparator);
+          if ( CurrentChar == Json.INNER_FIELD_SEPARATOR ) {
+            RetVal.Append(Json.INNER_FIELD_SEPARATOR);
             i++;
             continue;
           }
 
-          if ( CurrentChar == Json.OuterFieldSeparator ) {
+          if ( CurrentChar == Json.OUTER_FIELD_SEPARATOR ) {
             if ( InArrayLevel > 0 || InObjectLevel > 0 ) {
-              RetVal.Append(CurrentChar);
+              RetVal.Append(Json.OUTER_FIELD_SEPARATOR);
               i++;
               continue;
             } else {

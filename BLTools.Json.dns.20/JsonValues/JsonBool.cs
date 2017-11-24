@@ -44,7 +44,7 @@ namespace BLTools.Json {
 
     public override string ToString() {
       StringBuilder RetVal = new StringBuilder();
-      RetVal.Append(Value.HasValue ? Value.ToString() : "null");
+      RetVal.Append(Value.HasValue ? Value.ToString() : Json.NULL_VALUE);
       return RetVal.ToString();
     }
 
@@ -57,7 +57,7 @@ namespace BLTools.Json {
       if ( !Value.HasValue ) {
         RetVal.Append(JsonNull.Default.RenderAsString());
       } else {
-        RetVal.Append((bool)Value ? "true" : "false");
+        RetVal.Append((bool)Value ? Json.TRUE_VALUE : Json.FALSE_VALUE);
       }
 
       return RetVal.ToString();
@@ -74,7 +74,7 @@ namespace BLTools.Json {
           if ( !Value.HasValue ) {
             Writer.Write(JsonNull.Default.RenderAsBytes());
           } else {
-            Writer.Write((bool)Value ? "true" : "false");
+            Writer.Write((bool)Value ? Json.TRUE_VALUE : Json.FALSE_VALUE);
           }
 
           return RetVal.ToArray();

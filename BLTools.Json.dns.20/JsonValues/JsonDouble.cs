@@ -35,7 +35,7 @@ namespace BLTools.Json {
 
     public override string ToString() {
       StringBuilder RetVal = new StringBuilder();
-      RetVal.Append(Value.HasValue ? Value.ToString() : "NaN");
+      RetVal.Append(Value.HasValue ? Value.ToString() : Json.NAN);
       return RetVal.ToString();
     }
 
@@ -46,7 +46,7 @@ namespace BLTools.Json {
         RetVal.Append($"{StringExtension.Spaces(indent)}");
       }
       if ( Value == null ) {
-        RetVal.Append("NaN");
+        RetVal.Append(Json.NAN);
       } else {
         RetVal.Append(( (double)Value ).ToString(CultureInfo.InvariantCulture));
       }
@@ -63,7 +63,7 @@ namespace BLTools.Json {
             Writer.Write($"{StringExtension.Spaces(indent)}");
           }
           if ( Value == null ) {
-            Writer.Write("NaN");
+            Writer.Write(Json.NAN);
           } else {
             Writer.Write(( (double)Value ).ToString(CultureInfo.InvariantCulture));
           }

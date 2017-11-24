@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Linq;
 using System.IO;
+using System.Globalization;
 
 namespace BLTools.Json {
   public class JsonPair : IDisposable, IJsonPair {
@@ -31,7 +32,7 @@ namespace BLTools.Json {
 
     public JsonArray ArrayContent => Content is JsonArray Temp ? Temp : null;
 
-    public JsonObject ObjectContent => Content is JsonObject Temp ? Temp : null; 
+    public JsonObject ObjectContent => Content is JsonObject Temp ? Temp : null;
     #endregion --- Typed content --------------------------------------------
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
@@ -87,10 +88,10 @@ namespace BLTools.Json {
       Content.Dispose();
     }
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
-    
+
     public override string ToString() {
       StringBuilder RetVal = new StringBuilder();
-      RetVal.Append($"{Key} : {Content.ToString()}");
+      RetVal.Append($"{Key} {Json.INNER_FIELD_SEPARATOR} {Content.ToString()}");
       return RetVal.ToString();
     }
 
@@ -99,9 +100,9 @@ namespace BLTools.Json {
 
       if ( formatted ) {
         RetVal.Append($"{StringExtension.Spaces(indent)}");
-        RetVal.Append($"\"{Key}\" : ");
+        RetVal.Append($"\"{Key}\" {Json.INNER_FIELD_SEPARATOR} ");
       } else {
-        RetVal.Append($"\"{Key}\":");
+        RetVal.Append($"\"{Key}\"{Json.INNER_FIELD_SEPARATOR}");
       }
 
       RetVal.Append(Content.RenderAsString(formatted));
@@ -116,9 +117,9 @@ namespace BLTools.Json {
 
           if ( formatted ) {
             Writer.Write($"{StringExtension.Spaces(indent)}");
-            Writer.Write($"\"{Key}\" : ");
+            Writer.Write($"\"{Key}\" {Json.INNER_FIELD_SEPARATOR} ");
           } else {
-            Writer.Write($"\"{Key}\":");
+            Writer.Write($"\"{Key}\"{Json.INNER_FIELD_SEPARATOR}");
           }
 
           Writer.Write(Content.RenderAsBytes(formatted));
@@ -154,7 +155,7 @@ namespace BLTools.Json {
       #endregion === Validate parameters ===
 
       StringBuilder _Key = new StringBuilder();
-      string _Content = "";
+      string _Content;
 
       int LengthOfSource = ProcessedSource.Length;
       bool _InQuote = false;
@@ -197,11 +198,11 @@ namespace BLTools.Json {
       #endregion --- Get the key --------------------------------------------
 
       // Skip white spaces
-      while ( i < ProcessedSource.Length && Json.WhiteSpaces.Contains(ProcessedSource[i]) ) {
+      while ( i < ProcessedSource.Length && Json.WHITE_SPACES.Contains(ProcessedSource[i]) ) {
         i++;
       }
 
-      if ( ProcessedSource[i] != ':' ) {
+      if ( ProcessedSource[i] != Json.INNER_FIELD_SEPARATOR ) {
         Trace.WriteLine("Unable to parse Json string : source is invalid");
         return defaultValue;
       }
@@ -221,28 +222,96 @@ namespace BLTools.Json {
     public T SafeGetValue<T>(T defaultValue) {
       try {
 
-        switch ( typeof(T).Name.ToLowerInvariant() ) {
-          case "string":
+        if ( typeof(T) == typeof(string) ) {
+          if ( Content is JsonString ) {
             return (T)Convert.ChangeType(StringContent.Value, typeof(T));
-          case "int32":
-          case "int64":
-            return (T)Convert.ChangeType(IntContent.Value, typeof(T));
-          case "long":
-            return (T)Convert.ChangeType(LongContent.Value, typeof(T));
-          case "float":
-            return (T)Convert.ChangeType(FloatContent.Value, typeof(T));
-          case "double":
-            return (T)Convert.ChangeType(DoubleContent.Value, typeof(T));
-          case "datetime":
-            return (T)Convert.ChangeType(DateTimeContent.Value, typeof(T));
-          case "boolean":
-            return (T)Convert.ChangeType(BoolContent.Value, typeof(T));
-          case "jsonarray":
-          case "jsonobject":
-            return (T)Convert.ChangeType(Content, typeof(T));
-          default:
-            return defaultValue;
+          }
+          if ( Content is JsonBool ) {
+            return (T)Convert.ChangeType(BoolContent.RenderAsString(), typeof(T));
+          }
+          if ( Content is JsonDateTime ) {
+            return (T)Convert.ChangeType(DateTimeContent.RenderAsString(), typeof(T));
+          }
+          if ( Content is JsonInt ) {
+            return (T)Convert.ChangeType(IntContent.RenderAsString(), typeof(T));
+          }
+          if ( Content is JsonLong ) {
+            return (T)Convert.ChangeType(LongContent.RenderAsString(), typeof(T));
+          }
+          if ( Content is JsonFloat ) {
+            return (T)Convert.ChangeType(FloatContent.RenderAsString(), typeof(T));
+          }
+          if ( Content is JsonDouble ) {
+            return (T)Convert.ChangeType(DoubleContent.RenderAsString(), typeof(T));
+          }
+          if ( Content is JsonArray || Content is JsonObject ) {
+            return (T)Convert.ChangeType(Content.RenderAsString(), typeof(T));
+          }
         }
+
+        if ( typeof(T) == typeof(bool) ) {
+          if ( Content is JsonBool ) {
+            return (T)Convert.ChangeType(BoolContent.Value, typeof(T));
+          }
+          if ( Content is JsonString ) {
+            return (T)Convert.ChangeType(StringContent.Value.ToBool(), typeof(T));
+          }
+        }
+
+        if ( typeof(T) == typeof(JsonArray) && Content is JsonArray ) {
+          return (T)Convert.ChangeType(Content, typeof(T));
+        }
+
+        if ( typeof(T) == typeof(JsonObject) && Content is JsonObject ) {
+          return (T)Convert.ChangeType(Content, typeof(T));
+        }
+
+        if ( typeof(T) == typeof(DateTime) ) {
+          if ( Content is JsonDateTime ) {
+            return (T)Convert.ChangeType(DateTimeContent.Value, typeof(T));
+          }
+          if ( Content is JsonString ) {
+            return (T)Convert.ChangeType(DateTime.Parse(StringContent.Value, DateTimeFormatInfo.InvariantInfo), typeof(T));
+          }
+        }
+
+        if ( typeof(T) == typeof(float) || typeof(T) == typeof(double) || typeof(T) == typeof(int) || typeof(T) == typeof(long) ) {
+          if ( Content is JsonFloat ) {
+            return (T)Convert.ChangeType(FloatContent.Value, typeof(T));
+          }
+          if ( Content is JsonDouble ) {
+            return (T)Convert.ChangeType(DoubleContent.Value, typeof(T));
+          }
+          if ( Content is JsonInt ) {
+            return (T)Convert.ChangeType(IntContent.Value, typeof(T));
+          }
+          if ( Content is JsonLong ) {
+            return (T)Convert.ChangeType(LongContent.Value, typeof(T));
+          }
+        }
+
+        //switch ( typeof(T).Name.ToLowerInvariant() ) {
+        //  //case "string":
+        //  //  return (T)Convert.ChangeType(StringContent.Value, typeof(T));
+        //  //case "int32":
+        //  //case "int64":
+        //  //  return (T)Convert.ChangeType(IntContent.Value, typeof(T));
+        //  //case "long":
+        //  //  return (T)Convert.ChangeType(LongContent.Value, typeof(T));
+        //  //case "float":
+        //  //  return (T)Convert.ChangeType(FloatContent.Value, typeof(T));
+        //  //case "double":
+        //  //  return (T)Convert.ChangeType(DoubleContent.Value, typeof(T));
+        //    //case "datetime":
+        //    //  return (T)Convert.ChangeType(DateTimeContent.Value, typeof(T));
+        //    //case "boolean":
+        //    //  return (T)Convert.ChangeType(BoolContent.Value, typeof(T));
+        //    //case "jsonarray":
+        //    //case "jsonobject":
+        //    //  return (T)Convert.ChangeType(Content, typeof(T));
+        //}
+
+        return defaultValue;
 
       } catch {
         return defaultValue;
