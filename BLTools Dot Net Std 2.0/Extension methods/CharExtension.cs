@@ -22,7 +22,7 @@ namespace BLTools {
     /// <param name="sourceValue">The source string</param>
     /// <returns>True if the assertion succeeds</returns>
     public static bool IsNumericOrBlank(this char sourceValue) {
-      return "0123456789 ".Contains(sourceValue);
+      return sourceValue.IsNumeric() || sourceValue.IsWhiteSpace();
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ namespace BLTools {
     /// <param name="sourceValue">The source string</param>
     /// <returns>True if the assertion succeeds</returns>
     public static bool IsAlphaOrBlank(this char sourceValue) {
-      return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ".Contains(sourceValue);
+      return sourceValue.IsAlpha() || sourceValue.IsWhiteSpace();
     }
 
     /// <summary>
@@ -68,6 +68,24 @@ namespace BLTools {
     /// <returns>True if the assertion succeeds</returns>
     public static bool IsAlphaOrNumericOrBlank(this char sourceValue) {
       return sourceValue.IsAlphaOrBlank() || sourceValue.IsNumeric();
+    }
+
+    /// <summary>
+    /// Indicates if a char is a space character (0x20)
+    /// </summary>
+    /// <param name="sourceValue">The source string</param>
+    /// <returns>True if the assertion succeeds</returns>
+    public static bool IsSpace(this char sourceValue) {
+      return sourceValue == ' ';
+    }
+
+    /// <summary>
+    /// Indicates if a char is a white space character ("space", "tab", "backspace", "formfeed", "CR", "LF")
+    /// </summary>
+    /// <param name="sourceValue">The source string</param>
+    /// <returns>True if the assertion succeeds</returns>
+    public static bool IsWhiteSpace(this char sourceValue) {
+      return char.IsWhiteSpace(sourceValue);
     }
   }
 }

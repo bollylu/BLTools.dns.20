@@ -154,34 +154,38 @@ namespace BLTools.Json {
       }
       #endregion === Validate parameters ===
 
-      StringBuilder _Key = new StringBuilder();
-      string _Content;
-
+      #region --- Get the key --------------------------------------------
       int LengthOfSource = ProcessedSource.Length;
-      bool _InQuote = false;
+      bool InQuote = false;
+      bool GotTheKey = false;
       int i = 0;
 
-      #region --- Get the key --------------------------------------------
-      while ( i < LengthOfSource ) {
-        if ( i == 0 && ProcessedSource[i] == Json.CHR_DOUBLE_QUOTE ) {
-          _InQuote = true;
+      StringBuilder TempKey = new StringBuilder();
+
+      while ( i < LengthOfSource && !GotTheKey) {
+
+        char CurrentChar = ProcessedSource[i];
+
+        if ( i == 0 && CurrentChar == Json.CHR_DOUBLE_QUOTE ) {
+          InQuote = true;
           i++;
           continue;
         }
 
-        if ( i > 0 && ProcessedSource[i] == Json.CHR_DOUBLE_QUOTE && ProcessedSource[i - 1] != Json.CHR_BACKSLASH ) {
-          if ( _InQuote ) {
+        if ( i > 0 && CurrentChar == Json.CHR_DOUBLE_QUOTE && ProcessedSource[i - 1] != Json.CHR_BACKSLASH ) {
+          if ( InQuote ) {
             i++;
-            _InQuote = false;
-            break;
+            InQuote = false;
+            GotTheKey = true;
+            continue;
           } else {
             Trace.WriteLine("Unable to parse Json string : source is invalid");
             return defaultValue;
           }
         }
 
-        if ( i > 0 && _InQuote ) {
-          _Key.Append(ProcessedSource[i]);
+        if ( i > 0 && InQuote ) {
+          TempKey.Append(CurrentChar);
           i++;
           continue;
         }
@@ -191,14 +195,14 @@ namespace BLTools.Json {
 
       }
 
-      if ( _InQuote ) {
+      if ( InQuote || !GotTheKey) {
         Trace.WriteLine("Unable to parse Json string : source is invalid");
         return defaultValue;
       }
       #endregion --- Get the key --------------------------------------------
 
       // Skip white spaces
-      while ( i < ProcessedSource.Length && Json.WHITE_SPACES.Contains(ProcessedSource[i]) ) {
+      while ( i < ProcessedSource.Length && ProcessedSource[i].IsWhiteSpace() ) {
         i++;
       }
 
@@ -208,12 +212,12 @@ namespace BLTools.Json {
       }
 
       #region --- Get the value --------------------------------------------
-      _Content = ProcessedSource.Substring(i + 1).TrimStart();
+      string TempContent = ProcessedSource.Substring(i + 1).TrimStart();
       #endregion --- Get the value --------------------------------------------
 
       JsonPair RetVal = new JsonPair {
-        Key = _Key.ToString(),
-        Content = JsonValue.Parse(_Content)
+        Key = TempKey.ToString(),
+        Content = JsonValue.Parse(TempContent)
       };
 
       return RetVal;
@@ -289,27 +293,6 @@ namespace BLTools.Json {
             return (T)Convert.ChangeType(LongContent.Value, typeof(T));
           }
         }
-
-        //switch ( typeof(T).Name.ToLowerInvariant() ) {
-        //  //case "string":
-        //  //  return (T)Convert.ChangeType(StringContent.Value, typeof(T));
-        //  //case "int32":
-        //  //case "int64":
-        //  //  return (T)Convert.ChangeType(IntContent.Value, typeof(T));
-        //  //case "long":
-        //  //  return (T)Convert.ChangeType(LongContent.Value, typeof(T));
-        //  //case "float":
-        //  //  return (T)Convert.ChangeType(FloatContent.Value, typeof(T));
-        //  //case "double":
-        //  //  return (T)Convert.ChangeType(DoubleContent.Value, typeof(T));
-        //    //case "datetime":
-        //    //  return (T)Convert.ChangeType(DateTimeContent.Value, typeof(T));
-        //    //case "boolean":
-        //    //  return (T)Convert.ChangeType(BoolContent.Value, typeof(T));
-        //    //case "jsonarray":
-        //    //case "jsonobject":
-        //    //  return (T)Convert.ChangeType(Content, typeof(T));
-        //}
 
         return defaultValue;
 

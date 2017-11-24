@@ -52,5 +52,9 @@ namespace BLTools.Json {
       return JsonNull.Default;
 
     }
+
+    public static T Parse<T>(string source) where T : class, IJsonValue {
+      return Parse(source) as T;
+    }
   }
 }

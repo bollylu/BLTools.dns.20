@@ -12,7 +12,7 @@ namespace BLTools.Json.ConsoleTest {
 
       string SourceWithNumbers = @"{""Achat"":12.39,""Vente"":14.39,""Benefice"":2.1}";
 
-      JsonObject Test = JsonValue.Parse(SourceWithNumbers) as JsonObject;
+      JsonObject Test = JsonValue.Parse<JsonObject>(SourceWithNumbers);
 
       Console.WriteLine(Test.RenderAsString());
 

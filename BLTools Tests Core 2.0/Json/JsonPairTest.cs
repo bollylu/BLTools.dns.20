@@ -98,7 +98,7 @@ namespace BLTools.UnitTest.Core20.Json {
     #region --- Tests for constructors --------------------------------------------
     [TestMethod(), TestCategory("NC20.Json"), TestCategory("NC20.Json.Pair")]
     public void CreateJsonPair_String_ValueOk() {
-      JsonPair Actual = new JsonPair(TEST_STRING_NAME, new JsonString(TEST_STRING));
+      JsonPair Actual = new JsonPair(TEST_STRING_NAME, TEST_STRING);
       Assert.IsNotNull(Actual.Content);
       Assert.AreEqual(TEST_STRING_NAME, Actual.Key);
       Assert.IsInstanceOfType(Actual.Content, typeof(JsonString));

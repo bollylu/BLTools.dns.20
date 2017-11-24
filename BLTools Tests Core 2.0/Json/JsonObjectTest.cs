@@ -48,7 +48,6 @@ namespace BLTools.UnitTest.Core20.Json {
 
     private const string TEST_BOOL_NAME = "BoolField";
     private const bool TEST_BOOL = true;
-    private static string TEST_BOOL_JSON = "true";
     private const bool DEFAULT_BOOL = false;
 
     private static string CRLF = Environment.NewLine;

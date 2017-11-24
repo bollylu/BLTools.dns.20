@@ -7,7 +7,9 @@ using System.Text;
 namespace BLTools.Json {
   public class JsonString : IJsonValue<string> {
 
-    public string Value { get; set; }
+    #region --- Public properties ------------------------------------------------------------------------------
+    public string Value { get; set; } 
+    #endregion --- Public properties ---------------------------------------------------------------------------
 
     public static JsonString Default {
       get {
@@ -47,13 +49,15 @@ namespace BLTools.Json {
     }
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
-
+    #region --- Converters -------------------------------------------------------------------------------------
     public override string ToString() {
       StringBuilder RetVal = new StringBuilder();
       RetVal.Append(Value);
       return RetVal.ToString();
-    }
+    } 
+    #endregion --- Converters -------------------------------------------------------------------------------------
 
+    #region --- Rendering --------------------------------------------
     public string RenderAsString(bool formatted = false, int indent = 0) {
       StringBuilder RetVal = new StringBuilder();
 
@@ -86,5 +90,22 @@ namespace BLTools.Json {
         }
       }
     }
+    #endregion --- Rendering --------------------------------------------
+
+    //#region --- Operators --------------------------------------------
+    //public static implicit operator string(JsonString source) {
+    //  if ( source == null ) {
+    //    return null;
+    //  }
+    //  return source.Value;
+    //}
+
+    //public static implicit operator JsonString(string source) {
+    //  if ( source == null ) {
+    //    return null;
+    //  }
+    //  return new JsonString(source);
+    //}
+    //#endregion --- Operators --------------------------------------------
   }
 }
