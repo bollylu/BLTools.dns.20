@@ -106,7 +106,11 @@ namespace BLTools.Json {
         RetVal.Append(StringExtension.Spaces(1));
       }
 
-      RetVal.Append($"\"{Key}\" {Json.INNER_FIELD_SEPARATOR} ");
+      if ( formatted ) {
+        RetVal.Append($"\"{Key}\" {Json.INNER_FIELD_SEPARATOR} ");
+      } else {
+        RetVal.Append($"\"{Key}\"{Json.INNER_FIELD_SEPARATOR}");
+      }
 
       RetVal.Append(Content.RenderAsString(formatted, indent, false));
 
