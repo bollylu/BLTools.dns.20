@@ -97,7 +97,7 @@ namespace BLTools.Json {
     #endregion --- Items management --------------------------------------------
 
     #region --- Rendering --------------------------------------------
-    public string RenderAsString(bool formatted = false, int indent = 0) {
+    public string RenderAsString(bool formatted = false, int indent = 0, bool needFrontSpaces = true) {
       if ( Items.Count() == 0 ) {
         if ( formatted ) {
           return $"{StringExtension.Spaces(indent)}{Json.START_OF_ARRAY}{Json.END_OF_ARRAY}";
@@ -109,9 +109,10 @@ namespace BLTools.Json {
       lock ( _JsonLock ) {
         StringBuilder RetVal = new StringBuilder();
 
-        if ( formatted && indent >= Json.DEFAULT_INDENT ) {
+        if ( formatted && indent >= 0 && needFrontSpaces) {
           RetVal.Append($"{StringExtension.Spaces(indent)}");
         }
+
         RetVal.Append(Json.START_OF_ARRAY);
 
         if ( formatted ) {
@@ -133,7 +134,7 @@ namespace BLTools.Json {
           RetVal.Truncate(1);
         }
 
-        if ( formatted && indent >= Json.DEFAULT_INDENT ) {
+        if ( formatted && indent >= 0 ) {
           RetVal.Append($"{StringExtension.Spaces(indent)}");
         }
 
@@ -141,6 +142,7 @@ namespace BLTools.Json {
 
         return RetVal.ToString();
       }
+
     }
 
     public byte[] RenderAsBytes(bool formatted = false, int indent = 0) {

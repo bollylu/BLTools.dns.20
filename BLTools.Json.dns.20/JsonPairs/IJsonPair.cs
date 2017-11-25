@@ -17,7 +17,7 @@ namespace BLTools.Json {
     JsonArray ArrayContent { get; }
     JsonObject ObjectContent { get; }
 
-    string RenderAsString(bool formatted = false, int indent = 0);
+    string RenderAsString(bool formatted = false, int indent = 0, bool needFrontSpaces = true);
     byte[] RenderAsBytes(bool formatted = false, int indent = 0);
 
     T SafeGetValue<T>(T defaultValue);

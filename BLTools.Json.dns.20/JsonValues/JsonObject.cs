@@ -102,28 +102,28 @@ namespace BLTools.Json {
       lock ( _JsonLock ) {
         Items.Clear();
       }
-    } 
+    }
     #endregion --- Items management --------------------------------------------
 
     #region --- Rendering --------------------------------------------
-    public string RenderAsString(bool formatted = false, int indent = 0) {
+    public string RenderAsString(bool formatted = false, int indent = 0, bool needFrontSpaces = true) {
       if ( Items.Count() == 0 ) {
         if ( formatted ) {
           return $"{StringExtension.Spaces(indent)}{Json.START_OF_OBJECT}{Json.END_OF_OBJECT}";
         } else {
           return $"{Json.START_OF_OBJECT}{Json.END_OF_OBJECT}";
         }
-
       }
 
       lock ( _JsonLock ) {
         StringBuilder RetVal = new StringBuilder();
 
-        if ( formatted && indent >= Json.DEFAULT_INDENT ) {
+        if ( formatted && indent >= 0 && needFrontSpaces ) {
           RetVal.Append($"{StringExtension.Spaces(indent)}");
         }
 
         RetVal.Append(Json.START_OF_OBJECT);
+
         if ( formatted ) {
           RetVal.AppendLine();
         }
@@ -135,6 +135,7 @@ namespace BLTools.Json {
             RetVal.AppendLine();
           }
         }
+
         if ( formatted ) {
           RetVal.Truncate(Environment.NewLine.Length + 1);
           RetVal.AppendLine();
@@ -142,7 +143,7 @@ namespace BLTools.Json {
           RetVal.Truncate(1);
         }
 
-        if ( formatted && indent >= Json.DEFAULT_INDENT ) {
+        if ( formatted && indent >= 0 ) {
           RetVal.Append($"{StringExtension.Spaces(indent)}");
         }
 
@@ -211,7 +212,7 @@ namespace BLTools.Json {
           }
         }
       }
-    } 
+    }
     #endregion --- Rendering --------------------------------------------
 
     #region --- SafeGetValue --------------------------------------------
@@ -527,7 +528,7 @@ namespace BLTools.Json {
       }
 
       return RetVal;
-    } 
+    }
     #endregion --- Operators --------------------------------------------
 
     #region --- IEnumerable<IJsonValue> --------------------------------------------
@@ -556,7 +557,7 @@ namespace BLTools.Json {
         }
         return Items[key].Content;
       }
-    } 
+    }
     #endregion --- Indexer(s) --------------------------------------------
   }
 }

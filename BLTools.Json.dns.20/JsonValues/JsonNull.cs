@@ -10,8 +10,8 @@ namespace BLTools.Json {
     public void Dispose() {
     }
 
-    public string RenderAsString(bool formatted = false, int indent = 0) {
-      if ( formatted ) {
+    public string RenderAsString(bool formatted = false, int indent = 0, bool needFrontSpaces = true) {
+      if ( formatted && needFrontSpaces ) {
         return $"{StringExtension.Spaces(indent)}null";
       } else {
         return "null";

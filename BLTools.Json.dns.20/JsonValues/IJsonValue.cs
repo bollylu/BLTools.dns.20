@@ -5,7 +5,7 @@ using System.Text;
 namespace BLTools.Json {
   public interface IJsonValue : IDisposable {
 
-    string RenderAsString(bool formatted = false, int indent = 0);
+    string RenderAsString(bool formatted = false, int indent = 0, bool needFrontSpaces = true);
     byte[] RenderAsBytes(bool formatted = false, int indent = 0);
 
   }

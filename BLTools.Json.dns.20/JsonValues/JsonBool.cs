@@ -48,10 +48,10 @@ namespace BLTools.Json {
       return RetVal.ToString();
     }
 
-    public string RenderAsString(bool formatted = false, int indent = 0) {
+    public string RenderAsString(bool formatted = false, int indent = 0, bool needFrontSpaces = true) {
       StringBuilder RetVal = new StringBuilder();
 
-      if (formatted) {
+      if (formatted && needFrontSpaces ) {
         RetVal.Append($"{StringExtension.Spaces(indent)}");
       }
       if ( !Value.HasValue ) {

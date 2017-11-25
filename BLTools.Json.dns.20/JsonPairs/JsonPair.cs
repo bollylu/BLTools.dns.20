@@ -95,17 +95,20 @@ namespace BLTools.Json {
       return RetVal.ToString();
     }
 
-    public string RenderAsString(bool formatted = false, int indent = 0) {
+    public string RenderAsString(bool formatted = false, int indent = 0, bool needFrontSpaces = true) {
       StringBuilder RetVal = new StringBuilder();
 
-      if ( formatted ) {
+      if ( formatted && needFrontSpaces ) {
         RetVal.Append($"{StringExtension.Spaces(indent)}");
-        RetVal.Append($"\"{Key}\" {Json.INNER_FIELD_SEPARATOR} ");
-      } else {
-        RetVal.Append($"\"{Key}\"{Json.INNER_FIELD_SEPARATOR}");
       }
 
-      RetVal.Append(Content.RenderAsString(formatted));
+      if ( formatted && !needFrontSpaces ) {
+        RetVal.Append(StringExtension.Spaces(1));
+      }
+
+      RetVal.Append($"\"{Key}\" {Json.INNER_FIELD_SEPARATOR} ");
+
+      RetVal.Append(Content.RenderAsString(formatted, indent, false));
 
       return RetVal.ToString();
     }
@@ -162,7 +165,7 @@ namespace BLTools.Json {
 
       StringBuilder TempKey = new StringBuilder();
 
-      while ( i < LengthOfSource && !GotTheKey) {
+      while ( i < LengthOfSource && !GotTheKey ) {
 
         char CurrentChar = ProcessedSource[i];
 
@@ -195,7 +198,7 @@ namespace BLTools.Json {
 
       }
 
-      if ( InQuote || !GotTheKey) {
+      if ( InQuote || !GotTheKey ) {
         Trace.WriteLine("Unable to parse Json string : source is invalid");
         return defaultValue;
       }
