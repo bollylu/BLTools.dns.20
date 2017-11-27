@@ -259,6 +259,120 @@ namespace BLTools {
     }
 
     /// <summary>
+    /// Gets the portion of the string after a given string
+    /// </summary>
+    /// <param name="sourceString">The source string</param>
+    /// <param name="delimiter">The string to search for</param>
+    /// <returns>The selected portion of the string after the delimiter</returns>
+    public static string After(this string sourceString, string delimiter) {
+      #region Validate parameters
+      if ( sourceString == null ) {
+        return null;
+      }
+      if ( string.IsNullOrEmpty(delimiter) ) {
+        return sourceString;
+      }
+      #endregion Validate parameters
+
+      if ( sourceString == delimiter ) {
+        return "";
+      }
+      int Index = sourceString.IndexOf(delimiter);
+      if ( Index < 1 ) {
+        return sourceString;
+      }
+
+      return sourceString.Substring(Index + delimiter.Length);
+    }
+
+    /// <summary>
+    /// Gets the portion of the string after the last occurence of a given string
+    /// </summary>
+    /// <param name="sourceString">The source string</param>
+    /// <param name="delimiter">The string to search for</param>
+    /// <returns>The selected portion of the string after the last occurence of a delimiter</returns>
+    public static string AfterLast(this string sourceString, string delimiter) {
+      #region Validate parameters
+      if ( sourceString == null ) {
+        return null;
+      }
+      if ( string.IsNullOrEmpty(delimiter) ) {
+        return sourceString;
+      }
+      #endregion Validate parameters
+
+      if ( sourceString == delimiter ) {
+        return "";
+      }
+      int Index = sourceString.LastIndexOf(delimiter);
+      if ( Index < 1 ) {
+        return sourceString;
+      }
+
+      return sourceString.Substring(Index + delimiter.Length);
+    }
+
+    /// <summary>
+    /// Gets the portion of the string before a given string
+    /// </summary>
+    /// <param name="sourceString">The source string</param>
+    /// <param name="delimiter">The string to search for</param>
+    /// <returns>The selected portion of the string before the delimiter</returns>
+    public static string Before(this string sourceString, string delimiter) {
+      #region Validate parameters
+      if ( sourceString == null ) {
+        return null;
+      }
+      if ( string.IsNullOrEmpty(delimiter) ) {
+        return sourceString;
+      }
+      #endregion Validate parameters
+
+      if ( sourceString == delimiter ) {
+        return "";
+      }
+      int Index = sourceString.IndexOf(delimiter);
+      if ( Index == -1 ) {
+        return sourceString;
+      }
+      if ( Index <= 1 ) {
+        return "";
+      }
+
+      return sourceString.Left(Index);
+    }
+
+    /// <summary>
+    /// Gets the portion of the string before the last occurence of a given string
+    /// </summary>
+    /// <param name="sourceString">The source string</param>
+    /// <param name="delimiter">The string to search for</param>
+    /// <returns>The selected portion of the string before the last occurence of the delimiter</returns>
+    public static string BeforeLast(this string sourceString, string delimiter) {
+      #region Validate parameters
+      if ( sourceString == null ) {
+        return null;
+      }
+      if ( string.IsNullOrEmpty(delimiter) ) {
+        return sourceString;
+      }
+      #endregion Validate parameters
+
+      if ( sourceString == delimiter ) {
+        return "";
+      }
+      int Index = sourceString.LastIndexOf(delimiter);
+      if ( Index == -1 ) {
+        return sourceString;
+      }
+      if ( Index <= 1 ) {
+        return "";
+      }
+
+      return sourceString.Left(Index);
+    }
+
+    /// <summary>
     /// Capitalize the first letter of each word and uncapitalize other chars
     /// </summary>
     /// <param name="sourceValue">The source string</param>
@@ -335,7 +449,7 @@ namespace BLTools {
           continue;
         }
 
-        if(CurrentChar == '"') {
+        if ( CurrentChar == '"' ) {
           RetVal.Append(CurrentChar);
           InQuotes = !InQuotes;
           i++;

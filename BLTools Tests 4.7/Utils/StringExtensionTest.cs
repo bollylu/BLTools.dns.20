@@ -50,8 +50,198 @@ namespace BLTools.UnitTest.FW47.Extensions {
       string expected = "lazy dog";
       string actual = sourceString.Right(length);
       Assert.AreEqual(expected, actual);
-    } 
+    }
     #endregion Left and right
+
+    #region After
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_AfterEmptyString_ResultEmpty() {
+      string sourceString = "";
+      string actual = sourceString.After("*");
+      Assert.AreEqual("", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_AfterText_ResultOK() {
+      string sourceString = "A brown fox jumps over a lazy dog";
+      string actual = sourceString.After("fox");
+      Assert.AreEqual(" jumps over a lazy dog", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_AfterTextDelimIsAtStart_ResultOK() {
+      string sourceString = "A brown fox jumps over a lazy dog";
+      string actual = sourceString.After("A");
+      Assert.AreEqual("A brown fox jumps over a lazy dog", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_AfterTextDelimIsAtEnd_ResultOK() {
+      string sourceString = "A brown fox jumps over a lazy dog";
+      string actual = sourceString.After("g");
+      Assert.AreEqual("", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_AfterTextDelimIsNonExistent_ResultOK() {
+      string sourceString = "A brown fox jumps over a lazy dog";
+      string actual = sourceString.After("0");
+      Assert.AreEqual("A brown fox jumps over a lazy dog", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_AfterTextDelimIsSameAsSource_ResultEmpty() {
+      string sourceString = "A brown fox jumps over a lazy dog";
+      string actual = sourceString.After("A brown fox jumps over a lazy dog");
+      Assert.AreEqual("", actual);
+    }
+    #endregion After
+
+    #region AfterLast
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_AfterLastEmptyString_ResultEmpty() {
+      string sourceString = "";
+      string actual = sourceString.AfterLast("*");
+      Assert.AreEqual("", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_AfterLastText_ResultOK() {
+      string sourceString = "A brown fox jumps fox over a lazy dog";
+      string actual = sourceString.AfterLast("fox");
+      Assert.AreEqual(" over a lazy dog", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_AfterLastTextDelimIsAtStart_ResultOK() {
+      string sourceString = "A brown fox jumps over A lazy dog";
+      string actual = sourceString.AfterLast("A");
+      Assert.AreEqual(" lazy dog", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_AfterLastTextDelimIsAtEnd_ResultOK() {
+      string sourceString = "A brown fox jumps g over a lazy dog";
+      string actual = sourceString.AfterLast("g");
+      Assert.AreEqual("", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_AfterLastTextDelimIsNonExistent_ResultOK() {
+      string sourceString = "A brown fox jumps over a lazy dog";
+      string actual = sourceString.AfterLast("0");
+      Assert.AreEqual("A brown fox jumps over a lazy dog", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_AfterLastTextDelimIsSameAsSource_ResultEmpty() {
+      string sourceString = "A brown fox jumps over a lazy dog";
+      string actual = sourceString.AfterLast("A brown fox jumps over a lazy dog");
+      Assert.AreEqual("", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_AfterLastPathname_ResultFilename() {
+      string sourceString = @"\\server\path\filename.txt";
+      string actual = sourceString.AfterLast(@"\");
+      Assert.AreEqual("filename.txt", actual);
+    }
+    #endregion AfterLast
+
+    #region Before
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_BeforeEmptyString_ResultEmpty() {
+      string sourceString = "";
+      string actual = sourceString.Before("*");
+      Assert.AreEqual("", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_BeforeText_ResultOK() {
+      string sourceString = "A brown fox jumps over a lazy dog";
+      string actual = sourceString.Before("fox");
+      Assert.AreEqual("A brown ", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_BeforeTextDelimIsAtStart_ResultOK() {
+      string sourceString = "A brown fox jumps over a lazy dog";
+      string actual = sourceString.Before("A");
+      Assert.AreEqual("", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_BeforeTextDelimIsAtEnd_ResultOK() {
+      string sourceString = "A brown fox jumps over a lazy dog";
+      string actual = sourceString.Before("g");
+      Assert.AreEqual("A brown fox jumps over a lazy do", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_BeforeTextDelimIsNonExistent_ResultOK() {
+      string sourceString = "A brown fox jumps over a lazy dog";
+      string actual = sourceString.Before("0");
+      Assert.AreEqual("A brown fox jumps over a lazy dog", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_BeforeTextDelimIsSameAsSource_ResultEmpty() {
+      string sourceString = "A brown fox jumps over a lazy dog";
+      string actual = sourceString.After("A brown fox jumps over a lazy dog");
+      Assert.AreEqual("", actual);
+    }
+    #endregion Before
+
+    #region BeforeLast
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_BeforeLastEmptyString_ResultEmpty() {
+      string sourceString = "";
+      string actual = sourceString.BeforeLast("*");
+      Assert.AreEqual("", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_BeforeLastText_ResultOK() {
+      string sourceString = "A brown fox jumps fox over a lazy dog";
+      string actual = sourceString.BeforeLast("fox");
+      Assert.AreEqual("A brown fox jumps ", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_BeforeLastTextDelimIsAtStart_ResultOK() {
+      string sourceString = "A brown fox jumps over A lazy dog";
+      string actual = sourceString.BeforeLast("A");
+      Assert.AreEqual("A brown fox jumps over ", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_BeforeLastTextDelimIsAtEnd_ResultOK() {
+      string sourceString = "A brown fox jumps g over a lazy dog";
+      string actual = sourceString.BeforeLast("g");
+      Assert.AreEqual("A brown fox jumps g over a lazy do", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_BeforeLastTextDelimIsNonExistent_ResultOK() {
+      string sourceString = "A brown fox jumps over a lazy dog";
+      string actual = sourceString.BeforeLast("0");
+      Assert.AreEqual("A brown fox jumps over a lazy dog", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_BeforeLastTextDelimIsSameAsSource_ResultEmpty() {
+      string sourceString = "A brown fox jumps over a lazy dog";
+      string actual = sourceString.BeforeLast("A brown fox jumps over a lazy dog");
+      Assert.AreEqual("", actual);
+    }
+
+    [TestMethod(), TestCategory("FW47.String")]
+    public void StringExtension_BeforeLastPathname_ResultFilename() {
+      string sourceString = @"\\server\path\filename.txt";
+      string actual = sourceString.BeforeLast(@"\");
+      Assert.AreEqual(@"\\server\path", actual);
+    }
+    #endregion BeforeLast
 
     #region ToBool
     [TestMethod(), TestCategory("FW47.String")]
