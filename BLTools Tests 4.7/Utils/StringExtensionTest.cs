@@ -72,7 +72,7 @@ namespace BLTools.UnitTest.FW47.Extensions {
     public void StringExtension_AfterTextDelimIsAtStart_ResultOK() {
       string sourceString = "A brown fox jumps over a lazy dog";
       string actual = sourceString.After("A");
-      Assert.AreEqual("A brown fox jumps over a lazy dog", actual);
+      Assert.AreEqual(" brown fox jumps over a lazy dog", actual);
     }
 
     [TestMethod(), TestCategory("FW47.String")]

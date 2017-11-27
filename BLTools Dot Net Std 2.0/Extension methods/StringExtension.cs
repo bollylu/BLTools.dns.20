@@ -278,7 +278,7 @@ namespace BLTools {
         return "";
       }
       int Index = sourceString.IndexOf(delimiter);
-      if ( Index < 1 ) {
+      if ( Index == -1 ) {
         return sourceString;
       }
 
@@ -305,7 +305,7 @@ namespace BLTools {
         return "";
       }
       int Index = sourceString.LastIndexOf(delimiter);
-      if ( Index < 1 ) {
+      if ( Index == -1 ) {
         return sourceString;
       }
 
