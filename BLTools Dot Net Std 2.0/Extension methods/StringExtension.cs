@@ -286,6 +286,27 @@ namespace BLTools {
     }
 
     /// <summary>
+    /// Gets the portion of the string after a given char
+    /// </summary>
+    /// <param name="sourceString">The source string</param>
+    /// <param name="delimiter">The char to search for</param>
+    /// <returns>The selected portion of the string after the delimiter</returns>
+    public static string After(this string sourceString, char delimiter) {
+      #region Validate parameters
+      if ( sourceString == null ) {
+        return null;
+      }
+      #endregion Validate parameters
+
+      int Index = sourceString.IndexOf(delimiter);
+      if ( Index == -1 ) {
+        return sourceString;
+      }
+
+      return sourceString.Substring(Index + 1);
+    }
+
+    /// <summary>
     /// Gets the portion of the string after the last occurence of a given string
     /// </summary>
     /// <param name="sourceString">The source string</param>
@@ -313,6 +334,27 @@ namespace BLTools {
     }
 
     /// <summary>
+    /// Gets the portion of the string after the last occurence of a given char
+    /// </summary>
+    /// <param name="sourceString">The source string</param>
+    /// <param name="delimiter">The char to search for</param>
+    /// <returns>The selected portion of the string after the last occurence of a delimiter</returns>
+    public static string AfterLast(this string sourceString, char delimiter) {
+      #region Validate parameters
+      if ( sourceString == null ) {
+        return null;
+      }
+      #endregion Validate parameters
+
+      int Index = sourceString.LastIndexOf(delimiter);
+      if ( Index == -1 ) {
+        return sourceString;
+      }
+
+      return sourceString.Substring(Index + 1);
+    }
+
+    /// <summary>
     /// Gets the portion of the string before a given string
     /// </summary>
     /// <param name="sourceString">The source string</param>
@@ -331,6 +373,30 @@ namespace BLTools {
       if ( sourceString == delimiter ) {
         return "";
       }
+      int Index = sourceString.IndexOf(delimiter);
+      if ( Index == -1 ) {
+        return sourceString;
+      }
+      if ( Index <= 1 ) {
+        return "";
+      }
+
+      return sourceString.Left(Index);
+    }
+
+    /// <summary>
+    /// Gets the portion of the string before a given char
+    /// </summary>
+    /// <param name="sourceString">The source string</param>
+    /// <param name="delimiter">The char to search for</param>
+    /// <returns>The selected portion of the string before the delimiter</returns>
+    public static string Before(this string sourceString, char delimiter) {
+      #region Validate parameters
+      if ( sourceString == null ) {
+        return null;
+      }
+      #endregion Validate parameters
+
       int Index = sourceString.IndexOf(delimiter);
       if ( Index == -1 ) {
         return sourceString;
@@ -373,6 +439,30 @@ namespace BLTools {
     }
 
     /// <summary>
+    /// Gets the portion of the string before the last occurence of a given char
+    /// </summary>
+    /// <param name="sourceString">The source string</param>
+    /// <param name="delimiter">The char to search for</param>
+    /// <returns>The selected portion of the string before the last occurence of the delimiter</returns>
+    public static string BeforeLast(this string sourceString, char delimiter) {
+      #region Validate parameters
+      if ( sourceString == null ) {
+        return null;
+      }
+      #endregion Validate parameters
+
+      int Index = sourceString.LastIndexOf(delimiter);
+      if ( Index == -1 ) {
+        return sourceString;
+      }
+      if ( Index <= 1 ) {
+        return "";
+      }
+
+      return sourceString.Left(Index);
+    }
+
+    /// <summary>
     /// Capitalize the first letter of each word and uncapitalize other chars
     /// </summary>
     /// <param name="sourceValue">The source string</param>
@@ -386,7 +476,7 @@ namespace BLTools {
 
       string[] Words = sourceValue.Split(' ');
       foreach ( string WordItem in Words ) {
-        RetVal.AppendFormat("{0}{1} ", WordItem.Left(1).ToUpper(), WordItem.Substring(1).ToLower());
+        RetVal.Append($"{WordItem.Left(1).ToUpper()}{WordItem.Substring(1).ToLower()} ");
       }
       RetVal.Truncate(1);
 
