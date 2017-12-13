@@ -77,7 +77,7 @@ namespace BLTools.Json {
       }
     }
 
-    public static void Save(string filename, IJsonValue jsonValue) {
+    public static void Save(string filename, IJsonValue jsonValue, bool isOutputFormatted = true) {
       if ( string.IsNullOrWhiteSpace(filename) ) {
         Trace.WriteLine($"Unable to save Json content : filename is missing");
         return;
@@ -89,7 +89,7 @@ namespace BLTools.Json {
       }
 
       try {
-        File.WriteAllText(filename, jsonValue.RenderAsString());
+        File.WriteAllText(filename, jsonValue.RenderAsString(isOutputFormatted));
       } catch (Exception ex) {
         Trace.WriteLine($"Unable to save Json content to \"{filename}\" : {ex.Message}");
         return;
