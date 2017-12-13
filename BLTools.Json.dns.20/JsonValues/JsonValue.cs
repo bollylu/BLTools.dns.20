@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -55,6 +57,43 @@ namespace BLTools.Json {
 
     public static T Parse<T>(string source) where T : class, IJsonValue {
       return Parse(source) as T;
+    }
+
+    public static IJsonValue Load(string filename) {
+      if ( string.IsNullOrWhiteSpace(filename) ) {
+        return JsonNull.Default;
+      }
+
+      if ( !File.Exists(filename) ) {
+        Trace.WriteLine($"Unable to load Json content from \"{filename}\" : file is missing or access denied");
+        return JsonNull.Default;
+      }
+
+      try {
+        return Parse(File.ReadAllText(filename));
+      } catch (Exception ex) {
+        Trace.WriteLine($"Unable to load Json content from \"{filename}\" : {ex.Message}");
+        return JsonNull.Default;
+      }
+    }
+
+    public static void Save(string filename, IJsonValue jsonValue) {
+      if ( string.IsNullOrWhiteSpace(filename) ) {
+        Trace.WriteLine($"Unable to save Json content : filename is missing");
+        return;
+      }
+
+      if ( jsonValue == null ) {
+        Trace.WriteLine($"Unable to save Json content : jsonValue is missing");
+        return;
+      }
+
+      try {
+        File.WriteAllText(filename, jsonValue.RenderAsString());
+      } catch (Exception ex) {
+        Trace.WriteLine($"Unable to save Json content to \"{filename}\" : {ex.Message}");
+        return;
+      }
     }
   }
 }
