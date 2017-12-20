@@ -14,7 +14,7 @@ namespace BLTools.Json.ConsoleTest {
 
       
       string Source = @"
-{""Name"":""Blondes (Les)"",
+{""Name"":""\\[Blondes (Les)\\]"",
 ""Items"":[
 {""Name"":""Tome 1"",""Number"":""01""},
 {""Test"": [""Tome 2"",{""Number"":2.23}]},

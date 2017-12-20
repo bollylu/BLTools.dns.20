@@ -422,6 +422,13 @@ namespace BLTools.Json {
             continue;
           }
 
+          if ( CurrentChar == Json.CHR_BACKSLASH && NextCharIsControlChar ) {
+            RetVal.Append(Json.CHR_BACKSLASH).Append(Json.CHR_BACKSLASH);
+            NextCharIsControlChar = false;
+            i++;
+            continue;
+          }
+
           if ( InQuote ) {
             RetVal.Append(CurrentChar);
             i++;
