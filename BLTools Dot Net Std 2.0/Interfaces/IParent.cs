@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BLTools {
   public interface IParent {
-    IParent Parent { get; }
+    IParent Parent { get; set; }
     T GetParent<T>() where T : class, IParent;
   }
 }
