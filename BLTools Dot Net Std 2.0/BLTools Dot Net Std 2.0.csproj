@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Debugging\" />
+    <Folder Include="MVVM\" />
   </ItemGroup>
 
 </Project>
