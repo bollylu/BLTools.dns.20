@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ArcelorInfraSoftLib {
+namespace BLTools {
   public static class TProcessExtension {
     public static Task WaitForExitAsync(this Process process, CancellationToken cancellationToken = default(CancellationToken)) {
       process.EnableRaisingEvents = true;
