@@ -16,7 +16,7 @@ namespace BLTools.Debugging {
     /// <summary>
     /// Default location where log files without path will be created
     /// </summary>
-    public static string DefaultLogLocation = "c:\\logs";
+    public static string DefaultLogLocation = Environment.OSVersion.Platform == PlatformID.Unix ? "/var/log/dotnet" : "c:\\logs";
 
     /// <summary>
     /// Add a listener to the Listeners collection of the Trace object. This new listener point to a filename, can be reset and rolled over
@@ -25,19 +25,19 @@ namespace BLTools.Debugging {
     /// <param name="resetLog">True to reset the log before adding to the listeners</param>
     /// <param name="rollover">True to roll over the log before adding to the listeners</param>
     public static void AddTraceLogFilename(string filename, bool resetLog = false, bool rollover = false) {
-      if (string.IsNullOrWhiteSpace(filename)) {
+      if ( string.IsNullOrWhiteSpace(filename) ) {
         throw new ArgumentException("filename is missing", "filename");
       }
       TimeStampTraceListener NewTraceListener;
-      if (!filename.Contains("\\")) {
+      if ( !filename.Contains(Path.DirectorySeparatorChar) ) {
         NewTraceListener = new TimeStampTraceListener(Path.Combine(DefaultLogLocation, filename), "(default)");
       } else {
         NewTraceListener = new TimeStampTraceListener(filename, "(default)");
       }
-      if (resetLog) {
+      if ( resetLog ) {
         NewTraceListener.ResetLog();
       }
-      if (rollover) {
+      if ( rollover ) {
         NewTraceListener.Rollover();
       }
       Trace.Listeners.Add(NewTraceListener);
@@ -50,10 +50,10 @@ namespace BLTools.Debugging {
     /// <param name="rollover">True to roll over the log before adding to the listeners</param>
     public static void AddTraceDefaultLogFilename(bool resetLog = false, bool rollover = false) {
       TimeStampTraceListener NewTraceListener = new TimeStampTraceListener(GetTraceDefaultLogFilename(), "(default)");
-      if (resetLog) {
+      if ( resetLog ) {
         NewTraceListener.ResetLog();
       }
-      if (rollover) {
+      if ( rollover ) {
         NewTraceListener.Rollover();
       }
       Trace.Listeners.Add(NewTraceListener);
