@@ -16,7 +16,7 @@ namespace BLTools.Debugging {
     /// <summary>
     /// Default location where log files without path will be created
     /// </summary>
-    public static string DefaultLogLocation = Environment.OSVersion.Platform == PlatformID.Unix ? "/var/log/dotnet" : "c:\\logs";
+    public static string DefaultLogLocation = Environment.OSVersion.Platform == PlatformID.Unix ? "/var/log" : "c:\\logs";
 
     /// <summary>
     /// Add a listener to the Listeners collection of the Trace object. This new listener point to a filename, can be reset and rolled over
