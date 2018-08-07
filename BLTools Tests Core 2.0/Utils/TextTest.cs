@@ -34,8 +34,8 @@ namespace BLTools.UnitTest.Core20.Extensions {
 
     [TestMethod(), TestCategory("NC20.TextBox")]
     public void TextBox_HorizontalRowDefault_ResultOk() {
-      string actual = TextBox.BuildHorizontalRow();
       string ExpectedResult = new string('-', Console.WindowWidth);
+      string actual = TextBox.BuildHorizontalRow();
       Assert.AreEqual(ExpectedResult, actual);
     }
 
