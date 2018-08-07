@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Collections.Specialized;
+using System.Linq;
 
 namespace BLTools {
 
@@ -126,15 +127,31 @@ namespace BLTools {
       foreach ( string ValueItem in arrayOfValues ) {
         if ( ValueItem.StartsWith("/") || ValueItem.StartsWith("-") ) {
           if ( ValueItem.IndexOf("=") != -1 ) {
-            Add(new ArgElement(Position, ValueItem.Substring(1, ValueItem.IndexOf("=") - 1).Trim(), ValueItem.Substring(ValueItem.IndexOf("=") + 1).Trim()));
+            if ( IsCaseSensitive ) {
+              Add(new ArgElement(Position, ValueItem.Substring(1).Before("=").TrimStart(), ValueItem.After("=").TrimEnd()));
+            } else {
+              Add(new ArgElement(Position, ValueItem.Substring(1).Before("=").TrimStart().ToLower(CultureInfo.CurrentCulture), ValueItem.After("=").TrimEnd()));
+            }
           } else {
-            Add(new ArgElement(Position, ValueItem.Substring(1).Trim().ToLower(CultureInfo.CurrentCulture), ""));
+            if ( IsCaseSensitive ) {
+              Add(new ArgElement(Position, ValueItem.Substring(1).Trim(), ""));
+            } else {
+              Add(new ArgElement(Position, ValueItem.Substring(1).Trim().ToLower(CultureInfo.CurrentCulture), ""));
+            }
           }
         } else {
           if ( ValueItem.IndexOf("=") != -1 ) {
-            Add(new ArgElement(Position, ValueItem.Substring(0, ValueItem.IndexOf("=")).Trim(), ValueItem.Substring(ValueItem.IndexOf("=") + 1).Trim()));
+            if ( IsCaseSensitive ) {
+              Add(new ArgElement(Position, ValueItem.Before("=").TrimStart(), ValueItem.After("=").TrimEnd()));
+            } else {
+              Add(new ArgElement(Position, ValueItem.Before("=").TrimStart().ToLower(CultureInfo.CurrentCulture), ValueItem.After("=").TrimEnd()));
+            }
           } else {
-            Add(new ArgElement(Position, ValueItem.Trim().ToLower(CultureInfo.CurrentCulture), ""));
+            if ( IsCaseSensitive ) {
+              Add(new ArgElement(Position, ValueItem.Trim(), ""));
+            } else {
+              Add(new ArgElement(Position, ValueItem.Trim().ToLower(CultureInfo.CurrentCulture), ""));
+            }
           }
         }
         Position++;
@@ -475,6 +492,7 @@ namespace BLTools {
     }
 
     #region Generic version of the GetValue
+    
     /// <summary>
     /// Generic version of GetValue
     /// </summary>
@@ -488,6 +506,7 @@ namespace BLTools {
         return GetValue(key, default(T), CultureInfo.CurrentCulture);
       }
     }
+    
     /// <summary>
     /// Generic version of GetValue
     /// </summary>
@@ -502,6 +521,7 @@ namespace BLTools {
         return GetValue(key, defaultValue, CultureInfo.CurrentCulture);
       }
     }
+    
     /// <summary>
     /// Generic version of GetValue
     /// </summary>

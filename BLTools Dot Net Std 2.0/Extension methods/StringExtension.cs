@@ -377,7 +377,7 @@ namespace BLTools {
       if ( Index == -1 ) {
         return sourceString;
       }
-      if ( Index <= 1 ) {
+      if ( Index < 1 ) {
         return "";
       }
 
@@ -401,7 +401,7 @@ namespace BLTools {
       if ( Index == -1 ) {
         return sourceString;
       }
-      if ( Index <= 1 ) {
+      if ( Index < 1 ) {
         return "";
       }
 
@@ -431,7 +431,7 @@ namespace BLTools {
       if ( Index == -1 ) {
         return sourceString;
       }
-      if ( Index <= 1 ) {
+      if ( Index < 1 ) {
         return "";
       }
 
@@ -455,7 +455,7 @@ namespace BLTools {
       if ( Index == -1 ) {
         return sourceString;
       }
-      if ( Index <= 1 ) {
+      if ( Index < 1 ) {
         return "";
       }
 

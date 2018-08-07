@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLTools.SQL.dns.20", "BLToo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLTools.Json.dns.20", "BLTools.Json.dns.20\BLTools.Json.dns.20.csproj", "{AA6ECE0A-43B8-4C8B-ABE0-0171F953426E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLTools.Json.ConsoleTest.core.20", "BLTools.Json.ConsoleTest.core.20\BLTools.Json.ConsoleTest.core.20.csproj", "{442A8A78-D5BA-4527-8990-17D5CD9AC9CF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,10 +51,6 @@ Global
 		{AA6ECE0A-43B8-4C8B-ABE0-0171F953426E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA6ECE0A-43B8-4C8B-ABE0-0171F953426E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA6ECE0A-43B8-4C8B-ABE0-0171F953426E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{442A8A78-D5BA-4527-8990-17D5CD9AC9CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{442A8A78-D5BA-4527-8990-17D5CD9AC9CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{442A8A78-D5BA-4527-8990-17D5CD9AC9CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{442A8A78-D5BA-4527-8990-17D5CD9AC9CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

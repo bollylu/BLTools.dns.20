@@ -12,12 +12,19 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <LangVersion>7.1</LangVersion>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Frame\**" />
     <Compile Remove="Json\**" />
+    <EmbeddedResource Remove="Frame\**" />
     <EmbeddedResource Remove="Json\**" />
+    <None Remove="Frame\**" />
     <None Remove="Json\**" />
   </ItemGroup>
 
