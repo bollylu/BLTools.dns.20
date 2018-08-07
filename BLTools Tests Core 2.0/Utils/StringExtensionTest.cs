@@ -50,7 +50,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       string expected = "lazy dog";
       string actual = sourceString.Right(length);
       Assert.AreEqual(expected, actual);
-    } 
+    }
     #endregion Left and right
 
     #region ToBool
@@ -309,6 +309,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     }
     #endregion SecureString
 
+    #region --- ReplaceControlChars --------------------------------------------
     [TestMethod(), TestCategory("NC20.String")]
     public void ReplaceControlChars_EmptyString_EmptyString() {
       string SourceValue = "";
@@ -363,6 +364,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       string SourceValue = "AbC\"1\\\"2\\\"3\\\"=+";
       string actual = SourceValue.ReplaceControlChars();
       Assert.AreEqual("AbC\"1\\\"2\"3\"=+", actual);
-    }
+    } 
+    #endregion --- ReplaceControlChars --------------------------------------------
   }
 }

@@ -263,8 +263,9 @@ namespace BLTools {
     /// </summary>
     /// <param name="sourceString">The source string</param>
     /// <param name="delimiter">The string to search for</param>
+    /// <param name="stringComparison">The culture to find delimiter (useful for ignoring case)</param>
     /// <returns>The selected portion of the string after the delimiter</returns>
-    public static string After(this string sourceString, string delimiter) {
+    public static string After(this string sourceString, string delimiter, StringComparison stringComparison = StringComparison.CurrentCulture) {
       #region Validate parameters
       if ( sourceString == null ) {
         return null;
@@ -277,7 +278,7 @@ namespace BLTools {
       if ( sourceString == delimiter ) {
         return "";
       }
-      int Index = sourceString.IndexOf(delimiter);
+      int Index = sourceString.IndexOf(delimiter, 0, stringComparison);
       if ( Index == -1 ) {
         return sourceString;
       }
@@ -311,8 +312,9 @@ namespace BLTools {
     /// </summary>
     /// <param name="sourceString">The source string</param>
     /// <param name="delimiter">The string to search for</param>
+    /// <param name="stringComparison">The culture to find delimiter (useful for ignoring case)</param>
     /// <returns>The selected portion of the string after the last occurence of a delimiter</returns>
-    public static string AfterLast(this string sourceString, string delimiter) {
+    public static string AfterLast(this string sourceString, string delimiter, StringComparison stringComparison = StringComparison.CurrentCulture) {
       #region Validate parameters
       if ( sourceString == null ) {
         return null;
@@ -325,7 +327,7 @@ namespace BLTools {
       if ( sourceString == delimiter ) {
         return "";
       }
-      int Index = sourceString.LastIndexOf(delimiter);
+      int Index = sourceString.LastIndexOf(delimiter, sourceString.Length - 1, stringComparison);
       if ( Index == -1 ) {
         return sourceString;
       }
@@ -359,8 +361,9 @@ namespace BLTools {
     /// </summary>
     /// <param name="sourceString">The source string</param>
     /// <param name="delimiter">The string to search for</param>
+    /// <param name="stringComparison">The culture to find delimiter (useful for ignoring case)</param>
     /// <returns>The selected portion of the string before the delimiter</returns>
-    public static string Before(this string sourceString, string delimiter) {
+    public static string Before(this string sourceString, string delimiter, StringComparison stringComparison = StringComparison.CurrentCulture) {
       #region Validate parameters
       if ( sourceString == null ) {
         return null;
@@ -373,7 +376,7 @@ namespace BLTools {
       if ( sourceString == delimiter ) {
         return "";
       }
-      int Index = sourceString.IndexOf(delimiter);
+      int Index = sourceString.IndexOf(delimiter, stringComparison);
       if ( Index == -1 ) {
         return sourceString;
       }
@@ -413,8 +416,9 @@ namespace BLTools {
     /// </summary>
     /// <param name="sourceString">The source string</param>
     /// <param name="delimiter">The string to search for</param>
+    /// <param name="stringComparison">The culture to find delimiter (useful for ignoring case)</param>
     /// <returns>The selected portion of the string before the last occurence of the delimiter</returns>
-    public static string BeforeLast(this string sourceString, string delimiter) {
+    public static string BeforeLast(this string sourceString, string delimiter, StringComparison stringComparison = StringComparison.CurrentCulture) {
       #region Validate parameters
       if ( sourceString == null ) {
         return null;
@@ -427,7 +431,7 @@ namespace BLTools {
       if ( sourceString == delimiter ) {
         return "";
       }
-      int Index = sourceString.LastIndexOf(delimiter);
+      int Index = sourceString.LastIndexOf(delimiter, stringComparison);
       if ( Index == -1 ) {
         return sourceString;
       }
@@ -467,16 +471,16 @@ namespace BLTools {
     /// </summary>
     /// <param name="sourceValue">The source string</param>
     /// <returns>The proper string</returns>
-    public static string Proper(this string sourceValue) {
+    public static string Proper(this string sourceValue, char delimiter = ' ') {
       if ( string.IsNullOrWhiteSpace(sourceValue) ) {
         return "";
       }
 
       StringBuilder RetVal = new StringBuilder();
 
-      string[] Words = sourceValue.Split(' ');
+      string[] Words = sourceValue.Split(delimiter);
       foreach ( string WordItem in Words ) {
-        RetVal.Append($"{WordItem.Left(1).ToUpper()}{WordItem.Substring(1).ToLower()} ");
+        RetVal.Append($"{WordItem.Left(1).ToUpper()}{WordItem.Substring(1).ToLower()}{delimiter}");
       }
       RetVal.Truncate(1);
 
