@@ -32,12 +32,12 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(ExpectedResult, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.TextBox")]
-    public void TextBox_HorizontalRowDefault_ResultOk() {
-      string ExpectedResult = new string('-', Console.WindowWidth);
-      string actual = TextBox.BuildHorizontalRow();
-      Assert.AreEqual(ExpectedResult, actual);
-    }
+    //[TestMethod(), TestCategory("NC20.TextBox")]
+    //public void TextBox_HorizontalRowDefault_ResultOk() {
+    //  string ExpectedResult = new string('-', Console.WindowWidth);
+    //  string actual = TextBox.BuildHorizontalRow();
+    //  Assert.AreEqual(ExpectedResult, actual);
+    //}
 
     [TestMethod(), TestCategory("NC20.TextBox")]
     public void TextBox_HorizontalRowDouble40_ResultOk() {
