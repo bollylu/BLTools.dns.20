@@ -1,7 +1,9 @@
 ﻿using BLTools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
@@ -91,9 +93,9 @@ namespace BLTools.UnitTest.Core20.Extensions {
     }
 
     [TestMethod(), TestCategory("NC20.String.Before")]
-    public void StringExtension_BeforeInexistantString_CompleteSource() {
+    public void StringExtension_BeforeInexistantString_ResultEmpty() {
       string sourceString = "1.10";
-      string expected = "1.10";
+      string expected = "";
       string actual = sourceString.Before("toto");
       Assert.AreEqual(expected, actual);
     }
@@ -149,9 +151,9 @@ namespace BLTools.UnitTest.Core20.Extensions {
     }
 
     [TestMethod(), TestCategory("NC20.String.BeforeLast")]
-    public void StringExtension_BeforeLastInexistantString_CompleteSource() {
+    public void StringExtension_BeforeLastInexistantString_ResultEmpty() {
       string sourceString = "1.10";
-      string expected = "1.10";
+      string expected = "";
       string actual = sourceString.BeforeLast("toto");
       Assert.AreEqual(expected, actual);
     }
@@ -199,7 +201,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     }
 
     [TestMethod(), TestCategory("NC20.String.After")]
-    public void StringExtension_SourceEmptyAfterString_EmptyString() {
+    public void StringExtension_SourceEmptyAfterString_ResultEmpty() {
       string sourceString = "";
       string expected = "";
       string actual = sourceString.After("toto");
@@ -207,9 +209,9 @@ namespace BLTools.UnitTest.Core20.Extensions {
     }
 
     [TestMethod(), TestCategory("NC20.String.After")]
-    public void StringExtension_AfterInexistantString_CompleteSource() {
+    public void StringExtension_AfterInexistantString_ResultEmpty() {
       string sourceString = "1.10";
-      string expected = "1.10";
+      string expected = "";
       string actual = sourceString.After("toto");
       Assert.AreEqual(expected, actual);
     }
@@ -273,12 +275,209 @@ namespace BLTools.UnitTest.Core20.Extensions {
     }
 
     [TestMethod(), TestCategory("NC20.String.AfterLast")]
-    public void StringExtension_AfterLastInexistantString_CompleteSource() {
+    public void StringExtension_AfterLastInexistantString_ResultEmpty() {
       string sourceString = "1.10";
-      string expected = "1.10";
+      string expected = "";
       string actual = sourceString.AfterLast("toto");
       Assert.AreEqual(expected, actual);
     }
     #endregion --- AfterLast --------------------------------------------
+
+    #region --- Between chars --------------------------------------------
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenCharSourceEmpty_ResultEmpty() {
+      string sourceString = "";
+      string expected = "";
+      string actual = sourceString.Between('[',']');
+      Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenCharSourceNormal_ResultOK() {
+      string sourceString = "This  is a test [various data; example]";
+      string expected = "various data; example";
+      string actual = sourceString.Between('[', ']');
+      Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenCharBothDelimiterMissing_ResultEmpty() {
+      string sourceString = "This  is a test various data; example";
+      string expected = "";
+      string actual = sourceString.Between('[', ']');
+      Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenCharFirstDelimiterMissing_ResultEmpty() {
+      string sourceString = "This  is a test [various data; example";
+      string expected = "";
+      string actual = sourceString.Between('[', ']');
+      Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenCharSecondDelimiterMissing_ResultEmpty() {
+      string sourceString = "This  is a test various data; example]";
+      string expected = "";
+      string actual = sourceString.Between('[', ']');
+      Assert.AreEqual(expected, actual);
+    }
+    #endregion --- Between chars --------------------------------------------
+
+    #region --- Between strings --------------------------------------------
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenStringsSourceEmpty_ResultEmpty() {
+      string sourceString = "";
+      string expected = "";
+      string actual = sourceString.Between("=[", "]=");
+      Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenStringsSourceNormal_ResultOK() {
+      string sourceString = "This  is a test =[Live]= =[blabla]=";
+      string expected = "Live";
+      string actual = sourceString.Between("=[", "]=");
+      Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenStringsSourceNormalCaseInsensitive_ResultOK() {
+      string sourceString = "This  is a test DelimLiveDElim =[blabla]=";
+      string expected = "Live";
+      string actual = sourceString.Between("delim", "delim", StringComparison.InvariantCultureIgnoreCase);
+      Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenStringsBothDelimiterMissing_ResultEmpty() {
+      string sourceString = "This  is a test various data; example";
+      string expected = "";
+      string actual = sourceString.Between("=[", "]=");
+      Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenStringsFirstDelimiterMissing_ResultEmpty() {
+      string sourceString = "This  is a test =[various data; example";
+      string expected = "";
+      string actual = sourceString.Between("=[", "]=");
+      Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenStringsSecondDelimiterMissing_ResultEmpty() {
+      string sourceString = "This  is a test various data; example]=";
+      string expected = "";
+      string actual = sourceString.Between("=[", "]=");
+      Assert.AreEqual(expected, actual);
+    }
+    #endregion --- Between strings --------------------------------------------
+
+    #region --- ItemsBetween chars --------------------------------------------
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenCharsMultipleValuesSourceEmpty_ResultZero() {
+      string sourceString = "";
+      int expected = 0;
+      IEnumerable<string> actual = sourceString.ItemsBetween('[', ']');
+      Assert.AreEqual(expected, actual.Count());
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenCharsMultipleValues_ResultOK() {
+      string sourceString = "source value [item1] [Item2] [item3;item4]";
+      int expected = 3;
+      List<string> actual = sourceString.ItemsBetween('[', ']').ToList();
+      Assert.AreEqual(expected, actual.Count());
+      Assert.AreEqual("item1", actual.First());
+      Assert.AreEqual("Item2", actual[1]);
+      Assert.AreEqual("item3;item4", actual.Last());
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenCharsMultipleValuesErrors_ResultOK() {
+      string sourceString = "source value [item1] [Item2 [item3;item4]";
+      int expected = 2;
+      List<string> actual = sourceString.ItemsBetween('[', ']').ToList();
+      Assert.AreEqual(expected, actual.Count());
+      Assert.AreEqual("item1", actual.First());
+      Assert.AreEqual("Item2 [item3;item4", actual.Last());
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenCharsMultipleValuesDeStartlimiterMissing_ResultZero() {
+      string sourceString = "This  is a test various data; example]=";
+      int expected = 0;
+      IEnumerable<string> actual = sourceString.ItemsBetween('[', ']');
+      Assert.AreEqual(expected, actual.Count());
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenCharMultipleValuesEndDelimiterMissing_ResultZero() {
+      string sourceString = "source value [item1 [Item2 [item3;item4";
+      int expected = 0;
+      List<string> actual = sourceString.ItemsBetween('[', ']').ToList();
+      Assert.AreEqual(expected, actual.Count());
+    }
+    #endregion --- ItemsBetween chars --------------------------------------------
+
+    #region --- ItemsBetween strings --------------------------------------------
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenStringMultipleValuesSourceEmpty_ResultZero() {
+      string sourceString = "";
+      int expected = 0;
+      IEnumerable<string> actual = sourceString.ItemsBetween("=[", "]=");
+      Assert.AreEqual(expected, actual.Count());
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenStringsMultipleValues_ResultOK() {
+      string sourceString = "source value =[item1]= =[Item2]==[item3;item4]=";
+      int expected = 3;
+      List<string> actual = sourceString.ItemsBetween("=[", "]=").ToList();
+      Assert.AreEqual(expected, actual.Count());
+      Assert.AreEqual("item1", actual.First());
+      Assert.AreEqual("Item2", actual[1]);
+      Assert.AreEqual("item3;item4", actual.Last());
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenStringsMultipleValuesErrors_ResultOK() {
+      string sourceString = "source value =[item1]= =[Item2] =[item3;item4]=";
+      int expected = 2;
+      List<string> actual = sourceString.ItemsBetween("=[", "]=").ToList();
+      Assert.AreEqual(expected, actual.Count());
+      Assert.AreEqual("item1", actual.First());
+      Assert.AreEqual("Item2] =[item3;item4", actual.Last());
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenStringsMultipleValuesStartDelimiterMissing_ResultZero() {
+      string sourceString = "This  is a test various data; example]=";
+      int expected = 0;
+      IEnumerable<string> actual = sourceString.ItemsBetween("=[", "]=");
+      Assert.AreEqual(expected, actual.Count());
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenStringsMultipleValuesEndDelimiterMissing_ResultZero() {
+      string sourceString = "source value =[item1 =[Item2 =[item3;item4";
+      int expected = 0;
+      List<string> actual = sourceString.ItemsBetween("=[", "]=").ToList();
+      Assert.AreEqual(expected, actual.Count());
+    }
+
+    [TestMethod(), TestCategory("NC20.String.Between")]
+    public void StringExtension_BetweenStringsMultipleValuesCaseInsensitive_ResultZero() {
+      string sourceString = "source value Debutitem1FINdeButItem2 fin";
+      int expected = 2;
+      List<string> actual = sourceString.ItemsBetween("debut", "fin", StringComparison.InvariantCultureIgnoreCase).ToList();
+      Assert.AreEqual(expected, actual.Count());
+      Assert.AreEqual("item1", actual.First());
+      Assert.AreEqual("Item2 ", actual.Last());
+    }
+    #endregion --- ItemsBetween strings --------------------------------------------
+
   }
 }
