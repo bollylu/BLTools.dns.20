@@ -83,10 +83,10 @@ namespace BLTools.UnitTest.FW47.Extensions {
     }
 
     [TestMethod(), TestCategory("FW47.String")]
-    public void StringExtension_AfterTextDelimIsNonExistent_ResultOK() {
+    public void StringExtension_AfterTextDelimIsNonExistent_ResultEmpty() {
       string sourceString = "A brown fox jumps over a lazy dog";
       string actual = sourceString.After("0");
-      Assert.AreEqual("A brown fox jumps over a lazy dog", actual);
+      Assert.AreEqual("", actual);
     }
 
     [TestMethod(), TestCategory("FW47.String")]
@@ -127,10 +127,10 @@ namespace BLTools.UnitTest.FW47.Extensions {
     }
 
     [TestMethod(), TestCategory("FW47.String")]
-    public void StringExtension_AfterLastTextDelimIsNonExistent_ResultOK() {
+    public void StringExtension_AfterLastTextDelimIsNonExistent_ResultEmpty() {
       string sourceString = "A brown fox jumps over a lazy dog";
       string actual = sourceString.AfterLast("0");
-      Assert.AreEqual("A brown fox jumps over a lazy dog", actual);
+      Assert.AreEqual("", actual);
     }
 
     [TestMethod(), TestCategory("FW47.String")]
@@ -178,10 +178,10 @@ namespace BLTools.UnitTest.FW47.Extensions {
     }
 
     [TestMethod(), TestCategory("FW47.String")]
-    public void StringExtension_BeforeTextDelimIsNonExistent_ResultOK() {
+    public void StringExtension_BeforeTextDelimIsNonExistent_ResultEmpty() {
       string sourceString = "A brown fox jumps over a lazy dog";
       string actual = sourceString.Before("0");
-      Assert.AreEqual("A brown fox jumps over a lazy dog", actual);
+      Assert.AreEqual("", actual);
     }
 
     [TestMethod(), TestCategory("FW47.String")]
@@ -222,10 +222,10 @@ namespace BLTools.UnitTest.FW47.Extensions {
     }
 
     [TestMethod(), TestCategory("FW47.String")]
-    public void StringExtension_BeforeLastTextDelimIsNonExistent_ResultOK() {
+    public void StringExtension_BeforeLastTextDelimIsNonExistent_ResultEmpty() {
       string sourceString = "A brown fox jumps over a lazy dog";
       string actual = sourceString.BeforeLast("0");
-      Assert.AreEqual("A brown fox jumps over a lazy dog", actual);
+      Assert.AreEqual("", actual);
     }
 
     [TestMethod(), TestCategory("FW47.String")]
