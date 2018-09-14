@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace BLTools.ConsoleExtension {
   static public partial class ConsoleExtension {
@@ -47,6 +48,7 @@ namespace BLTools.ConsoleExtension {
             double ElapsedTime = (DateTime.Now - StartTime).TotalMilliseconds;
             Console.Write(TimeSpan.FromMilliseconds(timeout - ElapsedTime).ToString("hh\\:mm\\:ss\\:ff"));
           }
+          //Task.Delay(200);
           Thread.Sleep(200);
         }
         if (Console.KeyAvailable) {
