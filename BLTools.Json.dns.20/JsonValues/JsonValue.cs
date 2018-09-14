@@ -60,38 +60,42 @@ namespace BLTools.Json {
     }
 
     public static IJsonValue Load(string filename) {
+      const string ErrorMessageBase = "Unable to load Json content";
+
       if ( string.IsNullOrWhiteSpace(filename) ) {
         return JsonNull.Default;
       }
 
       if ( !File.Exists(filename) ) {
-        Trace.WriteLine($"Unable to load Json content from \"{filename}\" : file is missing or access denied");
+        Trace.WriteLine($"{ErrorMessageBase} from \"{filename}\" : file is missing or access denied");
         return JsonNull.Default;
       }
 
       try {
         return Parse(File.ReadAllText(filename));
       } catch (Exception ex) {
-        Trace.WriteLine($"Unable to load Json content from \"{filename}\" : {ex.Message}");
+        Trace.WriteLine($"{ErrorMessageBase} from \"{filename}\" : {ex.Message}");
         return JsonNull.Default;
       }
     }
 
     public static void Save(string filename, IJsonValue jsonValue, bool isOutputFormatted = true) {
+      const string ErrorMessageBase = "Unable to save Json content";
+
       if ( string.IsNullOrWhiteSpace(filename) ) {
-        Trace.WriteLine($"Unable to save Json content : filename is missing");
+        Trace.WriteLine($"{ErrorMessageBase} : filename is missing");
         return;
       }
 
       if ( jsonValue == null ) {
-        Trace.WriteLine($"Unable to save Json content : jsonValue is missing");
+        Trace.WriteLine($"{ErrorMessageBase} to \"{filename}\" : jsonValue is missing");
         return;
       }
 
       try {
         File.WriteAllText(filename, jsonValue.RenderAsString(isOutputFormatted));
       } catch (Exception ex) {
-        Trace.WriteLine($"Unable to save Json content to \"{filename}\" : {ex.Message}");
+        Trace.WriteLine($"{ErrorMessageBase} to \"{filename}\" : {ex.Message}");
         return;
       }
     }

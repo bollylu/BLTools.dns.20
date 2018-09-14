@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Xml.Linq;
 using System.Globalization;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BLTools.UnitTest.Core20.Data.Xml {
 
@@ -276,7 +278,6 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     #endregion DateTime
     #endregion Tests for SafeReadAttribute
 
-
     #region Tests for SafeReadElementValue
     /// <summary>
     ///A test for SafeReadElementValue
@@ -315,5 +316,24 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
       Assert.AreEqual(expected.ToString(), actual.ToString());
     }
     #endregion Tests for SafeReadElement
+
+    #region --- Tests for GetXmlItems --------------------------------------------
+    [TestMethod(), TestCategory("NC20.String")]
+    public void GetXmlTags_SourceStringEmpty_ResultZero() {
+      string sourceString = "";
+      IEnumerable<string> actual = sourceString.GetXmlTags();
+      Assert.AreEqual(0, actual.Count());
+    }
+
+    [TestMethod(), TestCategory("NC20.String")]
+    public void GetXmlTags_SourceStringNotEmpty_ResultAllTags() {
+      string sourceString = "<html><head></head><body><a href='/home/test'>This a test</p></body></html>";
+      IEnumerable<string> actual = sourceString.GetXmlTags();
+      Assert.AreEqual(8, actual.Count());
+      Assert.AreEqual("html", actual.First());
+      Assert.AreEqual("a href='/home/test'", actual.ElementAt(4));
+      Assert.AreEqual("/html", actual.Last());
+    }
+    #endregion --- Tests for GetXmlItems --------------------------------------------
   }
 }

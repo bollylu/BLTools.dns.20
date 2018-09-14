@@ -277,7 +277,7 @@ namespace BLTools {
     /// <param name="secondDelimiter">The second string to search for</param>
     /// <param name="stringComparison">The culture to find delimiter (useful for ignoring case)</param>
     /// <returns>The selected portion of the string between the delimiters</returns>
-    public static string Between(this string sourceString, string firstDelimiter, string secondDelimiter, StringComparison stringComparison = StringComparison.CurrentCulture) {
+    public static string Between(this string sourceString, string firstDelimiter = "[", string secondDelimiter = "]", StringComparison stringComparison = StringComparison.CurrentCulture) {
       return sourceString.After(firstDelimiter, stringComparison).Before(secondDelimiter, stringComparison);
     }
 
@@ -288,7 +288,7 @@ namespace BLTools {
     /// <param name="firstDelimiter">The first char to search for</param>
     /// <param name="secondDelimiter">The second char to search for</param>
     /// <returns>The selected portion of the string between the delimiters</returns>
-    public static string Between(this string sourceString, char firstDelimiter, char secondDelimiter) {
+    public static string Between(this string sourceString, char firstDelimiter = '[', char secondDelimiter = ']') {
       return sourceString.After(firstDelimiter).Before(secondDelimiter);
     }
 
@@ -299,22 +299,22 @@ namespace BLTools {
     /// <param name="firstDelimiter">The first string to search for</param>
     /// <param name="secondDelimiter">The second string to search for</param>
     /// <returns>A list of items found between both delimiters</returns>
-    public static IEnumerable<string> ItemsBetween(this string sourceString, string firstDelimiter, string secondDelimiter, StringComparison stringComparison = StringComparison.CurrentCulture) {
+    public static IEnumerable<string> ItemsBetween(this string sourceString, string firstDelimiter = "[", string secondDelimiter = "]", StringComparison stringComparison = StringComparison.CurrentCulture) {
       #region Validate parameters
       if ( string.IsNullOrEmpty(sourceString) ) {
         yield break;
       }
-      if ( string.IsNullOrEmpty(firstDelimiter) ) {
+      if ( firstDelimiter == "" ) {
         yield break;
       }
-      if ( string.IsNullOrEmpty(secondDelimiter) ) {
+      if ( secondDelimiter == "" ) {
         yield break;
       }
       #endregion Validate parameters
 
       string ProcessedString = sourceString;
 
-      while ( ProcessedString != "" && ProcessedString.IndexOf(firstDelimiter, stringComparison) != -1 && ProcessedString.IndexOf(secondDelimiter,stringComparison) != -1 ) {
+      while ( ProcessedString != "" && ProcessedString.IndexOf(firstDelimiter, stringComparison) != -1 && ProcessedString.IndexOf(secondDelimiter, stringComparison) != -1 ) {
         yield return ProcessedString.After(firstDelimiter, stringComparison).Before(secondDelimiter, stringComparison);
         ProcessedString = ProcessedString.After(secondDelimiter, stringComparison);
       }
@@ -330,7 +330,7 @@ namespace BLTools {
     /// <param name="firstDelimiter">The first char to search for</param>
     /// <param name="secondDelimiter">The second char to search for</param>
     /// <returns>A list of items found between both delimiters</returns>
-    public static IEnumerable<string> ItemsBetween(this string sourceString, char firstDelimiter, char secondDelimiter) {
+    public static IEnumerable<string> ItemsBetween(this string sourceString, char firstDelimiter = '[', char secondDelimiter = ']') {
       #region Validate parameters
       if ( string.IsNullOrEmpty(sourceString) ) {
         yield break;
@@ -339,7 +339,7 @@ namespace BLTools {
 
       string ProcessedString = sourceString;
 
-      while ( ProcessedString != "" && ProcessedString.IndexOf(firstDelimiter) != -1 && ProcessedString.IndexOf(secondDelimiter) != -1) {
+      while ( ProcessedString != "" && ProcessedString.IndexOf(firstDelimiter) != -1 && ProcessedString.IndexOf(secondDelimiter) != -1 ) {
         yield return ProcessedString.After(firstDelimiter).Before(secondDelimiter);
         ProcessedString = ProcessedString.After(secondDelimiter);
       }
@@ -349,6 +349,23 @@ namespace BLTools {
     }
 
 
+    public static IEnumerable<string> GetItems(this string sourceString, string delimiter = ";", StringSplitOptions stringSplitOptions = StringSplitOptions.None) {
+      #region === Validate parameters ===
+      if ( string.IsNullOrEmpty(sourceString) ) {
+        yield break;
+      }
+      if ( delimiter == "" ) {
+        yield return sourceString;
+      }
+      #endregion === Validate parameters ===
+      foreach ( string SplitItem in sourceString.Split(new string[] { delimiter }, stringSplitOptions) ) {
+        yield return SplitItem;
+      }
+    }
+
+    public static IEnumerable<string> GetXmlTags(this string sourceString) {
+      return sourceString.ItemsBetween('<', '>');
+    }
 
     /// <summary>
     /// Capitalize the first letter of each word and uncapitalize other chars
