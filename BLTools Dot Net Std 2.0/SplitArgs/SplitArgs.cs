@@ -1,9 +1,8 @@
 using System;
-using System.Text;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Collections.Specialized;
-using System.Linq;
+using System.Globalization;
+using System.Text;
 
 namespace BLTools {
 
@@ -12,7 +11,7 @@ namespace BLTools {
   /// If values are specified, they are separated from the keyword by an = sign.
   /// (c) 2004-2012 Luc Bolly
   /// </summary>
-  public class SplitArgs : List<ArgElement> {
+  public class SplitArgs : List<ArgElement>, ISplitArgs {
 
     #region Public static properties
     /// <summary>
@@ -539,7 +538,7 @@ namespace BLTools {
         if ( IsCaseSensitive ) {
           CurrentElement = Find((a) => a.Name == key);
         } else {
-          CurrentElement = Find((a) => a.Name.ToLower() == key.ToLower(culture));
+          CurrentElement = Find((a) => a.Name.ToLower(culture) == key.ToLower(culture));
         }
 
         if ( CurrentElement != null ) {
