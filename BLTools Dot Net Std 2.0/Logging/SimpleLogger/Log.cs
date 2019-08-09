@@ -26,7 +26,7 @@ namespace BLTools {
     }
     private static ISimpleLogger _Writer;
 
-    private static readonly object _WriterLock;
+    private static readonly object _WriterLock = new object();
 
     public static void Write(string message) {
       lock ( _WriterLock ) {
