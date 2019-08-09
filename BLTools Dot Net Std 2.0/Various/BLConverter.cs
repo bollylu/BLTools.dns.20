@@ -24,7 +24,7 @@ namespace BLTools {
     public static T BLConvert<T>(object source, CultureInfo culture, T defaultValue) {
       try {
 
-        if ( source.GetType().Name == typeof(T).Name ) {
+        if ( source.GetType() == typeof(T) ) {
           return (T)source;
         }
 
@@ -39,15 +39,15 @@ namespace BLTools {
               string TestSource = source as string;
               char DecimalSeparator = culture.NumberFormat.NumberDecimalSeparator[0];
               if ( TestSource.Count(x => !x.IsNumeric() && x != DecimalSeparator) > 0 ) {
-                _OutputError(string.Format("Bad format for conversion : {0} : unknown non numeric characters", TestSource));
+                _OutputError($"Bad format for conversion : {TestSource} : unknown non numeric characters");
                 return defaultValue;
               }
               if ( TestSource.Count(x => !x.IsNumeric()) > 1 ) {
-                _OutputError(string.Format("Bad format for conversion : {0} : too many non numeric characters", TestSource));
+                _OutputError($"Bad format for conversion : {TestSource} : too many non numeric characters");
                 return defaultValue;
               }
               if ( TestSource.Count(x => x == DecimalSeparator) > 1 ) {
-                _OutputError(string.Format("Bad format for conversion : {0} : too many decimal separators ({1})", (string)source, DecimalSeparator));
+                _OutputError($"Bad format for conversion : {(string)source} : too many decimal separators ({DecimalSeparator})");
                 return defaultValue;
               }
             }
@@ -65,7 +65,7 @@ namespace BLTools {
 
           case "Int32[]": {
               if ( !( source is string ) ) {
-                _OutputError(string.Format("Bad format for conversion to int32[] : {0} : source is not a string", source.GetType().Name));
+                _OutputError($"Bad format for conversion to int32[] : {source.GetType().Name} : source is not a string");
                 return defaultValue;
               }
               string[] aTemp = ( (string)source ).Split(SplitArgs.Separator);
