@@ -117,5 +117,25 @@ namespace BLTools {
     public static DateTime Time(this DateTime datetime) {
       return default(DateTime).Add(datetime.TimeOfDay);
     }
+
+    /// <summary>
+    /// Returns next day (with correct rolling of the month/year)
+    /// </summary>
+    /// <param name="datetime">The source DateTime</param>
+    /// <returns>A DateTime containing only time</returns>
+    public static DateTime NextDay(this DateTime datetime) {
+      return datetime.AddDays(1);
+    }
+
+    /// <summary>
+    /// Returns previous day (with correct rolling of the month/year)
+    /// </summary>
+    /// <param name="datetime">The source DateTime</param>
+    /// <returns>A DateTime containing only time</returns>
+    public static DateTime PreviousDay(this DateTime datetime) {
+      return datetime.AddDays(-1);
+    }
+
+
   }
 }

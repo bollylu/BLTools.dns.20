@@ -1,10 +1,12 @@
-﻿using System;
+﻿using BLTools.Diagnostic.Logging;
+using System;
+using System.ComponentModel;
 
 namespace BLTools.MVVM {
   /// <summary>
   /// Base class for a new MVVM class
   /// </summary>
-  public class MVVMBase : ObservableObject {
+  public abstract class MVVMBase : TLoggable, INotifyPropertyChanged {
 
     /// <summary>
     /// Minimum level for tracing. If under the level, the callback is skipped
@@ -133,7 +135,7 @@ namespace BLTools.MVVM {
     /// <summary>
     /// Sends an empty execution progress message to clear it
     /// </summary>
-    protected virtual void ClearExecutionProgress() {
+    public virtual void ClearExecutionProgress() {
       if (OnExecutionProgress == null) {
         return;
       }
@@ -145,7 +147,7 @@ namespace BLTools.MVVM {
     /// </summary>
     /// <param name="message">The message</param>
     /// <param name="errorlevel">The optional errorlevel (will be filtered by MinTraceLevel)</param>
-    protected virtual void NotifyExecutionProgress(string message = "", ErrorLevel errorlevel = ErrorLevel.Info) {
+    public virtual void NotifyExecutionProgress(string message = "", ErrorLevel errorlevel = ErrorLevel.Info) {
       if (errorlevel < MinTraceLevel || OnExecutionProgress == null) {
         return;
       }
@@ -158,7 +160,7 @@ namespace BLTools.MVVM {
     /// <param name="message">The message</param>
     /// <param name="progress">The integer</param>
     /// <param name="errorlevel">The optional errorlevel (will be filtered by MinTraceLevel)</param>
-    protected virtual void NotifyExecutionProgress(string message, int progress, ErrorLevel errorlevel = ErrorLevel.Info) {
+    public virtual void NotifyExecutionProgress(string message, int progress, ErrorLevel errorlevel = ErrorLevel.Info) {
       if (errorlevel < MinTraceLevel || OnExecutionProgress == null) {
         return;
       }
@@ -185,6 +187,22 @@ namespace BLTools.MVVM {
     }
     #endregion --- Execution error ----------------------------------------------------------------
 
+    #region === INotifyPropertyChanged ============================================================
+    /// <summary>
+    /// Event handler for when a property was changed
+    /// </summary>
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    /// <summary>
+    /// Calls any hook when the property was changed
+    /// </summary>
+    /// <param name="propertyName"></param>
+    protected void NotifyPropertyChanged(string propertyName) {
+      if (PropertyChanged != null) {
+        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+      }
+    }
+    #endregion === INotifyPropertyChanged =========================================================
 
   }
 }

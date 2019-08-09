@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+    <Message Id="Available">
+        <Translation Culture="en-us">{0} is available</Translation>
+        <Translation Culture="fr-fr">{0} est disponible</Translation>
+    </Message>
+    <Message Id="NotAvailable">
+        <Translation Culture="en-us">{0} is not available</Translation>
+        <Translation Culture="fr-fr">{0} n'est pas disponible</Translation>
+    </Message>
+    <Message Id="Init">
+        <Translation Culture="en-us">Initializing, please wait ...</Translation>
+        <Translation Culture="fr-fr">Initialisation, veuillez patienter svp ...</Translation>
+    </Message>
+    <Message Id="Done">
+        <Translation Culture="en-us">Done</Translation>
+        <Translation Culture="fr-fr">Terminé</Translation>
+    </Message>
+    <Message Id="Successful">
+        <Translation Culture="en-us">Successful</Translation>
+        <Translation Culture="fr-fr">Réussi</Translation>
+    </Message>
+    <Message Id="Failed">
+        <Translation Culture="en-us">Failed</Translation>
+        <Translation Culture="fr-fr">En échec</Translation>
+    </Message>
+    <Message Id="Pending">
+        <Translation Culture="en-us">Pending</Translation>
+        <Translation Culture="fr-fr">En attente</Translation>
+    </Message>
+    <Message Id="Started">
+        <Translation Culture="en-us">Started</Translation>
+        <Translation Culture="fr-fr">Démarré</Translation>
+    </Message>
+    <Message Id="Stopped">
+        <Translation Culture="en-us">Stopped</Translation>
+        <Translation Culture="fr-fr">Arrêté</Translation>
+    </Message>
+    <Message Id="Cancelled">
+        <Translation Culture="en-us">Cancelled</Translation>
+        <Translation Culture="fr-fr">Annulé</Translation>
+    </Message>
+</root>

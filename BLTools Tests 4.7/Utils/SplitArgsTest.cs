@@ -249,7 +249,7 @@ namespace BLTools.UnitTest.FW47.Utils {
     public void GetValue_KeyGenericDouble_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", string.Format("/par1=1236{0}2365", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator), "/verbose" };
       SplitArgs target = new SplitArgs(arrayOfValues);
-      Assert.IsTrue(target.GetValue<double>("par1", 0) == 1236.2365D);
+      Assert.IsTrue(target.GetValue<double>("par1", 0, CultureInfo.CurrentCulture) == 1236.2365D);
     }
     /// <summary>
     ///A test for GetValue&st;long&gt;
@@ -270,7 +270,7 @@ namespace BLTools.UnitTest.FW47.Utils {
                                                                "/verbose"
                                                              };
       SplitArgs target = new SplitArgs(arrayOfValues);
-      Assert.IsTrue(target.GetValue<float>("par1", 0) == 1236.23F, target.GetValue<float>("par1", 0).ToString());
+      Assert.IsTrue(target.GetValue<float>("par1", 0, CultureInfo.CurrentCulture) == 1236.23F, target.GetValue<float>("par1", 0).ToString());
     }
     /// <summary>
     ///A test for GetValue&st;DateTime&gt;
@@ -322,7 +322,7 @@ namespace BLTools.UnitTest.FW47.Utils {
     public void GetValue_PosGenericDouble_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", string.Format("/par1=1236{0}2365", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator), "/verbose" };
       SplitArgs target = new SplitArgs(arrayOfValues);
-      Assert.IsTrue(target.GetValue<double>(1, 0) == 1236.2365D);
+      Assert.IsTrue(target.GetValue<double>(1, 0, CultureInfo.CurrentCulture) == 1236.2365D);
     }
     /// <summary>
     ///A test for GetValue&st;long&gt;
@@ -340,7 +340,7 @@ namespace BLTools.UnitTest.FW47.Utils {
     public void GetValue_PosGenericFloat_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", string.Format("/par1=1236{0}23", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator), "/verbose" };
       SplitArgs target = new SplitArgs(arrayOfValues);
-      Assert.IsTrue(target.GetValue<float>(1, 0) == 1236.23F);
+      Assert.IsTrue(target.GetValue<float>(1, 0, CultureInfo.CurrentCulture) == 1236.23F);
     }
     /// <summary>
     ///A test for GetValue&st;DateTime&gt;
@@ -392,7 +392,7 @@ namespace BLTools.UnitTest.FW47.Utils {
                                                                "/verbose",
                                                                $"/par2=654789{CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator}123456" };
       SplitArgs target = new SplitArgs(arrayOfValues);
-      Assert.IsTrue(target.GetValue<double>(3, 0) == 654789.123456D);
+      Assert.IsTrue(target.GetValue<double>(3, 0, CultureInfo.CurrentCulture) == 654789.123456D);
     }
     /// <summary>
     ///A test for GetValue&st;long&gt;
@@ -410,7 +410,7 @@ namespace BLTools.UnitTest.FW47.Utils {
     public void GetValue_Pos3GenericFloat_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", string.Format("/par1=1236{0}2365", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator), "/verbose", string.Format("/par2=98764{0}1234", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator) };
       SplitArgs target = new SplitArgs(arrayOfValues);
-      Assert.IsTrue(target.GetValue<float>(3, 0) == 98764.1234F);
+      Assert.IsTrue(target.GetValue<float>(3, 0, CultureInfo.CurrentCulture) == 98764.1234F);
     }
     /// <summary>
     ///A test for GetValue&st;DateTime&gt;

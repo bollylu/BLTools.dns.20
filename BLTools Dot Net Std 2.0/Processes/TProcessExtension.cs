@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLTools {
   public static class TProcessExtension {
-    public static Task WaitForExitAsync(this Process process, CancellationToken cancellationToken = default(CancellationToken)) {
+    public static Task WaitForExitAsync(this Process process, CancellationToken cancellationToken) {
       process.EnableRaisingEvents = true;
       var TCS = new TaskCompletionSource<object>();
       process.Exited += (sender, args) => TCS.TrySetResult(null);
@@ -19,17 +19,13 @@ namespace BLTools {
     }
 
     public static Task WaitForExitAsync(this Process process, int timeoutInMillisec) {
-      CancellationTokenSource CTS = new CancellationTokenSource();
-      CTS.CancelAfter(timeoutInMillisec);
-      CancellationToken CT = CTS.Token;
-      return process.WaitForExitAsync(CT);
+      CancellationTokenSource CTS = new CancellationTokenSource(timeoutInMillisec);
+      return process.WaitForExitAsync(CTS.Token);
     }
 
     public static Task WaitForExitAsync(this Process process, TimeSpan timeSpan) {
-      CancellationTokenSource CTS = new CancellationTokenSource();
-      CTS.CancelAfter(timeSpan);
-      CancellationToken CT = CTS.Token;
-      return process.WaitForExitAsync(CT);
+      CancellationTokenSource CTS = new CancellationTokenSource(timeSpan);
+      return process.WaitForExitAsync(CTS.Token);
     }
   }
 }

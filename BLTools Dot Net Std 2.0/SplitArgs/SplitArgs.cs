@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace BLTools {
@@ -13,39 +14,60 @@ namespace BLTools {
   /// </summary>
   public class SplitArgs : List<ArgElement>, ISplitArgs {
 
+    public readonly static CultureInfo DEFAULT_CULTURE = CultureInfo.InvariantCulture;
+
     #region Public static properties
     /// <summary>
     /// Get or Set the CultureInfo used to parse DateTime and numbers (decimal point)
     /// </summary>
-    public static CultureInfo CurrentCultureInfo = CultureInfo.CurrentCulture;
+    public static CultureInfo CurrentCultureInfo {
+      get {
+        if (_CurrentCultureInfo == null) {
+          return DEFAULT_CULTURE;
+        }
+        return _CurrentCultureInfo;
+      }
+      set {
+        _CurrentCultureInfo = value;
+      }
+    }
+    private static CultureInfo _CurrentCultureInfo;
+
     /// <summary>
     /// Get or Set the parameters name case sensitivity
     /// </summary>
     public static bool IsCaseSensitive = false;
+
     /// <summary>
     /// Get or Set the separator used when reading an array from parameters (default value is ',')
     /// </summary>
     public static char Separator = ',';
+
+    /// <summary>
+    /// Separator between a key and its value
+    /// </summary>
+    public static char KeyValueSeparator = '=';
     #endregion Public static properties
 
-    #region Constructors
+    #region --- Constructor(s) ---------------------------------------------------------------------------------
     /// <summary>
     /// Creates a dictonnary of command line arguments from the args parameters list provided to Main function
     /// </summary>
     /// <param name="arrayOfValues">An array of parameters</param>
     public SplitArgs(IEnumerable<string> arrayOfValues) {
-      if ( arrayOfValues == null ) {
+      if (arrayOfValues == null) {
         throw new ArgumentNullException("arrayOfValues", "you must pass a valid IEnumerable[] arrayOfValues argument");
       }
       _ParseValues(arrayOfValues);
     }
+
     /// <summary>
     /// Creates a dictionnary of command line parameters from a given command line 
     /// </summary>
     /// <param name="cmdLine">The command line</param>
     public SplitArgs(string cmdLine) {
       #region Validate parameters
-      if ( cmdLine == null ) {
+      if (cmdLine == null) {
         throw new ArgumentNullException("cmdLine", "you must pass a valid string cmdLine argument");
       }
       #endregion Validate parameters
@@ -59,23 +81,23 @@ namespace BLTools {
 
       int PreprocessedLineLength = PreprocessedLine.Length;
 
-      while ( i < PreprocessedLineLength ) {
+      while (i < PreprocessedLineLength) {
 
-        if ( PreprocessedLine[i] == '"' ) {
-          InQuote = !( InQuote );
+        if (PreprocessedLine[i] == '"') {
+          InQuote = !(InQuote);
           i++;
           continue;
         }
 
-        if ( PreprocessedLine[i] == ' ' ) {
-          if ( InQuote ) {
+        if (PreprocessedLine[i] == ' ') {
+          if (InQuote) {
             TempStr.Append(PreprocessedLine[i]);
             i++;
             continue;
 
           }
 
-          if ( !( TempStr.Length == 0 ) ) {
+          if (!(TempStr.Length == 0)) {
             CmdLineValues.Add(TempStr.ToString());
             TempStr.Clear();
             i++;
@@ -84,7 +106,7 @@ namespace BLTools {
 
         }
 
-        if ( PreprocessedLine[i] != '"' ) {
+        if (PreprocessedLine[i] != '"') {
           TempStr.Append(PreprocessedLine[i]);
           i++;
           continue;
@@ -92,13 +114,14 @@ namespace BLTools {
 
       }
 
-      if ( !( TempStr.Length == 0 ) ) {
+      if (!(TempStr.Length == 0)) {
         CmdLineValues.Add(TempStr.ToString());
       }
 
       _ParseValues(CmdLineValues.ToArray());
 
     }
+
     /// <summary>
     /// Copy constructor
     /// </summary>
@@ -106,50 +129,53 @@ namespace BLTools {
     public SplitArgs(SplitArgs otherSplitArgs) {
       this.AddRange(otherSplitArgs);
     }
+
     /// <summary>
     /// Create a dictionnary of url parameters from a Request.QueryString
     /// </summary>
     /// <param name="queryStringItems">A Request.QueryString</param>
     public SplitArgs(NameValueCollection queryStringItems) {
-      if ( queryStringItems == null || queryStringItems.Count == 0 ) {
+      #region === Validate parameters ===
+      if (queryStringItems == null || queryStringItems.Count == 0) {
         return;
       }
-      foreach ( string QueryStringItem in queryStringItems ) {
+      #endregion === Validate parameters ===
+      foreach (string QueryStringItem in queryStringItems) {
         this.Add(new ArgElement(0, QueryStringItem, queryStringItems[QueryStringItem]));
       }
     }
-    #endregion Constructors
+    #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
     #region Private methods
     private void _ParseValues(IEnumerable<string> arrayOfValues) {
       int Position = 0;
-      foreach ( string ValueItem in arrayOfValues ) {
-        if ( ValueItem.StartsWith("/") || ValueItem.StartsWith("-") ) {
-          if ( ValueItem.IndexOf("=") != -1 ) {
-            if ( IsCaseSensitive ) {
-              Add(new ArgElement(Position, ValueItem.Substring(1).Before("=").TrimStart(), ValueItem.After("=").TrimEnd()));
+      foreach (string ValueItem in arrayOfValues) {
+        if (ValueItem.StartsWith("/") || ValueItem.StartsWith("-")) {
+          if (ValueItem.Contains(KeyValueSeparator)) {
+            if (IsCaseSensitive) {
+              Add(new ArgElement(Position, ValueItem.Substring(1).Before(KeyValueSeparator).TrimStart(), ValueItem.After(KeyValueSeparator).TrimEnd()));
             } else {
-              Add(new ArgElement(Position, ValueItem.Substring(1).Before("=").TrimStart().ToLower(CultureInfo.CurrentCulture), ValueItem.After("=").TrimEnd()));
+              Add(new ArgElement(Position, ValueItem.Substring(1).Before(KeyValueSeparator).TrimStart().ToLower(CurrentCultureInfo), ValueItem.After(KeyValueSeparator).TrimEnd()));
             }
           } else {
-            if ( IsCaseSensitive ) {
+            if (IsCaseSensitive) {
               Add(new ArgElement(Position, ValueItem.Substring(1).Trim(), ""));
             } else {
-              Add(new ArgElement(Position, ValueItem.Substring(1).Trim().ToLower(CultureInfo.CurrentCulture), ""));
+              Add(new ArgElement(Position, ValueItem.Substring(1).Trim().ToLower(CurrentCultureInfo), ""));
             }
           }
         } else {
-          if ( ValueItem.IndexOf("=") != -1 ) {
-            if ( IsCaseSensitive ) {
-              Add(new ArgElement(Position, ValueItem.Before("=").TrimStart(), ValueItem.After("=").TrimEnd()));
+          if (ValueItem.Contains("=")) {
+            if (IsCaseSensitive) {
+              Add(new ArgElement(Position, ValueItem.Before(KeyValueSeparator).TrimStart(), ValueItem.After(KeyValueSeparator).TrimEnd()));
             } else {
-              Add(new ArgElement(Position, ValueItem.Before("=").TrimStart().ToLower(CultureInfo.CurrentCulture), ValueItem.After("=").TrimEnd()));
+              Add(new ArgElement(Position, ValueItem.Before(KeyValueSeparator).TrimStart().ToLower(CurrentCultureInfo), ValueItem.After(KeyValueSeparator).TrimEnd()));
             }
           } else {
-            if ( IsCaseSensitive ) {
+            if (IsCaseSensitive) {
               Add(new ArgElement(Position, ValueItem.Trim(), ""));
             } else {
-              Add(new ArgElement(Position, ValueItem.Trim().ToLower(CultureInfo.CurrentCulture), ""));
+              Add(new ArgElement(Position, ValueItem.Trim().ToLower(CurrentCultureInfo), ""));
             }
           }
         }
@@ -161,8 +187,8 @@ namespace BLTools {
     #region Public properties
     public new ArgElement this[int index] {
       get {
-        ArgElement CurrentElement = Find((a) => a.Id == index);
-        if ( CurrentElement == null ) {
+        ArgElement CurrentElement = this.FirstOrDefault(a => a.Id == index);
+        if (CurrentElement == null) {
           return new ArgElement(0, "", "");
         } else {
           return CurrentElement;
@@ -171,327 +197,23 @@ namespace BLTools {
     }
     #endregion Public properties
 
-    #region Public methods
-    /// <summary>
-    /// Return the value of a named parameter as a string array. The source parameter string will be splitted based
-    /// on an array of chars
-    /// </summary>
-    /// <param name="key">The name of the parameter</param>
-    /// <param name="separator">The array of possible separators</param>
-    /// <returns>The array of values or an empty array if parameter is not found</returns>
-    [Obsolete("Use generic version instead.")]
-    public string[] GetValueAsStringArray(string key, char[] separator) {
-      if ( key == null || this.Count == 0 ) {
-        return new string[] { };
-      }
-      string KeyLower = key.ToLower(CultureInfo.CurrentCulture);
-      ArgElement CurrentElement = Find((a) => a.Name.ToLower() == KeyLower);
-      if ( CurrentElement != null ) {
-        return CurrentElement.Value.Split(separator);
-      } else {
-        return new string[] { };
-      }
-    }
-
-    /// <summary>
-    /// Return the value of a named parameter as a int array. The source parameter string will be splitted based
-    /// on an array of chars
-    /// </summary>
-    /// <param name="key">The name of the parameter</param>
-    /// <param name="separator">The array of possible separators</param>
-    /// <returns>The array of values or an empty array if parameter is not found. Each unconvertible value is rendered as 0.</returns>
-    [Obsolete("Use generic version instead.")]
-    public int[] GetValueAsIntArray(string key, char[] separator) {
-      string KeyLower = key.ToLower(CultureInfo.CurrentCulture);
-      ArgElement CurrentElement = Find((a) => a.Name.ToLower() == KeyLower);
-      if ( CurrentElement != null ) {
-        string[] aTemp = CurrentElement.Value.Split(separator);
-        int[] RetVal = new int[aTemp.Length];
-        for ( int i = 0; i < aTemp.Length; i++ ) {
-          try {
-            RetVal[i] = Int32.Parse(aTemp[i]);
-          } catch ( FormatException ) {
-            RetVal[i] = 0;
-          } catch ( OverflowException ) {
-            RetVal[i] = 0;
-          }
-        }
-        return (int[])RetVal.Clone();
-      } else {
-        return new int[] { };
-      }
-    }
-
-    #region GetValueAsString
-    /// <summary>
-    /// Return the string that match the parameter at the specified position (0 based)
-    /// </summary>
-    /// <param name="position">The position of the parameter in the command line</param>
-    /// <returns>The value of the parameter or an empty string is parameter does not exist</returns>
-    [Obsolete("Use generic version instead.")]
-    public string GetValueAsString(int position) {
-      return GetValueAsString(position, "");
-    }
-    /// <summary>
-    /// Return the string that match the parameter at the specified position (0 based)
-    /// </summary>
-    /// <param name="position">The position of the parameter in the command line</param>
-    /// <param name="defaultValue">The default value to return</param>
-    /// <returns>The value of the parameter or the default value is parameter does not exist</returns>
-    [Obsolete("Use generic version instead.")]
-    public string GetValueAsString(int position, string defaultValue) {
-      if ( position >= 0 && position <= this.Count ) {
-        return this[position].Value;
-      } else {
-        return defaultValue;
-      }
-    }
-    /// <summary>
-    /// Return the string that match the named parameter
-    /// </summary>
-    /// <param name="key">The name of the parameter</param>
-    /// <returns>The value of the parameter or an empty string is parameter does not exist</returns>
-    [Obsolete("Use generic version instead.")]
-    public string GetValueAsString(string key) {
-      return GetValueAsString(key, "");
-    }
-    /// <summary>
-    /// Return the string that match the named parameter
-    /// </summary>
-    /// <param name="key">The name of the parameter</param>
-    /// <param name="defaultValue">The default value to return</param>
-    /// <returns>The value of the parameter or the default value is parameter does not exist</returns>
-    [Obsolete("Use generic version instead.")]
-    public string GetValueAsString(string key, string defaultValue) {
-      string KeyLower = key.ToLower(CultureInfo.CurrentCulture);
-      ArgElement CurrentElement = Find((a) => a.Name.ToLower() == KeyLower);
-      if ( CurrentElement != null ) {
-        return CurrentElement.Value;
-      } else {
-        return defaultValue;
-      }
-    }
-    #endregion GetValueAsString
-
-    #region GetValueAsInt
-    [Obsolete("Use generic version instead.")]
-    public int GetValueAsInt(string key) {
-      return GetValueAsInt(key, 0);
-    }
-    [Obsolete("Use generic version instead.")]
-    public int GetValueAsInt(string key, int defaultValue) {
-      string KeyLower = key.ToLower(CultureInfo.CurrentCulture);
-      ArgElement CurrentElement = Find((a) => a.Name.ToLower() == KeyLower);
-      if ( CurrentElement != null ) {
-        try {
-          return Int32.Parse(CurrentElement.Value);
-        } catch ( FormatException ) {
-          return defaultValue;
-        } catch ( OverflowException ) {
-          return defaultValue;
-        }
-      } else {
-        return defaultValue;
-      }
-    }
-    [Obsolete("Use generic version instead.")]
-    public int GetValueAsInt(int position) {
-      return GetValueAsInt(position, 0);
-    }
-    [Obsolete("Use generic version instead.")]
-    public int GetValueAsInt(int position, int defaultValue) {
-      if ( position >= 0 && position <= this.Count ) {
-        try {
-          return Int32.Parse(this[position].Value);
-        } catch ( FormatException ) {
-          return defaultValue;
-        } catch ( OverflowException ) {
-          return defaultValue;
-        }
-      } else {
-        return defaultValue;
-      }
-    }
-    #endregion GetValueAsInt
-
-    #region GetValueAsLong
-    [Obsolete("Use generic version instead.")]
-    public long GetValueAsLong(string key) {
-      return GetValueAsLong(key, 0);
-    }
-    [Obsolete("Use generic version instead.")]
-    public long GetValueAsLong(string key, long defaultValue) {
-      string KeyLower = key.ToLower(CultureInfo.CurrentCulture);
-      ArgElement CurrentElement = Find((a) => a.Name.ToLower() == KeyLower);
-      if ( CurrentElement != null ) {
-        try {
-          return Int64.Parse(CurrentElement.Value);
-        } catch ( FormatException ) {
-          return defaultValue;
-        } catch ( OverflowException ) {
-          return defaultValue;
-        }
-      } else {
-        return defaultValue;
-      }
-    }
-    [Obsolete("Use generic version instead.")]
-    public long GetValueAsLong(int position) {
-      return GetValueAsLong(position, 0);
-    }
-    [Obsolete("Use generic version instead.")]
-    public long GetValueAsLong(int position, long defaultValue) {
-      if ( position >= 0 && position <= this.Count ) {
-        try {
-          return long.Parse(this[position].Value);
-        } catch ( FormatException ) {
-          return defaultValue;
-        } catch ( OverflowException ) {
-          return defaultValue;
-        }
-      } else {
-        return defaultValue;
-      }
-    }
-    #endregion GetValueAsLong
-
-    #region GetValueAsFloat
-    [Obsolete("Use generic version instead.")]
-    public float GetValueAsFloat(string key) {
-      return GetValueAsFloat(key, 0);
-    }
-    [Obsolete("Use generic version instead.")]
-    public float GetValueAsFloat(string key, float defaultValue) {
-      string KeyLower = key.ToLower(CultureInfo.CurrentCulture);
-      ArgElement CurrentElement = Find((a) => a.Name.ToLower() == KeyLower);
-      if ( CurrentElement != null ) {
-        try {
-          return (float)Double.Parse(CurrentElement.Value);
-        } catch ( FormatException ) {
-          return defaultValue;
-        } catch ( OverflowException ) {
-          return defaultValue;
-        }
-      } else {
-        return defaultValue;
-      }
-    }
-    [Obsolete("Use generic version instead.")]
-    public float GetValueAsFloat(int position) {
-      return GetValueAsFloat(position, 0);
-    }
-    [Obsolete("Use generic version instead.")]
-    public float GetValueAsFloat(int position, float defaultValue) {
-      if ( position >= 0 && position <= this.Count ) {
-        try {
-          return float.Parse(this[position].Value);
-        } catch ( FormatException ) {
-          return defaultValue;
-        } catch ( OverflowException ) {
-          return defaultValue;
-        }
-      } else {
-        return defaultValue;
-      }
-    }
-    #endregion GetValueAsFloat
-
-    #region GetValueAsDouble
-    [Obsolete("Use generic version instead.")]
-    public double GetValueAsDouble(string key) {
-      return GetValueAsDouble(key, 0);
-    }
-    [Obsolete("Use generic version instead.")]
-    public double GetValueAsDouble(string key, double defaultValue) {
-      string KeyLower = key.ToLower(CultureInfo.CurrentCulture);
-      ArgElement CurrentElement = Find((a) => a.Name.ToLower() == KeyLower);
-      if ( CurrentElement != null ) {
-        try {
-          return Double.Parse(CurrentElement.Value);
-        } catch ( FormatException ) {
-          return defaultValue;
-        } catch ( OverflowException ) {
-          return defaultValue;
-        }
-      } else {
-        return defaultValue;
-      }
-    }
-    [Obsolete("Use generic version instead.")]
-    public double GetValueAsDouble(int position) {
-      return GetValueAsDouble(position, 0);
-    }
-    [Obsolete("Use generic version instead.")]
-    public double GetValueAsDouble(int position, double defaultValue) {
-      if ( position >= 0 && position <= this.Count ) {
-        try {
-          return double.Parse(this[position].Value);
-        } catch ( FormatException ) {
-          return defaultValue;
-        } catch ( OverflowException ) {
-          return defaultValue;
-        }
-      } else {
-        return defaultValue;
-      }
-    }
-    #endregion GetValueAsDouble
-
-    #region GetValueAsDateTime
-    [Obsolete("Use generic version instead.")]
-    public DateTime GetValueAsDateTime(string key) {
-      return GetValueAsDateTime(key, DateTime.MinValue);
-    }
-    [Obsolete("Use generic version instead.")]
-    public DateTime GetValueAsDateTime(string key, DateTime defaultValue) {
-      string KeyLower = key.ToLower(CultureInfo.CurrentCulture);
-      ArgElement CurrentElement = Find((a) => a.Name.ToLower() == KeyLower);
-      if ( CurrentElement != null ) {
-        try {
-          return DateTime.Parse(CurrentElement.Value);
-        } catch ( FormatException ) {
-          return defaultValue;
-        }
-      } else {
-        return defaultValue;
-      }
-    }
-    [Obsolete("Use generic version instead.")]
-    public DateTime GetValueAsDateTime(int position) {
-      return GetValueAsDateTime(position, DateTime.MinValue);
-    }
-    [Obsolete("Use generic version instead.")]
-    public DateTime GetValueAsDateTime(int position, DateTime defaultValue) {
-      if ( position >= 0 && position <= this.Count ) {
-        try {
-          return DateTime.Parse(this[position].Value);
-        } catch ( FormatException ) {
-          return defaultValue;
-        } catch ( OverflowException ) {
-          return defaultValue;
-        }
-      } else {
-        return defaultValue;
-      }
-    }
-    #endregion GetValueAsDateTime
-
     public bool IsDefined(string key) {
-      if ( key == null || this.Count == 0 ) {
+      if (key == null || this.IsEmpty()) {
         return false;
       }
-      string KeyLower = key.ToLower(CultureInfo.CurrentCulture);
-      ArgElement CurrentElement = Find((a) => a.Name.ToLower(CultureInfo.CurrentCulture) == KeyLower);
-      if ( CurrentElement != null ) {
-        return true;
-      } else {
-        return false;
-      }
+      ArgElement CurrentElement;
 
+      if (IsCaseSensitive) {
+        CurrentElement = this.FirstOrDefault(a => a.Name == key);
+      } else {
+        string KeyLower = key.ToLower(CurrentCultureInfo);
+        CurrentElement = this.FirstOrDefault(a => a.Name.ToLower(CurrentCultureInfo) == KeyLower);
+      }
+      return CurrentElement != null;
     }
 
     #region Generic version of the GetValue
-    
+
     /// <summary>
     /// Generic version of GetValue
     /// </summary>
@@ -499,13 +221,9 @@ namespace BLTools {
     /// <param name="key">The key name of the value</param>
     /// <returns>The value</returns>
     public T GetValue<T>(string key) {
-      if ( CurrentCultureInfo != null ) {
-        return GetValue(key, default(T), CurrentCultureInfo);
-      } else {
-        return GetValue(key, default(T), CultureInfo.CurrentCulture);
-      }
+      return GetValue(key, default(T), CurrentCultureInfo);
     }
-    
+
     /// <summary>
     /// Generic version of GetValue
     /// </summary>
@@ -514,13 +232,9 @@ namespace BLTools {
     /// <param name="defaultValue">The default value to be returned if the key name is invalid</param>
     /// <returns>The value</returns>
     public T GetValue<T>(string key, T defaultValue) {
-      if ( CurrentCultureInfo != null ) {
-        return GetValue(key, defaultValue, CurrentCultureInfo);
-      } else {
-        return GetValue(key, defaultValue, CultureInfo.CurrentCulture);
-      }
+      return GetValue(key, defaultValue, CurrentCultureInfo);
     }
-    
+
     /// <summary>
     /// Generic version of GetValue
     /// </summary>
@@ -529,19 +243,20 @@ namespace BLTools {
     /// <param name="defaultValue">The default value to be returned if the key name is invalid</param>
     /// <returns>The value</returns>
     public T GetValue<T>(string key, T defaultValue, CultureInfo culture) {
-      if ( key == null || this.Count == 0 ) {
+      if (key == null || this.IsEmpty()) {
         return defaultValue;
       }
+
       try {
         ArgElement CurrentElement;
 
-        if ( IsCaseSensitive ) {
-          CurrentElement = Find((a) => a.Name == key);
+        if (IsCaseSensitive) {
+          CurrentElement = this.FirstOrDefault(a => a.Name == key);
         } else {
-          CurrentElement = Find((a) => a.Name.ToLower(culture) == key.ToLower(culture));
+          CurrentElement = this.FirstOrDefault(a => a.Name.ToLower(culture) == key.ToLower(culture));
         }
 
-        if ( CurrentElement != null ) {
+        if (CurrentElement != null) {
           return BLConverter.BLConvert<T>(CurrentElement.Value, culture, defaultValue);
         } else {
           return defaultValue;
@@ -558,11 +273,7 @@ namespace BLTools {
     /// <param name="position">The position (counted from 0) of the value</param>
     /// <returns>The value</returns>
     public T GetValue<T>(int position) {
-      if ( CurrentCultureInfo != null ) {
-        return GetValue(position, default(T), CurrentCultureInfo);
-      } else {
-        return GetValue(position, default(T), CultureInfo.CurrentCulture);
-      }
+      return GetValue(position, default(T), CurrentCultureInfo);
     }
 
     /// <summary>
@@ -573,11 +284,7 @@ namespace BLTools {
     /// <param name="defaultValue">The default value to be returned if the position is invalid</param>
     /// <returns>The value</returns>
     public T GetValue<T>(int position, T defaultValue) {
-      if ( CurrentCultureInfo != null ) {
-        return GetValue(position, defaultValue, CurrentCultureInfo);
-      } else {
-        return GetValue(position, defaultValue, CultureInfo.CurrentCulture);
-      }
+      return GetValue(position, defaultValue, CurrentCultureInfo);
     }
 
     /// <summary>
@@ -588,7 +295,7 @@ namespace BLTools {
     /// <param name="defaultValue">The default value to be returned if the key name is invalid</param>
     /// <returns>The value</returns>
     public T GetValue<T>(int position, T defaultValue, CultureInfo culture) {
-      if ( this.Count == 0 || position < 0 || position > this.Count ) {
+      if (this.IsEmpty() || position < 0 || position > this.Count) {
         return defaultValue;
       }
       ArgElement CurrentElement = this[position];
@@ -597,6 +304,5 @@ namespace BLTools {
     }
     #endregion Generic version of the GetValue
 
-    #endregion Public methods
   }
 }
