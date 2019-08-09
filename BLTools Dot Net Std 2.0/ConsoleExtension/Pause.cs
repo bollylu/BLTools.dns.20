@@ -9,8 +9,8 @@ namespace BLTools.ConsoleExtension {
     /// <param name="timeout">The timeout if no key is pressed</param>
     /// <param name="isAnimated">Will animation run during the pause</param>
     /// <param name="displayTimeout">Display the timeout counter during the pause</param>
-    static public void Pause(double timeout = 0, bool isAnimated = false, bool displayTimeout = false) {
-      Pause("Press any key to continue...", timeout, isAnimated, displayTimeout);
+    static public async Task Pause(double timeout = 0, bool isAnimated = false, bool displayTimeout = false) {
+      await Pause("Press any key to continue...", timeout, isAnimated, displayTimeout);
     }
     /// <summary>
     /// Display a message on console, then wait for a key, possibly with a timeout in msec
@@ -19,7 +19,7 @@ namespace BLTools.ConsoleExtension {
     /// <param name="timeout">The timeout if no key is pressed</param>
     /// <param name="isAnimated">Will animation run during the pause</param>
     /// <param name="displayTimeout">Display the timeout counter during the pause</param>
-    static public async void Pause(string message, double timeout = 0, bool isAnimated = false, bool displayTimeout = false) {
+    static public async Task Pause(string message, double timeout = 0, bool isAnimated = false, bool displayTimeout = false) {
 
       char[] Roll = new char[] { '|', '/', '-', '\\' };
 
