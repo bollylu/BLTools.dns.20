@@ -13,17 +13,17 @@ namespace BLTools.MVVM {
     protected bool _CanExecute;
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
-    public TRelayCommand() { }
+    public TRelayCommand() : base() { }
 
     public TRelayCommand(ILogger logger) : base(logger) { }
 
-    public TRelayCommand(Action executeAction) {
+    public TRelayCommand(Action executeAction) : base() {
       _ExecuteAction = executeAction;
     }
     public TRelayCommand(Action executeAction, ILogger logger) : base(logger) {
       _ExecuteAction = executeAction;
     }
-    public TRelayCommand(Action executeAction, Predicate<object> testIfCanExecute) {
+    public TRelayCommand(Action executeAction, Predicate<object> testIfCanExecute) : base() {
       _ExecuteAction = executeAction;
       _TestIfCanExecute = testIfCanExecute;
       CanExecuteChanged += TRelayCommand_CanExecuteChanged;
