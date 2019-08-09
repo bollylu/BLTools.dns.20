@@ -22,11 +22,11 @@ namespace BLTools.Debugging {
       Trace.AutoFlush = true;
       try {
         AssemblyName StartupApplication = Assembly.GetEntryAssembly().GetName();
-        string NameLine = string.Format("Startup of {0}, {1}, {2}", StartupApplication.Name, StartupApplication.ProcessorArchitecture, StartupApplication.Version.ToString());
-        string ContextLine = string.Format(".NET Runtime version: {0}", Assembly.GetEntryAssembly().ImageRuntimeVersion);
-        string BLToolsLine = string.Format("BLTools version: {0}", Assembly.GetExecutingAssembly().GetName().Version.ToString());
-        string CompleteString = string.Join("\r\n", NameLine, ContextLine, BLToolsLine);
-        Trace.WriteLine(TextBox.BuildFixedWidth(CompleteString, 80, TextBox.StringAlignmentEnum.Left));
+        StringBuilder Text = new StringBuilder();
+        Text.AppendLine($"Startup of {StartupApplication.Name}, {StartupApplication.ProcessorArchitecture}, {StartupApplication.Version.ToString()}");
+        Text.AppendLine($".NET Runtime version: {Assembly.GetEntryAssembly().ImageRuntimeVersion}");
+        Text.AppendLine($"BLTools version: {Assembly.GetExecutingAssembly().GetName().Version.ToString()}");
+        Trace.WriteLine(TextBox.BuildFixedWidth(Text.ToString(), 80, TextBox.StringAlignmentEnum.Left));
       } catch { }
       ApplicationInfo.TraceRuntimeInfo();
     }
@@ -36,8 +36,9 @@ namespace BLTools.Debugging {
     public static void ApplicationStop() {
       try {
         AssemblyName StartupApplication = Assembly.GetEntryAssembly().GetName();
-        string NameLine = string.Format("{0} is stopping", StartupApplication.Name);
-        Trace.WriteLine(TextBox.BuildFixedWidth(NameLine, 80, TextBox.StringAlignmentEnum.Left));
+        StringBuilder Text = new StringBuilder();
+        Text.AppendLine($"{StartupApplication.Name} is stopping");
+        Trace.WriteLine(TextBox.BuildFixedWidth(Text.ToString(), 80, TextBox.StringAlignmentEnum.Left));
         Trace.Flush();
       } catch { }
     }
@@ -50,19 +51,19 @@ namespace BLTools.Debugging {
         Trace.WriteLine(BuildRuntimeInfo());
       } catch { }
     }
-    
+
     /// <summary>
     /// Builds a banner with runtime infos
     /// </summary>
     /// <returns></returns>
     public static string BuildRuntimeInfo() {
       StringBuilder RetVal = new StringBuilder();
-      RetVal.AppendLine(string.Format("Working folder = \"{0}\"", Environment.CurrentDirectory));
-      RetVal.AppendLine(string.Format("Operating system = \"{0}\"", Environment.OSVersion.VersionString));
-      RetVal.AppendLine(string.Format("Current user = \"{0}\"", Environment.UserName));
-      RetVal.AppendLine(string.Format("Current domain user = \"{0}\"", Environment.UserDomainName));
-      RetVal.AppendLine(string.Format("Is 64 bits OS = {0}", Environment.Is64BitOperatingSystem));
-      return TextBox.BuildDynamic(RetVal.ToString(),0, TextBox.StringAlignmentEnum.Left);
+      RetVal.AppendLine($"Working folder = \"{Environment.CurrentDirectory}\"");
+      RetVal.AppendLine($"Operating system = \"{Environment.OSVersion.VersionString}\"");
+      RetVal.AppendLine($"Current user = \"{Environment.UserName}\"" );
+      RetVal.AppendLine($"Current domain user = \"{Environment.UserDomainName}\"");
+      RetVal.AppendLine($"Is 64 bits OS = {Environment.Is64BitOperatingSystem}");
+      return TextBox.BuildDynamic(RetVal.ToString(), 0, TextBox.StringAlignmentEnum.Left);
 
     }
 
