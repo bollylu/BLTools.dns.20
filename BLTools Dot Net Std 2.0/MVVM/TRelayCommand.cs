@@ -51,6 +51,7 @@ namespace BLTools.MVVM {
 
     public bool CanExecute(object parameter) {
       if (_TestIfCanExecute == null) {
+        _CanExecute = true;
         return true;
       }
       return _TestIfCanExecute(parameter);
