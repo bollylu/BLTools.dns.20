@@ -23,7 +23,7 @@ namespace BLTools.ConsoleExtension {
       do {
 
         if (optionFlags.HasFlag(EInputValidation.Mandatory)) {
-          Console.Write(string.Format("{0}{1}", "* ", questionMessage));
+          Console.Write($"* {questionMessage}");
         } else {
           Console.Write(questionMessage);
         }
@@ -47,6 +47,28 @@ namespace BLTools.ConsoleExtension {
         if (!IsOk) {
           Console.WriteLine(errorMessage);
         }
+
+      } while (!IsOk);
+
+      return BLConverter.BLConvert<T>(AnswerAsString, System.Globalization.CultureInfo.CurrentCulture, default(T));
+    }
+
+    static public T Input<T>(string questionMessage = "", Predicate<string> predicate = null, Action errorAction = null) {
+
+      if (predicate == null) {
+        predicate = new Predicate<string>(x => x != null);
+      }
+
+      string AnswerAsString;
+      bool IsOk = false;
+
+      do {
+
+        Console.Write(questionMessage);
+
+        AnswerAsString = Console.ReadLine();
+
+        IsOk = predicate(AnswerAsString);
 
       } while (!IsOk);
 

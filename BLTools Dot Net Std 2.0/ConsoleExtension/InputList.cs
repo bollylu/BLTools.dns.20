@@ -38,6 +38,38 @@ namespace BLTools.ConsoleExtension {
       return Answer;
     }
 
+    static public int InputList(Dictionary<int, string> possibleValues, string title = "", string question = "", Action errorAction = null) {
+      bool IsOk = true;
+      int Answer = -1;
+
+      if (title != "") {
+        Console.WriteLine($"[--{title}--]");
+      }
+
+      foreach (KeyValuePair<int, string> ValueItem in possibleValues) {
+        Console.WriteLine($"  {ValueItem.Key}. {ValueItem.Value}");
+      }
+
+      int CurrentRow = Console.CursorTop;
+      int CurrentCol = Console.CursorLeft;
+
+      do {
+
+        Console.SetCursorPosition(CurrentCol, CurrentRow);
+        Answer = Input<int>(question, EInputValidation.Unknown);
+
+        if (possibleValues.ContainsKey(Answer)) {
+          IsOk = true;
+        } else {
+          errorAction?.Invoke();
+          IsOk = false;
+        }
+
+      } while (!IsOk);
+
+      return Answer;
+    }
+
     /// <summary>
     /// Allow a user at the console to select a response from a list
     /// </summary>

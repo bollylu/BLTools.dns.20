@@ -51,7 +51,6 @@ namespace BLTools.ConsoleExtension {
         }
         Console.WriteLine();
       }
-
     }
   }
 }
