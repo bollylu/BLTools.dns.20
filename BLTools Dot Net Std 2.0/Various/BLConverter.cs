@@ -7,18 +7,12 @@ using System.Diagnostics;
 using BLTools.Diagnostic.Logging;
 
 namespace BLTools {
-  public class BLConverter : TLoggable {
+  public static class BLConverter {
 
     /// <summary>
     /// Set to true to obtain additional debug info
     /// </summary>
     public static bool TraceError = false;
-
-    private static BLConverter _Instance = new BLConverter();
-
-    public static void SetLogger(ILogger logger) {
-      _Instance.Logger = TLogger.Create(logger);
-    }
 
     /// <summary>
     /// Convert a value from one type to another (possibly through an evaluation of the value : e.g. "0", "True", "T" all becomes True)
@@ -165,9 +159,11 @@ namespace BLTools {
       }
     }
 
+    public static ILogger Logger { get; set; } = TLogger.DEFAULT_LOGGER;
+
     private static void _LogError(string message) {
       if (TraceError) {
-        _Instance.LogError(message);
+        Logger.LogError(message);
       }
     }
   }

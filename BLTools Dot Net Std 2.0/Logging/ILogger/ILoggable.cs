@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace BLTools.Diagnostic.Logging {
-  public interface ILoggable
-  {
+  public interface ILoggable {
+
     ILogger Logger { get; set; }
+    void SetLogger(ILogger logger);
+
   }
 }

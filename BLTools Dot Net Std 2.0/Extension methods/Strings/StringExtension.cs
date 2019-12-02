@@ -488,5 +488,18 @@ namespace BLTools {
       return new string(' ', number);
     }
 
+    public static string AlignedRight(this string source, int width, char filler = ' ') {
+      return source.PadLeft(width, filler).Left(width);
+    }
+
+    public static string AlignedLeft(this string source, int width, char filler = ' ') {
+      return source.PadRight(width, filler).Left(width);
+    }
+
+    public static string AlignedCenter(this string source, int width, char filler = ' ') {
+      string LeftPart = new string(filler, width / 2 - source.Length / 2);
+      return $"{LeftPart}{source}".PadRight(width, filler).Left(width);
+    }
+
   }
 }

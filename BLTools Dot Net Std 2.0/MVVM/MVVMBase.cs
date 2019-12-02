@@ -1,6 +1,7 @@
 ﻿using BLTools.Diagnostic.Logging;
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace BLTools.MVVM {
   /// <summary>
@@ -27,21 +28,19 @@ namespace BLTools.MVVM {
         }
       }
     }
-
-    /// <summary>
-    /// Indicates when an operation is in progress
-    /// </summary>
-    protected bool _WorkInProgress;
+    private bool _WorkInProgress;
 
     #region --- Progress bar ----------------------------------------------------------------------
     /// <summary>
     /// Request progress bar initialisation. Provides the maximum value
     /// </summary>
     public static event EventHandler<IntEventArgs> OnInitProgressBar;
+
     /// <summary>
     /// Indicates progress bar change. Provides new current value
     /// </summary>
     public static event EventHandler<IntEventArgs> OnProgressBarNewValue;
+
     /// <summary>
     /// Indicates progress bar termination
     /// </summary>
@@ -52,10 +51,7 @@ namespace BLTools.MVVM {
     /// </summary>
     /// <param name="maxValue">Maximum value of the bar</param>
     protected virtual void NotifyInitProgressBar(int maxValue) {
-      if (OnInitProgressBar == null) {
-        return;
-      }
-      OnInitProgressBar(this, new IntEventArgs(maxValue));
+      OnInitProgressBar?.Invoke(this, new IntEventArgs(maxValue));
     }
 
     /// <summary>
@@ -63,10 +59,7 @@ namespace BLTools.MVVM {
     /// </summary>
     /// <param name="value">The current value</param>
     protected virtual void NotifyProgressBarNewValue(int value) {
-      if (OnProgressBarNewValue == null) {
-        return;
-      }
-      OnProgressBarNewValue(this, new IntEventArgs(value));
+      OnProgressBarNewValue?.Invoke(this, new IntEventArgs(value));
     }
 
     /// <summary>
@@ -75,10 +68,8 @@ namespace BLTools.MVVM {
     /// <param name="message">The optional message</param>
     /// <param name="status">The optional status (true/false)</param>
     protected virtual void NotifyProgressBarCompleted(string message = "", bool status = true) {
-      if (OnProgressBarCompleted == null) {
-        return;
-      }
-      OnProgressBarCompleted(this, EventArgs.Empty);
+      OnProgressBarCompleted?.Invoke(this, EventArgs.Empty);
+      NotifyExecutionCompleted(message, status);
     }
     #endregion --- Progress bar ------------------------------------------------------------------
 
@@ -96,10 +87,7 @@ namespace BLTools.MVVM {
     /// Sends an empty execution status to clear it
     /// </summary>
     protected virtual void ClearExecutionStatus() {
-      if (OnExecutionStatus == null) {
-        return;
-      }
-      OnExecutionStatus(this, new StringEventArgs(""));
+      OnExecutionStatus?.Invoke(this, new StringEventArgs(""));
     }
 
     /// <summary>
@@ -107,10 +95,7 @@ namespace BLTools.MVVM {
     /// </summary>
     /// <param name="statusMessage">The message</param>
     protected virtual void NotifyExecutionStatus(string statusMessage = "") {
-      if (OnExecutionStatus == null) {
-        return;
-      }
-      OnExecutionStatus(this, new StringEventArgs(statusMessage));
+      OnExecutionStatus?.Invoke(this, new StringEventArgs(statusMessage));
     }
 
     /// <summary>
@@ -119,10 +104,7 @@ namespace BLTools.MVVM {
     /// <param name="statusMessage">The message</param>
     /// <param name="completionStatus">The status at the completion of the process</param>
     protected virtual void NotifyExecutionCompleted(string statusMessage = "", bool completionStatus = false) {
-      if (OnExecutionCompleted == null) {
-        return;
-      }
-      OnExecutionCompleted(this, new BoolAndMessageEventArgs(completionStatus, statusMessage));
+      OnExecutionCompleted?.Invoke(this, new BoolAndMessageEventArgs(completionStatus, statusMessage));
     }
     #endregion --- Execution status ---------------------------------------------------------------
 
@@ -136,10 +118,7 @@ namespace BLTools.MVVM {
     /// Sends an empty execution progress message to clear it
     /// </summary>
     public virtual void ClearExecutionProgress() {
-      if (OnExecutionProgress == null) {
-        return;
-      }
-      OnExecutionProgress(this, new IntAndMessageEventArgs(0, ""));
+      OnExecutionProgress?.Invoke(this, new IntAndMessageEventArgs(0, ""));
     }
 
     /// <summary>
@@ -148,9 +127,6 @@ namespace BLTools.MVVM {
     /// <param name="message">The message</param>
     /// <param name="errorlevel">The optional errorlevel (will be filtered by MinTraceLevel)</param>
     public virtual void NotifyExecutionProgress(string message = "", ErrorLevel errorlevel = ErrorLevel.Info) {
-      if (errorlevel < MinTraceLevel || OnExecutionProgress == null) {
-        return;
-      }
       NotifyExecutionProgress(message, 0, errorlevel);
     }
 
@@ -161,10 +137,10 @@ namespace BLTools.MVVM {
     /// <param name="progress">The integer</param>
     /// <param name="errorlevel">The optional errorlevel (will be filtered by MinTraceLevel)</param>
     public virtual void NotifyExecutionProgress(string message, int progress, ErrorLevel errorlevel = ErrorLevel.Info) {
-      if (errorlevel < MinTraceLevel || OnExecutionProgress == null) {
+      if (errorlevel < MinTraceLevel) {
         return;
       }
-      OnExecutionProgress(this, new IntAndMessageEventArgs(progress, message));
+      OnExecutionProgress?.Invoke(this, new IntAndMessageEventArgs(progress, message));
     }
     #endregion --- Execution progress -------------------------------------------------------------
 
@@ -180,10 +156,10 @@ namespace BLTools.MVVM {
     /// <param name="message">The message</param>
     /// <param name="errorlevel">The optional errorlevel (will be filtered by MinTraceLevel)</param>
     protected virtual void NotifyExecutionError(string message = "", ErrorLevel errorlevel = ErrorLevel.Warning) {
-      if (message == "" || errorlevel < MinTraceLevel || OnExecutionError == null) {
+      if (errorlevel < MinTraceLevel) {
         return;
       }
-      OnExecutionError(this, new IntAndMessageEventArgs((int)errorlevel, message));
+      OnExecutionError?.Invoke(this, new IntAndMessageEventArgs((int)errorlevel, message));
     }
     #endregion --- Execution error ----------------------------------------------------------------
 
@@ -197,10 +173,8 @@ namespace BLTools.MVVM {
     /// Calls any hook when the property was changed
     /// </summary>
     /// <param name="propertyName"></param>
-    protected void NotifyPropertyChanged(string propertyName) {
-      if (PropertyChanged != null) {
-        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-      }
+    protected void NotifyPropertyChanged([CallerMemberName]string propertyName = "") {
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
     #endregion === INotifyPropertyChanged =========================================================
 

@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <Folder Include="Debugging\" />
+    <Folder Include="Extension methods\Math\" />
     <Folder Include="MVVM\" />
   </ItemGroup>
 

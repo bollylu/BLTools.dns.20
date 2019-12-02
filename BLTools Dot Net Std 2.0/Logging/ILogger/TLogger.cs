@@ -8,6 +8,11 @@ using BLTools;
 namespace BLTools.Diagnostic.Logging {
   public abstract class TLogger : ILogger {
 
+    /// <summary>
+    /// Maximum amount of ms to wait for a log line to be written
+    /// </summary>
+    public static int TIMEOUT = 1000;
+
     #region --- Trace limit --------------------------------------------
     public const ESeverity DEFAULT_TRACE_LIMIT = ESeverity.Info;
 
@@ -57,22 +62,54 @@ namespace BLTools.Diagnostic.Logging {
       }
     }
     private int _SourceWidth;
+
+    public bool IncludeSource { get; set; } = true;
     #endregion --- Source width -----------------------------------------
 
+    #region --- Date format --------------------------------------------
+    public static string DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss:fff";
+
+    /// <summary>
+    /// How to format the date and time in the first column
+    /// </summary>
+    public string DateFormat {
+      get {
+        if (string.IsNullOrWhiteSpace(_DateFormat)) {
+          return DEFAULT_DATE_FORMAT;
+        }
+        return _DateFormat;
+      }
+      set {
+        lock (_Lock) {
+          _DateFormat = value;
+        }
+      }
+    }
+    private string _DateFormat;
+
+    public bool IncludeDateTime { get; set; } = true;
+    #endregion --- Date format -----------------------------------------
+
     #region --- Constructor(s) ---------------------------------------------------------------------------------
-    public TLogger() {
+    protected TLogger() {
       _Initialize();
     }
-    public TLogger(ILogger logger) {
+    protected TLogger(ILogger logger) {
       _Initialize();
       SeverityLimit = logger.SeverityLimit;
       SourceWidth = logger.SourceWidth;
     }
 
+    private bool _IsInitialized = false;
+
     protected virtual void _Initialize() {
+      if (_IsInitialized) {
+        return;
+      }
       Trace.AutoFlush = true;
       Trace.IndentSize = 2;
       Trace.UseGlobalLock = true;
+      _IsInitialized = true;
     }
     public void Dispose() {
       if (Listener != null) {
@@ -86,6 +123,7 @@ namespace BLTools.Diagnostic.Logging {
     protected bool _IsBusy;
     protected readonly object _Lock = new object();
 
+    #region --- Log actions --------------------------------------------
     public virtual void LogError(string text, string source = "") {
       Log(text, source, ESeverity.Error);
     }
@@ -107,39 +145,59 @@ namespace BLTools.Diagnostic.Logging {
     }
 
     public virtual void Log(string text, string source = "", ESeverity severity = ESeverity.Info) {
-      if (text == null) {
+      #region === Validate parameters ===
+      if (string.IsNullOrEmpty(text)) {
         return;
       }
 
-      if (severity >= SeverityLimit) {
-        lock (_Lock) {
-          while (_IsBusy) { Thread.Sleep(1); }
-          _IsBusy = true;
-          foreach (string TextItem in text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) {
-            Listener.WriteLine(_BuildLogLine(TextItem, source, severity));
-          }
-          Listener.Flush();
-          _IsBusy = false;
+      if (severity < SeverityLimit) {
+        return;
+      }
+      #endregion === Validate parameters ===
+
+      lock (_Lock) {
+
+        #region --- Ensure we can safely write --------------------------------------------
+        DateTime StartTime = DateTime.Now;
+        while (_IsBusy && (DateTime.Now - StartTime).TotalMilliseconds < TIMEOUT) {
+          Thread.Sleep(1);
         }
+        if (_IsBusy) {
+          throw new TimeoutException($"Timeout writing to log");
+        } 
+        #endregion --- Ensure we can safely write --------------------------------------------
+
+        _IsBusy = true;
+        foreach (string TextItem in text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) {
+          Listener.WriteLine(_BuildLogLine(TextItem, source, severity));
+        }
+        Listener.Flush();
+        _IsBusy = false;
       }
     }
+    #endregion --- Log actions --------------------------------------------
 
-    protected string _BuildLogLine(string text, string source = "", ESeverity severity = ESeverity.Info) {
+    protected virtual string _BuildLogLine(string text, string source = "", ESeverity severity = ESeverity.Info) {
       StringBuilder RetVal = new StringBuilder();
 
-      RetVal.Append($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff")}");
-      RetVal.Append($"|{severity.ToString().PadRight(10, '.')}");
-      RetVal.Append("|");
-      if (string.IsNullOrWhiteSpace(source)) {
-        RetVal.Append(new string('.', SourceWidth));
-      } else {
-        RetVal.Append(source.PadRight(SourceWidth, '.').Left(SourceWidth));
+      if (IncludeDateTime) {
+        RetVal.Append($"{DateTime.Now.ToString(DateFormat)}|");
       }
-      RetVal.Append("|");
+
+      RetVal.Append($"{severity.ToString().PadRight(10, '.')}|");
+
+      if (IncludeSource) {
+        if (string.IsNullOrWhiteSpace(source)) {
+          RetVal.Append(new string('.', SourceWidth));
+        } else {
+          RetVal.Append(source.PadRight(SourceWidth, '.').Left(SourceWidth));
+        }
+        RetVal.Append("|");
+      }
+      
       RetVal.Append(text);
       return RetVal.ToString();
     }
-
 
     public static ILogger Create(ILogger logger) {
       switch (logger) {
@@ -152,13 +210,20 @@ namespace BLTools.Diagnostic.Logging {
       }
     }
 
-    public static ILogger DEFAULT_LOGGER => new TTraceLogger();
+    /// <summary>
+    /// The default logger, when nothing is configured.
+    /// </summary>
+    public static ILogger DEFAULT_LOGGER => SYSTEM_LOGGER;
+
+    /// <summary>
+    /// When configured, can be used as a system wide logger
+    /// </summary>
     public static ILogger SYSTEM_LOGGER {
       get {
         if (_SYSTEM_LOGGER == null) {
-          return DEFAULT_LOGGER;
+          _SYSTEM_LOGGER = new TTraceLogger();
         }
-        return TLogger.Create(_SYSTEM_LOGGER);
+        return _SYSTEM_LOGGER;
       }
       set {
         _SYSTEM_LOGGER = value;

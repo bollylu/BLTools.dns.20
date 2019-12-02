@@ -97,15 +97,15 @@ namespace BLTools.Language {
     public string FullName => Path.Combine(TranslationsPathName, FileName);
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
-    public TTranslator() : base(TLogger.SYSTEM_LOGGER) { }
-    public TTranslator(XElement xmlSource) : base(TLogger.SYSTEM_LOGGER) {
+    public TTranslator() { }
+    public TTranslator(XElement xmlSource)  {
       Translations.AddRange(_ParseXml(xmlSource));
     }
-    public TTranslator(string filename) : base(TLogger.SYSTEM_LOGGER) {
+    public TTranslator(string filename)  {
       FileName = filename;
       Load(filename);
     }
-    public TTranslator(Stream stream) : base(TLogger.SYSTEM_LOGGER) {
+    public TTranslator(Stream stream)  {
       Load(stream);
     }
     #endregion --- Constructor(s) ------------------------------------------------------------------------------

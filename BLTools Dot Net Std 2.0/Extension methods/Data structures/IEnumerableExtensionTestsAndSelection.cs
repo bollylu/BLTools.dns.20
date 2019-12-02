@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace BLTools {
-  public static class IEnumerableExtensions {
+  public static partial class IEnumerableExtension {
 
     #region --- IEnumerable<T> as pattern within IEnumerable<T> --------------------------------------------
     public static bool StartsWith<T>(this IEnumerable<T> source, IEnumerable<T> pattern) where T : IEquatable<T> {
@@ -227,7 +227,7 @@ namespace BLTools {
     }
     #endregion --- IEnumerable<T> as pattern within IEnumerable<T> -----------------------------------------
 
-    #region --- Item T within IENumerable<T> --------------------------------------------
+    #region --- Item T within IEnumerable<T> --------------------------------------------
     public static IEnumerable<T> After<T>(this IEnumerable<T> source, T item) where T : IEquatable<T> {
       #region === Validate parameters ===
       if (source == null || item == null) {
@@ -341,8 +341,8 @@ namespace BLTools {
         }
       }
 
-    } 
-    #endregion --- Item T within IENumerable<T> -----------------------------------------
+    }
+    #endregion --- Item T within IEnumerable<T> -----------------------------------------
 
     /// <summary>
     /// Take the count of items from IEnumerable<T>, starting to count from the end
