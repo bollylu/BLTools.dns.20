@@ -1,38 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <AssemblyName>BLTools</AssemblyName>
     <RootNamespace>BLTools</RootNamespace>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <AssemblyVersion>1.1</AssemblyVersion>
-    <FileVersion>1.1</FileVersion>
-    <Version>1.1.0</Version>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <LangVersion>7.2</LangVersion>
+    <AssemblyVersion>4.5.6</AssemblyVersion>
+    <FileVersion>4.5.6</FileVersion>
+    <Version>4.5.6</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Frame\**" />
-    <Compile Remove="Json\**" />
-    <EmbeddedResource Remove="Frame\**" />
-    <EmbeddedResource Remove="Json\**" />
-    <None Remove="Frame\**" />
-    <None Remove="Json\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Debugging\" />
-    <Folder Include="Extension methods\Math\" />
-    <Folder Include="MVVM\" />
   </ItemGroup>
 
 </Project>
