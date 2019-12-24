@@ -34,7 +34,7 @@ namespace BLTools
             _RefreshRateInMsec = refreshRateInMsec;
         }
 
-        public void Execute(int pollingDelayInMsec = 5)
+        public bool Execute(int pollingDelayInMsec = 5)
         {
             DateTime StartTime = DateTime.Now;
             double DisplayCounter;
@@ -55,9 +55,11 @@ namespace BLTools
                 Thread.Sleep(pollingDelayInMsec);
                 _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
             }
+
+            return _Condition();
         }
 
-        public async Task ExecuteAsync(int pollingDelayInMsec = 5)
+        public async Task<bool> ExecuteAsync(int pollingDelayInMsec = 5)
         {
             DateTime StartTime = DateTime.Now;
             double DisplayCounter;
@@ -78,6 +80,8 @@ namespace BLTools
                 await Task.Delay(pollingDelayInMsec).ConfigureAwait(false);
                 _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
             }
+
+            return _Condition();
         }
 
     }

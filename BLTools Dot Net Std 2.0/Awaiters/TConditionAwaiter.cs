@@ -21,7 +21,7 @@ namespace BLTools
             _TimeoutInMsec = timeoutInMsec;
         }
 
-        public void Execute(int pollingDelayInMsec = 1)
+        public bool Execute(int pollingDelayInMsec = 1)
         {
             DateTime StartTime = DateTime.Now;
 
@@ -31,10 +31,11 @@ namespace BLTools
                 Thread.Sleep(pollingDelayInMsec);
                 _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
             }
+
+            return _Condition();
         }
 
-
-        public async Task ExecuteAsync(int pollingDelayInMsec = 1)
+        public async Task<bool> ExecuteAsync(int pollingDelayInMsec = 1)
         {
             DateTime StartTime = DateTime.Now;
 
@@ -44,6 +45,8 @@ namespace BLTools
                 await Task.Delay(pollingDelayInMsec).ConfigureAwait(false);
                 _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
             }
+
+            return _Condition();
         }
     }
 }

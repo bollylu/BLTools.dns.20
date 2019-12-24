@@ -7,10 +7,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <AssemblyVersion>4.5.7</AssemblyVersion>
-    <FileVersion>4.5.7</FileVersion>
-    <Version>4.5.7</Version>
-    <PackageReleaseNotes>Fixed TLogger for bad initialization</PackageReleaseNotes>
+    <AssemblyVersion>4.5.8</AssemblyVersion>
+    <FileVersion>4.5.8</FileVersion>
+    <Version>4.5.8</Version>
+    <PackageReleaseNotes>Awaiters now return the condition state</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
