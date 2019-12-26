@@ -40,8 +40,9 @@ namespace BLTools
             double DisplayCounter;
             DateTime DisplayCounterStartTime = DateTime.Now;
 
+            bool RetVal = _Condition();
             double _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
-            while (!_Condition() && _AwaitedDuration < _TimeoutInMsec)
+            while (!RetVal && _AwaitedDuration < _TimeoutInMsec)
             {
                 DisplayCounter = (DateTime.Now - DisplayCounterStartTime).TotalMilliseconds;
                 double TimeLeft = _TimeoutInMsec - (DateTime.Now - StartTime).TotalMilliseconds;
@@ -53,10 +54,11 @@ namespace BLTools
                 }
 
                 Thread.Sleep(pollingDelayInMsec);
+                RetVal = _Condition();
                 _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
             }
 
-            return _Condition();
+            return RetVal;
         }
 
         public async Task<bool> ExecuteAsync(int pollingDelayInMsec = 5)
@@ -65,8 +67,9 @@ namespace BLTools
             double DisplayCounter;
             DateTime DisplayCounterStartTime = DateTime.Now;
 
+            bool RetVal = _Condition();
             double _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
-            while (!_Condition() && _AwaitedDuration < _TimeoutInMsec)
+            while (!RetVal && _AwaitedDuration < _TimeoutInMsec)
             {
                 DisplayCounter = (DateTime.Now - DisplayCounterStartTime).TotalMilliseconds;
                 double TimeLeft = _TimeoutInMsec - (DateTime.Now - StartTime).TotalMilliseconds;
@@ -78,10 +81,11 @@ namespace BLTools
                 }
 
                 await Task.Delay(pollingDelayInMsec).ConfigureAwait(false);
+                RetVal = _Condition();
                 _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
             }
 
-            return _Condition();
+            return RetVal;
         }
 
     }

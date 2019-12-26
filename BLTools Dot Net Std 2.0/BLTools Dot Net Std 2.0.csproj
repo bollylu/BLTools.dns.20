@@ -7,10 +7,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <AssemblyVersion>4.5.8</AssemblyVersion>
-    <FileVersion>4.5.8</FileVersion>
-    <Version>4.5.8</Version>
-    <PackageReleaseNotes>Awaiters now return the condition state</PackageReleaseNotes>
+    <AssemblyVersion>4.5.9</AssemblyVersion>
+    <FileVersion>4.5.9</FileVersion>
+    <Version>4.5.9</Version>
+    <PackageReleaseNotes>Fixed the Awaiters so that when the condition is evaluated, result is captured, and returned instead of evaluating the condition again before return</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

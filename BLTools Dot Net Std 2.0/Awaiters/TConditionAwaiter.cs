@@ -21,32 +21,38 @@ namespace BLTools
             _TimeoutInMsec = timeoutInMsec;
         }
 
-        public bool Execute(int pollingDelayInMsec = 1)
+        public bool Execute(int pollingDelayInMsec = 5)
         {
             DateTime StartTime = DateTime.Now;
+            
+            bool RetVal = _Condition();
+            double _AwaitedDuration = ( DateTime.Now - StartTime ).TotalMilliseconds;
 
-            double _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
-            while (!_Condition() && _AwaitedDuration < _TimeoutInMsec)
+            while (!RetVal && _AwaitedDuration < _TimeoutInMsec)
             {
                 Thread.Sleep(pollingDelayInMsec);
+                RetVal = _Condition();
                 _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
             }
 
-            return _Condition();
+            return RetVal;
         }
 
-        public async Task<bool> ExecuteAsync(int pollingDelayInMsec = 1)
+        public async Task<bool> ExecuteAsync(int pollingDelayInMsec = 5)
         {
             DateTime StartTime = DateTime.Now;
 
+            bool RetVal = _Condition();
             double _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
-            while (!_Condition() && _AwaitedDuration < _TimeoutInMsec)
+
+            while (!RetVal && _AwaitedDuration < _TimeoutInMsec)
             {
                 await Task.Delay(pollingDelayInMsec).ConfigureAwait(false);
+                RetVal = _Condition();
                 _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
             }
 
-            return _Condition();
+            return RetVal;
         }
     }
 }
