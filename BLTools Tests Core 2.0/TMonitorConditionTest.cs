@@ -27,7 +27,7 @@ namespace BLTools.UnitTest.Core20
         }
 
         [TestMethod]
-        public void CreateMonitorCondition_ConstructorwithValues_AllPropertiesInitialized()
+        public void CreateMonitorCondition_ConstructorWithValues_AllPropertiesInitialized()
         {
             bool Done = false;
             using ( TConditionMonitor<TContainerClass> Monitor = new TConditionMonitor<TContainerClass>("Test ContainerClass", x => x.Value == 10, x => Done = true) )
@@ -41,7 +41,7 @@ namespace BLTools.UnitTest.Core20
         }
 
         [TestMethod]
-        public void CreateMonitorCondition_MonitorInt_TriggerFires()
+        public void CreateMonitorCondition_MonitorClassValue_TriggerFires()
         {
             bool Done = false;
             TContainerClass ContainerClass = new TContainerClass() { Value = 0 };
@@ -55,7 +55,7 @@ namespace BLTools.UnitTest.Core20
                     Assert.IsFalse(Done);
                     ContainerClass.Value++;
                 }
-                Thread.Sleep(10);
+                Thread.Sleep(100);
                 Assert.IsTrue(Done);
             }
         }
