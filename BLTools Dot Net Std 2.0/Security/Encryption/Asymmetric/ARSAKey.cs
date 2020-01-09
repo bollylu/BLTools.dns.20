@@ -8,7 +8,7 @@ using System.Text;
 using System.Xml.Linq;
 
 namespace BLTools.Encryption {
-  public abstract class TRSAKey : IToXml, IEquatable<TRSAKey> {
+  public abstract class ARSAKey : IToXml, IEquatable<ARSAKey> {
 
 
     #region --- XML constants ----------------------------------------------------------------------------------
@@ -30,15 +30,15 @@ namespace BLTools.Encryption {
     #endregion Public properties
 
     #region Constructor(s)
-    public TRSAKey() {
+    public ARSAKey() {
       Name = "";
     }
 
-    public TRSAKey(string name) {
+    public ARSAKey(string name) {
       Name = name;
     }
 
-    public TRSAKey(string name, RSAParameters parameters) {
+    public ARSAKey(string name, RSAParameters parameters) {
       Name = name;
       Parameters = parameters;
     }
@@ -108,7 +108,7 @@ namespace BLTools.Encryption {
       }
     }
 
-    public bool Equals(TRSAKey other) {
+    public bool Equals(ARSAKey other) {
       if ( other == null ) {
         return false;
       }

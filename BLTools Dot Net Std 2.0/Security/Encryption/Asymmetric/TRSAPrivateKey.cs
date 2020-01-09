@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 
 namespace BLTools.Encryption {
-  public class TRSAPrivateKey : TRSAKey {
+  public class TRSAPrivateKey : ARSAKey {
 
     #region Public properties
     public override string Filename {

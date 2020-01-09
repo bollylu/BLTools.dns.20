@@ -26,7 +26,7 @@ namespace BLTools.Debugging {
         Text.AppendLine($"Startup of {StartupApplication.Name}, {StartupApplication.ProcessorArchitecture}, {StartupApplication.Version.ToString()}");
         Text.AppendLine($".NET Runtime version: {Assembly.GetEntryAssembly().ImageRuntimeVersion}");
         Text.AppendLine($"BLTools version: {Assembly.GetExecutingAssembly().GetName().Version.ToString()}");
-        Trace.WriteLine(TextBox.BuildFixedWidth(Text.ToString(), 80, TextBox.StringAlignmentEnum.Left));
+        Trace.WriteLine(TextBox.BuildFixedWidth(Text.ToString().TrimEnd(Environment.NewLine.ToCharArray()), 80, TextBox.EStringAlignment.Left));
       } catch { }
       ApplicationInfo.TraceRuntimeInfo();
     }
@@ -38,7 +38,7 @@ namespace BLTools.Debugging {
         AssemblyName StartupApplication = Assembly.GetEntryAssembly().GetName();
         StringBuilder Text = new StringBuilder();
         Text.AppendLine($"{StartupApplication.Name} is stopping");
-        Trace.WriteLine(TextBox.BuildFixedWidth(Text.ToString(), 80, TextBox.StringAlignmentEnum.Left));
+        Trace.WriteLine(TextBox.BuildFixedWidth(Text.ToString().TrimEnd(Environment.NewLine.ToCharArray()), 80, TextBox.EStringAlignment.Left));
         Trace.Flush();
       } catch { }
     }
@@ -63,7 +63,7 @@ namespace BLTools.Debugging {
       RetVal.AppendLine($"Current user = \"{Environment.UserName}\"" );
       RetVal.AppendLine($"Current domain user = \"{Environment.UserDomainName}\"");
       RetVal.AppendLine($"Is 64 bits OS = {Environment.Is64BitOperatingSystem}");
-      return TextBox.BuildDynamic(RetVal.ToString(), 0, TextBox.StringAlignmentEnum.Left);
+      return TextBox.BuildDynamic(RetVal.ToString().TrimEnd(Environment.NewLine.ToCharArray()), 0, TextBox.EStringAlignment.Left);
 
     }
 

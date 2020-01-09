@@ -78,7 +78,7 @@ namespace BLTools {
     /// <returns>The requested MemoryStream</returns>
     public static MemoryStream ToStream(this IEnumerable<byte> sourceBytes) {
       #region === Validate parameters ===
-      if ( sourceBytes == null || sourceBytes.Count() == 0 ) {
+      if ( sourceBytes == null || sourceBytes.IsEmpty() ) {
         return new MemoryStream();
       }
       #endregion === Validate parameters ===
@@ -99,7 +99,7 @@ namespace BLTools {
     /// <returns>The requested MemoryStream</returns>
     public static async Task<MemoryStream> ToStreamAsync(this IEnumerable<byte> sourceBytes) {
       #region === Validate parameters ===
-      if ( sourceBytes == null || sourceBytes.Count() == 0 ) {
+      if ( sourceBytes == null || sourceBytes.IsEmpty() ) {
         return await Task.FromResult<MemoryStream>(new MemoryStream());
       }
       #endregion === Validate parameters ===

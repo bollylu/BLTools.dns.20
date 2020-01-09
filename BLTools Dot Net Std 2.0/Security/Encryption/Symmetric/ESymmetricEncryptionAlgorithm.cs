@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BLTools.Encryption {
-  public enum TAymmetricEncryptionAlgorithm {
-    RSA,
-    DSA,
-    ECDH,
-    ECDSA
+  public enum ESymmetricEncryptionAlgorithm {
+    DES,
+    TripleDES,
+    AES,
+    Rijndael,
+    RC2
   }
 }

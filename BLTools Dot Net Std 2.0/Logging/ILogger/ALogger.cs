@@ -7,7 +7,10 @@ using BLTools;
 
 namespace BLTools.Diagnostic.Logging
 {
-    public abstract class TLogger : ILogger
+    [Obsolete("Use ALogger instead")]
+    public abstract class TLogger : ALogger { }
+
+    public abstract class ALogger : ILogger
     {
 
         /// <summary>
@@ -284,8 +287,5 @@ namespace BLTools.Diagnostic.Logging
             }
         }
         private static ILogger _SYSTEM_LOGGER;
-
-        
-
     }
 }

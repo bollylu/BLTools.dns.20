@@ -7,7 +7,7 @@ using System.Xml.Linq;
 using System.IO;
 
 namespace BLTools.Security.Authorization {
-  public class TSecurityStorageXml : TSecurityStorage {
+  public class TSecurityStorageXml : ASecurityStorage {
     
     #region Constructor(s)
     public TSecurityStorageXml() {}

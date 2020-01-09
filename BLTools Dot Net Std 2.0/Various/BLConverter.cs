@@ -159,7 +159,7 @@ namespace BLTools {
       }
     }
 
-    public static ILogger Logger { get; set; } = TLogger.DEFAULT_LOGGER;
+    public static ILogger Logger { get; set; } = ALogger.DEFAULT_LOGGER;
 
     private static void _LogError(string message) {
       if (TraceError) {

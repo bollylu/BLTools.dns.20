@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace BLTools {
-  public class TChrono : IDisposable {
+  public sealed class TChrono : IDisposable {
 
     public DateTime StartTime { get; set; }
     public DateTime StopTime { get; set; }

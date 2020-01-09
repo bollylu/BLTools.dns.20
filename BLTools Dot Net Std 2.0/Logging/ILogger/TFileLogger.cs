@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace BLTools.Diagnostic.Logging
 {
-    public class TFileLogger : TLogger
+    public class TFileLogger : ALogger
     {
         public string Filename { get; }
 

@@ -78,7 +78,7 @@ namespace BLTools.UnitTest.FW47.Extensions {
     [TestMethod(), TestCategory("FW47.Array")]
     public void ToHexString_NoSeparator_ResultOK() {
       byte[] rawData = new byte[] { 12, 23, 34, 45, 56 };
-      string expected = "0C17222D38";
+      string expected = "0C 17 22 2D 38";
       string actual;
       actual = rawData.ToHexString();
       Assert.AreEqual(expected, actual);

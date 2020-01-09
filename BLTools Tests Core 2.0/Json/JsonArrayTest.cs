@@ -175,7 +175,7 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonInt Source2 = new JsonInt(TEST_INT);
       JsonArray Actual = new JsonArray(Source1, Source2);
       Assert.AreEqual(2, Actual.Count());
-      Trace.WriteLine(TextBox.BuildDynamic(Actual.RenderAsString(true), 0, TextBox.StringAlignmentEnum.Left));
+      Trace.WriteLine(TextBox.BuildDynamic(Actual.RenderAsString(true), 0, TextBox.EStringAlignment.Left));
       Assert.AreEqual($"[{CRLF}  {TEST_STRING_JSON},{CRLF}  {TEST_INT_JSON}{CRLF}]", Actual.RenderAsString(true));
     }
 
@@ -187,7 +187,7 @@ namespace BLTools.UnitTest.Core20.Json {
       JsonArray SourceArray2 = new JsonArray(Source2, Source1);
       JsonArray SourceArray3 = new JsonArray(SourceArray1, SourceArray2);
       JsonArray Actual = new JsonArray(SourceArray1, SourceArray2, SourceArray3);
-      Trace.WriteLine(TextBox.BuildDynamic(Actual.RenderAsString(true), 0, TextBox.StringAlignmentEnum.Left));
+      Trace.WriteLine(TextBox.BuildDynamic(Actual.RenderAsString(true), 0, TextBox.EStringAlignment.Left));
 
       Assert.AreEqual(3, Actual.Count());
     }

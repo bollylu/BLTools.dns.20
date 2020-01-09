@@ -9,12 +9,12 @@ using System.Reflection;
 
 namespace BLTools.Text {
   public static class TextBox {
-    public enum StringAlignmentEnum {
+    public enum EStringAlignment {
       Left,
       Center,
       Right
     }
-    public enum HorizontalRowType {
+    public enum EHorizontalRowType {
       Single,
       Double,
       FullLight,
@@ -34,10 +34,10 @@ namespace BLTools.Text {
 
     public static int DEFAULT_FIXED_WIDTH = 80;
 
-    public static string BuildDynamicIBM(string sourceString, int margin = 0, StringAlignmentEnum alignment = StringAlignmentEnum.Center, char filler = '·') {
+    public static string BuildDynamicIBM(string sourceString, int margin = 0, EStringAlignment alignment = EStringAlignment.Center, char filler = '·') {
       return BuildDynamic(sourceString, margin, alignment, filler, "╒═╕│╛═╘│");
     }
-    public static string BuildDynamic(string sourceString, int margin = 0, StringAlignmentEnum alignment = StringAlignmentEnum.Center, char filler = ' ', string border = "") {
+    public static string BuildDynamic(string sourceString, int margin = 0, EStringAlignment alignment = EStringAlignment.Center, char filler = ' ', string border = "") {
       #region Validate parameters
       if ( sourceString == null ) {
         return null;
@@ -77,13 +77,13 @@ namespace BLTools.Text {
         int RightPadding = 0;
 
         switch ( alignment ) {
-          case StringAlignmentEnum.Left:
+          case EStringAlignment.Left:
             RightPadding = MaxLength - StringItem.Length;
             break;
-          case StringAlignmentEnum.Right:
+          case EStringAlignment.Right:
             LeftPadding = MaxLength - StringItem.Length;
             break;
-          case StringAlignmentEnum.Center:
+          case EStringAlignment.Center:
             LeftPadding = Convert.ToInt32(Math.Floor(( MaxLength - StringItem.Length ) / 2d));
             RightPadding = MaxLength - StringItem.Length - LeftPadding;
             break;
@@ -101,10 +101,10 @@ namespace BLTools.Text {
       return RetVal.ToString();
     }
 
-    public static string BuildFixedWidth(string sourceString, StringAlignmentEnum alignment = StringAlignmentEnum.Center, char filler = ' ', string border = "") {
+    public static string BuildFixedWidth(string sourceString, EStringAlignment alignment = EStringAlignment.Center, char filler = ' ', string border = "") {
       return BuildFixedWidth(sourceString, DEFAULT_FIXED_WIDTH, alignment, filler, border);
     }
-    public static string BuildFixedWidth(string sourceString, int width, StringAlignmentEnum alignment = StringAlignmentEnum.Center, char filler = ' ', string border = "") {
+    public static string BuildFixedWidth(string sourceString, int width, EStringAlignment alignment = EStringAlignment.Center, char filler = ' ', string border = "") {
       #region Validate parameters
       if ( sourceString == null ) {
         return null;
@@ -142,15 +142,15 @@ namespace BLTools.Text {
           int RightPadding = 0;
 
           switch ( alignment ) {
-            case StringAlignmentEnum.Left:
+            case EStringAlignment.Left:
               RightPadding = Math.Max(InnerWidth - WorkString.Length, 0);
               RetVal.AppendLine($"{LeftBar} {WorkString} {new string(filler, RightPadding)}{RightBar}");
               break;
-            case StringAlignmentEnum.Right:
+            case EStringAlignment.Right:
               LeftPadding = Math.Max(InnerWidth - WorkString.Length, 0);
               RetVal.AppendLine($"{LeftBar}{new string(filler, LeftPadding)} {WorkString} {RightBar}");
               break;
-            case StringAlignmentEnum.Center:
+            case EStringAlignment.Center:
               LeftPadding = Math.Max(Convert.ToInt32(Math.Floor(( InnerWidth - WorkString.Length ) / 2d)), 0);
               RightPadding = Math.Max(InnerWidth - WorkString.Length - LeftPadding, 0);
               RetVal.AppendLine($"{LeftBar}{new string(filler, LeftPadding)} {WorkString} {new string(filler, RightPadding)}{RightBar}");
@@ -163,35 +163,35 @@ namespace BLTools.Text {
       RetVal.Append($"{BottomLeft}{new string(BottomBar, InnerWidth + 2)}{BottomRight}");
       return RetVal.ToString();
     }
-    public static string BuildFixedWidthIBM(string sourceString, int width = 0, StringAlignmentEnum alignment = StringAlignmentEnum.Center, char filler = '·') {
+    public static string BuildFixedWidthIBM(string sourceString, int width = 0, EStringAlignment alignment = EStringAlignment.Center, char filler = '·') {
       return BuildFixedWidth(sourceString, width, alignment, filler, "╒═╕│╛═╘│");
     }
 
-    static private Dictionary<HorizontalRowType, char> CharFinder = new Dictionary<HorizontalRowType, char> {
-      { HorizontalRowType.Single, '-' },
-      { HorizontalRowType.Double, '=' },
-      { HorizontalRowType.Dot, '.' },
-      { HorizontalRowType.Underline, '_' },
-      { HorizontalRowType.Stars, '*' },
-      { HorizontalRowType.FullLight, '░' },
-      { HorizontalRowType.FullMedium, '▒' },
-      { HorizontalRowType.FullBold, '▓' },
-      { HorizontalRowType.Solid, '█' },
-      { HorizontalRowType.SingleIBM, '─' },
-      { HorizontalRowType.SingleIBMBold, '━' },
-      { HorizontalRowType.DoubleIBM, '═' },
-      { HorizontalRowType.Slash, '/' },
-      { HorizontalRowType.Backslash, '\\' },
-      { HorizontalRowType.Pipe, '|' }
+    static private Dictionary<EHorizontalRowType, char> CharFinder = new Dictionary<EHorizontalRowType, char> {
+      { EHorizontalRowType.Single, '-' },
+      { EHorizontalRowType.Double, '=' },
+      { EHorizontalRowType.Dot, '.' },
+      { EHorizontalRowType.Underline, '_' },
+      { EHorizontalRowType.Stars, '*' },
+      { EHorizontalRowType.FullLight, '░' },
+      { EHorizontalRowType.FullMedium, '▒' },
+      { EHorizontalRowType.FullBold, '▓' },
+      { EHorizontalRowType.Solid, '█' },
+      { EHorizontalRowType.SingleIBM, '─' },
+      { EHorizontalRowType.SingleIBMBold, '━' },
+      { EHorizontalRowType.DoubleIBM, '═' },
+      { EHorizontalRowType.Slash, '/' },
+      { EHorizontalRowType.Backslash, '\\' },
+      { EHorizontalRowType.Pipe, '|' }
     };
 
     public static string BuildHorizontalRow() {
-      return BuildHorizontalRow(-1, HorizontalRowType.Single);
+      return BuildHorizontalRow(-1, EHorizontalRowType.Single);
     }
-    public static string BuildHorizontalRow(HorizontalRowType rowType = HorizontalRowType.Single) {
+    public static string BuildHorizontalRow(EHorizontalRowType rowType = EHorizontalRowType.Single) {
       return BuildHorizontalRow(-1, rowType);
     }
-    public static string BuildHorizontalRow(int width, HorizontalRowType rowType = HorizontalRowType.Single) {
+    public static string BuildHorizontalRow(int width, EHorizontalRowType rowType = EHorizontalRowType.Single) {
 
       if ( width == -1 ) {
         width = Console.WindowWidth;
@@ -205,10 +205,10 @@ namespace BLTools.Text {
 
     }
 
-    public static string BuildHorizontalRowWithText(string sourceString, HorizontalRowType rowType = HorizontalRowType.Single) {
+    public static string BuildHorizontalRowWithText(string sourceString, EHorizontalRowType rowType = EHorizontalRowType.Single) {
       return BuildHorizontalRowWithText(sourceString, -1, rowType);
     }
-    public static string BuildHorizontalRowWithText(string sourceString, int width = -1, HorizontalRowType rowType = HorizontalRowType.Single) {
+    public static string BuildHorizontalRowWithText(string sourceString, int width = -1, EHorizontalRowType rowType = EHorizontalRowType.Single) {
 
       if ( sourceString == null ) {
         sourceString = "";

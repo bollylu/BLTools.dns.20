@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BLTools.Diagnostic.Logging
 {
-    public class TTraceLogger : TLogger
+    public class TTraceLogger : ALogger
     {
 
         public TTraceLogger()

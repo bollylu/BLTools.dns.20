@@ -15,22 +15,18 @@ namespace BLTools {
     /// <param name="rawData">The byte array</param>
     /// <param name="separator">An optional separator</param>
     /// <returns>The string of hex values</returns>
-    public static string ToHexString(this byte[] rawData, string separator = "") {
+    public static string ToHexString(this IEnumerable<byte> rawData, string separator = " ") {
 
-      if ( rawData.Length == 0 ) {
+      if ( rawData.IsEmpty() ) {
         return "";
       }
 
-      if ( rawData.Length == 1 ) {
-        return $"{rawData[0]:X2}";
-      }
-
-      StringBuilder sbTemp = new StringBuilder(rawData.Length * 3);
+      StringBuilder RetVal = new StringBuilder(rawData.Count() * 3);
       foreach ( byte ByteItem in rawData ) {
-        sbTemp.Append($"{ByteItem:X2}{separator}");
+        RetVal.Append($"{ByteItem:X2}{separator}");
       }
-      sbTemp.Truncate(separator.Length);
-      return sbTemp.ToString();
+      RetVal.Truncate(separator.Length);
+      return RetVal.ToString();
     }
 
     /// <summary>

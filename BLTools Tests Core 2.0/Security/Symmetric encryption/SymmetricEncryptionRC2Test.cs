@@ -11,8 +11,8 @@ namespace BLTools.UnitTest.Core20.Security {
     public void TestEncryptSymmetricRC2_ParametersOk40_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 40);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 40);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 40);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 40);
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
@@ -20,8 +20,8 @@ namespace BLTools.UnitTest.Core20.Security {
     public void TestEncryptSymmetricRC2_ParametersOk64_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 64);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 64);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 64);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 64);
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
@@ -29,8 +29,8 @@ namespace BLTools.UnitTest.Core20.Security {
     public void TestEncryptSymmetricRC2_ParametersOk128_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 128);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 128);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 128);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 128);
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
@@ -38,8 +38,8 @@ namespace BLTools.UnitTest.Core20.Security {
     public void TestEncryptSymmetricRC2_SourceEmpty_EncryptionDecryptionOK() {
       string SourceText = "";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 128);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 128);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 128);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 128);
       Assert.AreEqual(SourceText, DecipheredText);
     }
     [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.RC2")]
@@ -47,7 +47,7 @@ namespace BLTools.UnitTest.Core20.Security {
     public void TestEncryptSymmetricRC2_BadKeyLengthTooSmall_Exception() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 127);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 127);
     }
 
     [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.RC2")]
@@ -55,7 +55,7 @@ namespace BLTools.UnitTest.Core20.Security {
     public void TestEncryptSymmetricRC2_BadKeyLengthZero_Exception() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 0);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 0);
     }
 
     [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.RC2")]
@@ -63,15 +63,15 @@ namespace BLTools.UnitTest.Core20.Security {
     public void TestEncryptSymmetricRC2_BadKeyLengthTooBig_Exception() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 1024);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 1024);
     }
 
     [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.RC2")]
     public void TestEncryptSymmetricRC2_NoPassword_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 128);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 128);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 128);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 128);
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
@@ -80,7 +80,7 @@ namespace BLTools.UnitTest.Core20.Security {
     public void TestEncryptSymmetricRC2_SourceTextIsNull_Exception() {
       string SourceText = null;
       string Password = "";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 128);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 128);
     }
 
     [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.RC2")]
@@ -88,16 +88,16 @@ namespace BLTools.UnitTest.Core20.Security {
     public void TestEncryptSymmetricRC2_NullPassword_Exception() {
       string SourceText = "Je vais bien, merci.";
       string Password = null;
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 128);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 128);
     }
 
     [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.RC2")]
     public void TestEncryptSymmetricRC2_WrongPassword_DecryptionFailed() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.RC2, 128);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.RC2, 128);
       string DecryptPassword = "az12df34vc";
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(DecryptPassword, TSymmetricEncryptionAlgorithm.RC2, 128);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(DecryptPassword, ESymmetricEncryptionAlgorithm.RC2, 128);
       Assert.IsNull(DecipheredText);
     }
 
@@ -105,8 +105,8 @@ namespace BLTools.UnitTest.Core20.Security {
     public void TestEncryptSymmetricRC2_ParametersOKEncodingUTF8_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.UTF8, TSymmetricEncryptionAlgorithm.RC2, 128);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.UTF8, TSymmetricEncryptionAlgorithm.RC2, 128);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.UTF8, ESymmetricEncryptionAlgorithm.RC2, 128);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.UTF8, ESymmetricEncryptionAlgorithm.RC2, 128);
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
@@ -114,8 +114,8 @@ namespace BLTools.UnitTest.Core20.Security {
     public void TestEncryptSymmetricRC2_ParametersOKWrongEncoding_DecryptionFailed() {
       string SourceText = "Je vais bien, merci. Célébration.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.ASCII, TSymmetricEncryptionAlgorithm.RC2, 128);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.UTF8, TSymmetricEncryptionAlgorithm.RC2, 128);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.ASCII, ESymmetricEncryptionAlgorithm.RC2, 128);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.UTF8, ESymmetricEncryptionAlgorithm.RC2, 128);
       Assert.AreNotEqual(SourceText, DecipheredText);
     }
 
@@ -123,8 +123,8 @@ namespace BLTools.UnitTest.Core20.Security {
     public void TestEncryptSymmetricRC2_ParametersASCIIEncodingASCII_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci. Celebration.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.ASCII, TSymmetricEncryptionAlgorithm.RC2, 128);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.ASCII, TSymmetricEncryptionAlgorithm.RC2, 128);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.ASCII, ESymmetricEncryptionAlgorithm.RC2, 128);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.ASCII, ESymmetricEncryptionAlgorithm.RC2, 128);
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
@@ -132,8 +132,8 @@ namespace BLTools.UnitTest.Core20.Security {
     public void TestEncryptSymmetricRC2_ParametersASCII_Accents_EncodingASCII_DecryptionFailed() {
       string SourceText = "Je vais bien, merci. Célébration.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.ASCII, TSymmetricEncryptionAlgorithm.RC2, 128);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.ASCII, TSymmetricEncryptionAlgorithm.RC2, 128);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.ASCII, ESymmetricEncryptionAlgorithm.RC2, 128);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.ASCII, ESymmetricEncryptionAlgorithm.RC2, 128);
       Assert.AreNotEqual(SourceText, DecipheredText);
     }
   }

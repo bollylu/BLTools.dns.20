@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace BLTools.Security.Authorization {
-  public class TSecurityStorageSql : TSecurityStorage {
+  public class TSecurityStorageSql : ASecurityStorage {
     public TSecurityStorageSql() {}
     public override void Save() {
       Save(Name);

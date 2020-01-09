@@ -4,10 +4,14 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace BLTools.MVVM {
+
+    [Obsolete("Use AMVVM instead")]
+    public abstract class MVVMBase : AMVVM { }
+
   /// <summary>
   /// Base class for a new MVVM class
   /// </summary>
-  public abstract class MVVMBase : TLoggable, INotifyPropertyChanged {
+  public abstract class AMVVM : ALoggable, INotifyPropertyChanged {
 
     /// <summary>
     /// Minimum level for tracing. If under the level, the callback is skipped

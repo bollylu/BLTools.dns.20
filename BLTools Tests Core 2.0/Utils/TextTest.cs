@@ -17,7 +17,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       string FormattedSource = source.PadRight(TextBox.DEFAULT_FIXED_WIDTH - 4);
       string TopAndBottom = $"+{new string('-', TextBox.DEFAULT_FIXED_WIDTH - 2)}+";
       string ExpectedResult = $"{TopAndBottom}{Environment.NewLine}| {FormattedSource} |{Environment.NewLine}{TopAndBottom}";
-      string actual = TextBox.BuildFixedWidth(source, TextBox.StringAlignmentEnum.Left);
+      string actual = TextBox.BuildFixedWidth(source, TextBox.EStringAlignment.Left);
       Assert.AreEqual(ExpectedResult, actual);
     }
 
@@ -28,7 +28,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       string FormattedSource = source.PadRight(BoxWidth - 4);
       string TopAndBottom = $"+{new string('-', BoxWidth - 2)}+";
       string ExpectedResult = $"{TopAndBottom}{Environment.NewLine}| {FormattedSource} |{Environment.NewLine}{TopAndBottom}";
-      string actual = TextBox.BuildFixedWidth(source, BoxWidth, TextBox.StringAlignmentEnum.Left);
+      string actual = TextBox.BuildFixedWidth(source, BoxWidth, TextBox.EStringAlignment.Left);
       Assert.AreEqual(ExpectedResult, actual);
     }
 
@@ -42,7 +42,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     [TestMethod(), TestCategory("NC20.TextBox")]
     public void TextBox_HorizontalRowDouble40_ResultOk() {
       string ExpectedResult = new string('=', 40);
-      string actual = TextBox.BuildHorizontalRow(40, TextBox.HorizontalRowType.Double);
+      string actual = TextBox.BuildHorizontalRow(40, TextBox.EHorizontalRowType.Double);
       Assert.AreEqual(ExpectedResult, actual);
     }
 

@@ -8,7 +8,7 @@ namespace BLTools.Security.Authorization {
   public class TSecurityController {
 
     #region Public properties
-    public TSecurityStorage Storage { get; private set; }
+    public ASecurityStorage Storage { get; private set; }
     public int LoggedInUsersCount {
       get {
         return LoggedInUsers.Count;
@@ -21,7 +21,7 @@ namespace BLTools.Security.Authorization {
     #endregion Private variables
 
     #region Constructor(s)
-    public TSecurityController(TSecurityStorage storage) {
+    public TSecurityController(ASecurityStorage storage) {
       LoggedInUsers = new TSecurityUserIdCollection();
       Storage = storage;
     }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 
 namespace BLTools.Language {
-  public class TTranslatableText : TLoggable, ITranslatableText {
+  public class TTranslatableText : ALoggable, ITranslatableText {
 
     #region --- Culture --------------------------------------------
     public readonly static CultureInfo DEFAULT_CULTURE = CultureInfo.CurrentCulture;
@@ -76,20 +76,20 @@ namespace BLTools.Language {
     #endregion Private variables
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
-    public TTranslatableText(string textKey) : this(textKey, TLogger.DEFAULT_LOGGER) { }
+    public TTranslatableText(string textKey) : this(textKey, ALogger.DEFAULT_LOGGER) { }
     public TTranslatableText(string textKey, ILogger logger) {
       SetLogger(logger);
       Key = textKey;
     }
 
-    public TTranslatableText(string textKey, CultureInfo culture) : this(textKey, culture, TLogger.DEFAULT_LOGGER) { }
+    public TTranslatableText(string textKey, CultureInfo culture) : this(textKey, culture, ALogger.DEFAULT_LOGGER) { }
     public TTranslatableText(string textKey, CultureInfo culture, ILogger logger) {
       SetLogger(logger);
       Key = textKey;
       CurrentCulture = culture;
     }
 
-    public TTranslatableText(string textKey, string cultureName) : this(textKey, cultureName, TLogger.DEFAULT_LOGGER) { }
+    public TTranslatableText(string textKey, string cultureName) : this(textKey, cultureName, ALogger.DEFAULT_LOGGER) { }
     public TTranslatableText(string textKey, string cultureName, ILogger logger) {
       SetLogger(logger);
       Key = textKey;

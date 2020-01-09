@@ -7,16 +7,16 @@ using System.Diagnostics;
 using System.IO;
 
 namespace BLTools.Security.Authorization {
-  public abstract class TSecurityStorage {
+  public abstract class ASecurityStorage {
     #region Public properties
     public string Name { get; set; }
     public TSecurityUserCollection Users { get; set; }
     public TSecurityGroupCollection Groups { get; set; }
     #endregion Public properties
 
-    public TSecurityStorage() {}
+    public ASecurityStorage() {}
 
-    public TSecurityStorage(TSecurityStorage storage) {
+    public ASecurityStorage(ASecurityStorage storage) {
       Name = storage.Name;
       Users = new TSecurityUserCollection(storage.Users);
       Groups = new TSecurityGroupCollection(storage.Groups);

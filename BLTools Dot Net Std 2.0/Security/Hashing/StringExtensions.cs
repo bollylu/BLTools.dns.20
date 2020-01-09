@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BLTools.Encryption {
-  public enum THashingMethods {
+  public enum EHashingMethods {
     MD5,
     SHA1,
     SHA256,
@@ -16,29 +16,29 @@ namespace BLTools.Encryption {
 
   public static class StringExtensions {
 
-    public static string HashToBase64(this string source, THashingMethods hashMethod = THashingMethods.SHA256) {
+    public static string HashToBase64(this string source, EHashingMethods hashMethod = EHashingMethods.SHA256) {
       switch (hashMethod) {
-        case THashingMethods.MD5:
+        case EHashingMethods.MD5:
           using (MD5CryptoServiceProvider MD5Hasher = new MD5CryptoServiceProvider()) {
             byte[] HashedData = MD5Hasher.ComputeHash(Encoding.UTF8.GetBytes(source));
             return Convert.ToBase64String(HashedData, Base64FormattingOptions.InsertLineBreaks);
           }
-        case THashingMethods.SHA1:
+        case EHashingMethods.SHA1:
           using (SHA1CryptoServiceProvider SHA1Hasher = new SHA1CryptoServiceProvider()) {
             byte[] HashedData = SHA1Hasher.ComputeHash(Encoding.UTF8.GetBytes(source));
             return Convert.ToBase64String(HashedData, Base64FormattingOptions.InsertLineBreaks);
           }
-        case THashingMethods.SHA256:
+        case EHashingMethods.SHA256:
           using (SHA256CryptoServiceProvider SHA256Hasher = new SHA256CryptoServiceProvider()) {
             byte[] HashedData = SHA256Hasher.ComputeHash(Encoding.UTF8.GetBytes(source));
             return Convert.ToBase64String(HashedData, Base64FormattingOptions.InsertLineBreaks);
           }
-        case THashingMethods.SHA384:
+        case EHashingMethods.SHA384:
           using (SHA384CryptoServiceProvider SHA384Hasher = new SHA384CryptoServiceProvider()) {
             byte[] HashedData = SHA384Hasher.ComputeHash(Encoding.UTF8.GetBytes(source));
             return Convert.ToBase64String(HashedData, Base64FormattingOptions.InsertLineBreaks);
           }
-        case THashingMethods.SHA512:
+        case EHashingMethods.SHA512:
           using (SHA512CryptoServiceProvider SHA512Hasher = new SHA512CryptoServiceProvider()) {
             byte[] HashedData = SHA512Hasher.ComputeHash(Encoding.UTF8.GetBytes(source));
             return Convert.ToBase64String(HashedData, Base64FormattingOptions.InsertLineBreaks);
@@ -47,37 +47,37 @@ namespace BLTools.Encryption {
           return "";
       }
     }
-    public static bool VerifyHashFromBase64(this string source, string base64Hash, THashingMethods hashMethod = THashingMethods.SHA256) {
+    public static bool VerifyHashFromBase64(this string source, string base64Hash, EHashingMethods hashMethod = EHashingMethods.SHA256) {
       string HashToTest = source.HashToBase64(hashMethod);
       return (HashToTest == base64Hash);
     }
 
-    public static string HMacToBase64(this string source, string key, THashingMethods hashMethod = THashingMethods.SHA256) {
+    public static string HMacToBase64(this string source, string key, EHashingMethods hashMethod = EHashingMethods.SHA256) {
       return source.HMacToBase64(Encoding.UTF8.GetBytes(key), hashMethod);
     }
-    public static string HMacToBase64(this string source, byte[] key, THashingMethods hashMethod = THashingMethods.SHA256) {
+    public static string HMacToBase64(this string source, byte[] key, EHashingMethods hashMethod = EHashingMethods.SHA256) {
       switch (hashMethod) {
-        case THashingMethods.MD5:
+        case EHashingMethods.MD5:
           using (HMACMD5 HMACMD5Hasher = new HMACMD5(key)) {
             byte[] HashedData = HMACMD5Hasher.ComputeHash(Encoding.UTF8.GetBytes(source));
             return Convert.ToBase64String(HashedData, Base64FormattingOptions.InsertLineBreaks);
           }
-        case THashingMethods.SHA1:
+        case EHashingMethods.SHA1:
           using (HMACSHA1 HMACSHA1Hasher = new HMACSHA1(key)) {
             byte[] HashedData = HMACSHA1Hasher.ComputeHash(Encoding.UTF8.GetBytes(source));
             return Convert.ToBase64String(HashedData, Base64FormattingOptions.InsertLineBreaks);
           }
-        case THashingMethods.SHA256:
+        case EHashingMethods.SHA256:
           using (HMACSHA256 HMACSHA256Hasher = new HMACSHA256(key)) {
             byte[] HashedData = HMACSHA256Hasher.ComputeHash(Encoding.UTF8.GetBytes(source));
             return Convert.ToBase64String(HashedData, Base64FormattingOptions.InsertLineBreaks);
           }
-        case THashingMethods.SHA384:
+        case EHashingMethods.SHA384:
           using (HMACSHA384 HMACSHA384Hasher = new HMACSHA384(key)) {
             byte[] HashedData = HMACSHA384Hasher.ComputeHash(Encoding.UTF8.GetBytes(source));
             return Convert.ToBase64String(HashedData, Base64FormattingOptions.InsertLineBreaks);
           }
-        case THashingMethods.SHA512:
+        case EHashingMethods.SHA512:
           using (HMACSHA512 HMACSHA512Hasher = new HMACSHA512(key)) {
             byte[] HashedData = HMACSHA512Hasher.ComputeHash(Encoding.UTF8.GetBytes(source));
             return Convert.ToBase64String(HashedData, Base64FormattingOptions.InsertLineBreaks);
@@ -87,11 +87,11 @@ namespace BLTools.Encryption {
       }
     }
 
-    public static bool VerifyHMACFromBase64(this string source, string key, string base64Hash, THashingMethods hashMethod = THashingMethods.SHA256) {
+    public static bool VerifyHMACFromBase64(this string source, string key, string base64Hash, EHashingMethods hashMethod = EHashingMethods.SHA256) {
       string HashToTest = source.HMacToBase64(key, hashMethod);
       return (HashToTest == base64Hash);
     }
-    public static bool VerifyHMACFromBase64(this string source, byte[] key, string base64Hash, THashingMethods hashMethod = THashingMethods.SHA256) {
+    public static bool VerifyHMACFromBase64(this string source, byte[] key, string base64Hash, EHashingMethods hashMethod = EHashingMethods.SHA256) {
       string HashToTest = source.HMacToBase64(key, hashMethod);
       return (HashToTest == base64Hash);
     }

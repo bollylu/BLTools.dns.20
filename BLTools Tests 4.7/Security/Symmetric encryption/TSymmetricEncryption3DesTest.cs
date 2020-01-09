@@ -11,8 +11,8 @@ namespace BLTools.UnitTest.FW47.Security {
     public void TestEncryptSymmetric3Des_ParametersOk128_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.TripleDES, 128);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, TSymmetricEncryptionAlgorithm.TripleDES, 128);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.TripleDES, 128);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, ESymmetricEncryptionAlgorithm.TripleDES, 128);
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
@@ -20,8 +20,8 @@ namespace BLTools.UnitTest.FW47.Security {
     public void TestEncryptSymmetric3Des_ParametersOk192_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.TripleDES, 192);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, TSymmetricEncryptionAlgorithm.TripleDES, 192);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.TripleDES, 192);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, ESymmetricEncryptionAlgorithm.TripleDES, 192);
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
@@ -29,8 +29,8 @@ namespace BLTools.UnitTest.FW47.Security {
     public void TestEncryptSymmetric3Des_SourceEmpty_EncryptionDecryptionOK() {
       string SourceText = "";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.TripleDES, 192);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, TSymmetricEncryptionAlgorithm.TripleDES, 192);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.TripleDES, 192);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, ESymmetricEncryptionAlgorithm.TripleDES, 192);
       Assert.AreEqual(SourceText, DecipheredText);
     }
     [TestCategory("FW47.SymmetricEncryption"), TestMethod, TestCategory("FW47.3DES")]
@@ -38,7 +38,7 @@ namespace BLTools.UnitTest.FW47.Security {
     public void TestEncryptSymmetric3Des_BadKeyLengthTooSmall_Exception() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.TripleDES, 125);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.TripleDES, 125);
     }
 
     [TestCategory("FW47.SymmetricEncryption"), TestMethod, TestCategory("FW47.3DES")]
@@ -46,7 +46,7 @@ namespace BLTools.UnitTest.FW47.Security {
     public void TestEncryptSymmetric3Des_BadKeyLengthZero_Exception() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.TripleDES, 0);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.TripleDES, 0);
     }
 
     [TestCategory("FW47.SymmetricEncryption"), TestMethod, TestCategory("FW47.3DES")]
@@ -54,15 +54,15 @@ namespace BLTools.UnitTest.FW47.Security {
     public void TestEncryptSymmetric3Des_BadKeyLengthTooBig_Exception() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.TripleDES, 1024);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.TripleDES, 1024);
     }
 
     [TestCategory("FW47.SymmetricEncryption"), TestMethod, TestCategory("FW47.3DES")]
     public void TestEncryptSymmetric3Des_NoPassword_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.TripleDES, 192);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, TSymmetricEncryptionAlgorithm.TripleDES, 192);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.TripleDES, 192);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, ESymmetricEncryptionAlgorithm.TripleDES, 192);
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
@@ -71,7 +71,7 @@ namespace BLTools.UnitTest.FW47.Security {
     public void TestEncryptSymmetric3Des_SourceTextIsNull_Exception() {
       string SourceText = null;
       string Password = "";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.TripleDES, 192);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.TripleDES, 192);
     }
 
     [TestCategory("FW47.SymmetricEncryption"), TestMethod, TestCategory("FW47.3DES")]
@@ -79,16 +79,16 @@ namespace BLTools.UnitTest.FW47.Security {
     public void TestEncryptSymmetric3Des_NullPassword_Exception() {
       string SourceText = "Je vais bien, merci.";
       string Password = null;
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.TripleDES, 192);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.TripleDES, 192);
     }
 
     [TestCategory("FW47.SymmetricEncryption"), TestMethod, TestCategory("FW47.3DES")]
     public void TestEncryptSymmetric3Des_WrongPassword_DecryptionFailed() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, TSymmetricEncryptionAlgorithm.TripleDES, 192);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.TripleDES, 192);
       string DecryptPassword = "az12df34vc";
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(DecryptPassword, TSymmetricEncryptionAlgorithm.TripleDES, 192);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(DecryptPassword, ESymmetricEncryptionAlgorithm.TripleDES, 192);
       Assert.IsNull(DecipheredText);
     }
 
@@ -96,8 +96,8 @@ namespace BLTools.UnitTest.FW47.Security {
     public void TestEncryptSymmetric3Des_ParametersOKEncodingUTF8_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.UTF8, TSymmetricEncryptionAlgorithm.TripleDES, 192);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.UTF8, TSymmetricEncryptionAlgorithm.TripleDES, 192);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.UTF8, ESymmetricEncryptionAlgorithm.TripleDES, 192);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.UTF8, ESymmetricEncryptionAlgorithm.TripleDES, 192);
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
@@ -105,8 +105,8 @@ namespace BLTools.UnitTest.FW47.Security {
     public void TestEncryptSymmetric3Des_ParametersOKWrongEncoding_DecryptionFailed() {
       string SourceText = "Je vais bien, merci. Célébration.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.ASCII, TSymmetricEncryptionAlgorithm.TripleDES, 192);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.UTF8, TSymmetricEncryptionAlgorithm.TripleDES, 192);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.ASCII, ESymmetricEncryptionAlgorithm.TripleDES, 192);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.UTF8, ESymmetricEncryptionAlgorithm.TripleDES, 192);
       Assert.AreNotEqual(SourceText, DecipheredText);
     }
 
@@ -114,8 +114,8 @@ namespace BLTools.UnitTest.FW47.Security {
     public void TestEncryptSymmetric3Des_ParametersASCIIEncodingASCII_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci. Celebration.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.ASCII, TSymmetricEncryptionAlgorithm.TripleDES, 192);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.ASCII, TSymmetricEncryptionAlgorithm.TripleDES, 192);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.ASCII, ESymmetricEncryptionAlgorithm.TripleDES, 192);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.ASCII, ESymmetricEncryptionAlgorithm.TripleDES, 192);
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
@@ -123,8 +123,8 @@ namespace BLTools.UnitTest.FW47.Security {
     public void TestEncryptSymmetric3Des_ParametersASCII_Accents_EncodingASCII_DecryptionFailed() {
       string SourceText = "Je vais bien, merci. Célébration.";
       string Password = "az12df34vb";
-      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.ASCII, TSymmetricEncryptionAlgorithm.TripleDES, 192);
-      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.ASCII, TSymmetricEncryptionAlgorithm.TripleDES, 192);
+      string EncryptedBase64 = SourceText.EncryptToBase64(Password, Encoding.ASCII, ESymmetricEncryptionAlgorithm.TripleDES, 192);
+      string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, Encoding.ASCII, ESymmetricEncryptionAlgorithm.TripleDES, 192);
       Assert.AreNotEqual(SourceText, DecipheredText);
     }
   }

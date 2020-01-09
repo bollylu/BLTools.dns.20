@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BLTools.Diagnostic.Logging
 {
-    public class TConsoleLogger : TLogger
+    public class TConsoleLogger : ALogger
     {
         public TConsoleLogger()
         {

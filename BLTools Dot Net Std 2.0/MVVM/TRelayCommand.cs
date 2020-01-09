@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Windows.Input;
 
 namespace BLTools.MVVM {
-  public class TRelayCommand : TLoggable, ICommand {
+  public class TRelayCommand : ALoggable, ICommand {
 
     protected Action _ExecuteAction;
 

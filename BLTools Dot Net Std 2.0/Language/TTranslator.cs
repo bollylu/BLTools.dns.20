@@ -10,7 +10,7 @@ using BLTools.Diagnostic.Logging;
 using BLTools.Text;
 
 namespace BLTools.Language {
-  public class TTranslator : TLoggable, ITranslator {
+  public class TTranslator : ALoggable, ITranslator {
     #region --- XML constants --------------------------------------------
     public const string XML_MESSAGE_ELEMENT = "Message";
     public const string XML_MESSAGE_ATTRIBUTE_ID = "Id";

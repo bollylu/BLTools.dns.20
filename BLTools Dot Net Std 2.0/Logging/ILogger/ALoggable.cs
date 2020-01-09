@@ -4,9 +4,9 @@ using System.Text;
 
 namespace BLTools.Diagnostic.Logging {
 
-  public abstract class TLoggable {
+  public abstract class ALoggable {
     #region --- Logging --------------------------------------------
-    public ILogger Logger { get; set; } = TLogger.DEFAULT_LOGGER;
+    public ILogger Logger { get; set; } = ALogger.DEFAULT_LOGGER;
 
     #region --- Log --------------------------------------------
     public void Log(string text) {
@@ -68,8 +68,11 @@ namespace BLTools.Diagnostic.Logging {
     #endregion --- Logging -----------------------------------------
 
     public void SetLogger(ILogger logger) {
-      Logger = TLogger.Create(logger);
+      Logger = ALogger.Create(logger);
     }
   }
+
+    [Obsolete("Use ALoggable instead")]
+    public abstract class TLoggable : ALoggable { }
 
 }
