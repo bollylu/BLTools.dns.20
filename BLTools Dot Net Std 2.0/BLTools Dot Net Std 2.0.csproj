@@ -7,12 +7,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <AssemblyVersion>4.5.10</AssemblyVersion>
-    <FileVersion>4.5.10</FileVersion>
-    <Version>4.5.10</Version>
-    <PackageReleaseNotes>Added TConditionMonitor
-Renamed abstract classes
-Few fixes</PackageReleaseNotes>
+    <AssemblyVersion>4.5.11</AssemblyVersion>
+    <FileVersion>4.5.11</FileVersion>
+    <Version>4.5.11</Version>
+    <PackageReleaseNotes>Changed ILogger and SetLogger to virtual</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

@@ -6,7 +6,7 @@ namespace BLTools.Diagnostic.Logging {
 
   public abstract class ALoggable {
     #region --- Logging --------------------------------------------
-    public ILogger Logger { get; set; } = ALogger.DEFAULT_LOGGER;
+    public virtual ILogger Logger { get; set; } = ALogger.DEFAULT_LOGGER;
 
     #region --- Log --------------------------------------------
     public void Log(string text) {
@@ -67,7 +67,7 @@ namespace BLTools.Diagnostic.Logging {
 
     #endregion --- Logging -----------------------------------------
 
-    public void SetLogger(ILogger logger) {
+    public virtual void SetLogger(ILogger logger) {
       Logger = ALogger.Create(logger);
     }
   }
