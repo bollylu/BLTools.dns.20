@@ -6,17 +6,22 @@ using System.Threading.Tasks;
 
 namespace BLTools
 {
-    public class TConditionActionAwaiter
+    /// <summary>
+    /// Wait for a condition to be met or timeout, while executing an action
+    /// </summary>
+    public class TConditionActionAwaiter : AConditionAwaiter
     {
-        protected Func<bool> _Condition;
         protected Action<double> _ProgressAction;
 
-        protected double _TimeoutInMsec;
         protected int _RefreshRateInMsec;
 
-        protected int _DurationToAwait;
-        protected int _AwaitedDuration;
-
+        /// <summary>
+        /// Wait for a condition to be met or timeout, while executing an action
+        /// </summary>
+        /// <param name="condition">The condition to evaluate</param>
+        /// <param name="progressAction">The progress action to execute</param>
+        /// <param name="timeoutInMsec">The timeout</param>
+        /// <param name="refreshRateInMsec">How often is the progress action executed</param>
         public TConditionActionAwaiter(Func<bool> condition, Action<double> progressAction, double timeoutInMsec, int refreshRateInMsec)
         {
             _Condition = condition;
@@ -25,6 +30,12 @@ namespace BLTools
             _RefreshRateInMsec = refreshRateInMsec;
         }
 
+        /// <summary>
+        /// Wait for a certain amount of time, while executing an action at a certain refresh rate
+        /// </summary>
+        /// <param name="durationInSec">How long to wait</param>
+        /// <param name="progressAction">The action to execute while waiting</param>
+        /// <param name="refreshRateInMsec">How often to execute the action</param>
         public TConditionActionAwaiter(int durationInSec, Action<double> progressAction, int refreshRateInMsec)
         {
             _DurationToAwait = durationInSec;
@@ -34,7 +45,13 @@ namespace BLTools
             _RefreshRateInMsec = refreshRateInMsec;
         }
 
-        public bool Execute(int pollingDelayInMsec = 5)
+        /// <summary>
+        /// Start to wait for the condition
+        /// </summary>
+        /// <remarks>Timeout > refresh rate > polling delay</remarks>
+        /// <param name="pollingDelayInMsec">Delay before next evaluation of the condition</param>
+        /// <returns>true if condition is met, false if timeout</returns>
+        public override bool Execute(int pollingDelayInMsec = 5)
         {
             DateTime StartTime = DateTime.Now;
             double DisplayCounter;
@@ -61,7 +78,13 @@ namespace BLTools
             return RetVal;
         }
 
-        public async Task<bool> ExecuteAsync(int pollingDelayInMsec = 5)
+        /// <summary>
+        /// Start to wait asynchronously for the condition
+        /// </summary>
+        /// <remarks>Timeout > refresh rate > polling delay</remarks>
+        /// <param name="pollingDelayInMsec">Delay before next evaluation of the condition</param>
+        /// <returns>true if condition is met, false if timeout</returns>
+        public override async Task<bool> ExecuteAsync(int pollingDelayInMsec = 5)
         {
             DateTime StartTime = DateTime.Now;
             double DisplayCounter;

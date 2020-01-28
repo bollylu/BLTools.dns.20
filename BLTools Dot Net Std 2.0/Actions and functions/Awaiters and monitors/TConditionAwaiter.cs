@@ -6,22 +6,26 @@ using System.Threading.Tasks;
 
 namespace BLTools
 {
-    public class TConditionAwaiter
+    /// <summary>
+    /// Wait for a condition to be met or timeout
+    /// </summary>
+    public class TConditionAwaiter : AConditionAwaiter
     {
-        protected Func<bool> _Condition;
-
-        protected double _TimeoutInMsec;
-
-        protected int _DurationToAwait;
-        protected int _AwaitedDuration;
-
+        /// <summary>
+        /// Wait for a condition to be met or timeout
+        /// </summary>
         public TConditionAwaiter(Func<bool> condition, double timeoutInMsec)
         {
             _Condition = condition;
             _TimeoutInMsec = timeoutInMsec;
         }
 
-        public bool Execute(int pollingDelayInMsec = 5)
+        /// <summary>
+        /// Start the wait process
+        /// </summary>
+        /// <param name="pollingDelayInMsec">Delay in ms to wait between evalution of the condition</param>
+        /// <returns>true if condition was met, false if timeout</returns>
+        public override bool Execute(int pollingDelayInMsec = 5)
         {
             DateTime StartTime = DateTime.Now;
             
@@ -38,7 +42,12 @@ namespace BLTools
             return RetVal;
         }
 
-        public async Task<bool> ExecuteAsync(int pollingDelayInMsec = 5)
+        /// <summary>
+        /// Start the wait process asynchronously
+        /// </summary>
+        /// <param name="pollingDelayInMsec">Delay in ms to wait between evalution of the condition</param>
+        /// <returns>true if condition was met, false if timeout</returns>
+        public override async Task<bool> ExecuteAsync(int pollingDelayInMsec = 5)
         {
             DateTime StartTime = DateTime.Now;
 

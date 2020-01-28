@@ -6,38 +6,20 @@ using BLTools.Diagnostic.Logging;
 
 namespace BLTools
 {
-    public abstract class AConditionMonitor : ALoggable
-    {
-        public const int DEFAULT_DELAY_IN_MS = 5;
-        public string Name { get; set; } = "";
-
-        public int Delay
-        {
-            get
-            {
-                if ( _Delay <= 0 )
-                {
-                    return DEFAULT_DELAY_IN_MS;
-                }
-                return _Delay;
-            }
-            set
-            {
-                _Delay = value;
-            }
-        }
-        private int _Delay;
-
-        public bool IsMonitoring => _MonitorThread != null;
-
-        protected bool _ContinueMonitor = false;
-        protected Thread _MonitorThread;
-        protected readonly object _LockMonitor = new object();
-    }
-
+    /// <summary>
+    /// Watch a condition continuously, until cancelled. When the condition is met, execute the associated action
+    /// </summary>
+    /// <typeparam name="T">The reference to provide to the predicate</typeparam>
     public class TConditionMonitor<T> : AConditionMonitor, IDisposable where T : class
     {
+        /// <summary>
+        /// The predicate to evaluate (the reference of the monitored item is passed to it)
+        /// </summary>
         public Predicate<T> Condition { get; set; }
+
+        /// <summary>
+        /// The action to execute when the condition is met (the reference of the monitored item is passed to it)
+        /// </summary>
         public Action<T> WhenCondition { get; set; }
 
         #region --- Constructor(s) ---------------------------------------------------------------------------------
@@ -85,6 +67,10 @@ namespace BLTools
         #endregion IDisposable Support
         #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
+        /// <summary>
+        /// Start the monitoring
+        /// </summary>
+        /// <param name="obj">The reference of the object to monitor</param>
         public void Start(T obj)
         {
             #region === Validate parameters ===
@@ -143,6 +129,9 @@ namespace BLTools
             }
         }
 
+        /// <summary>
+        /// Stop the monitoring
+        /// </summary>
         public void Cancel()
         {
             lock ( _LockMonitor )

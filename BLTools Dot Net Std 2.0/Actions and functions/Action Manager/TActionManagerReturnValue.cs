@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace BLTools {
-  public interface IActionManagerReturnValue {
-    bool WasExecuted { get; }
-  }
-
-  public interface IActionManagerReturnValue<T> : IActionManagerReturnValue {
-    T Value { get; }
-  }
 
   public class TActionManagerReturnValue : IActionManagerReturnValue {
     public bool WasExecuted { get; }
