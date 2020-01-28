@@ -6,7 +6,7 @@ namespace BLTools.UnitTest.Core20.DataModels {
   [TestClass]
   public class TLanguageTest {
 
-    [TestMethod, TestCategory("NC20.ComplexType")]
+    [TestMethod, TestCategory("ComplexType")]
     public void TestLanguage_ConstructorEmpty_DataInitialized() {
       TLanguage Language = new TLanguage();
       Assert.AreEqual<TLanguage.EAvailableLanguage>(TLanguage.EAvailableLanguage.Unknown, Language.Code);
@@ -16,7 +16,7 @@ namespace BLTools.UnitTest.Core20.DataModels {
       Assert.AreEqual<string>("Unknown", Language.GetName(EDescriptionLanguage.English));
     }
 
-    [TestMethod, TestCategory("NC20.ComplexType")]
+    [TestMethod, TestCategory("ComplexType")]
     public void TestLanguage_ConstructorFrench_DataInitialized() {
       TLanguage Language = new TLanguage(TLanguage.EAvailableLanguage.FR);
       Assert.AreEqual<TLanguage.EAvailableLanguage>(TLanguage.EAvailableLanguage.FR, Language.Code);
@@ -26,7 +26,7 @@ namespace BLTools.UnitTest.Core20.DataModels {
       Assert.AreEqual<string>("French", Language.GetName(EDescriptionLanguage.English));
     }
 
-    [TestMethod, TestCategory("NC20.ComplexType")]
+    [TestMethod, TestCategory("ComplexType")]
     public void TestLanguage_ConstructorEnglish_DataInitialized() {
       TLanguage Language = new TLanguage(TLanguage.EAvailableLanguage.UK);
       Assert.AreEqual<TLanguage.EAvailableLanguage>(TLanguage.EAvailableLanguage.UK, Language.Code);

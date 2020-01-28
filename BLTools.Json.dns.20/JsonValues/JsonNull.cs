@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 
 namespace BLTools.Json {
-  public class JsonNull : IJsonValue<object> {
+  public sealed class JsonNull : IJsonValue<object> {
     public object Value { get => null; set { } }
 
     public void Dispose() {

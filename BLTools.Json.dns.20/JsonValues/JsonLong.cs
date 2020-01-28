@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 
 namespace BLTools.Json {
-  public class JsonLong : IJsonValue<long?> {
+  public sealed class JsonLong : IJsonValue<long?> {
 
     public long? Value { get; set; }
 

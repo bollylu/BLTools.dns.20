@@ -7,7 +7,7 @@ using System.IO;
 using System.Collections;
 
 namespace BLTools.Json {
-  public class JsonArray : IJsonValue, IEnumerable<IJsonValue> {
+  public sealed class JsonArray : IJsonValue, IEnumerable<IJsonValue> {
 
     public readonly static JsonArray Empty = new JsonArray();
 
@@ -227,7 +227,7 @@ namespace BLTools.Json {
       JsonArray RetVal = new JsonArray();
 
       foreach ( string ValueItem in _GetNextValue(arrayContent) ) {
-        RetVal.Add(JsonValue.Parse(ValueItem));
+        RetVal.Add(HelperJsonValue.Parse(ValueItem));
       }
 
       return RetVal;

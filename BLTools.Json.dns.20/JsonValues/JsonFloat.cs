@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 
 namespace BLTools.Json {
-  public class JsonFloat : IJsonValue<float?> {
+  public sealed class JsonFloat : IJsonValue<float?> {
 
     public float? Value { get; set; }
 

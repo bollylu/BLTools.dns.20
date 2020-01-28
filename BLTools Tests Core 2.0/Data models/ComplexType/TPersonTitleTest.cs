@@ -6,7 +6,7 @@ namespace BLTools.UnitTest.Core20.DataModels {
   [TestClass]
   public class TPersonTitleTest {
 
-    [TestMethod, TestCategory("NC20.ComplexType")]
+    [TestMethod, TestCategory("ComplexType")]
     public void TestPersonTitle_ConstructorEmpty_DataInitialized() {
       TPersonTitle PersonTitle = new TPersonTitle();
       Assert.AreEqual<TPersonTitle.EAvailableCode>(TPersonTitle.EAvailableCode.Unknown, PersonTitle.Code);
@@ -15,7 +15,7 @@ namespace BLTools.UnitTest.Core20.DataModels {
       Assert.AreEqual<string>("Unknown", PersonTitle.GetName(EDescriptionLanguage.English));
     }
 
-    [TestMethod, TestCategory("NC20.ComplexType")]
+    [TestMethod, TestCategory("ComplexType")]
     public void TestPersonTitle_ConstructorMme_DataInitialized() {
       TPersonTitle PersonTitle = new TPersonTitle(TPersonTitle.EAvailableCode.Mme);
       Assert.AreEqual<TPersonTitle.EAvailableCode>(TPersonTitle.EAvailableCode.Mme, PersonTitle.Code);
@@ -24,7 +24,7 @@ namespace BLTools.UnitTest.Core20.DataModels {
       Assert.AreEqual<string>("Madam", PersonTitle.GetName(EDescriptionLanguage.English));
     }
 
-    [TestMethod, TestCategory("NC20.ComplexType")]
+    [TestMethod, TestCategory("ComplexType")]
     public void TestPersonTitleAbbreviations_ConstructorMme_DataInitialized() {
       TPersonTitle PersonTitle = new TPersonTitle(TPersonTitle.EAvailableCode.Mme);
       Assert.AreEqual<TPersonTitle.EAvailableCode>(TPersonTitle.EAvailableCode.Mme, PersonTitle.Code);

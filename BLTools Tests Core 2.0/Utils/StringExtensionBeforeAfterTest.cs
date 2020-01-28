@@ -36,7 +36,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     #endregion Test context
 
     #region --- Before --------------------------------------------
-    [TestMethod(), TestCategory("NC20.String.Before")]
+    [TestMethod(), TestCategory("String.Before")]
     public void StringExtension_BeforeWord_ResultOK() {
       string sourceString = "A brown fox jumps over a lazy dog";
       string expected = "A brown";
@@ -44,7 +44,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Before")]
+    [TestMethod(), TestCategory("String.Before")]
     public void StringExtension_BeforeWordCaseInsensitive_ResultOK() {
       string sourceString = "A brown fox jumps over a lazy dog";
       string expected = "A brown";
@@ -52,7 +52,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Before")]
+    [TestMethod(), TestCategory("String.Before")]
     public void StringExtension_BeforeLetter_ResultOK() {
       string sourceString = "A brown fox jumps over a lazy dog";
       string expected = "A br";
@@ -60,7 +60,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Before")]
+    [TestMethod(), TestCategory("String.Before")]
     public void StringExtension_BeforeChar_ResultOK() {
       string sourceString = "A brown fox jumps over a lazy dog";
       string expected = "A brown fo";
@@ -68,7 +68,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Before")]
+    [TestMethod(), TestCategory("String.Before")]
     public void StringExtension_BeforeDotInSmallText_ResultOK() {
       string sourceString = "1.10";
       string expected = "1";
@@ -76,7 +76,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Before")]
+    [TestMethod(), TestCategory("String.Before")]
     public void StringExtension_BeforeEmptyString_CompleteSource() {
       string sourceString = "1.10";
       string expected = "1.10";
@@ -84,7 +84,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Before")]
+    [TestMethod(), TestCategory("String.Before")]
     public void StringExtension_SourceEmptyBeforeString_EmptyString() {
       string sourceString = "";
       string expected = "";
@@ -92,7 +92,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Before")]
+    [TestMethod(), TestCategory("String.Before")]
     public void StringExtension_BeforeInexistantString_ResultEmpty() {
       string sourceString = "1.10";
       string expected = "";
@@ -102,7 +102,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     #endregion --- Before --------------------------------------------
 
     #region --- BeforeLast --------------------------------------------
-    [TestMethod(), TestCategory("NC20.String.BeforeLast")]
+    [TestMethod(), TestCategory("String.BeforeLast")]
     public void StringExtension_BeforeLastWord_ResultOK() {
       string sourceString = "A brown fox fox jumps over a lazy foxy-dog";
       string expected = "A brown fox fox jumps over a lazy ";
@@ -110,7 +110,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.BeforeLast")]
+    [TestMethod(), TestCategory("String.BeforeLast")]
     public void StringExtension_BeforeLastLetter_ResultOK() {
       string sourceString = @"\\server\sharename\folder\file.txt";
       string expected = @"\\server\sharename\folder";
@@ -118,7 +118,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.BeforeLast")]
+    [TestMethod(), TestCategory("String.BeforeLast")]
     public void StringExtension_BeforeLastChar_ResultOK() {
       string sourceString = "A brown fox jumps over a lazy dog";
       string expected = "A brown fox jumps over a lazy d";
@@ -126,7 +126,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.BeforeLast")]
+    [TestMethod(), TestCategory("String.BeforeLast")]
     public void StringExtension_BeforeLastDotInSmallText_ResultOK() {
       string sourceString = "1.10";
       string expected = "1";
@@ -134,7 +134,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.BeforeLast")]
+    [TestMethod(), TestCategory("String.BeforeLast")]
     public void StringExtension_BeforeLastEmptyString_CompleteSource() {
       string sourceString = "1.10";
       string expected = "1.10";
@@ -142,7 +142,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.BeforeLast")]
+    [TestMethod(), TestCategory("String.BeforeLast")]
     public void StringExtension_SourceEmptyBeforeLastString_EmptyString() {
       string sourceString = "";
       string expected = "";
@@ -150,7 +150,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.BeforeLast")]
+    [TestMethod(), TestCategory("String.BeforeLast")]
     public void StringExtension_BeforeLastInexistantString_ResultEmpty() {
       string sourceString = "1.10";
       string expected = "";
@@ -160,7 +160,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     #endregion --- BeforeLast --------------------------------------------
 
     #region --- After --------------------------------------------
-    [TestMethod(), TestCategory("NC20.String.After")]
+    [TestMethod(), TestCategory("String.After")]
     public void StringExtension_AfterWord_ResultOK() {
       string sourceString = "A brown fox jumps over a lazy dog";
       string expected = " jumps over a lazy dog";
@@ -168,7 +168,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.After")]
+    [TestMethod(), TestCategory("String.After")]
     public void StringExtension_AfterLetter_ResultOK() {
       string sourceString = "A brown fox jumps over a lazy dog";
       string expected = "wn fox jumps over a lazy dog";
@@ -176,7 +176,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.After")]
+    [TestMethod(), TestCategory("String.After")]
     public void StringExtension_AfterChar_ResultOK() {
       string sourceString = "A brown fox jumps over a lazy dog";
       string expected = " jumps over a lazy dog";
@@ -184,7 +184,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.After")]
+    [TestMethod(), TestCategory("String.After")]
     public void StringExtension_AFterDotInSmallText_ResultOK() {
       string sourceString = "1.10";
       string expected = "10";
@@ -192,7 +192,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.After")]
+    [TestMethod(), TestCategory("String.After")]
     public void StringExtension_AfterEmptyString_CompleteSource() {
       string sourceString = "1.10";
       string expected = "1.10";
@@ -200,7 +200,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.After")]
+    [TestMethod(), TestCategory("String.After")]
     public void StringExtension_SourceEmptyAfterString_ResultEmpty() {
       string sourceString = "";
       string expected = "";
@@ -208,7 +208,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.After")]
+    [TestMethod(), TestCategory("String.After")]
     public void StringExtension_AfterInexistantString_ResultEmpty() {
       string sourceString = "1.10";
       string expected = "";
@@ -218,7 +218,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     #endregion --- After --------------------------------------------
 
     #region --- AfterLast --------------------------------------------
-    [TestMethod(), TestCategory("NC20.String.AfterLast")]
+    [TestMethod(), TestCategory("String.AfterLast")]
     public void StringExtension_AfterLastWord_ResultOK() {
       string sourceString = "A brown fox fox jumps over a lazy foxy-dog";
       string expected = "y-dog";
@@ -226,7 +226,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.AfterLast")]
+    [TestMethod(), TestCategory("String.AfterLast")]
     public void StringExtension_AfterLastLetterOnlyOne_ResultOK() {
       string sourceString = "A brown fox fox jumps over a lazy foxy-dog";
       string expected = "g";
@@ -234,7 +234,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.AfterLast")]
+    [TestMethod(), TestCategory("String.AfterLast")]
     public void StringExtension_AfterLastLetter_ResultOK() {
       string sourceString = @"\\server\sharename\folder\file.txt";
       string expected = @"file.txt";
@@ -242,7 +242,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.AfterLast")]
+    [TestMethod(), TestCategory("String.AfterLast")]
     public void StringExtension_AfterLastChar_ResultOK() {
       string sourceString = "A brown fox jumps over a lazy dog";
       string expected = "g";
@@ -250,7 +250,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.AfterLast")]
+    [TestMethod(), TestCategory("String.AfterLast")]
     public void StringExtension_AfterLastDotInSmallText_ResultOK() {
       string sourceString = "1.10";
       string expected = "10";
@@ -258,7 +258,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.AfterLast")]
+    [TestMethod(), TestCategory("String.AfterLast")]
     public void StringExtension_AfterLastEmptyString_CompleteSource() {
       string sourceString = "1.10";
       string expected = "1.10";
@@ -266,7 +266,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.AfterLast")]
+    [TestMethod(), TestCategory("String.AfterLast")]
     public void StringExtension_SourceEmptyAfterLastString_EmptyString() {
       string sourceString = "";
       string expected = "";
@@ -274,7 +274,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.AfterLast")]
+    [TestMethod(), TestCategory("String.AfterLast")]
     public void StringExtension_AfterLastInexistantString_ResultEmpty() {
       string sourceString = "1.10";
       string expected = "";
@@ -284,7 +284,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     #endregion --- AfterLast --------------------------------------------
 
     #region --- Between chars --------------------------------------------
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenCharSourceEmpty_ResultEmpty() {
       string sourceString = "";
       string expected = "";
@@ -292,7 +292,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenCharSourceNormal_ResultOK() {
       string sourceString = "This  is a test [various data; example]";
       string expected = "various data; example";
@@ -300,7 +300,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenCharBothDelimiterMissing_ResultEmpty() {
       string sourceString = "This  is a test various data; example";
       string expected = "";
@@ -308,7 +308,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenCharFirstDelimiterMissing_ResultEmpty() {
       string sourceString = "This  is a test [various data; example";
       string expected = "";
@@ -316,7 +316,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenCharSecondDelimiterMissing_ResultEmpty() {
       string sourceString = "This  is a test various data; example]";
       string expected = "";
@@ -326,7 +326,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     #endregion --- Between chars --------------------------------------------
 
     #region --- Between strings --------------------------------------------
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenStringsSourceEmpty_ResultEmpty() {
       string sourceString = "";
       string expected = "";
@@ -334,7 +334,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenStringsSourceNormal_ResultOK() {
       string sourceString = "This  is a test =[Live]= =[blabla]=";
       string expected = "Live";
@@ -342,7 +342,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenStringsSourceNormalCaseInsensitive_ResultOK() {
       string sourceString = "This  is a test DelimLiveDElim =[blabla]=";
       string expected = "Live";
@@ -350,7 +350,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenStringsBothDelimiterMissing_ResultEmpty() {
       string sourceString = "This  is a test various data; example";
       string expected = "";
@@ -358,7 +358,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenStringsFirstDelimiterMissing_ResultEmpty() {
       string sourceString = "This  is a test =[various data; example";
       string expected = "";
@@ -366,7 +366,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual);
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenStringsSecondDelimiterMissing_ResultEmpty() {
       string sourceString = "This  is a test various data; example]=";
       string expected = "";
@@ -376,7 +376,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     #endregion --- Between strings --------------------------------------------
 
     #region --- ItemsBetween chars --------------------------------------------
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenCharsMultipleValuesSourceEmpty_ResultZero() {
       string sourceString = "";
       int expected = 0;
@@ -384,7 +384,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual.Count());
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenCharsMultipleValues_ResultOK() {
       string sourceString = "source value [item1] [Item2] [item3;item4]";
       int expected = 3;
@@ -395,7 +395,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual("item3;item4", actual.Last());
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenCharsMultipleValuesErrors_ResultOK() {
       string sourceString = "source value [item1] [Item2 [item3;item4]";
       int expected = 2;
@@ -405,7 +405,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual("Item2 [item3;item4", actual.Last());
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenCharsMultipleValuesDeStartlimiterMissing_ResultZero() {
       string sourceString = "This  is a test various data; example]=";
       int expected = 0;
@@ -413,7 +413,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual.Count());
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenCharMultipleValuesEndDelimiterMissing_ResultZero() {
       string sourceString = "source value [item1 [Item2 [item3;item4";
       int expected = 0;
@@ -423,7 +423,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     #endregion --- ItemsBetween chars --------------------------------------------
 
     #region --- ItemsBetween strings --------------------------------------------
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenStringMultipleValuesSourceEmpty_ResultZero() {
       string sourceString = "";
       int expected = 0;
@@ -431,7 +431,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual.Count());
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenStringsMultipleValues_ResultOK() {
       string sourceString = "source value =[item1]= =[Item2]==[item3;item4]=";
       int expected = 3;
@@ -442,7 +442,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual("item3;item4", actual.Last());
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenStringsMultipleValuesErrors_ResultOK() {
       string sourceString = "source value =[item1]= =[Item2] =[item3;item4]=";
       int expected = 2;
@@ -452,7 +452,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual("Item2] =[item3;item4", actual.Last());
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenStringsMultipleValuesStartDelimiterMissing_ResultZero() {
       string sourceString = "This  is a test various data; example]=";
       int expected = 0;
@@ -460,7 +460,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual.Count());
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenStringsMultipleValuesEndDelimiterMissing_ResultZero() {
       string sourceString = "source value =[item1 =[Item2 =[item3;item4";
       int expected = 0;
@@ -468,7 +468,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected, actual.Count());
     }
 
-    [TestMethod(), TestCategory("NC20.String.Between")]
+    [TestMethod(), TestCategory("String.Between")]
     public void StringExtension_BetweenStringsMultipleValuesCaseInsensitive_ResultZero() {
       string sourceString = "source value Debutitem1FINdeButItem2 fin";
       int expected = 2;

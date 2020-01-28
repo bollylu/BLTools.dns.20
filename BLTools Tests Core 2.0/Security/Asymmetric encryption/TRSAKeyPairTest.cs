@@ -63,7 +63,7 @@ namespace BLTools.UnitTest.Core20.Security {
     #endregion
 
 
-    [TestMethod(), TestCategory("NC20.RSA")]
+    [TestMethod(), TestCategory("RSA")]
     public void TRSAKeyPair_ConstructorEmpty_Keys1024Empty() {
       TRSAKeyPair KeyPair = new TRSAKeyPair();
       Assert.AreEqual(KeyPair.Name, string.Empty);
@@ -73,7 +73,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.IsNull(KeyPair.PublicKey.Parameters.P);
     }
 
-    [TestMethod(), TestCategory("NC20.RSA")]
+    [TestMethod(), TestCategory("RSA")]
     public void TRSAKeyPair_Constructor1024_Keys1024NotEmpty() {
       TRSAKeyPair KeyPair = new TRSAKeyPair("testkey", 1024);
       Assert.AreEqual(KeyPair.KeyLength, 1024);
@@ -83,7 +83,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.IsNotNull(KeyPair.PublicKey.Parameters.P);
     }
 
-    [TestMethod(), TestCategory("NC20.RSA")]
+    [TestMethod(), TestCategory("RSA")]
     public void TRSAKeyPair_Constructor1024_Keys1024RandomPrivateDifferent() {
       string Keyname = "testkey";
       TRSAKeyPair KeyPair1 = new TRSAKeyPair(Keyname, 1024);
@@ -93,7 +93,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.IsFalse(KeyPair1.PrivateKey.Equals(KeyPair2.PrivateKey));
     }
 
-    [TestMethod(), TestCategory("NC20.RSA")]
+    [TestMethod(), TestCategory("RSA")]
     public void TRSAKeyPair_Constructor1024_Keys1024RandomPublicDifferent() {
       string Keyname = "testkey";
       TRSAKeyPair KeyPair1 = new TRSAKeyPair(Keyname, 1024);
@@ -103,7 +103,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.IsFalse(KeyPair1.PublicKey.Equals(KeyPair2.PublicKey));
     }
 
-    [TestMethod(), TestCategory("NC20.RSA")]
+    [TestMethod(), TestCategory("RSA")]
     public void TRSAKeyPair_KeysAreSaved_FilesExist() {
       string Keyname = "testkey";
       string Pathname = Path.GetTempPath();
@@ -121,7 +121,7 @@ namespace BLTools.UnitTest.Core20.Security {
       File.Delete(PubKeyfile);
     }
 
-    [TestMethod(), TestCategory("NC20.RSA")]
+    [TestMethod(), TestCategory("RSA")]
     public void TRSAKeyPair_KeysAreSavedThenLoaded_KeysAreOK() {
       string Keyname = "testkey";
       string Pathname = Path.GetTempPath();
@@ -140,7 +140,7 @@ namespace BLTools.UnitTest.Core20.Security {
       File.Delete(PubKeyfile);
     }
 
-    [TestMethod(), TestCategory("NC20.RSA")]
+    [TestMethod(), TestCategory("RSA")]
     public void TRSAKeyPair_KeysAreSavedThenLoadedViaStatic_KeysAreOK() {
       string Keyname = "testkey";
       string Pathname = Path.GetTempPath();

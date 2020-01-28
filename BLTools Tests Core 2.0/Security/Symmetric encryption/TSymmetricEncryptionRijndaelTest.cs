@@ -7,7 +7,7 @@ using System.Text;
 namespace BLTools.UnitTest.Core20.Security {
   [TestClass]
   public class TSymmetricEncryptionRijndaelTest {
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.Rijndael")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]
     public void TestEncryptSymmetricRijndael_ParametersOk128_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
@@ -15,7 +15,7 @@ namespace BLTools.UnitTest.Core20.Security {
       string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, ESymmetricEncryptionAlgorithm.Rijndael, 128);
       Assert.AreEqual(SourceText, DecipheredText);
     }
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.Rijndael")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]
     public void TestEncryptSymmetricRijndael_ParametersOk192_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
@@ -24,7 +24,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.Rijndael")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]
     public void TestEncryptSymmetricRijndael_ParametersOk256_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
@@ -33,7 +33,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.Rijndael")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]
     public void TestEncryptSymmetricRijndael_SourceEmpty_EncryptionDecryptionOK() {
       string SourceText = "";
       string Password = "az12df34vb";
@@ -41,7 +41,7 @@ namespace BLTools.UnitTest.Core20.Security {
       string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, ESymmetricEncryptionAlgorithm.Rijndael, 256);
       Assert.AreEqual(SourceText, DecipheredText);
     }
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.Rijndael")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]
     [ExpectedException(typeof(ArgumentException))]
     public void TestEncryptSymmetricRijndael_BadKeyLengthTooSmall_Exception() {
       string SourceText = "Je vais bien, merci.";
@@ -49,7 +49,7 @@ namespace BLTools.UnitTest.Core20.Security {
       string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.Rijndael, 253);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.Rijndael")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]
     [ExpectedException(typeof(ArgumentException))]
     public void TestEncryptSymmetricRijndael_BadKeyLengthZero_Exception() {
       string SourceText = "Je vais bien, merci.";
@@ -57,7 +57,7 @@ namespace BLTools.UnitTest.Core20.Security {
       string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.Rijndael, 0);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.Rijndael")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]
     [ExpectedException(typeof(ArgumentException))]
     public void TestEncryptSymmetricRijndael_BadKeyLengthTooBig_Exception() {
       string SourceText = "Je vais bien, merci.";
@@ -65,7 +65,7 @@ namespace BLTools.UnitTest.Core20.Security {
       string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.Rijndael, 1024);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.Rijndael")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]
     public void TestEncryptSymmetricRijndael_NoPassword_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "";
@@ -74,7 +74,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.Rijndael")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]
     [ExpectedException(typeof(ArgumentNullException))]
     public void TestEncryptSymmetricRijndael_SourceTextIsNull_Exception() {
       string SourceText = null;
@@ -82,7 +82,7 @@ namespace BLTools.UnitTest.Core20.Security {
       string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.Rijndael, 256);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.Rijndael")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]
     [ExpectedException(typeof(ArgumentNullException))]
     public void TestEncryptSymmetricRijndael_NullPassword_Exception() {
       string SourceText = "Je vais bien, merci.";
@@ -90,7 +90,7 @@ namespace BLTools.UnitTest.Core20.Security {
       string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.Rijndael, 256);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.Rijndael")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]
     public void TestEncryptSymmetricRijndael_WrongPassword_DecryptionFailed() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
@@ -100,7 +100,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.IsNull(DecipheredText);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.Rijndael")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]
     public void TestEncryptSymmetricRijndael_ParametersOKEncodingUTF8_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
@@ -109,7 +109,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.Rijndael")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]
     public void TestEncryptSymmetricRijndael_ParametersOKWrongEncoding_DecryptionFailed() {
       string SourceText = "Je vais bien, merci. Célébration.";
       string Password = "az12df34vb";
@@ -118,7 +118,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.AreNotEqual(SourceText, DecipheredText);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.Rijndael")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]
     public void TestEncryptSymmetricRijndael_ParametersASCIIEncodingASCII_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci. Celebration.";
       string Password = "az12df34vb";
@@ -127,7 +127,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.Rijndael")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]
     public void TestEncryptSymmetricRijndael_ParametersASCII_Accents_EncodingASCII_DecryptionFailed() {
       string SourceText = "Je vais bien, merci. Célébration.";
       string Password = "az12df34vb";

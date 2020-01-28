@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 
 namespace BLTools.Json {
-  public class JsonValue {
+  public static class HelperJsonValue {
 
     public static IJsonValue Parse(string source) {
 

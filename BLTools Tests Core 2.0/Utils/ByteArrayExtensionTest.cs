@@ -62,7 +62,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     /// <summary>
     ///A test for ToHexString
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Array")]
+    [TestMethod(), TestCategory("Array")]
     public void ToHexString_CommaSeparator_ResultOK() {
       byte[] rawData = new byte[] { 12, 23, 34, 45, 56 };
       string separator = ",";
@@ -75,7 +75,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     /// <summary>
     ///A test for ToHexString
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Array")]
+    [TestMethod(), TestCategory("Array")]
     public void ToHexString_NoSeparator_ResultOK() {
       byte[] rawData = new byte[] { 12, 23, 34, 45, 56 };
       string expected = "0C 17 22 2D 38";
@@ -87,7 +87,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     /// <summary>
     ///A test for ToCharString
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Array")]
+    [TestMethod(), TestCategory("Array")]
     public void ToCharString_NormalCharacters_ResultOK() {
       byte[] rawData = "abcdef".ToByteArray();
       string expected = "abcdef";
@@ -99,7 +99,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     /// <summary>
     ///A test for ToCharString
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Array")]
+    [TestMethod(), TestCategory("Array")]
     public void ToCharString_EmptySource_ResultOK() {
       byte[] rawData = "".ToByteArray();
       string expected = "";
@@ -111,7 +111,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     /// <summary>
     ///A test for ToCharString
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Array")]
+    [TestMethod(), TestCategory("Array")]
     public void ToCharString_SpecialChars_ResultOK() {
       byte[] rawData = "Text\r\n".ToByteArray();
       string expected = "Text\r\n";

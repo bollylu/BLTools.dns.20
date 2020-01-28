@@ -6,7 +6,7 @@ namespace BLTools.UnitTest.Core20.DataModels {
   [TestClass]
   public class TCountryTest {
 
-    [TestMethod, TestCategory("NC20.ComplexType")]
+    [TestMethod, TestCategory("ComplexType")]
     public void TestCountry_ConstructorEmpty_DataInitialized() {
       TCountry Country = new TCountry();
       Assert.AreEqual<TCountry.EAvailableCode>(TCountry.EAvailableCode.Unknown, Country.Code);
@@ -16,7 +16,7 @@ namespace BLTools.UnitTest.Core20.DataModels {
       Assert.AreEqual<string>("Unknown", Country.GetName(EDescriptionLanguage.English));
     }
 
-    [TestMethod, TestCategory("NC20.ComplexType")]
+    [TestMethod, TestCategory("ComplexType")]
     public void TestCountry_ConstructorBE_DataInitialized() {
       TCountry Country = new TCountry(TCountry.EAvailableCode.BE);
       Assert.AreEqual<TCountry.EAvailableCode>(TCountry.EAvailableCode.BE, Country.Code);
@@ -26,7 +26,7 @@ namespace BLTools.UnitTest.Core20.DataModels {
       Assert.AreEqual<string>("Belgium", Country.GetName(EDescriptionLanguage.English));
     }
 
-    [TestMethod, TestCategory("NC20.ComplexType")]
+    [TestMethod, TestCategory("ComplexType")]
     public void TestCountry_ConstructorUS_DataInitialized() {
       TCountry Country = new TCountry(TCountry.EAvailableCode.US);
       Assert.AreEqual<TCountry.EAvailableCode>(TCountry.EAvailableCode.US, Country.Code);

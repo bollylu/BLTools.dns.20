@@ -61,7 +61,7 @@ namespace BLTools.UnitTest.Core20.Security {
     #endregion
 
 
-    [TestMethod(), TestCategory("NC20.RSA")]
+    [TestMethod(), TestCategory("RSA")]
     public void TRSAPrivateKey_ConstructorEmpty_KeyEmpty() {
       TRSAPrivateKey target = new TRSAPrivateKey();
       Assert.IsNull(target.Parameters.P);
@@ -77,7 +77,7 @@ namespace BLTools.UnitTest.Core20.Security {
     ///// <summary>
     /////A test for Save
     /////</summary>
-    //[TestMethod(), TestCategory("NC20.RSA")]
+    //[TestMethod(), TestCategory("RSA")]
     //public void TRSAPrivateKey_SaveKey_KeyIsSaved() {
     //  string Key = "0263489516513216541";
     //  TRSAPrivateKey Target = new TRSAPrivateKey("testkey", Key);
@@ -91,7 +91,7 @@ namespace BLTools.UnitTest.Core20.Security {
     ///// <summary>
     /////A test for Load
     /////</summary>
-    //[TestMethod(), TestCategory("NC20.RSA")]
+    //[TestMethod(), TestCategory("RSA")]
     //public void TRSAPrivateKey_KeyIsSavedThenLoaded_KeyIsOK() {
     //  string Key = "0263489516513216541";
     //  TRSAPrivateKey Source = new TRSAPrivateKey("testkey", Key);
@@ -107,7 +107,7 @@ namespace BLTools.UnitTest.Core20.Security {
     ///// <summary>
     /////A test for Load
     /////</summary>
-    //[TestMethod(), TestCategory("NC20.RSA")]
+    //[TestMethod(), TestCategory("RSA")]
     //public void TRSAPrivateKey_KeyIsLoadedViaStatic_KeyIsOK() {
     //  string Key = "0263489516513216541";
     //  TRSAPrivateKey Source = new TRSAPrivateKey("testkey", Key);

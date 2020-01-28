@@ -78,7 +78,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadString_ResultValid() {
       string name = "name";
       string defaultValue = "";
@@ -90,7 +90,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadString_ResultFromDefault() {
       string name = "xname";
       string defaultValue = "this is the default value";
@@ -104,7 +104,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadInt_ResultValid() {
       string name = "numeroint";
       int defaultValue = 0;
@@ -116,7 +116,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadInt_ResultFromDefault() {
       string name = "xnumero";
       int defaultValue = 13;
@@ -130,7 +130,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadDoubleFR_ResultValid() {
       string name = "numerodoublefr";
       double defaultValue = 0;
@@ -142,7 +142,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadDoubleUS_ResultValid() {
       string name = "numerodoubleus";
       double defaultValue = 0;
@@ -154,7 +154,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadDouble_ResultFromDefault() {
       string name = "badnumero";
       double defaultValue = 17D;
@@ -166,7 +166,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadDouble2_ResultFromDefault() {
       string name = "badnumero2";
       double defaultValue = 17D;
@@ -180,7 +180,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadFloatFR_ResultValid() {
       string name = "numerodoublefr";
       float defaultValue = 0;
@@ -192,7 +192,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadFloatUS_ResultValid() {
       string name = "numerodoubleus";
       float defaultValue = 0;
@@ -204,7 +204,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadFloat_ResultFromDefault() {
       string name = "badnumero";
       float defaultValue = 17F;
@@ -216,7 +216,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadFloat2_ResultFromDefault() {
       string name = "badnumero2";
       float defaultValue = 17F;
@@ -230,7 +230,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadDateTimeFR_ResultValid() {
       string name = "datefr";
       DateTime defaultValue = DateTime.MinValue;
@@ -242,7 +242,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadDateTimeUS_ResultValid() {
       string name = "dateus";
       DateTime defaultValue = DateTime.MinValue;
@@ -254,7 +254,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadDateTimeAnsi_ResultValid() {
       string name = "dateansi";
       DateTime defaultValue = DateTime.MinValue;
@@ -266,7 +266,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadAttribute
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadAttribute_ReadDateTime_ResultFromDefault() {
       string name = "baddate";
       DateTime defaultValue = DateTime.MinValue;
@@ -282,7 +282,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadElementValue
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadElementValue_ReadString_ResultValid() {
       string name = "subelement";
       string defaultValue = "";
@@ -296,7 +296,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadElementValue
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadElement_ReadExisting_ResultValid() {
       string name = "subelement";
       XElement expected = new XElement("subelement");
@@ -308,7 +308,7 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     /// <summary>
     ///A test for SafeReadElementValue
     ///</summary>
-    [TestMethod(), TestCategory("NC20.Xml")]
+    [TestMethod(), TestCategory("Xml")]
     public void SafeReadElement_ReadNotExisting_ResultInvalid() {
       string name = "ssubelement";
       XElement expected = new XElement("ssubelement");
@@ -318,14 +318,14 @@ namespace BLTools.UnitTest.Core20.Data.Xml {
     #endregion Tests for SafeReadElement
 
     #region --- Tests for GetXmlItems --------------------------------------------
-    [TestMethod(), TestCategory("NC20.String")]
+    [TestMethod(), TestCategory("String")]
     public void GetXmlTags_SourceStringEmpty_ResultZero() {
       string sourceString = "";
       IEnumerable<string> actual = sourceString.GetXmlTags();
       Assert.AreEqual(0, actual.Count());
     }
 
-    [TestMethod(), TestCategory("NC20.String")]
+    [TestMethod(), TestCategory("String")]
     public void GetXmlTags_SourceStringNotEmpty_ResultAllTags() {
       string sourceString = "<html><head></head><body><a href='/home/test'>This a test</p></body></html>";
       IEnumerable<string> actual = sourceString.GetXmlTags();

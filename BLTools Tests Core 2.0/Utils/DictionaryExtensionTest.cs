@@ -97,62 +97,62 @@ namespace BLTools.UnitTest.Core20.Extensions {
     //
     #endregion
 
-    [TestMethod(), TestCategory("NC20.Dictionary")]
+    [TestMethod(), TestCategory("Dictionary")]
     public void DictStringString_GetStringKeyOk_ValueOk() {
       string Actual = SourceDictStringString.SafeGetValue(KEY_STRING1, DEFAULT_STRING);
       Assert.AreEqual(Actual, VALUE_STRING1);
     }
 
-    [TestMethod(), TestCategory("NC20.Dictionary")]
+    [TestMethod(), TestCategory("Dictionary")]
     public void DictStringString_GetStringKeyInvalid_ValueDefault() {
       string Actual = SourceDictStringString.SafeGetValue(KEY_STRING3, DEFAULT_STRING);
       Assert.AreEqual(Actual, DEFAULT_STRING);
     }
 
-    [TestMethod(), TestCategory("NC20.Dictionary")]
+    [TestMethod(), TestCategory("Dictionary")]
     public void DictStringString_GetStringKeyNull_ValueDefault() {
       string LookupKey = null;
       string Actual = SourceDictStringString.SafeGetValue(LookupKey, DEFAULT_STRING);
       Assert.AreEqual(Actual, DEFAULT_STRING);
     }
 
-    [TestMethod(), TestCategory("NC20.Dictionary")]
+    [TestMethod(), TestCategory("Dictionary")]
     public void DictStringString_EmptyDictionary_ValueDefault() {
       string Actual = EmptySourceDict.SafeGetValue(KEY_STRING3, DEFAULT_STRING);
       Assert.AreEqual(Actual, DEFAULT_STRING);
     }
 
-    [TestMethod(), TestCategory("NC20.Dictionary")]
+    [TestMethod(), TestCategory("Dictionary")]
     public void DictStringInt_GetIntKeyOk_ValueOk() {
       int Actual = SourceDictStringInt.SafeGetValue(KEY_STRING2, DEFAULT_INT);
       Assert.AreEqual(Actual, VALUE_INT2);
     }
 
-    [TestMethod(), TestCategory("NC20.Dictionary")]
+    [TestMethod(), TestCategory("Dictionary")]
     public void DictStringInt_GetIntKeyInvalid_ValueDefault() {
       int Actual = SourceDictStringInt.SafeGetValue(KEY_STRING3, DEFAULT_INT);
       Assert.AreEqual(Actual, DEFAULT_INT);
     }
 
-    [TestMethod(), TestCategory("NC20.Dictionary")]
+    [TestMethod(), TestCategory("Dictionary")]
     public void DictStringBool_GetBoolKeyOk_ValueOk() {
       bool Actual = SourceDictStringBool.SafeGetValue(KEY_STRING2, DEFAULT_BOOL);
       Assert.AreEqual(Actual, VALUE_BOOL2);
     }
 
-    [TestMethod(), TestCategory("NC20.Dictionary")]
+    [TestMethod(), TestCategory("Dictionary")]
     public void DictStringBool_GetBoolKeyInvalid_ValueDefault() {
       bool Actual = SourceDictStringInt.SafeGetValue(KEY_STRING3, DEFAULT_BOOL);
       Assert.AreEqual(Actual, DEFAULT_BOOL);
     }
 
-    [TestMethod(), TestCategory("NC20.Dictionary")]
+    [TestMethod(), TestCategory("Dictionary")]
     public void DictIntString_GetStringKeyOk_ValueOk() {
       string Actual = SourceDictIntString.SafeGetValue(KEY_INT2, DEFAULT_STRING);
       Assert.AreEqual(Actual, VALUE_STRING2);
     }
 
-    [TestMethod(), TestCategory("NC20.Dictionary")]
+    [TestMethod(), TestCategory("Dictionary")]
     public void DictIntString_GetStringKeyInvalid_ValueDefault() {
       string Actual = SourceDictStringInt.SafeGetValue(KEY_INT3, DEFAULT_STRING);
       Assert.AreEqual(Actual, DEFAULT_STRING);

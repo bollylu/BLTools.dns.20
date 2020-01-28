@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 
 namespace BLTools.Json {
-  public class JsonInt : IJsonValue<int?> {
+  public sealed class JsonInt : IJsonValue<int?> {
 
     public int? Value { get; set; }
 

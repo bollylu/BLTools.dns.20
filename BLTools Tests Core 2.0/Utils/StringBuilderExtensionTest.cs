@@ -32,7 +32,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     #endregion Test context
 
     #region Truncate
-    [TestMethod(), TestCategory("NC20.StringBuilder")]
+    [TestMethod(), TestCategory("StringBuilder")]
     public void StringBuilderExtension_Truncate_ResultOK() {
       StringBuilder source = new StringBuilder("A brown fox jumps over a lazy dog");
       int length = 4;
@@ -43,7 +43,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
     #endregion Truncate
 
     #region Trim
-    [TestMethod(), TestCategory("NC20.StringBuilder")]
+    [TestMethod(), TestCategory("StringBuilder")]
     public void StringBuilderExtension_Trim_ResultOK() {
       StringBuilder source = new StringBuilder("A brown fox jumps over a lazy dog  ");
       string expected = "A brown fox jumps over a lazy dog";
@@ -51,7 +51,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected.ToString(), actual.ToString());
     }
 
-    [TestMethod(), TestCategory("NC20.StringBuilder")]
+    [TestMethod(), TestCategory("StringBuilder")]
     public void StringBuilderExtension_TrimLeft_ResultOK() {
       StringBuilder source = new StringBuilder("  A brown fox jumps over a lazy dog  ");
       string expected = "A brown fox jumps over a lazy dog  ";
@@ -59,7 +59,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected.ToString(), actual.ToString());
     }
 
-    [TestMethod(), TestCategory("NC20.StringBuilder")]
+    [TestMethod(), TestCategory("StringBuilder")]
     public void StringBuilderExtension_TrimAll_ResultOK() {
       StringBuilder source = new StringBuilder("  A brown fox jumps over a lazy dog  ");
       string expected = "A brown fox jumps over a lazy dog";
@@ -67,7 +67,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected.ToString(), actual.ToString());
     }
 
-    [TestMethod(), TestCategory("NC20.StringBuilder")]
+    [TestMethod(), TestCategory("StringBuilder")]
     public void StringBuilderExtension_TrimWithChars_ResultOK() {
       StringBuilder source = new StringBuilder("A brown fox jumps over a lazy dog *+");
       string expected = "A brown fox jumps over a lazy dog";
@@ -75,7 +75,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected.ToString(), actual.ToString());
     }
 
-    [TestMethod(), TestCategory("NC20.StringBuilder")]
+    [TestMethod(), TestCategory("StringBuilder")]
     public void StringBuilderExtension_TrimLeftWithChars_ResultOK() {
       StringBuilder source = new StringBuilder("===  A brown fox jumps over a lazy dog  ");
       string expected = "A brown fox jumps over a lazy dog  ";
@@ -83,7 +83,7 @@ namespace BLTools.UnitTest.Core20.Extensions {
       Assert.AreEqual(expected.ToString(), actual.ToString());
     }
 
-    [TestMethod(), TestCategory("NC20.StringBuilder")]
+    [TestMethod(), TestCategory("StringBuilder")]
     public void StringBuilderExtension_TrimAllWithChars_ResultOK() {
       StringBuilder source = new StringBuilder("*** A brown fox jumps over a lazy dog ***");
       string expected = "A brown fox jumps over a lazy dog";

@@ -56,7 +56,7 @@ namespace BLTools.UnitTest.Core20.Data.Sql {
     //
     #endregion
 
-    [TestMethod(), TestCategory("NC20.SQL")]
+    [TestMethod(), TestCategory("SQL")]
     public void TSqlDatabaseConstructor_NoParams_ResultDefault() {
       TSqlDatabase actual = new TSqlDatabase();
       Assert.AreEqual(TSqlDatabase.DEFAULT_DATABASENAME, actual.DatabaseName);
@@ -70,12 +70,12 @@ namespace BLTools.UnitTest.Core20.Data.Sql {
       Assert.IsFalse(actual.IsOpened);
     }
 
-    [TestMethod(), TestCategory("NC20.SQL"), ExpectedException(typeof(ArgumentNullException))]
+    [TestMethod(), TestCategory("SQL"), ExpectedException(typeof(ArgumentNullException))]
     public void TSqlDatabaseConstructor_EmptyConnectionString_Exception() {
       TSqlDatabase actual = new TSqlDatabase("");
     }
 
-    [TestMethod(), TestCategory("NC20.SQL")]
+    [TestMethod(), TestCategory("SQL")]
     public void TSqlDatabaseConstructor_ServerAndDbOnly_DefaultUserAndPassword() {
       const string TEST_SERVER = "TestServer";
       const string TEST_DB = "TestDb";
@@ -86,7 +86,7 @@ namespace BLTools.UnitTest.Core20.Data.Sql {
       Assert.AreEqual(TSqlDatabase.DEFAULT_PASSWORD, actual.Password);
     }
 
-    [TestMethod(), TestCategory("NC20.SQL")]
+    [TestMethod(), TestCategory("SQL")]
     public void TSqlDatabaseConstructor_InvalidConnectionStringSyntax_ResultWithDefaultsExceptCorrectValues() {
       TSqlDatabase actual = new TSqlDatabase("Savername=(locl);Database=test");
       Assert.AreEqual("test", actual.DatabaseName);
@@ -100,7 +100,7 @@ namespace BLTools.UnitTest.Core20.Data.Sql {
       Assert.IsFalse(actual.IsOpened);
     }
 
-    [TestMethod(), TestCategory("NC20.SQL")]
+    [TestMethod(), TestCategory("SQL")]
     public void TSqlDatabaseConstructor_InvalidConnectionStringDuplicate_ResultWithDefaults() {
       TSqlDatabase actual = new TSqlDatabase("Servername=(local);Database=test;Servername=(local);");
       Assert.AreEqual("test", actual.DatabaseName);
@@ -114,7 +114,7 @@ namespace BLTools.UnitTest.Core20.Data.Sql {
       Assert.IsFalse(actual.IsOpened);
     }
 
-    [TestMethod(), TestCategory("NC20.SQL")]
+    [TestMethod(), TestCategory("SQL")]
     public void TSqlDatabaseConstructor_CopyConstructor_ResultSameAsSource() {
       const string TEST_SERVER = "TestServer";
       const string TEST_DB = "TestDb";

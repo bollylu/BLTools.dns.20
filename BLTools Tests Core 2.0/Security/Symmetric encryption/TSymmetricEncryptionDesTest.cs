@@ -7,7 +7,7 @@ using System.Text;
 namespace BLTools.UnitTest.Core20.Security {
   [TestClass]
   public class TSymmetricEncryptionDesTest {
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.DES")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("DES")]
     public void TestEncryptSymmetricDes_ParametersOk64_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
@@ -16,7 +16,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.DES")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("DES")]
     public void TestEncryptSymmetricDes_SourceEmpty_EncryptionDecryptionOK() {
       string SourceText = "";
       string Password = "az12df34vb";
@@ -24,7 +24,7 @@ namespace BLTools.UnitTest.Core20.Security {
       string DecipheredText = EncryptedBase64.DecryptFromBase64(Password, ESymmetricEncryptionAlgorithm.DES, 64);
       Assert.AreEqual(SourceText, DecipheredText);
     }
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.DES")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("DES")]
     [ExpectedException(typeof(ArgumentException))]
     public void TestEncryptSymmetricDes_BadKeyLengthTooSmall_Exception() {
       string SourceText = "Je vais bien, merci.";
@@ -32,7 +32,7 @@ namespace BLTools.UnitTest.Core20.Security {
       string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.DES, 63);
     }
 
-    [TestMethod, TestCategory("NC20.DES")]
+    [TestMethod, TestCategory("DES")]
     [ExpectedException(typeof(ArgumentException))]
     public void TestEncryptSymmetricDes_BadKeyLengthZero_Exception() {
       string SourceText = "Je vais bien, merci.";
@@ -40,7 +40,7 @@ namespace BLTools.UnitTest.Core20.Security {
       string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.DES, 0);
     }
 
-    [TestMethod, TestCategory("NC20.DES")]
+    [TestMethod, TestCategory("DES")]
     [ExpectedException(typeof(ArgumentException))]
     public void TestEncryptSymmetricDes_BadKeyLengthTooBig_Exception() {
       string SourceText = "Je vais bien, merci.";
@@ -48,7 +48,7 @@ namespace BLTools.UnitTest.Core20.Security {
       string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.DES, 1024);
     }
 
-    [TestMethod, TestCategory("NC20.DES")]
+    [TestMethod, TestCategory("DES")]
     public void TestEncryptSymmetricDes_NoPassword_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "";
@@ -57,7 +57,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
-    [TestMethod, TestCategory("NC20.DES")]
+    [TestMethod, TestCategory("DES")]
     [ExpectedException(typeof(ArgumentNullException))]
     public void TestEncryptSymmetricDes_SourceTextIsNull_Exception() {
       string SourceText = null;
@@ -65,7 +65,7 @@ namespace BLTools.UnitTest.Core20.Security {
       string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.DES, 64);
     }
 
-    [TestMethod, TestCategory("NC20.DES")]
+    [TestMethod, TestCategory("DES")]
     [ExpectedException(typeof(ArgumentNullException))]
     public void TestEncryptSymmetricDes_NullPassword_Exception() {
       string SourceText = "Je vais bien, merci.";
@@ -73,7 +73,7 @@ namespace BLTools.UnitTest.Core20.Security {
       string EncryptedBase64 = SourceText.EncryptToBase64(Password, ESymmetricEncryptionAlgorithm.DES, 64);
     }
 
-    [TestMethod, TestCategory("NC20.DES")]
+    [TestMethod, TestCategory("DES")]
     public void TestEncryptSymmetricDes_WrongPassword_DecryptionFailed() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
@@ -83,7 +83,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.IsNull(DecipheredText);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.DES")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("DES")]
     public void TestEncryptSymmetricDes_ParametersOKEncodingUTF8_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci.";
       string Password = "az12df34vb";
@@ -92,7 +92,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.DES")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("DES")]
     public void TestEncryptSymmetricDes_ParametersOKWrongEncoding_DecryptionFailed() {
       string SourceText = "Je vais bien, merci. Célébration.";
       string Password = "az12df34vb";
@@ -101,7 +101,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.AreNotEqual(SourceText, DecipheredText);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.DES")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("DES")]
     public void TestEncryptSymmetricDes_ParametersASCIIEncodingASCII_EncryptionDecryptionOK() {
       string SourceText = "Je vais bien, merci. Celebration.";
       string Password = "az12df34vb";
@@ -110,7 +110,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.AreEqual(SourceText, DecipheredText);
     }
 
-    [TestCategory("NC20.SymmetricEncryption"), TestMethod, TestCategory("NC20.DES")]
+    [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("DES")]
     public void TestEncryptSymmetricDes_ParametersASCII_Accents_EncodingASCII_DecryptionFailed() {
       string SourceText = "Je vais bien, merci. Célébration.";
       string Password = "az12df34vb";

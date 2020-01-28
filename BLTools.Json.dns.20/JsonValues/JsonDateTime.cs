@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 
 namespace BLTools.Json {
-  public class JsonDateTime : IJsonValue<DateTime?> {
+  public sealed class JsonDateTime : IJsonValue<DateTime?> {
 
     public DateTime? Value { get; set; }
 

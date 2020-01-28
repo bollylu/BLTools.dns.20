@@ -4,7 +4,8 @@ using System.Diagnostics;
 using System.Text;
 
 namespace BLTools {
-  public class LoggerDefault : ISimpleLogger {
+    [Obsolete("Use ILogger instead")]
+    public class LoggerDefault : ISimpleLogger {
     public void Write(string message) {
       Trace.WriteLine(message);
     }

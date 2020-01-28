@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFrameworks>netcoreapp2.2;netcoreapp3.0;netcoreapp3.1;net472;net462;net48</TargetFrameworks>
 
     <IsPackable>false</IsPackable>
 
-    <RootNamespace>BLTools.UnitTest.Core20</RootNamespace>
+    <RootNamespace>BLTools.UnitTest</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

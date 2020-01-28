@@ -6,14 +6,14 @@ namespace BLTools.UnitTest.Core20.Security {
   [TestClass]
   public class THashingStringExtensionTest {
     #region MD5
-    [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.MD5")]
+    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("MD5")]
     public void TestHashMD5_StandardString_HashIsOK() {
       string SourceString = "This is a test";
       string Base64Hash = SourceString.HashToBase64(EHashingMethods.MD5);
       Assert.IsTrue(SourceString.VerifyHashFromBase64(Base64Hash, EHashingMethods.MD5));
     }
 
-    [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.MD5")]
+    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("MD5")]
     public void TestHashMD5_StandardStringModifiedForVerify_VerifyIsFalse() {
       string SourceString = "This is a test";
       string Base64Hash = SourceString.HashToBase64(EHashingMethods.MD5);
@@ -21,7 +21,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.IsFalse(TestString.VerifyHashFromBase64(Base64Hash, EHashingMethods.MD5));
     }
 
-    [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.MD5")]
+    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("MD5")]
     public void TestHashMD5_StandardStringHashModified_VerifyIsFalse() {
       string SourceString = "This is a test";
       string Base64Hash = SourceString.HashToBase64(EHashingMethods.MD5);
@@ -31,14 +31,14 @@ namespace BLTools.UnitTest.Core20.Security {
     #endregion MD5
 
     #region SHA1
-    [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.SHA1")]
+    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA1")]
     public void TestHashSHA1_StandardString_HashIsOK() {
       string SourceString = "This is a test";
       string Base64Hash = SourceString.HashToBase64(EHashingMethods.SHA1);
       Assert.IsTrue(SourceString.VerifyHashFromBase64(Base64Hash, EHashingMethods.SHA1));
     }
 
-    [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.SHA1")]
+    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA1")]
     public void TestHashSHA1_StandardStringModifiedForVerify_VerifyIsFalse() {
       string SourceString = "This is a test";
       string Base64Hash = SourceString.HashToBase64(EHashingMethods.SHA1);
@@ -46,7 +46,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.IsFalse(TestString.VerifyHashFromBase64(Base64Hash, EHashingMethods.SHA1));
     }
 
-    [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.SHA1")]
+    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA1")]
     public void TestHashSHA1_StandardStringHashModified_VerifyIsFalse() {
       string SourceString = "This is a test";
       string Base64Hash = SourceString.HashToBase64(EHashingMethods.SHA1);
@@ -56,14 +56,14 @@ namespace BLTools.UnitTest.Core20.Security {
     #endregion SHA1
 
     #region SHA256
-    [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.SHA256")]
+    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA256")]
     public void TestHashSHA256_StandardString_HashIsOK() {
       string SourceString = "This is a test";
       string Base64Hash = SourceString.HashToBase64(EHashingMethods.SHA256);
       Assert.IsTrue(SourceString.VerifyHashFromBase64(Base64Hash, EHashingMethods.SHA256));
     }
 
-    [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.SHA256")]
+    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA256")]
     public void TestHashSHA256_StandardStringModifiedForVerify_VerifyIsFalse() {
       string SourceString = "This is a test";
       string Base64Hash = SourceString.HashToBase64(EHashingMethods.SHA256);
@@ -71,7 +71,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.IsFalse(TestString.VerifyHashFromBase64(Base64Hash, EHashingMethods.SHA256));
     }
 
-    [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.SHA256")]
+    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA256")]
     public void TestHashSHA256_StandardStringHashModified_VerifyIsFalse() {
       string SourceString = "This is a test";
       string Base64Hash = SourceString.HashToBase64(EHashingMethods.SHA256);
@@ -81,14 +81,14 @@ namespace BLTools.UnitTest.Core20.Security {
     #endregion SHA256 
 
     #region SHA384
-    [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.SHA384")]
+    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA384")]
     public void TestHashSHA384_StandardString_HashIsOK() {
       string SourceString = "This is a test";
       string Base64Hash = SourceString.HashToBase64(EHashingMethods.SHA384);
       Assert.IsTrue(SourceString.VerifyHashFromBase64(Base64Hash, EHashingMethods.SHA384));
     }
 
-    [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.SHA384")]
+    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA384")]
     public void TestHashSHA384_StandardStringModifiedForVerify_VerifyIsFalse() {
       string SourceString = "This is a test";
       string Base64Hash = SourceString.HashToBase64(EHashingMethods.SHA384);
@@ -96,7 +96,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.IsFalse(TestString.VerifyHashFromBase64(Base64Hash, EHashingMethods.SHA384));
     }
 
-    [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.SHA384")]
+    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA384")]
     public void TestHashSHA384_StandardStringHashModified_VerifyIsFalse() {
       string SourceString = "This is a test";
       string Base64Hash = SourceString.HashToBase64(EHashingMethods.SHA384);
@@ -106,14 +106,14 @@ namespace BLTools.UnitTest.Core20.Security {
     #endregion SHA384
 
     #region SHA512
-    [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.SHA512")]
+    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA512")]
     public void TestHashSHA512_StandardString_HashIsOK() {
       string SourceString = "This is a test";
       string Base64Hash = SourceString.HashToBase64(EHashingMethods.SHA512);
       Assert.IsTrue(SourceString.VerifyHashFromBase64(Base64Hash, EHashingMethods.SHA512));
     }
 
-    [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.SHA512")]
+    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA512")]
     public void TestHashSHA512_StandardStringModifiedForVerify_VerifyIsFalse() {
       string SourceString = "This is a test";
       string Base64Hash = SourceString.HashToBase64(EHashingMethods.SHA512);
@@ -121,7 +121,7 @@ namespace BLTools.UnitTest.Core20.Security {
       Assert.IsFalse(TestString.VerifyHashFromBase64(Base64Hash, EHashingMethods.SHA512));
     }
 
-    [TestMethod(), TestCategory("NC20.Security"), TestCategory("NC20.Hash"), TestCategory("NC20.SHA512")]
+    [TestMethod(), TestCategory("Security"), TestCategory("Hash"), TestCategory("SHA512")]
     public void TestHashSHA512_StandardStringHashModified_VerifyIsFalse() {
       string SourceString = "This is a test";
       string Base64Hash = SourceString.HashToBase64(EHashingMethods.SHA512);

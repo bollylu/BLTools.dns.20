@@ -99,5 +99,66 @@ namespace BLTools.Diagnostic.Logging
 
             }
         }
+
+        /// <summary>
+        /// Delete the current log file.
+        /// A new log file will be created the first time a new log line is added
+        /// </summary>
+        public void ResetLog()
+        {
+            lock ( _LockOutputStream )
+            {
+                try
+                {
+                    File.Delete(Filename);
+                }
+                catch ( Exception ex )
+                {
+                    Trace.WriteLine($"Unable to ResetLog for {Filename} : {ex.Message}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Will close the current log file, and rename it as oldfilename + datetime + .log.
+        /// A new log file will be created the first time a new log line is added
+        /// </summary>
+        public string Rollover()
+        {
+            return Rollover($"{Path.GetFileNameWithoutExtension(Filename)}+{DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss")}{Path.GetExtension(Filename)}");
+        }
+
+        /// <summary>
+        /// Will close the current log file, and rename it as newName.
+        /// A new log file will be created the first time a new log line is added
+        /// </summary>
+        /// <param name="newName">Name of the renamed (only the filename+extension part, not the path) version</param>
+        /// <returns>The name of the new log file or null if error</returns>
+        public string Rollover(string newName)
+        {
+            #region Validate parameters
+            if ( newName == null )
+            {
+                string Msg = $"Unable to rollover {Filename} because the new name is null";
+                Trace.WriteLine(Msg, Severity.Fatal);
+                throw new ArgumentNullException("newName", Msg);
+            }
+            #endregion Validate parameters
+
+            lock ( _LockOutputStream )
+            {
+                try
+                {
+                    string Destination = Path.Combine(Path.GetDirectoryName(Filename), newName);
+                    File.Move(Filename, Destination);
+                    return Destination;
+                }
+                catch ( Exception ex )
+                {
+                    Trace.WriteLine($"Unable to Rollover for \"{Filename}\" to \"{newName}\" : {ex.Message}");
+                    return null;
+                }
+            }
+        }
     }
 }
