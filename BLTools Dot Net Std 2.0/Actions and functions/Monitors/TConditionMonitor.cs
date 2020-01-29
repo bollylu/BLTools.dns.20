@@ -9,7 +9,7 @@ namespace BLTools
     /// <summary>
     /// Watch a condition continuously, until cancelled. When the condition is met, execute the associated action
     /// </summary>
-    public class TConditionMonitor : AConditionMonitor, IDisposable
+    public class TConditionMonitor : AConditionMonitor
     {
         /// <summary>
         /// The predicate to evaluate
@@ -47,21 +47,17 @@ namespace BLTools
         #region IDisposable Support
         private bool disposedValue = false;
 
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if ( !disposedValue )
             {
                 if ( disposing )
                 {
                     Cancel();
+                    base.Dispose(true);
                 }
                 disposedValue = true;
             }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
         }
         #endregion IDisposable Support
         #endregion --- Constructor(s) ------------------------------------------------------------------------------
@@ -161,7 +157,7 @@ namespace BLTools
     /// Watch a condition continuously, until cancelled. When the condition is met, execute the associated action
     /// </summary>
     /// <typeparam name="T">The type (reference, not value) to feed both the predicate and the action</typeparam>
-    public class TConditionMonitor<T> : AConditionMonitor, IDisposable where T : class
+    public class TConditionMonitor<T> : AConditionMonitor where T : class
     {
         /// <summary>
         /// The predicate to evaluate (the reference of the monitored item is passed to it)
@@ -199,21 +195,17 @@ namespace BLTools
         #region IDisposable Support
         private bool disposedValue = false;
 
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if ( !disposedValue )
             {
                 if ( disposing )
                 {
                     Cancel();
+                    base.Dispose(true);
                 }
                 disposedValue = true;
             }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
         }
         #endregion IDisposable Support
         #endregion --- Constructor(s) ------------------------------------------------------------------------------

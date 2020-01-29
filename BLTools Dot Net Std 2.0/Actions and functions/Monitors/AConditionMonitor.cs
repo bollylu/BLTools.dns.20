@@ -6,7 +6,7 @@ using BLTools.Diagnostic.Logging;
 
 namespace BLTools
 {
-    public abstract class AConditionMonitor : ALoggable
+    public abstract class AConditionMonitor : ALoggable, IDisposable
     {
         public const int DEFAULT_DELAY_IN_MS = 5;
         public string Name { get; set; } = "";
@@ -33,5 +33,27 @@ namespace BLTools
         protected bool _ContinueMonitor = false;
         protected Thread _MonitorThread;
         protected readonly object _LockMonitor = new object();
+
+        #region IDisposable Support
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if ( !disposedValue )
+            {
+                if ( disposing )
+                {
+                    _ContinueMonitor = false;
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
     }
 }

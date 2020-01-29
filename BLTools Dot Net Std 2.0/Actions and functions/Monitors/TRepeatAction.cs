@@ -37,21 +37,17 @@ namespace BLTools
         #region IDisposable Support
         private bool disposedValue = false;
 
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if ( !disposedValue )
             {
                 if ( disposing )
                 {
                     Cancel();
+                    base.Dispose(true);
                 }
                 disposedValue = true;
             }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
         }
         #endregion IDisposable Support
         #endregion --- Constructor(s) ------------------------------------------------------------------------------
@@ -164,21 +160,17 @@ namespace BLTools
         #region IDisposable Support
         private bool disposedValue = false;
 
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if ( !disposedValue )
             {
                 if ( disposing )
                 {
                     Cancel();
+                    base.Dispose(true);
                 }
                 disposedValue = true;
             }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
         }
         #endregion IDisposable Support
         #endregion --- Constructor(s) ------------------------------------------------------------------------------
