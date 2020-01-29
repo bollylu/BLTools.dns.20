@@ -7,11 +7,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <AssemblyVersion>4.5.12</AssemblyVersion>
-    <FileVersion>4.5.12</FileVersion>
-    <Version>4.5.12</Version>
-    <PackageReleaseNotes>Bit of a reorganization for monitors and awaiters
-Added RepeatAction and RepeatActionCondition</PackageReleaseNotes>
+    <AssemblyVersion>4.5.13</AssemblyVersion>
+    <FileVersion>4.5.13</FileVersion>
+    <Version>4.5.13</Version>
+    <PackageReleaseNotes>All awaiters and ConditionMonitors are now in both standard and generic way</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
