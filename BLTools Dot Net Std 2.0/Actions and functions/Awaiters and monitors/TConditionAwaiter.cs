@@ -16,7 +16,9 @@ namespace BLTools
         /// <summary>
         /// Wait for a condition to be met or timeout
         /// </summary>
-        public TConditionAwaiter(Func<bool> condition, double timeoutInMsec)
+        /// <param name="condition">The condition to evaluate</param>
+        /// <param name="timeoutInMsec">The timeout in msec</param>
+        public TConditionAwaiter(Func<bool> condition, long timeoutInMsec)
         {
             _Condition = condition;
             _TimeoutInMsec = timeoutInMsec;
@@ -77,7 +79,9 @@ namespace BLTools
         /// <summary>
         /// Wait for a condition to be met or timeout
         /// </summary>
-        public TConditionAwaiter(Predicate<T> predicate, double timeoutInMsec)
+        /// <param name="predicate">The predicate to evaluate</param>
+        /// <param name="timeoutInMsec">The timeout in msec</param>
+        public TConditionAwaiter(Predicate<T> predicate, long timeoutInMsec)
         {
             _Predicate = predicate;
             _TimeoutInMsec = timeoutInMsec;
@@ -86,6 +90,7 @@ namespace BLTools
         /// <summary>
         /// Start the wait process
         /// </summary>
+        /// <param name="source">The reference to an object used to the predicate evaluation</param>
         /// <param name="pollingDelayInMsec">Delay in ms to wait between evalution of the condition</param>
         /// <returns>true if condition was met, false if timeout</returns>
         public bool Execute(T source, int pollingDelayInMsec = 5)
@@ -108,6 +113,7 @@ namespace BLTools
         /// <summary>
         /// Start the wait process asynchronously
         /// </summary>
+        /// <param name="source">The reference to an object used to the predicate evaluation</param>
         /// <param name="pollingDelayInMsec">Delay in ms to wait between evalution of the condition</param>
         /// <returns>true if condition was met, false if timeout</returns>
         public async Task<bool> ExecuteAsync(T source, int pollingDelayInMsec = 5)

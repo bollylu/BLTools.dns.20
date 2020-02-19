@@ -89,6 +89,8 @@ namespace BLTools
                 #region --- Defines the thread content --------------------------------------------
                 ThreadStart MonitorThreadStart = new ThreadStart(() =>
                 {
+                    TConditionAwaiter WaitForTimeOrCancel = new TConditionAwaiter(() => !_ContinueMonitor, Delay);
+
                     _ContinueMonitor = true;
                     LogDebug($"#### Entering repeat thread {Name}");
                     while ( _ContinueMonitor )
@@ -102,7 +104,7 @@ namespace BLTools
 
                         if ( _ContinueMonitor )
                         {
-                            Thread.Sleep(Delay);
+                            WaitForTimeOrCancel.Execute(5);
                         }
                     }
                     LogDebug($"**** Leaving monitoring thread {Name}");

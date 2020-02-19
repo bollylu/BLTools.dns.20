@@ -20,29 +20,14 @@ namespace BLTools
         /// Wait for a condition to be met or timeout, while executing an action
         /// </summary>
         /// <param name="condition">The condition to evaluate</param>
-        /// <param name="progressAction">The progress action to execute</param>
+        /// <param name="progressAction">The action to execute while waiting, the value passed as parameter is the number of milliseconds remaining before the timeout</param>
         /// <param name="timeoutInMsec">The timeout</param>
         /// <param name="refreshRateInMsec">How often is the progress action executed</param>
-        public TConditionActionAwaiter(Func<bool> condition, Action<double> progressAction, double timeoutInMsec, int refreshRateInMsec)
+        public TConditionActionAwaiter(Func<bool> condition, Action<double> progressAction, long timeoutInMsec, int refreshRateInMsec)
         {
             _Condition = condition;
             _ProgressAction = progressAction;
             _TimeoutInMsec = timeoutInMsec;
-            _RefreshRateInMsec = refreshRateInMsec;
-        }
-
-        /// <summary>
-        /// Wait for a certain amount of time, while executing an action at a certain refresh rate
-        /// </summary>
-        /// <param name="durationInSec">How long to wait</param>
-        /// <param name="progressAction">The action to execute while waiting</param>
-        /// <param name="refreshRateInMsec">How often to execute the action</param>
-        public TConditionActionAwaiter(int durationInSec, Action<double> progressAction, int refreshRateInMsec)
-        {
-            _DurationToAwait = durationInSec;
-            _Condition = () => (_AwaitedDuration * 1000) < _DurationToAwait;
-            _TimeoutInMsec = double.MaxValue;
-            _ProgressAction = progressAction;
             _RefreshRateInMsec = refreshRateInMsec;
         }
 
@@ -129,10 +114,10 @@ namespace BLTools
         /// Wait for a condition to be met or timeout, while executing an action
         /// </summary>
         /// <param name="predicate">The condition to evaluate</param>
-        /// <param name="progressAction">The progress action to execute</param>
+        /// <param name="progressAction">The action to execute while waiting, the value passed as parameter is the number of milliseconds remaining before the timeout</param>
         /// <param name="timeoutInMsec">The timeout</param>
         /// <param name="refreshRateInMsec">How often is the progress action executed</param>
-        public TConditionActionAwaiter(Predicate<T> predicate, Action<double> progressAction, double timeoutInMsec, int refreshRateInMsec)
+        public TConditionActionAwaiter(Predicate<T> predicate, Action<double> progressAction, long timeoutInMsec, int refreshRateInMsec)
         {
             _Predicate = predicate;
             _ProgressAction = progressAction;

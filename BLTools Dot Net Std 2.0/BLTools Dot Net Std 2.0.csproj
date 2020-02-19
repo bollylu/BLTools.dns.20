@@ -7,10 +7,12 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <AssemblyVersion>4.5.14</AssemblyVersion>
-    <FileVersion>4.5.14</FileVersion>
-    <Version>4.5.14</Version>
-    <PackageReleaseNotes>Added IDisposable to ensure background threads are killed</PackageReleaseNotes>
+    <AssemblyVersion>4.5.15</AssemblyVersion>
+    <FileVersion>4.5.15</FileVersion>
+    <Version>4.5.15</Version>
+    <PackageReleaseNotes>Changed timeout in msec from double to long
+Added TTimerActionAwaiter
+Fixed /// glitches</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
