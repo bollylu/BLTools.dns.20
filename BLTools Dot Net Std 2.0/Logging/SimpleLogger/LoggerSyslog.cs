@@ -99,13 +99,27 @@ namespace BLTools
             TargetIP = targetAddress;
         }
 
-        public void Dispose()
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
         {
-            if ( CurrentUdpClient != null )
+            if ( !disposedValue )
             {
-                CurrentUdpClient.Close();
+                if ( disposing )
+                {
+                    CurrentUdpClient?.Close();
+                }
+
+                disposedValue = true;
             }
         }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
         #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
         public void Write(string message)
@@ -161,6 +175,8 @@ namespace BLTools
             }
 
         }
+
+        
 
 
     }

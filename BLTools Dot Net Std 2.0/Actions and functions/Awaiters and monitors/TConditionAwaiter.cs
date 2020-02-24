@@ -21,7 +21,7 @@ namespace BLTools
         public TConditionAwaiter(Func<bool> condition, long timeoutInMsec)
         {
             _Condition = condition;
-            _TimeoutInMsec = timeoutInMsec;
+            TimeoutInMsec = timeoutInMsec;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace BLTools
             bool RetVal = _Condition();
             double _AwaitedDuration = ( DateTime.Now - StartTime ).TotalMilliseconds;
 
-            while (!RetVal && _AwaitedDuration < _TimeoutInMsec)
+            while (!RetVal && _AwaitedDuration < TimeoutInMsec)
             {
                 Thread.Sleep(pollingDelayInMsec);
                 RetVal = _Condition();
@@ -58,7 +58,7 @@ namespace BLTools
             bool RetVal = _Condition();
             double _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
 
-            while (!RetVal && _AwaitedDuration < _TimeoutInMsec)
+            while (!RetVal && _AwaitedDuration < TimeoutInMsec)
             {
                 await Task.Delay(pollingDelayInMsec).ConfigureAwait(false);
                 RetVal = _Condition();
@@ -84,7 +84,7 @@ namespace BLTools
         public TConditionAwaiter(Predicate<T> predicate, long timeoutInMsec)
         {
             _Predicate = predicate;
-            _TimeoutInMsec = timeoutInMsec;
+            TimeoutInMsec = timeoutInMsec;
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace BLTools
             bool RetVal = _Predicate(source);
             double _AwaitedDuration = ( DateTime.Now - StartTime ).TotalMilliseconds;
 
-            while ( !RetVal && _AwaitedDuration < _TimeoutInMsec )
+            while ( !RetVal && _AwaitedDuration < TimeoutInMsec )
             {
                 Thread.Sleep(pollingDelayInMsec);
                 RetVal = _Predicate(source);
@@ -123,7 +123,7 @@ namespace BLTools
             bool RetVal = _Predicate(source);
             double _AwaitedDuration = ( DateTime.Now - StartTime ).TotalMilliseconds;
 
-            while ( !RetVal && _AwaitedDuration < _TimeoutInMsec )
+            while ( !RetVal && _AwaitedDuration < TimeoutInMsec )
             {
                 await Task.Delay(pollingDelayInMsec).ConfigureAwait(false);
                 RetVal = _Predicate(source);

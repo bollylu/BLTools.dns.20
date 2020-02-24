@@ -8,9 +8,19 @@ namespace BLTools
 {
     public abstract class ARepeatAction : ALoggable, IDisposable
     {
-        public const int DEFAULT_DELAY_IN_MS = 5;
+        /// <summary>
+        /// A name for debug
+        /// </summary>
         public string Name { get; set; } = "";
 
+        /// <summary>
+        /// Default constant value for delay between two evaluations of the condition
+        /// </summary>
+        public const int DEFAULT_DELAY_IN_MS = 5;
+
+        /// <summary>
+        /// The delay between two evaluations of the condition
+        /// </summary>
         public int Delay
         {
             get
@@ -28,11 +38,14 @@ namespace BLTools
         }
         private int _Delay;
 
-        public bool IsWorking => _MonitorThread != null;
+        /// <summary>
+        /// When true, the repeat action is running
+        /// </summary>
+        public bool IsWorking => _LoopThread != null;
 
-        protected bool _ContinueMonitor = false;
-        protected Thread _MonitorThread;
-        protected readonly object _LockMonitor = new object();
+        protected bool _ContinueLoop = false;
+        protected Thread _LoopThread;
+        protected readonly object _LockLoop = new object();
 
         #region IDisposable Support
         private bool disposedValue = false;
@@ -43,7 +56,7 @@ namespace BLTools
             {
                 if ( disposing )
                 {
-                    _ContinueMonitor = false;
+                    _ContinueLoop = false;
                 }
 
                 disposedValue = true;

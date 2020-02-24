@@ -8,7 +8,7 @@ namespace BLTools
     public class TRepeatAction : ARepeatAction
     {
         /// <summary>
-        /// The action to execute when the condition is met (the reference of the monitored item is passed to it)
+        /// The action to execute every occurence of the delay
         /// </summary>
         public Action ToDo { get; set; }
 
@@ -68,28 +68,28 @@ namespace BLTools
             }
             #endregion === Validate parameters ===
 
-            lock ( _LockMonitor )
+            lock ( _LockLoop )
             {
                 #region --- Defines the thread content --------------------------------------------
                 ThreadStart MonitorThreadStart = new ThreadStart(() =>
                 {
-                    _ContinueMonitor = true;
+                    _ContinueLoop = true;
                     LogDebug($"#### Entering repeat thread {Name}");
-                    while ( _ContinueMonitor )
+                    while ( _ContinueLoop )
                     {
                         ToDo.Invoke();
 
-                        if ( _ContinueMonitor )
+                        if ( _ContinueLoop )
                         {
                             Thread.Sleep(Delay);
                         }
                     }
-                    LogDebug($"**** Leaving monitoring thread {Name}");
+                    LogDebug($"**** Leaving repeat thread {Name}");
                 });
                 #endregion --- Defines the thread content -----------------------------------------
 
                 #region --- Defines the thread conditions --------------------------------------------
-                _MonitorThread = new Thread(MonitorThreadStart)
+                _LoopThread = new Thread(MonitorThreadStart)
                 {
                     IsBackground = true,
                     Priority = ThreadPriority.Lowest,
@@ -97,22 +97,34 @@ namespace BLTools
                 };
                 #endregion --- Defines the thread conditions -----------------------------------------
 
-                _MonitorThread.Start();
+                _LoopThread.Start();
             }
         }
 
+        /// <summary>
+        /// Stop the execution of the loop
+        /// </summary>
         public void Cancel()
         {
-            lock ( _LockMonitor )
+            Cancel(Delay * 10);
+        }
+
+        /// <summary>
+        /// Stop the execution of the loop
+        /// </summary>
+        /// <param name="timeout">The timeout for the loop to be stopped, default is delay * 10</param>
+        public void Cancel(int timeout)
+        {
+            lock ( _LockLoop )
             {
-                if ( _MonitorThread != null )
+                if ( _LoopThread != null )
                 {
                     StringBuilder LogText = new StringBuilder($"Cancelling repeat {Name} : ");
                     try
                     {
-                        _ContinueMonitor = false;
-                        _MonitorThread?.Join(Delay * 10);
-                        _MonitorThread = null;
+                        _ContinueLoop = false;
+                        _LoopThread?.Join(timeout);
+                        _LoopThread = null;
                         LogText.Append("OK");
                     }
                     catch ( Exception ex )
@@ -191,30 +203,30 @@ namespace BLTools
             }
             #endregion === Validate parameters ===
 
-            lock ( _LockMonitor )
+            lock ( _LockLoop )
             {
                 #region --- Defines the thread content --------------------------------------------
                 ThreadStart MonitorThreadStart = new ThreadStart(() =>
                 {
-                    TConditionAwaiter WaitForTimeOrCancel = new TConditionAwaiter(() => !_ContinueMonitor, Delay);
+                    TConditionAwaiter WaitForTimeOrCancel = new TConditionAwaiter(() => !_ContinueLoop, Delay);
 
-                    _ContinueMonitor = true;
+                    _ContinueLoop = true;
                     LogDebug($"#### Entering repeat thread {Name}");
-                    while ( _ContinueMonitor )
+                    while ( _ContinueLoop )
                     {
                         ToDo.Invoke(obj);
 
-                        if ( _ContinueMonitor )
+                        if ( _ContinueLoop )
                         {
                             WaitForTimeOrCancel.Execute(5);
                         }
                     }
-                    LogDebug($"**** Leaving monitoring thread {Name}");
+                    LogDebug($"**** Leaving repeat thread {Name}");
                 });
                 #endregion --- Defines the thread content -----------------------------------------
 
                 #region --- Defines the thread conditions --------------------------------------------
-                _MonitorThread = new Thread(MonitorThreadStart)
+                _LoopThread = new Thread(MonitorThreadStart)
                 {
                     IsBackground = true,
                     Priority = ThreadPriority.Lowest,
@@ -222,22 +234,34 @@ namespace BLTools
                 };
                 #endregion --- Defines the thread conditions -----------------------------------------
 
-                _MonitorThread.Start();
+                _LoopThread.Start();
             }
         }
 
+        /// <summary>
+        /// Stop the execution of the loop
+        /// </summary>
         public void Cancel()
         {
-            lock ( _LockMonitor )
+            Cancel(Delay * 10);
+        }
+
+        /// <summary>
+        /// Stop the execution of the loop
+        /// </summary>
+        /// <param name="timeout">The timeout for the loop to be stopped, default is delay * 10</param>
+        public void Cancel(int timeout)
+        {
+            lock ( _LockLoop )
             {
-                if ( _MonitorThread != null )
+                if ( _LoopThread != null )
                 {
                     StringBuilder LogText = new StringBuilder($"Cancelling repeat {Name} : ");
                     try
                     {
-                        _ContinueMonitor = false;
-                        _MonitorThread?.Join(Delay * 10);
-                        _MonitorThread = null;
+                        _ContinueLoop = false;
+                        _LoopThread?.Join(timeout);
+                        _LoopThread = null;
                         LogText.Append("OK");
                     }
                     catch ( Exception ex )

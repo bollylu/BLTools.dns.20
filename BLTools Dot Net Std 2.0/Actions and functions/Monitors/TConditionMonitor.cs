@@ -12,7 +12,7 @@ namespace BLTools
     public class TConditionMonitor : AConditionMonitor
     {
         /// <summary>
-        /// The predicate to evaluate
+        /// The function to evaluate
         /// </summary>
         public Func<bool> Condition { get; set; }
 

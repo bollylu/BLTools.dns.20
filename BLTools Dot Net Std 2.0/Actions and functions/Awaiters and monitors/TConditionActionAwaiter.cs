@@ -11,10 +11,10 @@ namespace BLTools
     /// </summary>
     public class TConditionActionAwaiter : AConditionAwaiter
     {
-        protected Func<bool> _Condition;
-        protected Action<double> _ProgressAction;
+        public Func<bool> Condition { get; set; }
+        public Action<double> ProgressAction { get; set; }
 
-        protected int _RefreshRateInMsec;
+        public int RefreshRateInMsec { get; set; }
 
         /// <summary>
         /// Wait for a condition to be met or timeout, while executing an action
@@ -25,10 +25,10 @@ namespace BLTools
         /// <param name="refreshRateInMsec">How often is the progress action executed</param>
         public TConditionActionAwaiter(Func<bool> condition, Action<double> progressAction, long timeoutInMsec, int refreshRateInMsec)
         {
-            _Condition = condition;
-            _ProgressAction = progressAction;
-            _TimeoutInMsec = timeoutInMsec;
-            _RefreshRateInMsec = refreshRateInMsec;
+            Condition = condition;
+            ProgressAction = progressAction;
+            TimeoutInMsec = timeoutInMsec;
+            RefreshRateInMsec = refreshRateInMsec;
         }
 
         /// <summary>
@@ -43,21 +43,21 @@ namespace BLTools
             double DisplayCounter;
             DateTime DisplayCounterStartTime = DateTime.Now;
 
-            bool RetVal = _Condition();
+            bool RetVal = Condition();
             double _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
-            while (!RetVal && _AwaitedDuration < _TimeoutInMsec)
+            while (!RetVal && _AwaitedDuration < TimeoutInMsec)
             {
                 DisplayCounter = (DateTime.Now - DisplayCounterStartTime).TotalMilliseconds;
-                double TimeLeft = _TimeoutInMsec - (DateTime.Now - StartTime).TotalMilliseconds;
+                double TimeLeft = TimeoutInMsec - (DateTime.Now - StartTime).TotalMilliseconds;
 
-                if (DisplayCounter > _RefreshRateInMsec)
+                if (DisplayCounter > RefreshRateInMsec)
                 {
-                    _ProgressAction(TimeLeft);
+                    ProgressAction(TimeLeft);
                     DisplayCounterStartTime = DateTime.Now;
                 }
 
                 Thread.Sleep(pollingDelayInMsec);
-                RetVal = _Condition();
+                RetVal = Condition();
                 _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
             }
 
@@ -76,27 +76,26 @@ namespace BLTools
             double DisplayCounter;
             DateTime DisplayCounterStartTime = DateTime.Now;
 
-            bool RetVal = _Condition();
+            bool RetVal = Condition();
             double _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
-            while (!RetVal && _AwaitedDuration < _TimeoutInMsec)
+            while (!RetVal && _AwaitedDuration < TimeoutInMsec)
             {
                 DisplayCounter = (DateTime.Now - DisplayCounterStartTime).TotalMilliseconds;
-                double TimeLeft = _TimeoutInMsec - (DateTime.Now - StartTime).TotalMilliseconds;
+                double TimeLeft = TimeoutInMsec - (DateTime.Now - StartTime).TotalMilliseconds;
 
-                if (DisplayCounter > _RefreshRateInMsec)
+                if (DisplayCounter > RefreshRateInMsec)
                 {
-                    _ProgressAction(TimeLeft);
+                    ProgressAction(TimeLeft);
                     DisplayCounterStartTime = DateTime.Now;
                 }
 
                 await Task.Delay(pollingDelayInMsec).ConfigureAwait(false);
-                RetVal = _Condition();
+                RetVal = Condition();
                 _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
             }
 
             return RetVal;
         }
-
     }
 
     /// <summary>
@@ -104,11 +103,11 @@ namespace BLTools
     /// </summary>
     public class TConditionActionAwaiter<T> : AConditionAwaiter
     {
-        protected Predicate<T> _Predicate;
+        public Predicate<T> Predicate { get; set; }
 
-        protected Action<double> _ProgressAction;
+        public Action<double> ProgressAction { get; set; }
 
-        protected int _RefreshRateInMsec;
+        public int RefreshRateInMsec { get; set; }
 
         /// <summary>
         /// Wait for a condition to be met or timeout, while executing an action
@@ -119,10 +118,10 @@ namespace BLTools
         /// <param name="refreshRateInMsec">How often is the progress action executed</param>
         public TConditionActionAwaiter(Predicate<T> predicate, Action<double> progressAction, long timeoutInMsec, int refreshRateInMsec)
         {
-            _Predicate = predicate;
-            _ProgressAction = progressAction;
-            _TimeoutInMsec = timeoutInMsec;
-            _RefreshRateInMsec = refreshRateInMsec;
+            Predicate = predicate;
+            ProgressAction = progressAction;
+            TimeoutInMsec = timeoutInMsec;
+            RefreshRateInMsec = refreshRateInMsec;
         }
 
         /// <summary>
@@ -137,21 +136,21 @@ namespace BLTools
             double DisplayCounter;
             DateTime DisplayCounterStartTime = DateTime.Now;
 
-            bool RetVal = _Predicate(source);
+            bool RetVal = Predicate(source);
             double _AwaitedDuration = ( DateTime.Now - StartTime ).TotalMilliseconds;
-            while ( !RetVal && _AwaitedDuration < _TimeoutInMsec )
+            while ( !RetVal && _AwaitedDuration < TimeoutInMsec )
             {
                 DisplayCounter = ( DateTime.Now - DisplayCounterStartTime ).TotalMilliseconds;
-                double TimeLeft = _TimeoutInMsec - ( DateTime.Now - StartTime ).TotalMilliseconds;
+                double TimeLeft = TimeoutInMsec - ( DateTime.Now - StartTime ).TotalMilliseconds;
 
-                if ( DisplayCounter > _RefreshRateInMsec )
+                if ( DisplayCounter > RefreshRateInMsec )
                 {
-                    _ProgressAction(TimeLeft);
+                    ProgressAction(TimeLeft);
                     DisplayCounterStartTime = DateTime.Now;
                 }
 
                 Thread.Sleep(pollingDelayInMsec);
-                RetVal = _Predicate(source);
+                RetVal = Predicate(source);
                 _AwaitedDuration = ( DateTime.Now - StartTime ).TotalMilliseconds;
             }
 
@@ -170,21 +169,21 @@ namespace BLTools
             double DisplayCounter;
             DateTime DisplayCounterStartTime = DateTime.Now;
 
-            bool RetVal = _Predicate(source);
+            bool RetVal = Predicate(source);
             double _AwaitedDuration = ( DateTime.Now - StartTime ).TotalMilliseconds;
-            while ( !RetVal && _AwaitedDuration < _TimeoutInMsec )
+            while ( !RetVal && _AwaitedDuration < TimeoutInMsec )
             {
                 DisplayCounter = ( DateTime.Now - DisplayCounterStartTime ).TotalMilliseconds;
-                double TimeLeft = _TimeoutInMsec - ( DateTime.Now - StartTime ).TotalMilliseconds;
+                double TimeLeft = TimeoutInMsec - ( DateTime.Now - StartTime ).TotalMilliseconds;
 
-                if ( DisplayCounter > _RefreshRateInMsec )
+                if ( DisplayCounter > RefreshRateInMsec )
                 {
-                    _ProgressAction(TimeLeft);
+                    ProgressAction(TimeLeft);
                     DisplayCounterStartTime = DateTime.Now;
                 }
 
                 await Task.Delay(pollingDelayInMsec).ConfigureAwait(false);
-                RetVal = _Predicate(source);
+                RetVal = Predicate(source);
                 _AwaitedDuration = ( DateTime.Now - StartTime ).TotalMilliseconds;
             }
 

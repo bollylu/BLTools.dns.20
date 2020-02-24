@@ -7,10 +7,6 @@ namespace BLTools
 {
     public abstract class AConditionAwaiter : IConditionAwaiter
     {
-        protected long _TimeoutInMsec;
-
-        protected int _DurationToAwait;
-        protected int _AwaitedDuration;
-
+        public long TimeoutInMsec { get; set; }
     }
 }

@@ -11,10 +11,11 @@ namespace BLTools
     /// </summary>
     public class TTimerActionAwaiter : AConditionAwaiter
     {
-        protected Func<bool> _Condition;
-        protected Action<double> _ProgressAction;
+        public Action<double> ProgressAction { get; set; }
 
-        protected int _RefreshRateInMsec;
+        public int RefreshRateInMsec { get; set; }
+
+        public int DurationToAwait { get; set; }
 
         /// <summary>
         /// Wait for a certain amount of time, while executing an action at a certain refresh rate
@@ -24,11 +25,9 @@ namespace BLTools
         /// <param name="refreshRateInMsec">How often to execute the action</param>
         public TTimerActionAwaiter(int durationInMSec, Action<double> progressAction, int refreshRateInMsec)
         {
-            _DurationToAwait = durationInMSec;
-            _Condition = () => (_AwaitedDuration) < _DurationToAwait;
-            _TimeoutInMsec = long.MaxValue;
-            _ProgressAction = progressAction;
-            _RefreshRateInMsec = refreshRateInMsec;
+            DurationToAwait = durationInMSec;
+            ProgressAction = progressAction;
+            RefreshRateInMsec = refreshRateInMsec;
         }
 
         /// <summary>
@@ -36,31 +35,29 @@ namespace BLTools
         /// </summary>
         /// <param name="pollingDelayInMsec">Delay before next evaluation of the condition</param>
         /// <returns>true if condition is met, false if timeout</returns>
-        public bool Execute(int pollingDelayInMsec = 5)
+        public void Execute(int pollingDelayInMsec = 5)
         {
             DateTime StartTime = DateTime.Now;
             double DisplayCounter;
             DateTime DisplayCounterStartTime = DateTime.Now;
 
-            bool RetVal = _Condition();
             double _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
-            while (!RetVal && _AwaitedDuration < _TimeoutInMsec)
+            while ( _AwaitedDuration < DurationToAwait )
             {
                 DisplayCounter = (DateTime.Now - DisplayCounterStartTime).TotalMilliseconds;
-                double TimeLeft = _TimeoutInMsec - (DateTime.Now - StartTime).TotalMilliseconds;
+                double TimeLeft = DurationToAwait - (DateTime.Now - StartTime).TotalMilliseconds;
 
-                if (DisplayCounter > _RefreshRateInMsec)
+                if (DisplayCounter > RefreshRateInMsec)
                 {
-                    _ProgressAction(TimeLeft);
+                    ProgressAction(TimeLeft);
                     DisplayCounterStartTime = DateTime.Now;
                 }
 
                 Thread.Sleep(pollingDelayInMsec);
-                RetVal = _Condition();
                 _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
             }
 
-            return RetVal;
+            return;
         }
 
         /// <summary>
@@ -68,31 +65,29 @@ namespace BLTools
         /// </summary>
         /// <param name="pollingDelayInMsec">Delay before next evaluation of the condition</param>
         /// <returns>true if condition is met, false if timeout</returns>
-        public async Task<bool> ExecuteAsync(int pollingDelayInMsec = 5)
+        public async Task ExecuteAsync(int pollingDelayInMsec = 5)
         {
             DateTime StartTime = DateTime.Now;
             double DisplayCounter;
             DateTime DisplayCounterStartTime = DateTime.Now;
 
-            bool RetVal = _Condition();
             double _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
-            while (!RetVal && _AwaitedDuration < _TimeoutInMsec)
+            while ( _AwaitedDuration < DurationToAwait )
             {
                 DisplayCounter = (DateTime.Now - DisplayCounterStartTime).TotalMilliseconds;
-                double TimeLeft = _TimeoutInMsec - (DateTime.Now - StartTime).TotalMilliseconds;
+                double TimeLeft = DurationToAwait - (DateTime.Now - StartTime).TotalMilliseconds;
 
-                if (DisplayCounter > _RefreshRateInMsec)
+                if (DisplayCounter > RefreshRateInMsec)
                 {
-                    _ProgressAction(TimeLeft);
+                    ProgressAction(TimeLeft);
                     DisplayCounterStartTime = DateTime.Now;
                 }
 
                 await Task.Delay(pollingDelayInMsec).ConfigureAwait(false);
-                RetVal = _Condition();
                 _AwaitedDuration = (DateTime.Now - StartTime).TotalMilliseconds;
             }
 
-            return RetVal;
+            return;
         }
 
     }
