@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace BLTools
 {
@@ -71,13 +75,22 @@ namespace BLTools
             lock ( _LockLoop )
             {
                 #region --- Defines the thread content --------------------------------------------
-                ThreadStart MonitorThreadStart = new ThreadStart(() =>
+                ThreadStart MonitorThreadStart = new ThreadStart(async () =>
                 {
                     _ContinueLoop = true;
                     LogDebug($"#### Entering repeat thread {Name}");
+                    bool IsAsync = ToDo.Method.GetCustomAttributes(typeof(AsyncStateMachineAttribute)).FirstOrDefault() != null;
+
                     while ( _ContinueLoop )
                     {
-                        ToDo.Invoke();
+                        if ( IsAsync )
+                        {
+                            await Task.Run(ToDo);
+                        }
+                        else
+                        {
+                            ToDo.Invoke();
+                        }
 
                         if ( _ContinueLoop )
                         {
