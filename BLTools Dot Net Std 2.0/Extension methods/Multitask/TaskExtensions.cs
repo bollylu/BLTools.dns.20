@@ -46,5 +46,58 @@ namespace BLTools {
       return default(T);
     }
 
+    public static async Task WithCancellation(this Task task, CancellationToken cancellationToken) {
+
+      TaskCompletionSource<bool> Tcs = new TaskCompletionSource<bool>();
+
+      using (cancellationToken.Register(s => ((TaskCompletionSource<bool>)s).TrySetResult(true), Tcs)) {
+        if (task != await Task.WhenAny(task, Tcs.Task)) {
+          throw new OperationCanceledException(cancellationToken);
+        }
+      }
+
+    }
+
+    public static async Task WithTimeout(this Task task, int timeoutInMs) {
+
+      CancellationToken CancelTimeout = new CancellationTokenSource(timeoutInMs).Token;
+
+      TaskCompletionSource<bool> Tcs = new TaskCompletionSource<bool>();
+
+      using (CancelTimeout.Register(s => ((TaskCompletionSource<bool>)s).TrySetResult(true), Tcs)) {
+        if (task != await Task.WhenAny(task, Tcs.Task)) {
+          throw new OperationCanceledException(CancelTimeout);
+        }
+      }
+
+    }
+
+    public static async Task<T> WithCancellation<T>(this Task<T> task, CancellationToken cancellationToken) {
+
+      TaskCompletionSource<bool> Tcs = new TaskCompletionSource<bool>();
+
+      using (cancellationToken.Register(s => ((TaskCompletionSource<bool>)s).TrySetResult(true), Tcs)) {
+        if (task != await Task.WhenAny(task, Tcs.Task)) {
+          throw new OperationCanceledException(cancellationToken);
+        }
+      }
+
+      return task.Result;
+    }
+
+    public static async Task<T> WithTimeout<T>(this Task<T> task, int timeoutInMs) {
+
+      CancellationToken CancelTimeout = new CancellationTokenSource(timeoutInMs).Token;
+
+      TaskCompletionSource<bool> Tcs = new TaskCompletionSource<bool>();
+
+      using (CancelTimeout.Register(s => ((TaskCompletionSource<bool>)s).TrySetResult(true), Tcs)) {
+        if (task != await Task.WhenAny(task, Tcs.Task)) {
+          throw new OperationCanceledException(CancelTimeout);
+        }
+      }
+
+      return task.Result;
+    }
   }
 }
