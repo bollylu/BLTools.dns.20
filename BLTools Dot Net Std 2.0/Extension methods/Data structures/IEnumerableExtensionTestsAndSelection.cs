@@ -444,7 +444,7 @@ namespace BLTools
         }
         #endregion --- Item T within IEnumerable<T> -----------------------------------------
 
-#if !NETSTANDARD3_0 && !NETSTANDARD3_1
+#if NETSTANDARD2_0
         /// <summary>
         /// Take the count of items from IEnumerable<T>, starting to count from the end
         /// </summary>

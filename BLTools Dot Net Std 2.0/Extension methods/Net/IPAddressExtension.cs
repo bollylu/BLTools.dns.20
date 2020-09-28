@@ -5,6 +5,7 @@ using System.Text;
 using System.Net;
 
 namespace BLTools {
+  
   /// <summary>
   /// Extensions for IPAddress
   /// </summary>
@@ -34,5 +35,6 @@ namespace BLTools {
     public static IPAddress GetSubnet(this IPAddress ipAddress, IPAddress netmask) {
       return ipAddress.GetSubnet(netmask.GetAddressBytes());
     }
+
   }
 }

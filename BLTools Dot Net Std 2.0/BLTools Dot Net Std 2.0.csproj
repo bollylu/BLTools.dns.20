@@ -7,10 +7,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <AssemblyVersion>4.5.16</AssemblyVersion>
-    <FileVersion>4.5.16</FileVersion>
-    <Version>4.5.16</Version>
-    <PackageReleaseNotes>Added TaskExtensions</PackageReleaseNotes>
+    <AssemblyVersion>4.5.17</AssemblyVersion>
+    <FileVersion>4.5.17</FileVersion>
+    <Version>4.5.17</Version>
+    <PackageReleaseNotes>Fixed incorrect definition of #define for TakeLast&lt;T&gt;</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
