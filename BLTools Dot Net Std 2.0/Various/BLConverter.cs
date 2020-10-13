@@ -14,6 +14,10 @@ namespace BLTools {
     /// </summary>
     public static bool TraceError = false;
 
+    public static T BLConvert<T> (object source, T defaultValue) {
+      return BLConvert(source, CultureInfo.CurrentCulture, defaultValue);
+    }
+
     /// <summary>
     /// Convert a value from one type to another (possibly through an evaluation of the value : e.g. "0", "True", "T" all becomes True)
     /// </summary>
@@ -27,6 +31,11 @@ namespace BLTools {
 
         if (source.GetType() == typeof(T)) {
           return (T)source;
+        }
+
+        if (typeof(T).IsEnum) {
+          string TestSource = source as string;
+          return (T)Enum.Parse(typeof(T), TestSource);
         }
 
         if (culture == null) {

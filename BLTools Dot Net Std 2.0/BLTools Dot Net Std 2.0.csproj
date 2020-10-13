@@ -7,10 +7,11 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <AssemblyVersion>4.5.17</AssemblyVersion>
-    <FileVersion>4.5.17</FileVersion>
-    <Version>4.5.17</Version>
-    <PackageReleaseNotes>Fixed incorrect definition of #define for TakeLast&lt;T&gt;</PackageReleaseNotes>
+    <AssemblyVersion>4.5.18</AssemblyVersion>
+    <FileVersion>4.5.18</FileVersion>
+    <Version>4.5.18</Version>
+    <PackageReleaseNotes>Added IsInRange and IsOutsideRange
+Added BLConverter for enum</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

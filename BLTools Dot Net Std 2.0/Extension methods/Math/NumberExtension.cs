@@ -159,7 +159,7 @@ namespace BLTools {
 
     /// <summary>
     /// Calculate an aligned value on a specific frontier. Alignment is made towards zero.
-    /// If alignement value is zero, no alignment is done and the original value is returned.
+    /// If alignment value is zero, no alignment is done and the original value is returned.
     /// </summary>
     /// <param name="value">The value to align</param>
     /// <param name="alignmentValue">The frontier to align the value against</param>
