@@ -2,9 +2,6 @@
 Library of classes for generic support in .NET
 
 ## Compiled for 
-- .NET framework 4.62
-- .NET framework 4.72
-- .NET framework 4.8
 - .NET standard 2.0
 - .NET standard 2.1
 - .NET 5.0

@@ -7,13 +7,14 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <AssemblyVersion>4.5.19</AssemblyVersion>
-    <FileVersion>4.5.19</FileVersion>
-    <Version>4.5.19</Version>
+    <AssemblyVersion>4.5.19.0-LBO</AssemblyVersion>
+    <FileVersion>4.5.19.0-LBO</FileVersion>
+    <Version>4.5.19.0-LBO</Version>
     <PackageReleaseNotes>
       Fixed IsNumeric() with negative numbers
       Moved Spaces to TextBox
-      Switch to .NET 5.0
+      Switch to .NET 5.
+      Compile for .NET standard 2.0 and 2.1 and .NET 5.0
     </PackageReleaseNotes>
   </PropertyGroup>
 
