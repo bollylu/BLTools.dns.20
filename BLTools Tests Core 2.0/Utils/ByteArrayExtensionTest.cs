@@ -64,7 +64,7 @@ namespace BLTools.UnitTest.Extensions {
     ///</summary>
     [TestMethod(), TestCategory("Array")]
     public void ToHexString_CommaSeparator_ResultOK() {
-      byte[] rawData = new byte[] { 12, 23, 34, 45, 56 };
+      byte[] rawData = new byte[] { 0x0C, 0x17, 0x22, 0x2D, 0x38 };
       string separator = ",";
       string expected = "0C,17,22,2D,38";
       string actual;
@@ -77,7 +77,7 @@ namespace BLTools.UnitTest.Extensions {
     ///</summary>
     [TestMethod(), TestCategory("Array")]
     public void ToHexString_NoSeparator_ResultOK() {
-      byte[] rawData = new byte[] { 12, 23, 34, 45, 56 };
+      byte[] rawData = new byte[] { 0x0C, 0x17, 0x22, 0x2D, 0x38 };
       string expected = "0C 17 22 2D 38";
       string actual;
       actual = rawData.ToHexString();

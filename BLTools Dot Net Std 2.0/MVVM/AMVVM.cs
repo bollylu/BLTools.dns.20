@@ -1,12 +1,15 @@
 ﻿using BLTools.Diagnostic.Logging;
+
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace BLTools.MVVM {
 
-    [Obsolete("Use AMVVM instead")]
-    public abstract class MVVMBase : AMVVM { }
+  [Obsolete("Use AMVVM instead")]
+#pragma warning disable IDE1006 // Naming Styles
+  public abstract class MVVMBase : AMVVM { }
+#pragma warning restore IDE1006 // Naming Styles
 
   /// <summary>
   /// Base class for a new MVVM class
@@ -54,7 +57,7 @@ namespace BLTools.MVVM {
     /// Notify that a progress bar is to be reinitialised
     /// </summary>
     /// <param name="maxValue">Maximum value of the bar</param>
-    protected virtual void NotifyInitProgressBar(int maxValue) {
+    public virtual void NotifyInitProgressBar(int maxValue) {
       OnInitProgressBar?.Invoke(this, new IntEventArgs(maxValue));
     }
 
@@ -62,7 +65,7 @@ namespace BLTools.MVVM {
     /// Notify the progress bar of a new current value
     /// </summary>
     /// <param name="value">The current value</param>
-    protected virtual void NotifyProgressBarNewValue(int value) {
+    public virtual void NotifyProgressBarNewValue(int value) {
       OnProgressBarNewValue?.Invoke(this, new IntEventArgs(value));
     }
 
@@ -71,7 +74,7 @@ namespace BLTools.MVVM {
     /// </summary>
     /// <param name="message">The optional message</param>
     /// <param name="status">The optional status (true/false)</param>
-    protected virtual void NotifyProgressBarCompleted(string message = "", bool status = true) {
+    public virtual void NotifyProgressBarCompleted(string message = "", bool status = true) {
       OnProgressBarCompleted?.Invoke(this, EventArgs.Empty);
       NotifyExecutionCompleted(message, status);
     }
@@ -90,7 +93,7 @@ namespace BLTools.MVVM {
     /// <summary>
     /// Sends an empty execution status to clear it
     /// </summary>
-    protected virtual void ClearExecutionStatus() {
+    public virtual void ClearExecutionStatus() {
       OnExecutionStatus?.Invoke(this, new StringEventArgs(""));
     }
 
@@ -98,7 +101,7 @@ namespace BLTools.MVVM {
     /// Sends an execution status message
     /// </summary>
     /// <param name="statusMessage">The message</param>
-    protected virtual void NotifyExecutionStatus(string statusMessage = "") {
+    public virtual void NotifyExecutionStatus(string statusMessage = "") {
       OnExecutionStatus?.Invoke(this, new StringEventArgs(statusMessage));
     }
 
@@ -107,7 +110,7 @@ namespace BLTools.MVVM {
     /// </summary>
     /// <param name="statusMessage">The message</param>
     /// <param name="completionStatus">The status at the completion of the process</param>
-    protected virtual void NotifyExecutionCompleted(string statusMessage = "", bool completionStatus = false) {
+    public virtual void NotifyExecutionCompleted(string statusMessage = "", bool completionStatus = false) {
       OnExecutionCompleted?.Invoke(this, new BoolAndMessageEventArgs(completionStatus, statusMessage));
     }
     #endregion --- Execution status ---------------------------------------------------------------
@@ -159,7 +162,7 @@ namespace BLTools.MVVM {
     /// </summary>
     /// <param name="message">The message</param>
     /// <param name="errorlevel">The optional errorlevel (will be filtered by MinTraceLevel)</param>
-    protected virtual void NotifyExecutionError(string message = "", ErrorLevel errorlevel = ErrorLevel.Warning) {
+    public virtual void NotifyExecutionError(string message = "", ErrorLevel errorlevel = ErrorLevel.Warning) {
       if (errorlevel < MinTraceLevel) {
         return;
       }
@@ -177,7 +180,7 @@ namespace BLTools.MVVM {
     /// Calls any hook when the property was changed
     /// </summary>
     /// <param name="propertyName"></param>
-    protected void NotifyPropertyChanged([CallerMemberName]string propertyName = "") {
+    public void NotifyPropertyChanged([CallerMemberName] string propertyName = "") {
       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
     #endregion === INotifyPropertyChanged =========================================================

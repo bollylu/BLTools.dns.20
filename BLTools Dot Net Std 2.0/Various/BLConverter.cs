@@ -51,8 +51,7 @@ namespace BLTools {
         switch (typeof(T).Name) {
           case "Double":
           case "Single":
-            if (source is string) {
-              string TestSource = source as string;
+            if (source is string TestSource) {
               char DecimalSeparator = culture.NumberFormat.NumberDecimalSeparator[0];
               if (TestSource.Count(x => !x.IsNumeric() && x != DecimalSeparator) > 0) {
                 _LogError($"Bad format for conversion : {TestSource} : unknown non numeric characters");
@@ -132,8 +131,8 @@ namespace BLTools {
             }
 
           case "Boolean":
-            if (source is string) {
-              return (T)Convert.ChangeType(((string)source).ToBool(), typeof(T));
+            if (source is string StringSource) {
+              return (T)Convert.ChangeType(StringSource.ToBool(), typeof(T));
             }
             switch (source.GetType().Name) {
               case "Int16":
@@ -153,14 +152,14 @@ namespace BLTools {
             return defaultValue;
 
           case "Guid":
-            if (source is string) {
-              if (((string)source).Trim() == "") {
+            if (source is string GuidStringSource) {
+              if (GuidStringSource.Trim() == "") {
                 return (T)Convert.ChangeType(new Guid(), typeof(T));
               }
-              return (T)Convert.ChangeType(new Guid((string)source), typeof(T));
+              return (T)Convert.ChangeType(new Guid(GuidStringSource), typeof(T));
             }
-            if (source is Guid) {
-              return (T)Convert.ChangeType(source, typeof(T));
+            if (source is Guid GuidSource) {
+              return (T)Convert.ChangeType(GuidSource, typeof(T));
             }
             return defaultValue;
 
