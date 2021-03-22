@@ -83,17 +83,13 @@ namespace BLTools.UnitTest.Core20.Extensions {
     [TestMethod(), TestCategory("String")]
     public void IsAlpha_AlphaValue_ResultTrue() {
       string SourceValue = "OnlyAlphA";
-      bool expected = true;
-      bool actual = SourceValue.IsAlpha();
-      Assert.AreEqual(expected, actual);
+      Assert.IsTrue(SourceValue.IsAlpha());
     }
 
     [TestMethod(), TestCategory("String")]
     public void IsAlpha_NonAlphaValue_ResultFalse() {
       string SourceValue = "Only1AlphA";
-      bool expected = false;
-      bool actual = SourceValue.IsAlpha();
-      Assert.AreEqual(expected, actual);
+      Assert.IsFalse(SourceValue.IsAlpha());
     } 
     #endregion IsAlpha
 
@@ -101,33 +97,25 @@ namespace BLTools.UnitTest.Core20.Extensions {
     [TestMethod(), TestCategory("String")]
     public void IsAlphaNumeric_AlphaValue_ResultTrue() {
       string SourceValue = "OnlyAlphA";
-      bool expected = true;
-      bool actual = SourceValue.IsAlphaNumeric();
-      Assert.AreEqual(expected, actual);
+      Assert.IsTrue(SourceValue.IsAlphaNumeric());
     }
 
     [TestMethod(), TestCategory("String")]
     public void IsAlphaNumeric_NumericValue_ResultTrue() {
       string SourceValue = "1259763";
-      bool expected = true;
-      bool actual = SourceValue.IsAlphaNumeric();
-      Assert.AreEqual(expected, actual);
+      Assert.IsTrue(SourceValue.IsAlphaNumeric());
     }
 
     [TestMethod(), TestCategory("String")]
     public void IsAlphaNumeric_AlphaNumericValue_ResultTrue() {
       string SourceValue = "Only123AlphA";
-      bool expected = true;
-      bool actual = SourceValue.IsAlphaNumeric();
-      Assert.AreEqual(expected, actual);
+      Assert.IsTrue(SourceValue.IsAlphaNumeric());
     }
 
     [TestMethod(), TestCategory("String")]
     public void IsAlphaNumeric_NonAlphaNumericValue_ResultFalse() {
       string SourceValue = "Only1@lph@";
-      bool expected = false;
-      bool actual = SourceValue.IsAlphaNumeric();
-      Assert.AreEqual(expected, actual);
+      Assert.IsFalse(SourceValue.IsAlphaNumeric());
     } 
     #endregion IsAlphaNumeric
 
@@ -135,41 +123,31 @@ namespace BLTools.UnitTest.Core20.Extensions {
     [TestMethod(), TestCategory("String")]
     public void IsNumeric_NumericValue_ResultTrue() {
       string SourceValue = "12354";
-      bool expected = true;
-      bool actual = SourceValue.IsNumeric();
-      Assert.AreEqual(expected, actual);
+      Assert.IsTrue(SourceValue.IsNumeric());
     }
 
     [TestMethod(), TestCategory("String")]
     public void IsNumeric_NegativeNumericValue_ResultTrue() {
       string SourceValue = "-12354";
-      bool expected = true;
-      bool actual = SourceValue.IsNumeric();
-      Assert.AreEqual(expected, actual);
+      Assert.IsTrue(SourceValue.IsNumeric());
     }
 
     [TestMethod(), TestCategory("String")]
     public void IsNumeric_NumericValueWithSeparator_ResultTrue() {
       string SourceValue = "12.354,123";
-      bool expected = true;
-      bool actual = SourceValue.IsNumeric();
-      Assert.AreEqual(expected, actual);
+      Assert.IsTrue(SourceValue.IsNumeric());
     }
 
     [TestMethod(), TestCategory("String")]
     public void IsNumeric_NonNumericValue_ResultFalse() {
       string SourceValue = "231655abc";
-      bool expected = false;
-      bool actual = SourceValue.IsNumeric();
-      Assert.AreEqual(expected, actual);
+      Assert.IsFalse(SourceValue.IsNumeric());
     }
 
     [TestMethod(), TestCategory("String")]
     public void IsNumeric_BadNegativeNumericValue_ResultFalse() {
       string SourceValue = "231655-";
-      bool expected = false;
-      bool actual = SourceValue.IsNumeric();
-      Assert.AreEqual(expected, actual);
+      Assert.IsFalse(SourceValue.IsNumeric());
     }
     #endregion IsNumeric
 
@@ -177,17 +155,13 @@ namespace BLTools.UnitTest.Core20.Extensions {
     [TestMethod(), TestCategory("String")]
     public void IsAlphaOrBlank_AlphaValue_ResultTrue() {
       string SourceValue = "Only AlphA";
-      bool expected = true;
-      bool actual = SourceValue.IsAlphaOrBlank();
-      Assert.AreEqual(expected, actual);
+      Assert.IsTrue(SourceValue.IsAlphaOrBlank());
     }
 
     [TestMethod(), TestCategory("String")]
     public void IsAlphaOrBlank_NonAlphaValue_ResultFalse() {
       string SourceValue = "Only1 AlphA";
-      bool expected = false;
-      bool actual = SourceValue.IsAlphaOrBlank();
-      Assert.AreEqual(expected, actual);
+      Assert.IsFalse(SourceValue.IsAlphaOrBlank());
     }
     #endregion IsAlphaOrBlank
 
@@ -229,25 +203,19 @@ namespace BLTools.UnitTest.Core20.Extensions {
     [TestMethod(), TestCategory("String")]
     public void IsNumericOrBlank_NumericValue_ResultTrue() {
       string SourceValue = "1235 4";
-      bool expected = true;
-      bool actual = SourceValue.IsNumericOrBlank();
-      Assert.AreEqual(expected, actual);
+      Assert.IsTrue(SourceValue.IsNumericOrBlank());
     }
 
     [TestMethod(), TestCategory("String")]
     public void IsNumericOrBlank_NumericValueWithSeparator_ResultTrue() {
       string SourceValue = " 12.354,123 ";
-      bool expected = true;
-      bool actual = SourceValue.IsNumericOrBlank();
-      Assert.AreEqual(expected, actual);
+      Assert.IsTrue(SourceValue.IsNumericOrBlank());
     }
 
     [TestMethod(), TestCategory("String")]
     public void IsNumericOrBlank_NonNumericValue_ResultFalse() {
       string SourceValue = "231655 abc";
-      bool expected = false;
-      bool actual = SourceValue.IsNumericOrBlank();
-      Assert.AreEqual(expected, actual);
+      Assert.IsFalse(SourceValue.IsNumericOrBlank());
     }
     #endregion IsNumericOrBlank
 

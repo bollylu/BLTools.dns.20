@@ -5,6 +5,8 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 
+using static BLTools.Text.TextBox;
+
 namespace BLTools.Json {
   public sealed class JsonDouble : IJsonValue<double?> {
 
@@ -43,7 +45,7 @@ namespace BLTools.Json {
       StringBuilder RetVal = new StringBuilder();
 
       if ( formatted && needFrontSpaces ) {
-        RetVal.Append($"{StringExtension.Spaces(indent)}");
+        RetVal.Append($"{Spaces(indent)}");
       }
       if ( Value == null ) {
         RetVal.Append(Json.NAN);
@@ -60,7 +62,7 @@ namespace BLTools.Json {
         using ( JsonWriter Writer = new JsonWriter(RetVal) ) {
 
           if ( formatted ) {
-            Writer.Write($"{StringExtension.Spaces(indent)}");
+            Writer.Write($"{Spaces(indent)}");
           }
           if ( Value == null ) {
             Writer.Write(Json.NAN);

@@ -5,6 +5,7 @@ using System.Text;
 using System.Linq;
 using System.IO;
 using System.Collections;
+using static BLTools.Text.TextBox;
 
 namespace BLTools.Json {
   public sealed class JsonArray : IJsonValue, IEnumerable<IJsonValue> {
@@ -100,7 +101,7 @@ namespace BLTools.Json {
     public string RenderAsString(bool formatted = false, int indent = 0, bool needFrontSpaces = true) {
       if ( Items.Count() == 0 ) {
         if ( formatted ) {
-          return $"{StringExtension.Spaces(indent)}{Json.START_OF_ARRAY}{Json.END_OF_ARRAY}";
+          return $"{Spaces(indent)}{Json.START_OF_ARRAY}{Json.END_OF_ARRAY}";
         } else {
           return $"{Json.START_OF_ARRAY}{Json.END_OF_ARRAY}";
         }
@@ -110,7 +111,7 @@ namespace BLTools.Json {
         StringBuilder RetVal = new StringBuilder();
 
         if ( formatted && indent >= 0 && needFrontSpaces) {
-          RetVal.Append($"{StringExtension.Spaces(indent)}");
+          RetVal.Append($"{Spaces(indent)}");
         }
 
         RetVal.Append(Json.START_OF_ARRAY);
@@ -135,7 +136,7 @@ namespace BLTools.Json {
         }
 
         if ( formatted && indent >= 0 ) {
-          RetVal.Append($"{StringExtension.Spaces(indent)}");
+          RetVal.Append($"{Spaces(indent)}");
         }
 
         RetVal.Append(Json.END_OF_ARRAY);
@@ -152,7 +153,7 @@ namespace BLTools.Json {
 
           if ( Items.Count() == 0 ) {
             if ( formatted ) {
-              Writer.Write($"{StringExtension.Spaces(indent)}{Json.START_OF_ARRAY}{Json.END_OF_ARRAY}");
+              Writer.Write($"{Spaces(indent)}{Json.START_OF_ARRAY}{Json.END_OF_ARRAY}");
               return RetVal.ToArray();
             } else {
               Writer.Write(Json.START_OF_ARRAY);
@@ -165,7 +166,7 @@ namespace BLTools.Json {
           lock ( _JsonLock ) {
 
             if ( formatted && indent >= Json.DEFAULT_INDENT ) {
-              Writer.Write($"{StringExtension.Spaces(indent)}");
+              Writer.Write($"{Spaces(indent)}");
             }
             Writer.Write(Json.START_OF_ARRAY);
 
@@ -192,7 +193,7 @@ namespace BLTools.Json {
             }
 
             if ( formatted && indent >= Json.DEFAULT_INDENT ) {
-              Writer.Write($"{StringExtension.Spaces(indent)}");
+              Writer.Write($"{Spaces(indent)}");
             }
 
             Writer.Write(Json.END_OF_ARRAY);

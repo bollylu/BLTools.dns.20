@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
+using static BLTools.Text.TextBox;
+
 namespace BLTools.Json
 {
     public sealed class JsonBool : IJsonValue<bool?>
@@ -65,7 +67,7 @@ namespace BLTools.Json
 
             if ( formatted && needFrontSpaces )
             {
-                RetVal.Append($"{StringExtension.Spaces(indent)}");
+                RetVal.Append($"{Spaces(indent)}");
             }
             if ( !Value.HasValue )
             {
@@ -89,7 +91,7 @@ namespace BLTools.Json
 
                     if ( formatted )
                     {
-                        Writer.Write($"{StringExtension.Spaces(indent)}");
+                        Writer.Write($"{Spaces(indent)}");
                     }
                     if ( !Value.HasValue )
                     {

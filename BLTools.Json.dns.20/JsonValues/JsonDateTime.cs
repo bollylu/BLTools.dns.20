@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+using static BLTools.Text.TextBox;
+
 namespace BLTools.Json {
   public sealed class JsonDateTime : IJsonValue<DateTime?> {
 
@@ -46,7 +48,7 @@ namespace BLTools.Json {
       StringBuilder RetVal = new StringBuilder();
 
       if ( formatted ) {
-        RetVal.Append($"{StringExtension.Spaces(indent)}");
+        RetVal.Append($"{Spaces(indent)}");
       }
       if ( Value == null ) {
         RetVal.Append(JsonNull.Default.RenderAsString());
@@ -63,7 +65,7 @@ namespace BLTools.Json {
         using ( JsonWriter Writer = new JsonWriter(RetVal) ) {
 
           if ( formatted ) {
-            Writer.Write($"{StringExtension.Spaces(indent)}");
+            Writer.Write($"{Spaces(indent)}");
           }
           if ( Value == null ) {
             Writer.Write(JsonNull.Default.RenderAsBytes());

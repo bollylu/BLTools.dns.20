@@ -38,6 +38,12 @@ namespace BLTools {
           return (T)Enum.Parse(typeof(T), TestSource);
         }
 
+        if (typeof(T).Name == nameof(Version)) {
+          string TestSource = source as string;
+          Version RetVal = Version.Parse(TestSource);
+          return (T)Convert.ChangeType(RetVal, typeof(Version));
+        }
+
         if (culture == null) {
           culture = CultureInfo.CurrentCulture;
         }

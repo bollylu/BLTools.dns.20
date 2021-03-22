@@ -22,7 +22,14 @@ namespace BLTools.UnitTest {
       string TempStorage = Source.ToString();
       ETestEnum Target = BLConvert(TempStorage, ETestEnum.Unknown);
       Assert.AreEqual(ETestEnum.Ok, Target);
-    
+    }
+
+    [TestMethod]
+    public void ConvertVersion_VersionIsOk_AnswerIsOk() {
+      Version Source = Version.Parse("1.2.3.4");
+      string TempStorage = Source.ToString();
+      Version Target = BLConvert(TempStorage, Version.Parse("0.0.0.0"));
+      Assert.AreEqual(Source, Target);
     }
   }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Linq;
 using System.IO;
 using System.Collections;
+using static BLTools.Text.TextBox;
 
 namespace BLTools.Json
 {
@@ -157,7 +158,7 @@ namespace BLTools.Json
             {
                 if ( formatted )
                 {
-                    return $"{StringExtension.Spaces(indent)}{Json.START_OF_OBJECT}{Json.END_OF_OBJECT}";
+                    return $"{Spaces(indent)}{Json.START_OF_OBJECT}{Json.END_OF_OBJECT}";
                 }
                 else
                 {
@@ -171,7 +172,7 @@ namespace BLTools.Json
 
                 if ( formatted && indent >= 0 && needFrontSpaces )
                 {
-                    RetVal.Append($"{StringExtension.Spaces(indent)}");
+                    RetVal.Append($"{Spaces(indent)}");
                 }
 
                 RetVal.Append(Json.START_OF_OBJECT);
@@ -203,7 +204,7 @@ namespace BLTools.Json
 
                 if ( formatted && indent >= 0 )
                 {
-                    RetVal.Append($"{StringExtension.Spaces(indent)}");
+                    RetVal.Append($"{Spaces(indent)}");
                 }
 
                 RetVal.Append(Json.END_OF_OBJECT);
@@ -227,7 +228,7 @@ namespace BLTools.Json
                     {
                         if ( formatted )
                         {
-                            Writer.Write($"{StringExtension.Spaces(indent)}{{}}");
+                            Writer.Write($"{Spaces(indent)}{{}}");
                             return RetVal.ToArray();
                         }
                         else
@@ -243,7 +244,7 @@ namespace BLTools.Json
 
                         if ( formatted && indent >= Json.DEFAULT_INDENT )
                         {
-                            Writer.Write($"{StringExtension.Spaces(indent)}");
+                            Writer.Write($"{Spaces(indent)}");
                         }
 
                         Writer.Write(Json.START_OF_OBJECT);
@@ -277,7 +278,7 @@ namespace BLTools.Json
 
                         if ( formatted && indent >= Json.DEFAULT_INDENT )
                         {
-                            Writer.Write($"{StringExtension.Spaces(indent)}");
+                            Writer.Write($"{Spaces(indent)}");
                         }
 
                         Writer.Write(Json.END_OF_OBJECT);

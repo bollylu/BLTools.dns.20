@@ -17,16 +17,18 @@ namespace BLTools {
     /// <returns>The string of hex values</returns>
     public static string ToHexString(this IEnumerable<byte> rawData, string separator = " ") {
 
-      if ( rawData.IsEmpty() ) {
+      if (rawData is null || rawData.IsEmpty()) {
         return "";
       }
 
-      StringBuilder RetVal = new StringBuilder(rawData.Count() * 3);
-      foreach ( byte ByteItem in rawData ) {
-        RetVal.Append($"{ByteItem:X2}{separator}");
-      }
-      RetVal.Truncate(separator.Length);
-      return RetVal.ToString();
+      return string.Join(separator, rawData.Select(d => d.ToString("X2")));
+
+      //StringBuilder RetVal = new StringBuilder(rawData.Count() * 3);
+      //foreach ( byte ByteItem in rawData ) {
+      //  RetVal.Append($"{ByteItem:X2}{separator}");
+      //}
+      //RetVal.Truncate(separator.Length);
+      //return RetVal.ToString();
     }
 
     /// <summary>
@@ -35,15 +37,16 @@ namespace BLTools {
     /// <param name="rawData">The array to convert</param>
     /// <returns></returns>
     public static string ToCharString(this byte[] rawData) {
-      if ( rawData.Length == 0 ) {
+      if ( rawData is null || rawData.IsEmpty() ) {
         return "";
       }
 
-      StringBuilder RetVal = new StringBuilder(rawData.Length);
-      foreach ( byte ByteItem in rawData ) {
-        RetVal.Append((char)ByteItem);
-      }
-      return RetVal.ToString();
+      return new string( rawData.Select(d => (char)d).ToArray() );
+      //StringBuilder RetVal = new StringBuilder(rawData.Length);
+      //foreach ( byte ByteItem in rawData ) {
+      //  RetVal.Append((char)ByteItem);
+      //}
+      //return RetVal.ToString();
     }
   }
 }

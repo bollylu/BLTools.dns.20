@@ -438,6 +438,13 @@ namespace BLTools {
       return RetVal.ToString();
     }
 
+    public static string WithQuotes(this string sourceValue) {
+      if (sourceValue is null) {
+        return null;
+      }
+      return $"\"{sourceValue}\"";
+    }
+
     public static string ReplaceControlChars(this string sourceValue) {
       if ( string.IsNullOrWhiteSpace(sourceValue) ) {
         return "";
@@ -481,13 +488,7 @@ namespace BLTools {
       return RetVal.ToString();
     }
 
-    public static string Spaces(int number) {
-      if ( number <= 0 ) {
-        return "";
-      }
-      return new string(' ', number);
-    }
-
+    
     public static string AlignedRight(this string source, int width, char filler = ' ') {
       return source.PadLeft(width, filler).Left(width);
     }

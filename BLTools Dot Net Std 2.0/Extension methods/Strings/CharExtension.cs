@@ -13,7 +13,7 @@ namespace BLTools {
     /// <param name="sourceValue">The source string</param>
     /// <returns>True if the assertion succeeds</returns>
     public static bool IsNumeric(this char sourceValue) {
-      return "0123456789".Contains(sourceValue);
+      return "-0123456789".Contains(sourceValue);
     }
 
     /// <summary>

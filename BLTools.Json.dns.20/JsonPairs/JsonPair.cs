@@ -5,6 +5,7 @@ using System.Text;
 using System.Linq;
 using System.IO;
 using System.Globalization;
+using static BLTools.Text.TextBox;
 
 namespace BLTools.Json
 {
@@ -129,12 +130,12 @@ namespace BLTools.Json
 
             if ( formatted && needFrontSpaces )
             {
-                RetVal.Append($"{StringExtension.Spaces(indent)}");
+                RetVal.Append($"{Spaces(indent)}");
             }
 
             if ( formatted && !needFrontSpaces )
             {
-                RetVal.Append(StringExtension.Spaces(1));
+                RetVal.Append(Spaces(1));
             }
 
             if ( formatted )
@@ -161,7 +162,7 @@ namespace BLTools.Json
 
                     if ( formatted )
                     {
-                        Writer.Write($"{StringExtension.Spaces(indent)}");
+                        Writer.Write($"{Spaces(indent)}");
                         Writer.Write($"\"{Key}\" {Json.INNER_FIELD_SEPARATOR} ");
                     }
                     else
