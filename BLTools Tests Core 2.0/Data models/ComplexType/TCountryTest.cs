@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BLTools.DataModels;
 
-namespace BLTools.UnitTest.Core20.DataModels {
+namespace BLTools.UnitTest.DataModels {
   [TestClass]
   public class TCountryTest {
 

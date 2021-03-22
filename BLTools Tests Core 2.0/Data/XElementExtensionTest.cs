@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BLTools.UnitTest.Core20.Data.Xml {
+namespace BLTools.UnitTest.Data.Xml {
 
   /// <summary>
   ///This is a test class for XElementExtensionTest and is intended

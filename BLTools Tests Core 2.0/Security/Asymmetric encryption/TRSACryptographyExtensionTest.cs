@@ -4,7 +4,7 @@ using System;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace BLTools.UnitTest.Core20.Security {
+namespace BLTools.UnitTest.Security {
 
 
   /// <summary>

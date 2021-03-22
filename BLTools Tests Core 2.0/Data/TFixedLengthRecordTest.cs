@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BLTools.Data;
 using BLTools.Data.FixedLength;
 
-namespace BLTools.UnitTest.Core20.Data {
+namespace BLTools.UnitTest.Data {
   public class TFixedLengthRecordTest : TFixedLengthRecord {
 
     #region Data fields

@@ -85,7 +85,7 @@ namespace BLTools.Data.FixedLength {
             #region DateTime
             if (PropertyInfoItem.PropertyType == typeof(DateTime)) {
               DateTime CurrentValue = (DateTime)PropertyInfoItem.GetValue(this, null);
-              if (CurrentValue == null || CurrentValue == DateTime.MinValue) {
+              if (CurrentValue == DateTime.MinValue) {
                 if (EmptyDatesValueBlank) {
                   RawData.Append(new string(' ', CurrentFieldAttribute.Length));
                   continue;

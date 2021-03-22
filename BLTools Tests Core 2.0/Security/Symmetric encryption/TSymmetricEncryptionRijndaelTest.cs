@@ -4,7 +4,7 @@ using BLTools.Encryption;
 using System.Diagnostics;
 using System.Text;
 
-namespace BLTools.UnitTest.Core20.Security {
+namespace BLTools.UnitTest.Security {
   [TestClass]
   public class TSymmetricEncryptionRijndaelTest {
     [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("Rijndael")]

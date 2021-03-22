@@ -6,7 +6,7 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLTools.UnitTest.Core20.Extensions {
+namespace BLTools.UnitTest.Extensions {
 
 
   /// <summary>

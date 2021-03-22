@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
 
-namespace BLTools.UnitTest.Core20.Extensions {
+namespace BLTools.UnitTest.Extensions {
 
 
   /// <summary>

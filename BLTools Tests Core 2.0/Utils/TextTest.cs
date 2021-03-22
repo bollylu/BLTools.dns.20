@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using BLTools.Text;
 
-namespace BLTools.UnitTest.Core20.Extensions {
+namespace BLTools.UnitTest.Extensions {
   [TestClass]
   public class TextTest {
 

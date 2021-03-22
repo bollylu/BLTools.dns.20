@@ -185,6 +185,11 @@ namespace BLTools {
     #endregion Private methods
 
     #region Public properties
+    /// <summary>
+    /// Obtain an argument by its index instead of its name
+    /// </summary>
+    /// <param name="index">The index of the argument obtain (first is zero)</param>
+    /// <returns>An ArgElement</returns>
     public new ArgElement this[int index] {
       get {
         ArgElement CurrentElement = this.FirstOrDefault(a => a.Id == index);
@@ -197,6 +202,11 @@ namespace BLTools {
     }
     #endregion Public properties
 
+    /// <summary>
+    /// Indicate if a key was part of the arguments (whatever it has a value or not)
+    /// </summary>
+    /// <param name="key">the key to test</param>
+    /// <returns>true if the key was defined, false otherwise</returns>
     public bool IsDefined(string key) {
       if (key == null || this.IsEmpty()) {
         return false;

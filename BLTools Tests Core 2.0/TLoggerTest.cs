@@ -5,7 +5,7 @@ using BLTools.Diagnostic.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
-namespace BLTools.UnitTest.Core20
+namespace BLTools.UnitTest
 {
     [TestClass()]
     public class TLoggerTest

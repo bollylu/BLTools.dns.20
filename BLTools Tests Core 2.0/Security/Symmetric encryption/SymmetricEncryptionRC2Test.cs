@@ -4,7 +4,7 @@ using BLTools.Encryption;
 using System.Diagnostics;
 using System.Text;
 
-namespace BLTools.UnitTest.Core20.Security {
+namespace BLTools.UnitTest.Security {
   [TestClass]
   public class TSymmetricEncryptionRC2Test {
     [TestCategory("SymmetricEncryption"), TestMethod, TestCategory("RC2")]

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace BLTools.UnitTest.Core20.Json {
+namespace BLTools.UnitTest.Json {
 
   /// <summary>
   ///This is a test class for ArgElementTest and is intended

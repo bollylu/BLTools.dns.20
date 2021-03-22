@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace BLTools.UnitTest.Core20.Json {
+namespace BLTools.UnitTest.Json {
 
 
   /// <summary>

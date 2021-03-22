@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using System.Globalization;
 using BLTools.SQL;
 
-namespace BLTools.UnitTest.Core20.Data.Sql {
+namespace BLTools.UnitTest.Data.Sql {
 
   [TestClass()]
   public class TSqlDatabaseTest {

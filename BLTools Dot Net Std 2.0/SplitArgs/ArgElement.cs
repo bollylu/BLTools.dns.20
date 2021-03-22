@@ -28,7 +28,7 @@ namespace BLTools {
     }
 
     public bool Equals(ArgElement other) {
-      if (other == null) {
+      if (other is null) {
         return false;
       }
       return (Name == other.Name && Value == other.Value);

@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BLTools.UnitTest.Core20
+namespace BLTools.UnitTest
 {
     internal class TContainerClass
     {

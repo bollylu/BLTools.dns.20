@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace BLTools.UnitTest.Core20.Extensions {
+namespace BLTools.UnitTest.Extensions {
   [TestClass]
   public class MemoryStreamTest {
 

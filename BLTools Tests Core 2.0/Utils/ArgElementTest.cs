@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace BLTools.UnitTest.Core20.Utils {
+namespace BLTools.UnitTest.Utils {
 
 
   /// <summary>

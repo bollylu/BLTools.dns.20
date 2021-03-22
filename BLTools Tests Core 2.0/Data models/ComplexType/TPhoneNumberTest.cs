@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BLTools.DataModels;
 using System.Linq;
 
-namespace BLTools.UnitTest.Core20.DataModels {
+namespace BLTools.UnitTest.DataModels {
   [TestClass]
   public class TPhoneNumberTest {
 

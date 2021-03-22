@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
-namespace BLTools.UnitTest.Core20.Json {
+namespace BLTools.UnitTest.Json {
 
 
   /// <summary>
