@@ -8,26 +8,31 @@ namespace BLTools.Security.Authorization {
   public class TSecurityUserIdCollection : List<string>, IToXml {
     public TSecurityUserIdCollection() {}
 
-    public TSecurityUserIdCollection(TSecurityUserIdCollection UserIds) {
-      foreach (string UserIdItem in UserIds) {
+    public TSecurityUserIdCollection(TSecurityUserIdCollection userIds) {
+      foreach (string UserIdItem in userIds) {
         Add(UserIdItem);
       }
     }
 
-    public TSecurityUserIdCollection(IEnumerable<string> UserIds) {
-      foreach (string UserIdItem in UserIds) {
+    public TSecurityUserIdCollection(IEnumerable<string> userIds) {
+      foreach (string UserIdItem in userIds) {
         Add(UserIdItem);
       }
     }
 
-    public TSecurityUserIdCollection(IEnumerable<XElement> UserIds) {
-      foreach (XElement UserIdItem in UserIds) {
+    public TSecurityUserIdCollection(IEnumerable<XElement> userIds) {
+      foreach (XElement UserIdItem in userIds) {
         Add(UserIdItem.SafeReadAttribute<string>("id"));
       }
     }
 
-    public TSecurityUserIdCollection(XElement UserIds) {
-      foreach (XElement UserIdItem in UserIds.Elements("userid")) {
+    public TSecurityUserIdCollection(XElement userIds) {
+      FromXml(userIds);
+    }
+
+    public void FromXml(XElement source) {
+      Clear();
+      foreach (XElement UserIdItem in source.Elements("userid")) {
         Add(UserIdItem.SafeReadAttribute<string>("id"));
       }
     }

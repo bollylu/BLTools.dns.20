@@ -7,15 +7,17 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <AssemblyVersion>4.5.19.0</AssemblyVersion>
-    <FileVersion>4.5.19.0</FileVersion>
-    <Version>4.5.19.0-LBO</Version>
+    <Version>4.5.19.0</Version>
     <PackageReleaseNotes>
       Fixed IsNumeric() with negative numbers
       Moved Spaces to TextBox
       Switch to .NET 5.
       Compile for .NET standard 2.0 and 2.1 and .NET 5.0
     </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
+    <DocumentationFile>I:\dev.git\BLTools.dns.20\BLTools Dot Net Std 2.0\BLTools.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

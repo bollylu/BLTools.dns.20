@@ -10,19 +10,18 @@ namespace BLTools.Security.Authorization {
     public string Id { get; private set; }
     public string Name { get; set; }
     public string Description { get; set; }
-    public TSecurityUserIdCollection UserIds { get; set; }
-    public TSecurityGroupCollection Groups { get; set; }
+    public TSecurityUserIdCollection UserIds { get; } = new TSecurityUserIdCollection();
+    public TSecurityGroupCollection Groups { get; } = new TSecurityGroupCollection();
 
+    #region --- Constructor(s) ---------------------------------------------------------------------------------
     public TSecurityGroup() {
       Id = "";
       Name = "";
       Description = "";
-      UserIds = new TSecurityUserIdCollection();
-      Groups = new TSecurityGroupCollection();
     }
 
-    public TSecurityGroup(string name, string description = "")
-      : this() {
+    public TSecurityGroup(string name, string description = "") {
+      Id = "";
       Name = name;
       Description = description;
     }
@@ -36,18 +35,11 @@ namespace BLTools.Security.Authorization {
     }
 
     public TSecurityGroup(XElement group) {
-      if (group == null) {
-        string Msg = "Unable to create a TSecurityGroup from a null XElement";
-        Trace.WriteLine(Msg, Severity.Error);
-        throw new ArgumentNullException(Msg, "group");
-      }
-      Id = group.SafeReadAttribute<string>("id", "");
-      Name = group.SafeReadAttribute<string>("name", "");
-      Description = group.SafeReadElementValue<string>("description", "");
-      UserIds = new TSecurityUserIdCollection(group.SafeReadElement("userids"));
-      Groups = new TSecurityGroupCollection(group.SafeReadElement("groups"));
-    }
+      FromXml(group);
+    } 
+    #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
+    #region --- IToXml --------------------------------------------
     public XElement ToXml() {
       XElement RetVal = new XElement("group");
       RetVal.SetAttributeValue("id", Id);
@@ -57,5 +49,19 @@ namespace BLTools.Security.Authorization {
       RetVal.Add(Groups.ToXml());
       return RetVal;
     }
+
+    public void FromXml(XElement source) {
+      if (source is null) {
+        string Msg = "Unable to create a TSecurityGroup from a null XElement";
+        Trace.WriteLine(Msg, Severity.Error);
+        throw new ArgumentNullException(Msg, "group");
+      }
+      Id = source.SafeReadAttribute<string>("id", "");
+      Name = source.SafeReadAttribute<string>("name", "");
+      Description = source.SafeReadElementValue<string>("description", "");
+      UserIds.FromXml(source.SafeReadElement("userids"));
+      Groups.FromXml(source.SafeReadElement("groups"));
+    } 
+    #endregion --- IToXml --------------------------------------------
   }
 }

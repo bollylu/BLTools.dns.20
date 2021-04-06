@@ -1,0 +1,88 @@
+﻿doc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  display: grid;
+}
+
+members {
+  display: grid;
+  grid-template-columns: 100px 600px 100px;
+}
+
+assembly, members, member {
+  font-family: Arial;
+  line-height: 1.5;
+}
+
+assembly {
+  color: red;
+  display: block;
+  font-size: 3em;
+  text-align: center;
+}
+
+member {
+  font-size: 2em;
+  margin: 10px 0px 0px 0px;
+  color: blue;
+  display: list-item;
+  list-style-type: circle;
+  list-style-position: outside;
+  grid-column-start: 2;
+  grid-column-end: 2;
+  display: inline-block;
+  border:1px solid blue;
+  padding: 5px;
+}
+
+  member:before {
+    content: attr(name) " : "
+  }
+
+summary {
+  font-size: 1em;
+  color: green;
+  margin: 0px 50px 0px 50px;
+  display: block;
+}
+
+summary:before {
+  content: "Summary : "
+}
+
+remarks {
+  font-size: 1em;
+  font-style: italic;
+  color: green;
+  margin: 0px 50px 0px 50px;
+  display: block;
+}
+
+remarks:before {
+  content: "Remarks : "
+}
+
+param, typeparam {
+  font-size: 1em;
+  margin: 0px 50px 0px 50px;
+  color: darkmagenta;
+  display: block;
+}
+
+  param:before, typeparam:before {
+    content: attr(name) " : "
+  }
+
+returns {
+  font-size: 1em;
+  font-style: italic;
+  color: darkred;
+  margin: 0px 50px 0px 50px;
+  display: block;
+}

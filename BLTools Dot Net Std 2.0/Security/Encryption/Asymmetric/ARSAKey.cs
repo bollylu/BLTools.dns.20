@@ -5,10 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace BLTools.Encryption {
-  public abstract class ARSAKey : IToXml, IEquatable<ARSAKey> {
+  public abstract class ARSAKey : IToXml, IFileXml, IEquatable<ARSAKey> {
 
 
     #region --- XML constants ----------------------------------------------------------------------------------
@@ -70,9 +73,28 @@ namespace BLTools.Encryption {
       RetVal.SetAttributeValue(XML_ATTRIBUTE_EXPONENT, Convert.ToBase64String(Parameters.Exponent));
       return RetVal;
     }
+
+    public void FromXml(XElement source) {
+      if (source is null) {
+        return;
+      }
+
+      Parameters = new RSAParameters() {
+        P = Convert.FromBase64String(source.SafeReadAttribute(XML_ATTRIBUTE_P, "")),
+        Q = Convert.FromBase64String(source.SafeReadAttribute(XML_ATTRIBUTE_Q, "")),
+        DP = Convert.FromBase64String(source.SafeReadAttribute(XML_ATTRIBUTE_DP, "")),
+        DQ = Convert.FromBase64String(source.SafeReadAttribute(XML_ATTRIBUTE_DQ, "")),
+        InverseQ = Convert.FromBase64String(source.SafeReadAttribute(XML_ATTRIBUTE_INVERSEQ, "")),
+        D = Convert.FromBase64String(source.SafeReadAttribute(XML_ATTRIBUTE_D, "")),
+        Modulus = Convert.FromBase64String(source.SafeReadAttribute(XML_ATTRIBUTE_MODULUS, "")),
+        Exponent = Convert.FromBase64String(source.SafeReadAttribute(XML_ATTRIBUTE_EXPONENT, "")),
+      };
+    }
     #endregion Converters
 
     #region Public methods
+
+    [Obsolete("Use SaveXml() or SaveXmlAsync()")]
     public virtual void Save(string pathname) {
       string FullName = Path.Combine(pathname, Filename);
       try {
@@ -83,11 +105,12 @@ namespace BLTools.Encryption {
         TextWriter XmlWriter = new StreamWriter(FullName, false, Encoding.UTF8);
         XmlPublicKeyFile.Save(XmlWriter, SaveOptions.None);
         XmlWriter.Close();
-      } catch ( Exception ex ) {
+      } catch (Exception ex) {
         Trace.WriteLine(string.Format("Error while saving public key : {0}", ex.Message), Severity.Error);
       }
     }
 
+    [Obsolete("Use LoadXml() or LoadXmlAsync()")]
     public virtual void Load(string pathname) {
       string FullName = Path.Combine(pathname, Filename);
       try {
@@ -103,13 +126,13 @@ namespace BLTools.Encryption {
           Modulus = Convert.FromBase64String(Key.SafeReadAttribute<string>(XML_ATTRIBUTE_MODULUS, "")),
           Exponent = Convert.FromBase64String(Key.SafeReadAttribute<string>(XML_ATTRIBUTE_EXPONENT, ""))
         };
-      } catch ( Exception ex ) {
+      } catch (Exception ex) {
         Trace.WriteLine(string.Format("Error while reading public key : {0}", ex.Message), Severity.Error);
       }
     }
 
     public bool Equals(ARSAKey other) {
-      if ( other == null ) {
+      if (other == null) {
         return false;
       }
 
@@ -117,34 +140,141 @@ namespace BLTools.Encryption {
         return true;
       }
 
-      if ( !other.Parameters.P.SequenceEqual(Parameters.P) ) {
+      if (!other.Parameters.P.SequenceEqual(Parameters.P)) {
         return false;
       }
 
-      if ( !other.Parameters.Q.SequenceEqual(Parameters.Q) ) {
+      if (!other.Parameters.Q.SequenceEqual(Parameters.Q)) {
         return false;
       }
-      if ( !other.Parameters.DP.SequenceEqual(Parameters.DP) ) {
+      if (!other.Parameters.DP.SequenceEqual(Parameters.DP)) {
         return false;
       }
-      if ( !other.Parameters.DQ.SequenceEqual(Parameters.DQ) ) {
+      if (!other.Parameters.DQ.SequenceEqual(Parameters.DQ)) {
         return false;
       }
-      if ( !other.Parameters.D.SequenceEqual(Parameters.D) ) {
+      if (!other.Parameters.D.SequenceEqual(Parameters.D)) {
         return false;
       }
-      if ( !other.Parameters.InverseQ.SequenceEqual(Parameters.InverseQ) ) {
+      if (!other.Parameters.InverseQ.SequenceEqual(Parameters.InverseQ)) {
         return false;
       }
-      if ( !other.Parameters.Modulus.SequenceEqual(Parameters.Modulus) ) {
+      if (!other.Parameters.Modulus.SequenceEqual(Parameters.Modulus)) {
         return false;
       }
-      if ( !other.Parameters.Exponent.SequenceEqual(Parameters.Exponent) ) {
+      if (!other.Parameters.Exponent.SequenceEqual(Parameters.Exponent)) {
         return false;
       }
 
       return true;
     }
+
+    public bool SaveXml(string filename, bool overwrite = true) {
+
+      #region === Validate parameters ===
+      if (string.IsNullOrWhiteSpace(filename)) {
+        return false;
+      }
+      #endregion === Validate parameters ===
+
+      try {
+        XDocument XmlPublicKeyFile = new XDocument();
+        XmlPublicKeyFile.Declaration = new XDeclaration("1.0", "UTF-8", "yes");
+        XmlPublicKeyFile.Add(new XElement("root"));
+        XmlPublicKeyFile.Root.Add(this.ToXml());
+        using (TextWriter XmlWriter = new StreamWriter(filename, false, Encoding.UTF8)) {
+          XmlPublicKeyFile.Save(XmlWriter, SaveOptions.None);
+          XmlWriter.Close();
+        }
+        return true;
+      } catch (Exception ex) {
+        Trace.WriteLine(string.Format("Error while saving public key : {0}", ex.Message), Severity.Error);
+        return false;
+      }
+    }
+
+    public async Task<bool> SaveXmlAsync(string filename, bool overwrite = true) {
+      #region === Validate parameters ===
+      if (string.IsNullOrWhiteSpace(filename)) {
+        return false;
+      }
+      #endregion === Validate parameters ===
+
+      try {
+        XDocument XmlPublicKeyFile = new XDocument();
+        XmlPublicKeyFile.Declaration = new XDeclaration("1.0", "UTF-8", "yes");
+        XmlPublicKeyFile.Add(new XElement("root"));
+        XmlPublicKeyFile.Root.Add(this.ToXml());
+#if NETSTANDARD2_0
+        using (TextWriter XmlWriter = new StreamWriter(filename, false, Encoding.UTF8)) {
+          XmlPublicKeyFile.Save(XmlWriter, SaveOptions.None);
+          await Task.Yield();
+          XmlWriter.Close();
+        }
+        return true;
+#else
+        using (FileStream OutputStream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None)) {
+          await XmlPublicKeyFile.SaveAsync(OutputStream, SaveOptions.None, new CancellationTokenSource(1000).Token).ConfigureAwait(false);
+
+        }
+        return true;
+#endif
+      } catch (Exception ex) {
+        Trace.WriteLine(string.Format("Error while saving public key : {0}", ex.Message), Severity.Error);
+        return false;
+      }
+    }
+
+    /// <inheritdoc/>
+    public bool LoadXml(string filename) {
+      #region === Validate parameters ===
+      if (string.IsNullOrWhiteSpace(filename)) {
+        return false;
+      }
+      #endregion === Validate parameters ===
+
+      try {
+        XDocument XmlFile = XDocument.Load(filename);
+        XElement Key = XmlFile.Root.SafeReadElement(XML_THIS_ELEMENT);
+        FromXml(Key);
+        return true;
+      } catch (Exception ex) {
+        Trace.WriteLine(string.Format("Error while reading public key : {0}", ex.Message), Severity.Error);
+        return false;
+      }
+    }
+
+    /// <inheritdoc/>
+    public async Task<bool> LoadXmlAsync(string filename) {
+      #region === Validate parameters ===
+      if (string.IsNullOrWhiteSpace(filename)) {
+        return false;
+      }
+      #endregion === Validate parameters ===
+
+      try {
+
+#if NETSTANDARD2_0
+        XDocument XmlFile = XDocument.Load(filename);
+        await Task.Yield();
+        XElement Key = XmlFile.Root.SafeReadElement(XML_THIS_ELEMENT);
+        FromXml(Key);
+#else
+        using (FileStream InputStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+          XDocument XmlFile = await XDocument.LoadAsync(InputStream, LoadOptions.None, new CancellationTokenSource(1000).Token).ConfigureAwait(false);
+          XElement Key = XmlFile.Root.SafeReadElement(XML_THIS_ELEMENT);
+          FromXml(Key);
+        }
+#endif
+
+        return true;
+      } catch (Exception ex) {
+        Trace.WriteLine(string.Format("Error while reading public key : {0}", ex.Message), Severity.Error);
+        return false;
+      }
+    }
+
+
     #endregion Public methods
 
 

@@ -19,16 +19,14 @@ namespace BLTools.Encryption {
     public string Name { get; set; }
     public EKeyType KeyType { get; set; }
     public int KeyLength { get; set; }
-    public TRSAPrivateKey PrivateKey { get; set; }
-    public TRSAPublicKey PublicKey { get; set; }
+    public TRSAPrivateKey PrivateKey { get; } = new TRSAPrivateKey();
+    public TRSAPublicKey PublicKey { get; } = new TRSAPublicKey();
     #endregion Public properties
 
     #region Constructor(s)
     public TRSAKeyPair() {
       Name = "";
       KeyType = EKeyType.Unknown;
-      PublicKey = new TRSAPublicKey();
-      PrivateKey = new TRSAPrivateKey();
       KeyLength = 1024;
     }
 
@@ -36,7 +34,7 @@ namespace BLTools.Encryption {
       Name = keyname;
       KeyLength = keyLength;
       KeyType = EKeyType.Random;
-      using ( RSACryptoServiceProvider RSACSP = new RSACryptoServiceProvider(keyLength) ) {
+      using (RSACryptoServiceProvider RSACSP = new RSACryptoServiceProvider(keyLength)) {
         RSAParameters TempParams = RSACSP.ExportParameters(true);
         PublicKey = new TRSAPublicKey(Name, TempParams);
         PrivateKey = new TRSAPrivateKey(Name, TempParams);
@@ -53,26 +51,6 @@ namespace BLTools.Encryption {
       return RetVal.ToString();
     }
 
-    public XElement ToXml() {
-      XElement RetVal = new XElement("RSAKeyPair");
-      RetVal.Add(PrivateKey.ToXml());
-      RetVal.Add(PublicKey.ToXml());
-      return RetVal;
-    }
-
-    //public RSAParameters ToPublicRSAParameters() {
-    //  using (RSACryptoServiceProvider RSACSP = new RSACryptoServiceProvider()) {
-    //    RSACSP.FromXmlString(PublicKey.Key);
-    //    return RSACSP.ExportParameters(false);
-    //  }
-    //}
-
-    //public RSAParameters ToPrivateRSAParameters() {
-    //  using (RSACryptoServiceProvider RSACSP = new RSACryptoServiceProvider()) {
-    //    RSACSP.FromXmlString(PrivateKey.Key);
-    //    return RSACSP.ExportParameters(true);
-    //  }
-    //} 
     #endregion Converters
 
     public void Save(string pathname) {
@@ -90,5 +68,24 @@ namespace BLTools.Encryption {
       RetVal.Load(pathname);
       return RetVal;
     }
+
+    #region --- IToXml --------------------------------------------
+    public XElement ToXml() {
+      XElement RetVal = new XElement("RSAKeyPair");
+      RetVal.Add(PrivateKey.ToXml());
+      RetVal.Add(PublicKey.ToXml());
+      return RetVal;
+    }
+
+    public void FromXml(XElement source) {
+      if (source is null) {
+        return;
+      }
+
+      PrivateKey.FromXml(source.Element(TRSAPrivateKey.XML_THIS_ELEMENT));
+      PublicKey.FromXml(source.Element(TRSAPublicKey.XML_THIS_ELEMENT));
+
+    }
+    #endregion --- IToXml --------------------------------------------
   }
 }

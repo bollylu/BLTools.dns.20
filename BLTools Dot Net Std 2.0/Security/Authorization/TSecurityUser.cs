@@ -45,15 +45,7 @@ namespace BLTools.Security.Authorization {
     }
 
     public TSecurityUser(XElement user) {
-      if (user == null) {
-        string Msg = "Unable to create a TSecurityUser from a null XElement";
-        Trace.WriteLine(Msg, Severity.Error);
-        throw new ArgumentNullException(Msg, "user");
-      }
-      Id = user.SafeReadAttribute<string>("id", "");
-      Name = user.SafeReadAttribute<string>("name", "");
-      EncryptedPassword = user.SafeReadAttribute<string>("password", "");
-      Description = user.SafeReadElementValue<string>("description", "");
+      FromXml(user);
     } 
     #endregion Constructor(s)
 
@@ -86,5 +78,16 @@ namespace BLTools.Security.Authorization {
       }
     }
 
+    public void FromXml(XElement source) {
+      if (source is null) {
+        string Msg = "Unable to create a TSecurityUser from a null XElement";
+        Trace.WriteLine(Msg, Severity.Error);
+        throw new ArgumentNullException(Msg, "user");
+      }
+      Id = source.SafeReadAttribute<string>("id", "");
+      Name = source.SafeReadAttribute<string>("name", "");
+      EncryptedPassword = source.SafeReadAttribute<string>("password", "");
+      Description = source.SafeReadElementValue<string>("description", "");
+    }
   }
 }

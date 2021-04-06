@@ -1,0 +1,2535 @@
+<?xml version="1.0"?>
+<!--<?xml-stylesheet type="text/xsl" href="ViewDoc.xsl"?>-->
+<?xml-stylesheet type="text/css" href="DocXml.css"?>
+
+<doc>
+    <assembly>
+        <name>BLTools</name>
+    </assembly>
+    <members>
+        <member name="M:BLTools.TActionManager.AddFunc``2 (System.String,System.Predicate{``0},System.Func{``0,``1})">
+            <summary>
+            Add a function to calculate some results if a predicate is true
+            </summary>
+            <typeparam name="X">The type of the value passed to the predicate (and the function)</typeparam>
+            <typeparam name="R">The type of the returned value</typeparam>
+            <param name="name">A name (for display only)</param>
+            <param name="predicate">The predicate that determine if the function is processed</param>
+            <param name="func">The function to process when the predicate is true</param>
+        </member>
+        <member name="M:BLTools.TActionManager.AddFunc``3(System.String,System.Predicate{``0},System.Func{``0,``1,``2})">
+            <summary>
+            Add a function to calculate some results if a predicate is true
+            </summary>
+            <typeparam name="X1">The type of the value passed to the predicate (and the function)</typeparam>
+            <typeparam name="X2">The type of the second parameter for the function</typeparam>
+            <typeparam name="R">The type of the returned value</typeparam>
+            <param name="name">A name (for display only)</param>
+            <param name="predicate">The predicate that determine if the function is processed</param>
+            <param name="func">The function to process when the predicate is true</param>
+        </member>
+        <member name="M:BLTools.TActionManager.AddFunc``4(System.String,System.Predicate{``0},System.Func{``0,``1,``2,``3})">
+            <summary>
+            Add a function to calculate some results if a predicate is true
+            </summary>
+            <typeparam name="X1">The type of the value passed to the predicate (and the function)</typeparam>
+            <typeparam name="X2">The type of the second parameter for the function</typeparam>
+            <typeparam name="X3">The type of the third parameter for the function</typeparam>
+            <typeparam name="R">The type of the returned value</typeparam>
+            <param name="name">A name (for display only)</param>
+            <param name="predicate">The predicate that determine if the function is processed</param>
+            <param name="func">The function to process when the predicate is true</param>
+        </member>
+        <member name="M:BLTools.TActionManager.AddFunc``5(System.String,System.Predicate{``0},System.Func{``0,``1,``2,``3,``4})">
+            <summary>
+            Add a function to calculate some results if a predicate is true
+            </summary>
+            <typeparam name="X1">The type of the value passed to the predicate (and the function)</typeparam>
+            <typeparam name="X2">The type of the second parameter for the function</typeparam>
+            <typeparam name="X3">The type of the third parameter for the function</typeparam>
+            <typeparam name="X4">The type of the third parameter for the function</typeparam>
+            <typeparam name="R">The type of the returned value</typeparam>
+            <param name="name">A name (for display only)</param>
+            <param name="predicate">The predicate that determine if the function is processed</param>
+            <param name="func">The function to process when the predicate is true</param>
+        </member>
+        <member name="T:BLTools.TConditionActionAwaiter">
+            <summary>
+            Wait for a condition to be met or timeout, while executing an action
+            </summary>
+        </member>
+        <member name="M:BLTools.TConditionActionAwaiter.#ctor(System.Func{System.Boolean},System.Action{System.Double},System.Int64,System.Int32)">
+            <summary>
+            Wait for a condition to be met or timeout, while executing an action
+            </summary>
+            <param name="condition">The condition to evaluate</param>
+            <param name="progressAction">The action to execute while waiting, the value passed as parameter is the number of milliseconds remaining before the timeout</param>
+            <param name="timeoutInMsec">The timeout</param>
+            <param name="refreshRateInMsec">How often is the progress action executed</param>
+        </member>
+        <member name="M:BLTools.TConditionActionAwaiter.Execute(System.Int32)">
+            <summary>
+            Start to wait for the condition
+            </summary>
+            <remarks>Timeout > refresh rate > polling delay</remarks>
+            <param name="pollingDelayInMsec">Delay before next evaluation of the condition</param>
+            <returns>true if condition is met, false if timeout</returns>
+        </member>
+        <member name="M:BLTools.TConditionActionAwaiter.ExecuteAsync(System.Int32)">
+            <summary>
+            Start to wait asynchronously for the condition
+            </summary>
+            <remarks>Timeout > refresh rate > polling delay</remarks>
+            <param name="pollingDelayInMsec">Delay before next evaluation of the condition</param>
+            <returns>true if condition is met, false if timeout</returns>
+        </member>
+        <member name="T:BLTools.TConditionActionAwaiter`1">
+            <summary>
+            Wait for a condition to be met or timeout, while executing an action
+            </summary>
+        </member>
+        <member name="M:BLTools.TConditionActionAwaiter`1.#ctor(System.Predicate{`0},System.Action{System.Double},System.Int64,System.Int32)">
+            <summary>
+            Wait for a condition to be met or timeout, while executing an action
+            </summary>
+            <param name="predicate">The condition to evaluate</param>
+            <param name="progressAction">The action to execute while waiting, the value passed as parameter is the number of milliseconds remaining before the timeout</param>
+            <param name="timeoutInMsec">The timeout</param>
+            <param name="refreshRateInMsec">How often is the progress action executed</param>
+        </member>
+        <member name="M:BLTools.TConditionActionAwaiter`1.Execute(`0,System.Int32)">
+            <summary>
+            Start to wait for the condition
+            </summary>
+            <remarks>Timeout > refresh rate > polling delay</remarks>
+            <param name="pollingDelayInMsec">Delay before next evaluation of the condition</param>
+            <returns>true if condition is met, false if timeout</returns>
+        </member>
+        <member name="M:BLTools.TConditionActionAwaiter`1.ExecuteAsync(`0,System.Int32)">
+            <summary>
+            Start to wait asynchronously for the condition
+            </summary>
+            <remarks>Timeout > refresh rate > polling delay</remarks>
+            <param name="pollingDelayInMsec">Delay before next evaluation of the condition</param>
+            <returns>true if condition is met, false if timeout</returns>
+        </member>
+        <member name="T:BLTools.TConditionAwaiter">
+            <summary>
+            Wait for a condition to be met or timeout
+            </summary>
+        </member>
+        <member name="M:BLTools.TConditionAwaiter.#ctor(System.Func{System.Boolean},System.Int64)">
+            <summary>
+            Wait for a condition to be met or timeout
+            </summary>
+            <param name="condition">The condition to evaluate</param>
+            <param name="timeoutInMsec">The timeout in msec</param>
+        </member>
+        <member name="M:BLTools.TConditionAwaiter.Execute(System.Int32)">
+            <summary>
+            Start the wait process
+            </summary>
+            <param name="pollingDelayInMsec">Delay in ms to wait between evalution of the condition</param>
+            <returns>true if condition was met, false if timeout</returns>
+        </member>
+        <member name="M:BLTools.TConditionAwaiter.ExecuteAsync(System.Int32)">
+            <summary>
+            Start the wait process asynchronously
+            </summary>
+            <param name="pollingDelayInMsec">Delay in ms to wait between evalution of the condition</param>
+            <returns>true if condition was met, false if timeout</returns>
+        </member>
+        <member name="T:BLTools.TConditionAwaiter`1">
+            <summary>
+            Wait for a condition to be met or timeout
+            </summary>
+        </member>
+        <member name="M:BLTools.TConditionAwaiter`1.#ctor(System.Predicate{`0},System.Int64)">
+            <summary>
+            Wait for a condition to be met or timeout
+            </summary>
+            <param name="predicate">The predicate to evaluate</param>
+            <param name="timeoutInMsec">The timeout in msec</param>
+        </member>
+        <member name="M:BLTools.TConditionAwaiter`1.Execute(`0,System.Int32)">
+            <summary>
+            Start the wait process
+            </summary>
+            <param name="source">The reference to an object used to the predicate evaluation</param>
+            <param name="pollingDelayInMsec">Delay in ms to wait between evalution of the condition</param>
+            <returns>true if condition was met, false if timeout</returns>
+        </member>
+        <member name="M:BLTools.TConditionAwaiter`1.ExecuteAsync(`0,System.Int32)">
+            <summary>
+            Start the wait process asynchronously
+            </summary>
+            <param name="source">The reference to an object used to the predicate evaluation</param>
+            <param name="pollingDelayInMsec">Delay in ms to wait between evalution of the condition</param>
+            <returns>true if condition was met, false if timeout</returns>
+        </member>
+        <member name="T:BLTools.TTimerActionAwaiter">
+            <summary>
+            Wait for a condition to be met or timeout, while executing an action
+            </summary>
+        </member>
+        <member name="M:BLTools.TTimerActionAwaiter.#ctor(System.Int32,System.Action{System.Double},System.Int32)">
+            <summary>
+            Wait for a certain amount of time, while executing an action at a certain refresh rate
+            </summary>
+            <param name="durationInMSec">How long to wait</param>
+            <param name="progressAction">The action to execute while waiting, the value passed as parameter is the number of milliseconds remaining before the timeout</param>
+            <param name="refreshRateInMsec">How often to execute the action</param>
+        </member>
+        <member name="M:BLTools.TTimerActionAwaiter.Execute(System.Int32)">
+            <summary>
+            Start to wait
+            </summary>
+            <param name="pollingDelayInMsec">Delay before next evaluation of the condition</param>
+            <returns>true if condition is met, false if timeout</returns>
+        </member>
+        <member name="M:BLTools.TTimerActionAwaiter.ExecuteAsync(System.Int32)">
+            <summary>
+            Start to wait asynchronously
+            </summary>
+            <param name="pollingDelayInMsec">Delay before next evaluation of the condition</param>
+            <returns>true if condition is met, false if timeout</returns>
+        </member>
+        <member name="P:BLTools.ARepeatAction.Name">
+            <summary>
+            A name for debug
+            </summary>
+        </member>
+        <member name="F:BLTools.ARepeatAction.DEFAULT_DELAY_IN_MS">
+            <summary>
+            Default constant value for delay between two evaluations of the condition
+            </summary>
+        </member>
+        <member name="P:BLTools.ARepeatAction.Delay">
+            <summary>
+            The delay between two evaluations of the condition
+            </summary>
+        </member>
+        <member name="P:BLTools.ARepeatAction.IsWorking">
+            <summary>
+            When true, the repeat action is running
+            </summary>
+        </member>
+        <member name="T:BLTools.TConditionMonitor">
+            <summary>
+            Watch a condition continuously, until cancelled. When the condition is met, execute the associated action
+            </summary>
+        </member>
+        <member name="P:BLTools.TConditionMonitor.Condition">
+            <summary>
+            The function to evaluate
+            </summary>
+        </member>
+        <member name="P:BLTools.TConditionMonitor.WhenCondition">
+            <summary>
+            The action to execute when the condition is met
+            </summary>
+        </member>
+        <member name="M:BLTools.TConditionMonitor.#ctor">
+            <summary>
+            Monitor a condition, triggering an action when condition is met
+            WARNING : Monitoring is done in a background thread, beware of UI
+            </summary>
+        </member>
+        <member name="M:BLTools.TConditionMonitor.#ctor(System.String,System.Func{System.Boolean},System.Action,System.Int32)">
+            <summary>
+            Monitor a condition, triggering an action when condition is met
+            WARNING : Monitoring is done in a background thread, beware of UI
+            </summary>
+            <param name="name">A name for the mmonitor</param>
+            <param name="condition">The condition to evaluate. When true, triggers the action</param>
+            <param name="action">The action to execute when condition is met</param>
+            <param name="delay">The delay between two evaluation of the condition</param>
+        </member>
+        <member name="M:BLTools.TConditionMonitor.Start">
+            <summary>
+            Start the monitoring
+            </summary>
+        </member>
+        <member name="M:BLTools.TConditionMonitor.Cancel">
+            <summary>
+            Stop the monitoring
+            </summary>
+        </member>
+        <member name="T:BLTools.TConditionMonitor`1">
+            <summary>
+            Watch a condition continuously, until cancelled. When the condition is met, execute the associated action
+            </summary>
+            <typeparam name="T">The type (reference, not value) to feed both the predicate and the action</typeparam>
+        </member>
+        <member name="P:BLTools.TConditionMonitor`1.Condition">
+            <summary>
+            The predicate to evaluate (the reference of the monitored item is passed to it)
+            </summary>
+        </member>
+        <member name="P:BLTools.TConditionMonitor`1.WhenCondition">
+            <summary>
+            The action to execute when the condition is met (the reference of the monitored item is passed to it)
+            </summary>
+        </member>
+        <member name="M:BLTools.TConditionMonitor`1.#ctor">
+            <summary>
+            Monitor a condition, triggering an action when condition is met
+            WARNING : Monitoring is done in a background thread, beware of UI
+            </summary>
+        </member>
+        <member name="M:BLTools.TConditionMonitor`1.#ctor(System.String,System.Predicate{`0},System.Action{`0},System.Int32)">
+            <summary>
+            Monitor a condition, triggering an action when condition is met
+            WARNING : Monitoring is done in a background thread, beware of UI
+            </summary>
+            <param name="name">A name for the mmonitor</param>
+            <param name="predicate">The condition to evaluate. When true, triggers the action</param>
+            <param name="action">The action to execute when condition is met</param>
+            <param name="delay">The delay between two evaluation of the condition</param>
+        </member>
+        <member name="M:BLTools.TConditionMonitor`1.Start(`0)">
+            <summary>
+            Start the monitoring
+            </summary>
+            <param name="obj">The reference of the object to monitor</param>
+        </member>
+        <member name="M:BLTools.TConditionMonitor`1.Cancel">
+            <summary>
+            Stop the monitoring
+            </summary>
+        </member>
+        <member name="P:BLTools.TRepeatAction.ToDo">
+            <summary>
+            The action to execute every occurence of the delay
+            </summary>
+        </member>
+        <member name="M:BLTools.TRepeatAction.#ctor">
+            <summary>
+            Monitor a condition, triggering an action when condition is met
+            WARNING : Monitoring is done in a background thread, beware of UI
+            </summary>
+        </member>
+        <member name="M:BLTools.TRepeatAction.#ctor(System.String,System.Action,System.Int32)">
+            <summary>
+            Monitor a condition, triggering an action when condition is met
+            WARNING : Monitoring is done in a background thread, beware of UI
+            </summary>
+            <param name="name">A name for the mmonitor</param>
+            <param name="predicate">The condition to evaluate. When true, triggers the action</param>
+            <param name="action">The action to execute when condition is met</param>
+            <param name="delay">The delay between two evaluation of the condition</param>
+        </member>
+        <member name="M:BLTools.TRepeatAction.Cancel">
+            <summary>
+            Stop the execution of the loop
+            </summary>
+        </member>
+        <member name="M:BLTools.TRepeatAction.Cancel(System.Int32)">
+            <summary>
+            Stop the execution of the loop
+            </summary>
+            <param name="timeout">The timeout for the loop to be stopped, default is delay * 10</param>
+        </member>
+        <member name="P:BLTools.TRepeatAction`1.ToDo">
+            <summary>
+            The action to execute when the condition is met (the reference of the monitored item is passed to it)
+            </summary>
+        </member>
+        <member name="M:BLTools.TRepeatAction`1.#ctor">
+            <summary>
+            Monitor a condition, triggering an action when condition is met
+            WARNING : Monitoring is done in a background thread, beware of UI
+            </summary>
+        </member>
+        <member name="M:BLTools.TRepeatAction`1.#ctor(System.String,System.Action{`0},System.Predicate{`0},System.Int32)">
+            <summary>
+            Monitor a condition, triggering an action when condition is met
+            WARNING : Monitoring is done in a background thread, beware of UI
+            </summary>
+            <param name="name">A name for the mmonitor</param>
+            <param name="predicate">The condition to evaluate. When true, triggers the action</param>
+            <param name="action">The action to execute when condition is met</param>
+            <param name="delay">The delay between two evaluation of the condition</param>
+        </member>
+        <member name="M:BLTools.TRepeatAction`1.Cancel">
+            <summary>
+            Stop the execution of the loop
+            </summary>
+        </member>
+        <member name="M:BLTools.TRepeatAction`1.Cancel(System.Int32)">
+            <summary>
+            Stop the execution of the loop
+            </summary>
+            <param name="timeout">The timeout for the loop to be stopped, default is delay * 10</param>
+        </member>
+        <member name="T:BLTools.TRepeatActionCondition">
+            <summary>
+            Execute an action until a condition is met or cancelled
+            WARNING : execution is done in a background thread, beware of UI
+            </summary>
+        </member>
+        <member name="P:BLTools.TRepeatActionCondition.ToDo">
+            <summary>
+            The action to execute when the condition is met (the reference of the monitored item is passed to it)
+            </summary>
+        </member>
+        <member name="P:BLTools.TRepeatActionCondition.ExitCondition">
+            <summary>
+            A function to evaluate if we continue or not
+            </summary>
+        </member>
+        <member name="M:BLTools.TRepeatActionCondition.#ctor">
+            <summary>
+            Execute an action until a condition is met or cancelled
+            WARNING : execution is done in a background thread, beware of UI
+            </summary>
+        </member>
+        <member name="M:BLTools.TRepeatActionCondition.#ctor(System.String,System.Action,System.Func{System.Boolean},System.Int32)">
+            <summary>
+            Execute an action until a condition is met or cancelled
+            WARNING : execution is done in a background thread, beware of UI
+            </summary>
+            <param name="name">A name for the item</param>
+            <param name="todo">The action to execute until condition is met</param>
+            <param name="exitCondition">The condition to evaluate : when true, repeat is complete</param>
+            <param name="delay">The delay between two evaluations of the condition</param>
+        </member>
+        <member name="M:BLTools.TRepeatActionCondition.Start">
+            <summary>
+            Start the loop
+            </summary>
+        </member>
+        <member name="M:BLTools.TRepeatActionCondition.Cancel">
+            <summary>
+            Stop the execution of the loop
+            </summary>
+        </member>
+        <member name="M:BLTools.TRepeatActionCondition.Cancel(System.Int32)">
+            <summary>
+            Stop the execution of the loop
+            </summary>
+            <param name="timeout">The timeout for the loop to be stopped, default is delay * 10</param>
+        </member>
+        <member name="T:BLTools.TRepeatActionCondition`1">
+            <summary>
+            Execute an action until a condition is met or cancelled
+            WARNING : execution is done in a background thread, beware of UI
+            </summary>
+        </member>
+        <member name="P:BLTools.TRepeatActionCondition`1.ToDo">
+            <summary>
+            The action to execute when the condition is met (the reference of the monitored item is passed to it)
+            </summary>
+        </member>
+        <member name="P:BLTools.TRepeatActionCondition`1.ExitCondition">
+            <summary>
+            The predicate to evaluate (the reference of the monitored item is passed to it)
+            </summary>
+        </member>
+        <member name="M:BLTools.TRepeatActionCondition`1.#ctor">
+            <summary>
+            Execute an action until a condition is met or cancelled
+            WARNING : execution is done in a background thread, beware of UI
+            </summary>
+        </member>
+        <member name="M:BLTools.TRepeatActionCondition`1.#ctor(System.String,System.Action{`0},System.Predicate{`0},System.Int32)">
+            <summary>
+            Execute an action until a condition is met or cancelled
+            WARNING : execution is done in a background thread, beware of UI
+            </summary>
+            <param name="name">A name for the item</param>
+            <param name="todo">The action to execute until condition is met</param>
+            <param name="predicate">The condition to evaluate. When true, execution is cancelled</param>
+            <param name="delay">The delay between two evaluation of the condition</param>
+        </member>
+        <member name="M:BLTools.TRepeatActionCondition`1.Start(`0)">
+            <summary>
+            Start the loop
+            </summary>
+            <param name="obj">The reference of the object to be used in evalution</param>
+        </member>
+        <member name="M:BLTools.TRepeatActionCondition`1.Cancel">
+            <summary>
+            Stop the repeat process
+            </summary>
+        </member>
+        <member name="M:BLTools.TRepeatActionCondition`1.Cancel(System.Int32)">
+            <summary>
+            Stop the execution of the loop
+            </summary>
+            <param name="timeout">The timeout for the loop to be stopped, default is delay * 10</param>
+        </member>
+        <member name="T:BLTools.ConsoleExtension.EInputValidation">
+            <summary>
+            Possible values for validation of an input
+            </summary>
+        </member>
+        <member name="F:BLTools.ConsoleExtension.EInputValidation.Unknown">
+            <summary>
+            Value is unknonw
+            </summary>
+        </member>
+        <member name="F:BLTools.ConsoleExtension.EInputValidation.Mandatory">
+            <summary>
+            The request needs an answer in any case
+            </summary>
+        </member>
+        <member name="F:BLTools.ConsoleExtension.EInputValidation.IsNumeric">
+            <summary>
+            The request wait for a numeric only anwser
+            </summary>
+        </member>
+        <member name="F:BLTools.ConsoleExtension.EInputValidation.IsAlpha">
+            <summary>
+            The request wait for a alpha only answer
+            </summary>
+        </member>
+        <member name="F:BLTools.ConsoleExtension.EInputValidation.IsAlphaNumeric">
+            <summary>
+            The answer could be alpha or numeric
+            </summary>
+        </member>
+        <member name="F:BLTools.ConsoleExtension.EInputValidation.IsAlphaNumericAndSpacesAndDashes">
+            <summary>
+            The answer can contain both alphanumeric, numeric plus dashes and spaces
+            </summary>
+        </member>
+        <member name="T:BLTools.ConsoleExtension.EInputYesNo">
+            <summary>
+            Possible return values for InputYesNo
+            </summary>
+        </member>
+        <member name="T:BLTools.ConsoleExtension.ConsoleExtension">
+            <summary>
+            Extensions to the console
+            </summary>
+        </member>
+        <member name="M:BLTools.ConsoleExtension.ConsoleExtension.Input``1(System.String,BLTools.ConsoleExtension.EInputValidation,System.String)">
+            <summary>
+            Display a message to the console and wait for an answer. Return the entered value converted to requested type or default value for this type in case of convert error
+            </summary>
+            <typeparam name="T">Requested type of the return value</typeparam>
+            <param name="questionMessage">Message to display on the console</param>
+            <param name="optionFlags">Validation option for the answer (mandatory, alpha, ...)</param>
+            <param name="errorMessage">Message to display in case of error</param>
+            <returns>Entered value converted to the requested type or default for this type in case of convert error</returns>
+        </member>
+        <member name="M:BLTools.ConsoleExtension.ConsoleExtension.InputList(System.Collections.Generic.Dictionary{System.Int32,System.String},System.String,System.String,System.String)">
+            <summary>
+            Allow a user at the console to select a response from a list
+            </summary>
+            <param name="possibleValues">Dictionnary of the possible values</param>
+            <param name="title">Title of the list</param>
+            <param name="question">Prompt at the bottom of the list</param>
+            <param name="errorMessage">Message to display in case of erroneous value</param>
+            <returns>The key of the selected dictionnary item</returns>
+        </member>
+        <member name="M:BLTools.ConsoleExtension.ConsoleExtension.InputList(System.Collections.Generic.IEnumerable{System.String},System.String,System.String,System.String)">
+            <summary>
+            Allow a user at the console to select a response from a list
+            </summary>
+            <param name="items">List of the possible values</param>
+            <param name="title">Title of the list</param>
+            <param name="question">Prompt at the bottom of the list</param>
+            <param name="errorMessage">Message to display in case of erroneous value</param>
+            <returns>The key of the selected item</returns>
+        </member>
+        <member name="M:BLTools.ConsoleExtension.ConsoleExtension.InputYesNo(System.String,BLTools.ConsoleExtension.EInputYesNo,System.Char,System.Char)">
+            <summary>
+            Display a question on the console, and wait for a Yes or No answer. Both Yes and No value can be customized. A default value can be specified.
+            </summary>
+            <param name="question">The question to display</param>
+            <param name="defaultValue">The default value if &lt;enter&gt; is pressed (default=Y)</param>
+            <param name="yesValue">The value for Yes (default=Y)</param>
+            <param name="noValue">The value for No (default=N)</param>
+            <returns>Either Yes or No</returns>
+        </member>
+        <member name="M:BLTools.ConsoleExtension.ConsoleExtension.Pause(System.Double,System.Boolean,System.Boolean)">
+            <summary>
+            Display "Press any key to continue..." on console, then wait for a key, possibly with a timeout in msec
+            </summary>
+            <param name="timeout">The timeout if no key is pressed</param>
+            <param name="isAnimated">Will animation run during the pause</param>
+            <param name="displayTimeout">Display the timeout counter during the pause</param>
+        </member>
+        <member name="M:BLTools.ConsoleExtension.ConsoleExtension.Pause(System.String,System.Double,System.Boolean,System.Boolean)">
+            <summary>
+            Display a message on console, then wait for a key, possibly with a timeout in msec
+            </summary>
+            <param name="message">The message to be displayed</param>
+            <param name="timeout">The timeout if no key is pressed</param>
+            <param name="isAnimated">Will animation run during the pause</param>
+            <param name="displayTimeout">Display the timeout counter during the pause</param>
+        </member>
+        <member name="T:BLTools.Collections.ICircularList`1">
+            <summary>
+            Defines a circular list. When iterating the list, after the last item, the itaration continue with the first item. The behaviour is similar in the other direction.
+            </summary>
+            <typeparam name="T">The type of data to store</typeparam>
+        </member>
+        <member name="P:BLTools.Collections.ICircularList`1.IsCircular">
+            <summary>
+            tru to indicate that this list behave as circular. If false, this is a standard list
+            </summary>
+        </member>
+        <member name="M:BLTools.Collections.ICircularList`1.GetNext">
+            <summary>
+            Obtain the next item in iteration
+            </summary>
+            <returns>The next item</returns>
+        </member>
+        <member name="M:BLTools.Collections.ICircularList`1.GetPrevious">
+            <summary>
+            Obtain the previous item in iteration
+            </summary>
+            <returns>The previous item</returns>
+        </member>
+        <member name="M:BLTools.Collections.ICircularList`1.ResetIndex">
+            <summary>
+            Reset the index to the first item of the list
+            </summary>
+        </member>
+        <member name="T:BLTools.Debugging.ApplicationInfo">
+            <summary>
+            Helper for obtaining runtime infos
+            </summary>
+        </member>
+        <member name="M:BLTools.Debugging.ApplicationInfo.ApplicationStart">
+            <summary>
+            Generate a banner with startup information and send it to Trace
+            </summary>
+        </member>
+        <member name="M:BLTools.Debugging.ApplicationInfo.ApplicationStop">
+            <summary>
+            Generate a banner to confirm that application is stopping and send it to Trace
+            </summary>
+        </member>
+        <member name="M:BLTools.Debugging.ApplicationInfo.TraceRuntimeInfo">
+            <summary>
+            Send a banner with runtime info to Trace
+            </summary>
+        </member>
+        <member name="M:BLTools.Debugging.ApplicationInfo.BuildRuntimeInfo">
+            <summary>
+            Builds a banner with runtime infos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BLTools.Debugging.TraceFactory">
+            <summary>
+            Helper for Trace management
+            </summary>
+        </member>
+        <member name="F:BLTools.Debugging.TraceFactory.DefaultLogLocation">
+            <summary>
+            Default location where log files without path will be created
+            </summary>
+        </member>
+        <member name="M:BLTools.Debugging.TraceFactory.AddTraceLogFilename(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Add a listener to the Listeners collection of the Trace object. This new listener point to a filename, can be reset and rolled over
+            </summary>
+            <param name="filename">Name of the log file</param>
+            <param name="resetLog">True to reset the log before adding to the listeners</param>
+            <param name="rollover">True to roll over the log before adding to the listeners</param>
+        </member>
+        <member name="M:BLTools.Debugging.TraceFactory.AddTraceDefaultLogFilename(System.Boolean,System.Boolean)">
+            <summary>
+            Add a listener to the Listeners collection of the Trace object. This new listener is named after the main process filename (i.e. the .exe filename). It can be reset and rolled over
+            </summary>
+            <param name="resetLog">True to reset the log before adding to the listeners</param>
+            <param name="rollover">True to roll over the log before adding to the listeners</param>
+        </member>
+        <member name="M:BLTools.Debugging.TraceFactory.GetTraceDefaultLogFilename">
+            <summary>
+            Get the name of the default log file (based on application name)
+            </summary>
+            <returns>The path and name of the default log file</returns>
+        </member>
+        <member name="M:BLTools.Debugging.TraceFactory.AddTraceConsole">
+            <summary>
+            Add the console as a listener to the listeners collection of the Trace object
+            </summary>
+        </member>
+        <member name="T:BLTools.BoolAndMessageEventArgs">
+            <summary>
+            EventArgs holding both a boolean value and a message
+            </summary>
+        </member>
+        <member name="P:BLTools.BoolAndMessageEventArgs.Result">
+            <summary>
+            Boolean result to pass
+            </summary>
+        </member>
+        <member name="P:BLTools.BoolAndMessageEventArgs.Message">
+            <summary>
+            A message to better describe the result (e.g. Operation failed because ...)
+            </summary>
+        </member>
+        <member name="M:BLTools.BoolAndMessageEventArgs.#ctor">
+            <summary>
+            Parameterless constructor
+            </summary>
+        </member>
+        <member name="M:BLTools.BoolAndMessageEventArgs.#ctor(System.Boolean,System.String)">
+            <summary>
+            Constructor with result and message
+            </summary>
+            <param name="result">The boolean result to pass</param>
+            <param name="message">The message</param>
+        </member>
+        <member name="T:BLTools.BoolEventArgs">
+            <summary>
+            EventArgs holding a boolean value
+            </summary>
+        </member>
+        <member name="P:BLTools.BoolEventArgs.Result">
+            <summary>
+            The boolean value
+            </summary>
+        </member>
+        <member name="M:BLTools.BoolEventArgs.#ctor">
+            <summary>
+            Parameterless constructor
+            </summary>
+        </member>
+        <member name="M:BLTools.BoolEventArgs.#ctor(System.Boolean)">
+            <summary>
+            Constructor with boolean result
+            </summary>
+            <param name="result">The boolean result</param>
+        </member>
+        <member name="T:BLTools.DoubleEventArgs">
+            <summary>
+            EventArgs holding a double
+            </summary>
+        </member>
+        <member name="P:BLTools.DoubleEventArgs.Value">
+            <summary>
+            The double value to pass
+            </summary>
+        </member>
+        <member name="M:BLTools.DoubleEventArgs.#ctor">
+            <summary>
+            Parameterless constructor
+            </summary>
+        </member>
+        <member name="M:BLTools.DoubleEventArgs.#ctor(System.Double)">
+            <summary>
+            Constructor with the double value
+            </summary>
+            <param name="value">The double result</param>
+        </member>
+        <member name="T:BLTools.IntAndMessageEventArgs">
+            <summary>
+            EventArgs holding both an int and a message
+            </summary>
+        </member>
+        <member name="P:BLTools.IntAndMessageEventArgs.Result">
+            <summary>
+            The int result to pass
+            </summary>
+        </member>
+        <member name="P:BLTools.IntAndMessageEventArgs.Message">
+            <summary>
+            The message
+            </summary>
+        </member>
+        <member name="M:BLTools.IntAndMessageEventArgs.#ctor">
+            <summary>
+            Parameterless constructor
+            </summary>
+        </member>
+        <member name="M:BLTools.IntAndMessageEventArgs.#ctor(System.Int32,System.String)">
+            <summary>
+            Constructor with int result and a message
+            </summary>
+            <param name="result">The result to pass</param>
+            <param name="message">The message</param>
+        </member>
+        <member name="T:BLTools.IntEventArgs">
+            <summary>
+            EventArgs hold an int
+            </summary>
+        </member>
+        <member name="P:BLTools.IntEventArgs.Value">
+            <summary>
+            The int result to pass
+            </summary>
+        </member>
+        <member name="M:BLTools.IntEventArgs.#ctor">
+            <summary>
+            Parameterless constructor
+            </summary>
+        </member>
+        <member name="M:BLTools.IntEventArgs.#ctor(System.Int32)">
+            <summary>
+            Constructor with the int
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:BLTools.ObjectEventArgs">
+            <summary>
+            EventArgs holding any object
+            </summary>
+        </member>
+        <member name="P:BLTools.ObjectEventArgs.Value">
+            <summary>
+            The object to pass
+            </summary>
+        </member>
+        <member name="M:BLTools.ObjectEventArgs.#ctor">
+            <summary>
+            Parameterless constructor
+            </summary>
+        </member>
+        <member name="M:BLTools.ObjectEventArgs.#ctor(System.Object)">
+            <summary>
+            Constructor with the object
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:BLTools.PercentageEventArgs">
+            <summary>
+            EventArgs holding an int value as percentage
+            </summary>
+        </member>
+        <member name="M:BLTools.PercentageEventArgs.#ctor(System.Int32)">
+            <summary>
+            Constructor with the percentage value
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:BLTools.StringEventArgs">
+            <summary>
+            EventArgs holding a string
+            </summary>
+        </member>
+        <member name="P:BLTools.StringEventArgs.Value">
+            <summary>
+            String argument to pass
+            </summary>
+        </member>
+        <member name="M:BLTools.StringEventArgs.#ctor">
+            <summary>
+            Build parameterless
+            </summary>
+        </member>
+        <member name="M:BLTools.StringEventArgs.#ctor(System.String)">
+            <summary>
+            Build with a string argument
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:BLTools.ByteArrayExtension">
+            <summary>
+            Extension methods for arrays
+            </summary>
+        </member>
+        <member name="M:BLTools.ByteArrayExtension.ToHexString(System.Collections.Generic.IEnumerable{System.Byte},System.String)">
+            <summary>
+            Convert an array of byte into a string of hex values, each separated by a space (ex. "A6 34 F2")
+            </summary>
+            <param name="rawData">The byte array</param>
+            <param name="separator">An optional separator</param>
+            <returns>The string of hex values</returns>
+        </member>
+        <member name="M:BLTools.ByteArrayExtension.ToCharString(System.Byte[])">
+            <summary>
+            Convert an array of bytes to a string of chars
+            </summary>
+            <param name="rawData">The array to convert</param>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.ByteArrayExtension.ToHexString(System.Span{System.Byte},System.String)">
+            <summary>
+            Convert an array of byte into a string of hex values, each separated by a space (ex. "A6 34 F2")
+            </summary>
+            <param name="rawData">The byte array</param>
+            <param name="separator">An optional separator</param>
+            <returns>The string of hex values</returns>
+        </member>
+        <member name="M:BLTools.IEnumerableExtension.SumByBlock(System.Collections.Generic.IEnumerable{System.Single},System.Int32)">
+            <summary>
+            Calculate a new IEnumerable by summing current IEnumerable through blocks
+            Eg. {3,6,5,9} with a block factor of 2 produces {9,14}
+            </summary>
+            <param name="source">The enumeration to sum</param>
+            <param name="blockSize">The block factor to group data</param>
+            <returns>A new enumeration where contents are summed by block of size in parameter</returns>
+        </member>
+        <member name="M:BLTools.IEnumerableExtension.SumByBlock(System.Collections.Generic.IEnumerable{System.Double},System.Int32)">
+            <summary>
+            Calculate a new IEnumerable by summing current IEnumerable through blocks
+            Eg. {3,6,5,9} with a block factor of 2 produces {9,14}
+            </summary>
+            <param name="source">The enumeration to sum</param>
+            <param name="blockSize">The block factor to group data</param>
+            <returns>A new enumeration where contents are summed by block of size in parameter</returns>
+        </member>
+        <member name="M:BLTools.IEnumerableExtension.SumByBlock(System.Collections.Generic.IEnumerable{System.Int32},System.Int32)">
+            <summary>
+            Calculate a new IEnumerable by summing current IEnumerable through blocks
+            Eg. {3,6,5,9} with a block factor of 2 produces {9,14}
+            </summary>
+            <param name="source">The enumeration to sum</param>
+            <param name="blockSize">The block factor to group data</param>
+            <returns>A new enumeration where contents are summed by block of size in parameter</returns>
+        </member>
+        <member name="M:BLTools.IEnumerableExtension.SumByBlock(System.Collections.Generic.IEnumerable{System.Int64},System.Int32)">
+            <summary>
+            Calculate a new IEnumerable by summing current IEnumerable through blocks
+            Eg. {3,6,5,9} with a block factor of 2 produces {9,14}
+            </summary>
+            <param name="source">The enumeration to sum</param>
+            <param name="blockSize">The block factor to group data</param>
+            <returns>A new enumeration where contents are summed by block of size in parameter</returns>
+        </member>
+        <member name="M:BLTools.IEnumerableExtension.SumByBlock(System.Collections.Generic.IEnumerable{System.Decimal},System.Int32)">
+            <summary>
+            Calculate a new IEnumerable by summing current IEnumerable through blocks
+            Eg. {3,6,5,9} with a block factor of 2 produces {9,14}
+            </summary>
+            <param name="source">The enumeration to sum</param>
+            <param name="blockSize">The block factor to group data</param>
+            <returns>A new enumeration where contents are summed by block of size in parameter</returns>
+        </member>
+        <member name="M:BLTools.IEnumerableExtension.AverageByBlock(System.Collections.Generic.IEnumerable{System.Single},System.Int32)">
+            <summary>
+            Calculate a new IEnumerable by averaging current IEnumerable through blocks
+            Eg. {3,6,5,9} with a block factor of 2 produces {4.5,7}
+            </summary>
+            <param name="source">The enumeration to sum</param>
+            <param name="blockSize">The block factor to group data</param>
+            <returns>A new enumeration where contents are summed by block of size in parameter</returns>
+        </member>
+        <member name="M:BLTools.IEnumerableExtension.AverageByBlock(System.Collections.Generic.IEnumerable{System.Double},System.Int32)">
+            <summary>
+            Calculate a new IEnumerable by averaging current IEnumerable through blocks
+            Eg. {3,6,5,9} with a block factor of 2 produces {4.5,7}
+            </summary>
+            <param name="source">The enumeration to sum</param>
+            <param name="blockSize">The block factor to group data</param>
+            <returns>A new enumeration where contents are summed by block of size in parameter</returns>
+        </member>
+        <member name="M:BLTools.IEnumerableExtension.AverageByBlock(System.Collections.Generic.IEnumerable{System.Int32},System.Int32)">
+            <summary>
+            Calculate a new IEnumerable by averaging current IEnumerable through blocks, results are rounded
+            Eg. {3,6,5,9} with a block factor of 2 produces {5,7}
+            </summary>
+            <param name="source">The enumeration to sum</param>
+            <param name="blockSize">The block factor to group data</param>
+            <returns>A new enumeration where contents are summed by block of size in parameter</returns>
+        </member>
+        <member name="M:BLTools.IEnumerableExtension.AverageByBlock(System.Collections.Generic.IEnumerable{System.Int64},System.Int32)">
+            <summary>
+            Calculate a new IEnumerable by averaging current IEnumerable through blocks, results are rounded
+            Eg. {3,6,5,9} with a block factor of 2 produces {5,7}
+            </summary>
+            <param name="source">The enumeration to sum</param>
+            <param name="blockSize">The block factor to group data</param>
+            <returns>A new enumeration where contents are summed by block of size in parameter</returns>
+        </member>
+        <member name="M:BLTools.IEnumerableExtension.AverageByBlock(System.Collections.Generic.IEnumerable{System.Decimal},System.Int32)">
+            <summary>
+            Calculate a new IEnumerable by averaging current IEnumerable through blocks
+            Eg. {3,6,5,9} with a block factor of 2 produces {4.5,7}
+            </summary>
+            <param name="source">The enumeration to sum</param>
+            <param name="blockSize">The block factor to group data</param>
+            <returns>A new enumeration where contents are summed by block of size in parameter</returns>
+        </member>
+        <member name="M:BLTools.IEnumerableExtension.IsEmpty``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Indicate if an IEnumerable is empty
+            </summary>
+            <typeparam name="T">The type of item</typeparam>
+            <param name="source">The IEnumerable being extended</param>
+            <returns>True if the IEnumerable is empty, False otherwise</returns>
+        </member>
+        <member name="M:BLTools.IEnumerableExtension.IsEmpty``1(System.Span{``0})">
+            <summary>
+            Indicate if an IEnumerable is empty
+            </summary>
+            <typeparam name="T">The type of item</typeparam>
+            <param name="source">The IEnumerable being extended</param>
+            <returns>True if the IEnumerable is empty, False otherwise</returns>
+        </member>
+        <member name="T:BLTools.DateTimeExtension">
+            <summary>
+            DateTime extensions
+            </summary>
+        </member>
+        <member name="M:BLTools.DateTimeExtension.ToYMD(System.DateTime)">
+            <summary>
+            Returns a DateTime as a string formatted as "yyyy-MM-dd"
+            </summary>
+            <param name="datetime">The source Datetime</param>
+            <returns>A DateTime as a string formatted as "yyyy-MM-dd"</returns>
+        </member>
+        <member name="M:BLTools.DateTimeExtension.ToDMY(System.DateTime)">
+            <summary>
+            Returns a DateTime as a string formatted as "dd/MM/yyyy"
+            </summary>
+            <param name="datetime">The source Datetime</param>
+            <returns>A DateTime as a string formatted as "dd/MM/yyyy"</returns>
+        </member>
+        <member name="M:BLTools.DateTimeExtension.ToYMDHMS(System.DateTime)">
+            <summary>
+            Returns a DateTime as a string formatted as "yyyy-MM-dd HH:mm:ss"
+            </summary>
+            <param name="datetime">The source Datetime</param>
+            <returns>A DateTime as a string formatted as "yyyy-MM-dd HH:mm:ss"</returns>
+        </member>
+        <member name="M:BLTools.DateTimeExtension.ToDMYHMS(System.DateTime)">
+            <summary>
+            Returns a DateTime as a string formatted as "dd/MM/yyyy HH:mm:ss"
+            </summary>
+            <param name="datetime">The source Datetime</param>
+            <returns>A DateTime as a string formatted as "dd/MM/yyyy HH:mm:ss"</returns>
+        </member>
+        <member name="M:BLTools.DateTimeExtension.ToHMS(System.DateTime)">
+            <summary>
+            Returns a DateTime as a string formatted as "HH:mm:ss"
+            </summary>
+            <param name="datetime">The source Datetime</param>
+            <returns>A DateTime as a string formatted as "HH:mm:ss"</returns>
+        </member>
+        <member name="M:BLTools.DateTimeExtension.FromUTC(System.DateTime)">
+            <summary>
+            Returns a UTC DateTime converted into local DateTime
+            </summary>
+            <param name="datetime">The source Datetime</param>
+            <returns>A UTC DateTime converted into local DateTime</returns>
+        </member>
+        <member name="M:BLTools.DateTimeExtension.EmptyDateAs(System.DateTime,System.String)">
+            <summary>
+            Returns a DateTime as a formatted string or a specific value for empty dates
+            </summary>
+            <param name="datetime">The source DateTime</param>
+            <param name="valueForEmptyDate">The string value to return when DateTime is DateTime.MinValue (default = "-")</param>
+            <returns>The DateTime converted or the default value</returns>
+        </member>
+        <member name="M:BLTools.DateTimeExtension.EmptyDateAsDash(System.DateTime)">
+            <summary>
+            Returns a DateTime as a formatted string or a "-" for empty dates
+            </summary>
+            <param name="datetime">The source DateTime</param>
+            <returns>The DateTime converted or "-"</returns>
+        </member>
+        <member name="M:BLTools.DateTimeExtension.EmptyDateAsBlank(System.DateTime)">
+            <summary>
+            Returns a DateTime as a formatted string or blank ("") for empty dates
+            </summary>
+            <param name="datetime">The source DateTime</param>
+            <returns>The DateTime converted or blank ("")</returns>
+        </member>
+        <member name="M:BLTools.DateTimeExtension.DateOrDateTime(System.DateTime)">
+            <summary>
+            Returns a DateTime as a formatted string with date only or date and time depending if time is 00:00:00 or not
+            </summary>
+            <param name="datetime">The source DateTime</param>
+            <returns>The formatted string</returns>
+        </member>
+        <member name="M:BLTools.DateTimeExtension.Time(System.DateTime)">
+            <summary>
+            Returns The time part of the date time
+            </summary>
+            <param name="datetime">The source DateTime</param>
+            <returns>A DateTime containing only time</returns>
+        </member>
+        <member name="M:BLTools.DateTimeExtension.NextDay(System.DateTime)">
+            <summary>
+            Returns next day (with correct rolling of the month/year)
+            </summary>
+            <param name="datetime">The source DateTime</param>
+            <returns>A DateTime containing only time</returns>
+        </member>
+        <member name="M:BLTools.DateTimeExtension.PreviousDay(System.DateTime)">
+            <summary>
+            Returns previous day (with correct rolling of the month/year)
+            </summary>
+            <param name="datetime">The source DateTime</param>
+            <returns>A DateTime containing only time</returns>
+        </member>
+        <member name="M:BLTools.BinaryReaderExtensions.ReadUInt48(System.IO.BinaryReader)">
+            <summary>
+            Read a 48 bits (6 bytes) uint48 into an uint64
+            </summary>
+            <param name="reader">The reader being extended</param>
+            <returns>An unsigned 64 bits integer containing a 48 bits value</returns>
+        </member>
+        <member name="M:BLTools.BinaryReaderExtensions.ReadInt48(System.IO.BinaryReader)">
+            <summary>
+            Read a 48 bits (6 bytes) int48 into an int64
+            </summary>
+            <param name="reader">The reader being extended</param>
+            <returns>An signed 64 bits integer containing a 48 bits value</returns>
+        </member>
+        <member name="M:BLTools.BinaryReaderExtensions.ReadInt16(System.IO.BinaryReader,System.Int32)">
+            <summary>
+            Read multiple int16 values
+            </summary>
+            <param name="reader">The reader being extended</param>
+            <param name="count">The maximum quantity of int16 values to read</param>
+            <returns>The int16 values up to the maximum quantity requested</returns>
+        </member>
+        <member name="M:BLTools.BinaryReaderExtensions.ReadUInt16(System.IO.BinaryReader,System.Int32)">
+            <summary>
+            Read multiple uint16 values
+            </summary>
+            <param name="reader">The reader being extended</param>
+            <param name="count">The maximum quantity of uint16 values to read</param>
+            <returns>The uint16 values up to the maximum quantity requested</returns>
+        </member>
+        <member name="M:BLTools.BinaryReaderExtensions.ReadInt32(System.IO.BinaryReader,System.Int32)">
+            <summary>
+            Read multiple int32 values
+            </summary>
+            <param name="reader">The reader being extended</param>
+            <param name="count">The maximum quantity of int32 values to read</param>
+            <returns>The int32 values up to the maximum quantity requested</returns>
+        </member>
+        <member name="M:BLTools.BinaryReaderExtensions.ReadUInt32(System.IO.BinaryReader,System.Int32)">
+            <summary>
+            Read multiple uint32 values
+            </summary>
+            <param name="reader">The reader being extended</param>
+            <param name="count">The maximum quantity of uint32 values to read</param>
+            <returns>The uint32 values up to the maximum quantity requested</returns>
+        </member>
+        <member name="M:BLTools.BinaryReaderExtensions.ReadInt64(System.IO.BinaryReader,System.Int32)">
+            <summary>
+            Read multiple int64 values
+            </summary>
+            <param name="reader">The reader being extended</param>
+            <param name="count">The maximum quantity of int64 values to read</param>
+            <returns>The int64 values up to the maximum quantity requested</returns>
+        </member>
+        <member name="M:BLTools.BinaryReaderExtensions.ReadUInt64(System.IO.BinaryReader,System.Int32)">
+            <summary>
+            Read multiple uint64 values
+            </summary>
+            <param name="reader">The reader being extended</param>
+            <param name="count">The maximum quantity of uint64 values to read</param>
+            <returns>The uint64 values up to the maximum quantity requested</returns>
+        </member>
+        <member name="M:BLTools.BinaryReaderExtensions.ReadFloat(System.IO.BinaryReader,System.Int32)">
+            <summary>
+            Read multiple float values
+            </summary>
+            <param name="reader">The reader being extended</param>
+            <param name="count">The maximum quantity of float values to read</param>
+            <returns>The float values up to the maximum quantity requested</returns>
+        </member>
+        <member name="M:BLTools.BinaryReaderExtensions.ReadDouble(System.IO.BinaryReader,System.Int32)">
+            <summary>
+            Read multiple double values
+            </summary>
+            <param name="reader">The reader being extended</param>
+            <param name="count">The maximum quantity of double values to read</param>
+            <returns>The double values up to the maximum quantity requested</returns>
+        </member>
+        <member name="M:BLTools.BinaryReaderExtensions.ReadSByte(System.IO.BinaryReader,System.Int32)">
+            <summary>
+            Read multiple sbyte values
+            </summary>
+            <param name="reader">The reader being extended</param>
+            <param name="count">The maximum quantity of sbyte values to read</param>
+            <returns>The sbyte values up to the maximum quantity requested</returns>
+        </member>
+        <member name="M:BLTools.ToMemoryStreamExtension.ToStream(System.String)">
+            <summary>
+            Gets a MemoryStream from a string (encoding UTF8)
+            </summary>
+            <param name="source">The source string</param>
+            <returns>The requested MemoryStream</returns>
+        </member>
+        <member name="M:BLTools.ToMemoryStreamExtension.ToStream(System.String,System.Text.Encoding)">
+            <summary>
+            Gets a MemoryStream from a string
+            </summary>
+            <param name="source">The source string</param>
+            <param name="encoding">The encoding for the stream creation</param>
+            <returns>The requested MemoryStream</returns>
+        </member>
+        <member name="M:BLTools.ToMemoryStreamExtension.ToStreamAsync(System.String)">
+            <summary>
+            Gets a MemoryStream from a string asynchronously (encoding UTF8)
+            </summary>
+            <param name="source">The source string</param>
+            <returns>The requested MemoryStream</returns>
+        </member>
+        <member name="M:BLTools.ToMemoryStreamExtension.ToStreamAsync(System.String,System.Text.Encoding)">
+            <summary>
+            Gets a MemoryStream from a string asynchronously
+            </summary>
+            <param name="source">The source string</param>
+            <param name="encoding">The encoding for the stream creation</param>
+            <returns>The requested MemoryStream</returns>
+        </member>
+        <member name="M:BLTools.ToMemoryStreamExtension.ToStream(System.Collections.Generic.IEnumerable{System.Byte})">
+            <summary>
+            Gets a MemoryStream from a byte[]
+            </summary>
+            <param name="sourceBytes">The array of bytes</param>
+            <returns>The requested MemoryStream</returns>
+        </member>
+        <member name="M:BLTools.ToMemoryStreamExtension.ToStreamAsync(System.Collections.Generic.IEnumerable{System.Byte})">
+            <summary>
+            Gets a MemoryStream from a byte[] asynchronously
+            </summary>
+            <param name="sourceBytes">The array of byte</param>
+            <returns>The requested MemoryStream</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.WithinLimits(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Verifies if a value is within limits (limits are included)
+            </summary>
+            <param name="value">The value to test</param>
+            <param name="lowerLimit">The lower limit (included)</param>
+            <param name="upperLimit">The upper limit (included)</param>
+            <returns>true if value is within limits, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.WithinLimits(System.Int64,System.Int64,System.Int64)">
+            <summary>
+            Verifies if a value is within limits (limits are included)
+            </summary>
+            <param name="value">The value to test</param>
+            <param name="lowerLimit">The lower limit (included)</param>
+            <param name="upperLimit">The upper limit (included)</param>
+            <returns>true if value is within limits, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.WithinLimits(System.Single,System.Single,System.Single)">
+            <summary>
+            Verifies if a value is within limits (limits are included)
+            </summary>
+            <param name="value">The value to test</param>
+            <param name="lowerLimit">The lower limit (included)</param>
+            <param name="upperLimit">The upper limit (included)</param>
+            <returns>true if value is within limits, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.WithinLimits(System.Double,System.Double,System.Double)">
+            <summary>
+            Verifies if a value is within limits (limits are included)
+            </summary>
+            <param name="value">The value to test</param>
+            <param name="lowerLimit">The lower limit (included)</param>
+            <param name="upperLimit">The upper limit (included)</param>
+            <returns>true if value is within limits, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.WithinLimits(System.Decimal,System.Decimal,System.Decimal)">
+            <summary>
+            Verifies if a value is within limits (limits are included)
+            </summary>
+            <param name="value">The value to test</param>
+            <param name="lowerLimit">The lower limit (included)</param>
+            <param name="upperLimit">The upper limit (included)</param>
+            <returns>true if value is within limits, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.AlignedTo(System.Int32,System.Int32,BLTools.ENumberAlignmentDirection)">
+            <summary>
+            Calculate an aligned value on a specific frontier. Alignment is made towards zero.
+            If alignement value is zero, no alignment is done and the original value is returned.
+            </summary>
+            <param name="value">The value to align</param>
+            <param name="alignmentValue">The frontier to align the value against</param>
+            <param name="direction">The direction to align the number (default to lower, meaning closer to zero)</param>
+            <returns>The aligned value</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.AlignedTo(System.Int64,System.Int64,BLTools.ENumberAlignmentDirection)">
+            <summary>
+            Calculate an aligned value on a specific frontier. Alignment is made towards zero.
+            If alignement value is zero, no alignment is done and the original value is returned.
+            </summary>
+            <param name="value">The value to align</param>
+            <param name="alignmentValue">The frontier to align the value against</param>
+            <param name="direction">The direction to align the number (default to lower, meaning closer to zero)</param>
+            <returns>The aligned value</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.AlignedTo(System.Single,System.Single,BLTools.ENumberAlignmentDirection)">
+            <summary>
+            Calculate an aligned value on a specific frontier. Alignment is made towards zero.
+            If alignement value is zero, no alignment is done and the original value is returned.
+            </summary>
+            <param name="value">The value to align</param>
+            <param name="alignmentValue">The frontier to align the value against</param>
+            <param name="direction">The direction to align the number (default to lower, meaning closer to zero)</param>
+            <returns>The aligned value</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.AlignedTo(System.Double,System.Double,BLTools.ENumberAlignmentDirection)">
+            <summary>
+            Calculate an aligned value on a specific frontier. Alignment is made towards zero.
+            If alignement value is zero, no alignment is done and the original value is returned.
+            </summary>
+            <param name="value">The value to align</param>
+            <param name="alignmentValue">The frontier to align the value against</param>
+            <param name="direction">The direction to align the number (default to lower, meaning closer to zero)</param>
+            <returns>The aligned value</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.AlignedTo(System.Decimal,System.Decimal,BLTools.ENumberAlignmentDirection)">
+            <summary>
+            Calculate an aligned value on a specific frontier. Alignment is made towards zero.
+            If alignment value is zero, no alignment is done and the original value is returned.
+            </summary>
+            <param name="value">The value to align</param>
+            <param name="alignmentValue">The frontier to align the value against</param>
+            <param name="direction">The direction to align the number (default to lower, meaning closer to zero)</param>
+            <returns>The aligned value</returns>
+        </member>
+        <member name="T:BLTools.IPAddressExtension">
+            <summary>
+            Extensions for IPAddress
+            </summary>
+        </member>
+        <member name="M:BLTools.IPAddressExtension.GetSubnet(System.Net.IPAddress,System.Byte[])">
+            <summary>
+            Obtain the subnet for a given IPAddress and a netmask
+            </summary>
+            <param name="netmask">The netmask as a byte array of 4 bytes</param>
+            <returns>The subnet</returns>
+        </member>
+        <member name="M:BLTools.IPAddressExtension.GetSubnet(System.Net.IPAddress,System.Net.IPAddress)">
+            <summary>
+            Obtain the subnet for a given IPAddress and a netmask
+            </summary>
+            <param name="netmask">The netmask as an IPAddress</param>
+            <returns>The subnet</returns>
+        </member>
+        <member name="M:BLTools.CharExtension.IsNumeric(System.Char)">
+            <summary>
+            Indicates if a char is a numeric characters (0-9)
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.CharExtension.IsNumericOrBlank(System.Char)">
+            <summary>
+            Indicates if a char is a numeric characters (0-9)
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.CharExtension.IsNumericOrSeparator(System.Char)">
+            <summary>
+            Indicates if a char is a numeric characters (0-9) or separator
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.CharExtension.IsAlpha(System.Char)">
+            <summary>
+            Indicates if a char is an alpha character (A-Z or a-z)
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.CharExtension.IsAlphaOrBlank(System.Char)">
+            <summary>
+            Indicates if a char is an alpha character (A-Z or a-z) or a blank
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.CharExtension.IsAlphaOrNumeric(System.Char)">
+            <summary>
+            Indicates if a char is an alpha character (A-Z or a-z) or a numeric character
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.CharExtension.IsAlphaOrNumericOrBlank(System.Char)">
+            <summary>
+            Indicates if a char is an alpha character (A-Z or a-z) or a blank or a numeric character
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.CharExtension.IsSpace(System.Char)">
+            <summary>
+            Indicates if a char is a space character (0x20)
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.CharExtension.IsWhiteSpace(System.Char)">
+            <summary>
+            Indicates if a char is a white space character ("space", "tab", "backspace", "formfeed", "CR", "LF")
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="T:BLTools.SecureStringExtension">
+            <summary>
+            Compares two SecureString for equality without converting them to string
+            </summary>
+        </member>
+        <member name="M:BLTools.StringBuilderExtension.Truncate(System.Text.StringBuilder,System.Int32)">
+            <summary>
+            Removes n characters from the end of the StringBuilder
+            </summary>
+            <param name="source">The string builder</param>
+            <param name="length">The amount of character(s) to remove</param>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.StringBuilderExtension.Trim(System.Text.StringBuilder)">
+            <summary>
+            Remove trailing spaces or tabs from StringBuilder
+            </summary>
+            <param name="source">The string builder</param>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.StringBuilderExtension.TrimLeft(System.Text.StringBuilder)">
+            <summary>
+            Remove leading spaces or tabs from StringBuilder
+            </summary>
+            <param name="source">The string builder</param>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.StringBuilderExtension.TrimAll(System.Text.StringBuilder)">
+            <summary>
+            Remove leading spaces or tabs from StringBuilder
+            </summary>
+            <param name="source">The string builder</param>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.StringBuilderExtension.Trim(System.Text.StringBuilder,System.Char[])">
+            <summary>
+            Remove trailing characters from StringBuilder
+            </summary>
+            <param name="source">The string builder</param>
+            <param name="chars">The characters to remove</param>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.StringBuilderExtension.TrimLeft(System.Text.StringBuilder,System.Char[])">
+            <summary>
+            Remove leading characters from StringBuilder
+            </summary>
+            <param name="source">The string builder</param>
+            <param name="chars">The characters to remove</param>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.StringBuilderExtension.TrimAll(System.Text.StringBuilder,System.Char[])">
+            <summary>
+            Remove leading and trailing characters from StringBuilder
+            </summary>
+            <param name="source">The string builder</param>
+            <param name="chars">The characters to remove</param>
+            <returns></returns>
+        </member>
+        <member name="T:BLTools.StringExtension">
+            <summary>
+            Extensions for string
+            </summary>
+            <summary>
+            Extensions for string
+            </summary>
+            <summary>
+            Extensions for string
+            </summary>
+        </member>
+        <member name="M:BLTools.StringExtension.Left(System.String,System.Int32)">
+            <summary>
+            Gets the left portion of a string
+            </summary>
+            <param name="sourceString">The source string</param>
+            <param name="length">The number of characters to get</param>
+            <returns>The selected portion of the string. If Length > Length of the string, returns the string.</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.Right(System.String,System.Int32)">
+            <summary>
+            Gets the right portion of the string
+            </summary>
+            <param name="sourceString">The source string</param>
+            <param name="length">The number of characters to get</param>
+            <returns>The selected portion of the string. If Length > Length of the string, returns the string.</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.After(System.String,System.String,System.StringComparison)">
+            <summary>
+            Gets the portion of the string after a given string
+            </summary>
+            <param name="sourceString">The source string</param>
+            <param name="delimiter">The string to search for</param>
+            <param name="stringComparison">The culture to find delimiter (useful for ignoring case)</param>
+            <returns>The selected portion of the string after the delimiter</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.After(System.String,System.Char)">
+            <summary>
+            Gets the portion of the string after a given char
+            </summary>
+            <param name="sourceString">The source string</param>
+            <param name="delimiter">The char to search for</param>
+            <returns>The selected portion of the string after the delimiter</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.AfterLast(System.String,System.String,System.StringComparison)">
+            <summary>
+            Gets the portion of the string after the last occurence of a given string
+            </summary>
+            <param name="sourceString">The source string</param>
+            <param name="delimiter">The string to search for</param>
+            <param name="stringComparison">The culture to find delimiter (useful for ignoring case)</param>
+            <returns>The selected portion of the string after the last occurence of a delimiter</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.AfterLast(System.String,System.Char)">
+            <summary>
+            Gets the portion of the string after the last occurence of a given char
+            </summary>
+            <param name="sourceString">The source string</param>
+            <param name="delimiter">The char to search for</param>
+            <returns>The selected portion of the string after the last occurence of a delimiter</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.Before(System.String,System.String,System.StringComparison)">
+            <summary>
+            Gets the portion of the string before a given string
+            </summary>
+            <param name="sourceString">The source string</param>
+            <param name="delimiter">The string to search for</param>
+            <param name="stringComparison">The culture to find delimiter (useful for ignoring case)</param>
+            <returns>The selected portion of the string before the delimiter</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.Before(System.String,System.Char)">
+            <summary>
+            Gets the portion of the string before a given char
+            </summary>
+            <param name="sourceString">The source string</param>
+            <param name="delimiter">The char to search for</param>
+            <returns>The selected portion of the string before the delimiter</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.BeforeLast(System.String,System.String,System.StringComparison)">
+            <summary>
+            Gets the portion of the string before the last occurence of a given string
+            </summary>
+            <param name="sourceString">The source string</param>
+            <param name="delimiter">The string to search for</param>
+            <param name="stringComparison">The culture to find delimiter (useful for ignoring case)</param>
+            <returns>The selected portion of the string before the last occurence of the delimiter</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.BeforeLast(System.String,System.Char)">
+            <summary>
+            Gets the portion of the string before the last occurence of a given char
+            </summary>
+            <param name="sourceString">The source string</param>
+            <param name="delimiter">The char to search for</param>
+            <returns>The selected portion of the string before the last occurence of the delimiter</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.Except(System.String,System.String)">
+            <summary>
+            Get the whole string but the part to remove
+            </summary>
+            <param name="sourceString">The source string</param>
+            <param name="dataToRemove">The string to remove</param>
+            <returns>The cleaned string</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.Between(System.String,System.String,System.String,System.StringComparison)">
+            <summary>
+            Gets the portion of the string after a given string
+            </summary>
+            <param name="sourceString">The source string</param>
+            <param name="firstDelimiter">The first string to search for</param>
+            <param name="secondDelimiter">The second string to search for</param>
+            <param name="stringComparison">The culture to find delimiter (useful for ignoring case)</param>
+            <returns>The selected portion of the string between the delimiters</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.Between(System.String,System.Char,System.Char)">
+            <summary>
+            Gets the portion of the string between two given chars
+            </summary>
+            <param name="sourceString">The source string</param>
+            <param name="firstDelimiter">The first char to search for</param>
+            <param name="secondDelimiter">The second char to search for</param>
+            <returns>The selected portion of the string between the delimiters</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.ItemsBetween(System.String,System.String,System.String,System.StringComparison)">
+            <summary>
+            Gets the strings between two given strings
+            </summary>
+            <param name="sourceString">The source string</param>
+            <param name="firstDelimiter">The first string to search for</param>
+            <param name="secondDelimiter">The second string to search for</param>
+            <returns>A list of items found between both delimiters</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.ItemsBetween(System.String,System.Char,System.Char)">
+            <summary>
+            Gets the strings between two given chars
+            </summary>
+            <param name="sourceString">The source string</param>
+            <param name="firstDelimiter">The first char to search for</param>
+            <param name="secondDelimiter">The second char to search for</param>
+            <returns>A list of items found between both delimiters</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.Proper(System.String,System.Char)">
+            <summary>
+            Capitalize the first letter of each word and uncapitalize other chars
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>The proper string</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.RemoveExternalQuotes(System.String)">
+            <summary>
+            Removes external quotes from a string (ex. "\"MyString\"" => "MyString")
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>The string without quotes</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.ToBool(System.String)">
+            <summary>
+            Converts a string to a bool
+            </summary>
+            <param name="booleanString">A string representing a bool (0,1; false,true; no,yes; n,y)</param>
+            <returns>A bool as represented by the string (default=false)</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.ToBool(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Converts a string to a bool
+            </summary>
+            <param name="booleanString">The string to convert</param>
+            <param name="trueValue">The string value representing true</param>
+            <param name="falseValue">The string value representing false</param>
+            <param name="isCaseSensitive">Do we test the values with case sensitivity (default=false)</param>
+            <returns>A bool as represented by the string (default=false)</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.ToByteArray(System.String)">
+            <summary>
+            Convert a string to an array of bytes
+            </summary>
+            <param name="sourceString">The source string</param>
+            <returns>The array of bytes</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.ConvertToUnsecureString(System.Security.SecureString)">
+            <summary>
+            Convert a SecureString to a normal string
+            </summary>
+            <param name="securePassword">The source SecureString</param>
+            <returns>The string</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.ConvertToSecureString(System.String)">
+            <summary>
+            Converts a string to a SecureString
+            </summary>
+            <param name="unsecureString">The source string</param>
+            <returns>The SecureString</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.IsAlpha(System.String)">
+            <summary>
+            Indicates if a string contains only alphabetic characters (A-Z and a-z)
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.IsAlphaNumeric(System.String)">
+            <summary>
+            Indicates if a string contains only alphabetic characters (A-Z and a-z) or numeric characters (0-9)
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.IsNumeric(System.String)">
+            <summary>
+            Indicates if a string contains only numeric characters (0-9) or separators (-.,)
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.IsNumericOnly(System.String)">
+            <summary>
+            Indicates if a string contains only numeric characters (0-9) or separators (-.,)
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.IsAlphaOrBlank(System.String)">
+            <summary>
+            Indicates if a string contains only alphabetic characters (A-Z and a-z) or blank
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.IsAlphaNumericOrBlank(System.String)">
+            <summary>
+            Indicates if a string contains only alphabetic characters (A-Z and a-z) or numeric characters (0-9) or blank
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.IsNumericOrBlank(System.String)">
+            <summary>
+            Indicates if a string contains only numeric characters (0-9) or blank
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.IsAlphaNumericOrBlankOrDashes(System.String)">
+            <summary>
+            Indicates if a string contains only alphabetic characters (A-Z and a-z) or numeric characters (0-9) or blank or dashes
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.IsMadeOfTheseChars(System.String,System.Char[])">
+            <summary>
+            Indicates if a string contains only specified characters
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <param name="charList">The list of characters to test for</param>
+            <returns>True if the assertion succeeds</returns>
+        </member>
+        <member name="T:BLTools.XElementExtension">
+            <summary>
+            Extensions for XElement
+            </summary>
+        </member>
+        <member name="F:BLTools.XElementExtension.IsDebug">
+            <summary>
+            Provides additional debug information when true
+            </summary>
+        </member>
+        <member name="M:BLTools.XElementExtension.SafeReadAttribute``1(System.Xml.Linq.XElement,System.String)">
+            <summary>
+            Obtains the value of an typed attribute value from an XElement with a default value in case of error.
+            </summary>
+            <typeparam name="T">Type of the returned value</typeparam>
+            <param name="xElement">The source XElement</param>
+            <param name="name">The name of the attribute</param>
+            <returns>The attribute value in the requested type or the specified default value</returns>
+        </member>
+        <member name="M:BLTools.XElementExtension.SafeReadAttribute``1(System.Xml.Linq.XElement,System.Xml.Linq.XName)">
+            <summary>
+            Obtains the value of an typed attribute value from an XElement with a default value in case of error.
+            </summary>
+            <typeparam name="T">Type of the returned value</typeparam>
+            <param name="xElement">The source XElement</param>
+            <param name="name">The name of the attribute</param>
+            <returns>The attribute value in the requested type or the specified default value</returns>
+        </member>
+        <member name="M:BLTools.XElementExtension.SafeReadAttribute``1(System.Xml.Linq.XElement,System.String,``0)">
+            <summary>
+            Obtains the value of an typed attribute value from an XElement with a default value in case of error.
+            </summary>
+            <typeparam name="T">Type of the returned value</typeparam>
+            <param name="xElement">The source XElement</param>
+            <param name="name">The name of the attribute</param>
+            <param name="defaultValue">The default value (same type as the returned value)</param>
+            <returns>The attribute value in the requested type or the specified default value</returns>
+        </member>
+        <member name="M:BLTools.XElementExtension.SafeReadAttribute``1(System.Xml.Linq.XElement,System.Xml.Linq.XName,``0)">
+            <summary>
+            Obtains the value of an typed attribute value from an XElement with a default value in case of error.
+            </summary>
+            <typeparam name="T">Type of the returned value</typeparam>
+            <param name="xElement">The source XElement</param>
+            <param name="name">The name of the attribute</param>
+            <param name="defaultValue">The default value (same type as the returned value)</param>
+            <returns>The attribute value in the requested type or the specified default value</returns>
+        </member>
+        <member name="M:BLTools.XElementExtension.SafeReadAttribute``1(System.Xml.Linq.XElement,System.String,``0,System.Globalization.CultureInfo)">
+            <summary>
+            Obtains the value of an typed attribute value from an XElement with a default value in case of error.
+            </summary>
+            <typeparam name="T">Type of the returned value</typeparam>
+            <param name="xElement">The source XElement</param>
+            <param name="name">The name of the attribute</param>
+            <param name="defaultValue">The default value (same type as the returned value)</param>
+            <param name="culture">The culture info used to convert the return value</param>
+            <returns>The attribute value in the requested type or the specified default value</returns>
+        </member>
+        <member name="M:BLTools.XElementExtension.SafeReadAttribute``1(System.Xml.Linq.XElement,System.Xml.Linq.XName,``0,System.Globalization.CultureInfo)">
+            <summary>
+            Obtains the value of an typed attribute value from an XElement with a default value in case of error.
+            </summary>
+            <typeparam name="T">Type of the returned value</typeparam>
+            <param name="xElement">The source XElement</param>
+            <param name="name">The name of the attribute</param>
+            <param name="defaultValue">The default value (same type as the returned value)</param>
+            <param name="culture">The culture info used to convert the return value</param>
+            <returns>The attribute value in the requested type or the specified default value</returns>
+        </member>
+        <member name="M:BLTools.XElementExtension.SafeReadElement(System.Xml.Linq.XElement,System.String)">
+            <summary>
+            Read an XElement from an XElement while handling error cases
+            </summary>
+            <param name="xElement">The source XElement</param>
+            <param name="name">The name of the inner XElement to read</param>
+            <returns>The requested inner XElement or an empty XElement named after the name parameter</returns>
+        </member>
+        <member name="M:BLTools.XElementExtension.SafeReadElement(System.Xml.Linq.XElement,System.Xml.Linq.XName)">
+            <summary>
+            Read an XElement from an XElement while handling error cases
+            </summary>
+            <param name="xElement">The source XElement</param>
+            <param name="name">The name of the inner XElement to read</param>
+            <returns>The requested inner XElement or an empty XElement named after the name parameter</returns>
+        </member>
+        <member name="M:BLTools.XElementExtension.SafeReadElementValue``1(System.Xml.Linq.XElement,System.String)">
+            <summary>
+            Obtains the value of an inner XElement value from an XElement with a default value in case of error.
+            </summary>
+            <typeparam name="T">Type of the returned value</typeparam>
+            <param name="xElement">The source XElement</param>
+            <param name="name">The name of the inner XElemnt</param>
+            <returns>The inner XElement value in the requested type or the specified default value</returns>
+        </member>
+        <member name="M:BLTools.XElementExtension.SafeReadElementValue``1(System.Xml.Linq.XElement,System.Xml.Linq.XName)">
+            <summary>
+            Obtains the value of an inner XElement value from an XElement with a default value in case of error.
+            </summary>
+            <typeparam name="T">Type of the returned value</typeparam>
+            <param name="xElement">The source XElement</param>
+            <param name="name">The name of the inner XElemnt</param>
+            <returns>The inner XElement value in the requested type or the specified default value</returns>
+        </member>
+        <member name="M:BLTools.XElementExtension.SafeReadElementValue``1(System.Xml.Linq.XElement,System.String,``0)">
+            <summary>
+            Obtains the value of an inner XElement value from an XElement with a default value in case of error.
+            </summary>
+            <typeparam name="T">Type of the returned value</typeparam>
+            <param name="xElement">The source XElement</param>
+            <param name="name">The name of the inner XElemnt</param>
+            <param name="defaultValue">The default value (same type as the returned value)</param>
+            <returns>The inner XElement value in the requested type or the specified default value</returns>
+        </member>
+        <member name="M:BLTools.XElementExtension.SafeReadElementValue``1(System.Xml.Linq.XElement,System.Xml.Linq.XName,``0)">
+            <summary>
+            Obtains the value of an inner XElement value from an XElement with a default value in case of error.
+            </summary>
+            <typeparam name="T">Type of the returned value</typeparam>
+            <param name="xElement">The source XElement</param>
+            <param name="name">The name of the inner XElemnt</param>
+            <param name="defaultValue">The default value (same type as the returned value)</param>
+            <returns>The inner XElement value in the requested type or the specified default value</returns>
+        </member>
+        <member name="M:BLTools.XElementExtension.SafeReadElementValue``1(System.Xml.Linq.XElement,System.String,``0,System.Globalization.CultureInfo)">
+            <summary>
+            Obtains the value of an inner XElement value from an XElement with a default value in case of error.
+            </summary>
+            <typeparam name="T">Type of the returned value</typeparam>
+            <param name="xElement">The source XElement</param>
+            <param name="name">The name of the inner XElemnt</param>
+            <param name="defaultValue">The default value (same type as the returned value)</param>
+            <param name="culture">The culture info used to convert the return value</param>
+            <returns>The inner XElement value in the requested type or the specified default value</returns>
+        </member>
+        <member name="M:BLTools.XElementExtension.SafeReadElementValue``1(System.Xml.Linq.XElement,System.Xml.Linq.XName,``0,System.Globalization.CultureInfo)">
+            <summary>
+            Obtains the value of an inner XElement value from an XElement with a default value in case of error.
+            </summary>
+            <typeparam name="T">Type of the returned value</typeparam>
+            <param name="xElement">The source XElement</param>
+            <param name="name">The name of the inner XElemnt</param>
+            <param name="defaultValue">The default value (same type as the returned value)</param>
+            <param name="culture">The culture info used to convert the return value</param>
+            <returns>The inner XElement value in the requested type or the specified default value</returns>
+        </member>
+        <member name="F:BLTools.Diagnostic.Logging.ALogger.TIMEOUT">
+            <summary>
+            Maximum amount of ms to wait for a log line to be written
+            </summary>
+        </member>
+        <member name="P:BLTools.Diagnostic.Logging.ALogger.DateFormat">
+            <summary>
+            How to format the date and time in the first column
+            </summary>
+        </member>
+        <member name="P:BLTools.Diagnostic.Logging.ALogger.DEFAULT_LOGGER">
+            <summary>
+            The default logger, when nothing is configured.
+            </summary>
+        </member>
+        <member name="P:BLTools.Diagnostic.Logging.ALogger.SYSTEM_LOGGER">
+            <summary>
+            When configured, can be used as a system wide logger
+            </summary>
+        </member>
+        <member name="M:BLTools.Diagnostic.Logging.TFileLogger.ResetLog">
+            <summary>
+            Delete the current log file.
+            A new log file will be created the first time a new log line is added
+            </summary>
+        </member>
+        <member name="M:BLTools.Diagnostic.Logging.TFileLogger.Rollover">
+            <summary>
+            Will close the current log file, and rename it as oldfilename + datetime + .log.
+            A new log file will be created the first time a new log line is added
+            </summary>
+        </member>
+        <member name="M:BLTools.Diagnostic.Logging.TFileLogger.Rollover(System.String)">
+            <summary>
+            Will close the current log file, and rename it as newName.
+            A new log file will be created the first time a new log line is added
+            </summary>
+            <param name="newName">Name of the renamed (only the filename+extension part, not the path) version</param>
+            <returns>The name of the new log file or null if error</returns>
+        </member>
+        <member name="T:BLTools.Severity">
+            <summary>
+            Summary description for Severity.
+            </summary>
+        </member>
+        <member name="T:BLTools.TExtendedTraceListenerBase">
+            <summary>
+            Add a timestamp, userid, computer in front of the log line
+            </summary>
+        </member>
+        <member name="P:BLTools.TExtendedTraceListenerBase.UserIdColSize">
+            <summary>
+            If the userid column has to be displayed, indicate its size in chars (min = 8, max = 50)
+            </summary>
+        </member>
+        <member name="P:BLTools.TExtendedTraceListenerBase.ComputerColSize">
+            <summary>
+            If the computer column has to be displayed, indicate its size in chars (min = 8, max = 50)
+            </summary>
+        </member>
+        <member name="F:BLTools.TExtendedTraceListenerBase.DisplayUserId">
+            <summary>
+            Indicate whether or not the current userid will be displayed in front of every line (default=false)
+            </summary>
+        </member>
+        <member name="F:BLTools.TExtendedTraceListenerBase.DisplayComputerName">
+            <summary>
+            Indicate whether or not the current computer will be displayed in front of every line (default=false)
+            </summary>
+        </member>
+        <member name="M:BLTools.TExtendedTraceListenerBase.#ctor">
+            <summary>
+            Basic constructor
+            </summary>
+        </member>
+        <member name="M:BLTools.TExtendedTraceListenerBase.WriteLine(System.String)">
+            <summary>
+            Writes a message into log file with severity 'information'. If the message contains '\n', the line will be splitted.
+            </summary>
+            <param name="message">The message to add to the log</param>
+        </member>
+        <member name="M:BLTools.TExtendedTraceListenerBase.Write(System.String)">
+            <summary>
+            Writes a message into log file with severity 'information'. If the message contains '\n', the line will be splitted.
+            </summary>
+            <param name="message">The message</param>
+        </member>
+        <member name="M:BLTools.TExtendedTraceListenerBase.Write(System.String,System.String)">
+            <summary>
+            Writes a message into log file with severity. If the message contains '\n', the line will be splitted.
+            </summary>
+            <param name="message">The message</param>
+            <param name="severity">the severity of the message</param>
+        </member>
+        <member name="M:BLTools.TExtendedTraceListenerBase._BuildLogLine(System.String,System.String,System.String)">
+            <summary>
+            Builds a log line from components and optional components
+            </summary>
+            <param name="message">The message itself</param>
+            <param name="severity">The severity (category) of the message</param>
+            <param name="IndentSpace">How much do we indent</param>
+            <returns></returns>
+        </member>
+        <member name="T:BLTools.TimeStampTextWriterTraceListener">
+            <summary>
+            Act as a trace with timestamp in front of text values
+            </summary>
+        </member>
+        <member name="P:BLTools.TimeStampTextWriterTraceListener.Writer">
+            <summary>
+            Textwriter used to log info
+            </summary>
+        </member>
+        <member name="M:BLTools.TimeStampTextWriterTraceListener.#ctor(System.IO.TextWriter,System.String)">
+            <summary>
+            Create a new TimeStampTextWriterTraceListener using a StreamWriter
+            </summary>
+            <param name="textWriter">The stream that will receive the log</param>
+            <param name="name">The name of the TraceListener or empty for anonymous</param>
+        </member>
+        <member name="M:BLTools.TimeStampTextWriterTraceListener.WriteLine(System.String,System.String)">
+            <summary>
+            Writes a message into log file with severity. If the message contains '\n', the line will be splitted.
+            </summary>
+            <param name="message">The message</param>
+            <param name="severity">the severity of the message</param>
+        </member>
+        <member name="T:BLTools.TimeStampTraceListener">
+            <summary>
+            Act as a trace with timestamp in front of text values
+            </summary>
+        </member>
+        <member name="P:BLTools.TimeStampTraceListener.ListenerEncoding">
+            <summary>
+            Defines the encoding used to write the log
+            </summary>
+        </member>
+        <member name="M:BLTools.TimeStampTraceListener.#ctor(System.String,System.String)">
+            <summary>
+            Create a new TimeStampTraceListener using a filename. It can be named.
+            </summary>
+            <param name="filename">The name of the file that will contain the log (including path name)</param>
+            <param name="name">The name of the TraceListener or empty for anonymous</param>
+        </member>
+        <member name="M:BLTools.TimeStampTraceListener.WriteLine(System.String,System.String)">
+            <summary>
+            Writes a message into log file with severity. If the message contains '\n', the line will be splitted.
+            </summary>
+            <param name="message">The message</param>
+            <param name="severity">the severity of the message</param>
+        </member>
+        <member name="M:BLTools.TimeStampTraceListener.ResetLog">
+            <summary>
+            Delete the current log file.
+            A new log file will be created the first time a new log line is added
+            </summary>
+        </member>
+        <member name="M:BLTools.TimeStampTraceListener.Rollover">
+            <summary>
+            Will close the current log file, and rename it as oldfilename + datetime + .log.
+            A new log file will be created the first time a new log line is added
+            </summary>
+        </member>
+        <member name="M:BLTools.TimeStampTraceListener.Rollover(System.String)">
+            <summary>
+            Will close the current log file, and rename it as newName.
+            A new log file will be created the first time a new log line is added
+            </summary>
+            <param name="newName">Name of the renamed (only the filename+extension part, not the path) version</param>
+        </member>
+        <member name="T:BLTools.MVVM.AMVVM">
+            <summary>
+            Base class for a new MVVM class
+            </summary>
+        </member>
+        <member name="F:BLTools.MVVM.AMVVM.MinTraceLevel">
+            <summary>
+            Minimum level for tracing. If under the level, the callback is skipped
+            </summary>
+        </member>
+        <member name="P:BLTools.MVVM.AMVVM.WorkInProgress">
+            <summary>
+            Indicates when an operation is in progress
+            </summary>
+        </member>
+        <member name="E:BLTools.MVVM.AMVVM.OnInitProgressBar">
+            <summary>
+            Request progress bar initialisation. Provides the maximum value
+            </summary>
+        </member>
+        <member name="E:BLTools.MVVM.AMVVM.OnProgressBarNewValue">
+            <summary>
+            Indicates progress bar change. Provides new current value
+            </summary>
+        </member>
+        <member name="E:BLTools.MVVM.AMVVM.OnProgressBarCompleted">
+            <summary>
+            Indicates progress bar termination
+            </summary>
+        </member>
+        <member name="M:BLTools.MVVM.AMVVM.NotifyInitProgressBar(System.Int32)">
+            <summary>
+            Notify that a progress bar is to be reinitialised
+            </summary>
+            <param name="maxValue">Maximum value of the bar</param>
+        </member>
+        <member name="M:BLTools.MVVM.AMVVM.NotifyProgressBarNewValue(System.Int32)">
+            <summary>
+            Notify the progress bar of a new current value
+            </summary>
+            <param name="value">The current value</param>
+        </member>
+        <member name="M:BLTools.MVVM.AMVVM.NotifyProgressBarCompleted(System.String,System.Boolean)">
+            <summary>
+            Notify a progress bar of a job completion, with optional message and status
+            </summary>
+            <param name="message">The optional message</param>
+            <param name="status">The optional status (true/false)</param>
+        </member>
+        <member name="E:BLTools.MVVM.AMVVM.OnExecutionStatus">
+            <summary>
+            Indicates a change in operation status. Transmit a string.
+            </summary>
+        </member>
+        <member name="E:BLTools.MVVM.AMVVM.OnExecutionCompleted">
+            <summary>
+            Indicates that an operation is completed. Provides a bool to reflect the operation success and optionally a message
+            </summary>
+        </member>
+        <member name="M:BLTools.MVVM.AMVVM.ClearExecutionStatus">
+            <summary>
+            Sends an empty execution status to clear it
+            </summary>
+        </member>
+        <member name="M:BLTools.MVVM.AMVVM.NotifyExecutionStatus(System.String)">
+            <summary>
+            Sends an execution status message
+            </summary>
+            <param name="statusMessage">The message</param>
+        </member>
+        <member name="M:BLTools.MVVM.AMVVM.NotifyExecutionCompleted(System.String,System.Boolean)">
+            <summary>
+            Sends an execution completed status message
+            </summary>
+            <param name="statusMessage">The message</param>
+            <param name="completionStatus">The status at the completion of the process</param>
+        </member>
+        <member name="E:BLTools.MVVM.AMVVM.OnExecutionProgress">
+            <summary>
+            Indicates a change in operation progress. Provides a message and optionally a integer value
+            </summary>
+        </member>
+        <member name="M:BLTools.MVVM.AMVVM.ClearExecutionProgress">
+            <summary>
+            Sends an empty execution progress message to clear it
+            </summary>
+        </member>
+        <member name="M:BLTools.MVVM.AMVVM.NotifyExecutionProgress(System.String,BLTools.ErrorLevel)">
+            <summary>
+            Sends a message for progress
+            </summary>
+            <param name="message">The message</param>
+            <param name="errorlevel">The optional errorlevel (will be filtered by MinTraceLevel)</param>
+        </member>
+        <member name="M:BLTools.MVVM.AMVVM.NotifyExecutionProgress(System.String,System.Int32,BLTools.ErrorLevel)">
+            <summary>
+            Sends a message and an integer to indicate progress
+            </summary>
+            <param name="message">The message</param>
+            <param name="progress">The integer</param>
+            <param name="errorlevel">The optional errorlevel (will be filtered by MinTraceLevel)</param>
+        </member>
+        <member name="E:BLTools.MVVM.AMVVM.OnExecutionError">
+            <summary>
+            Indicates an error in operation progress. Provides a message and an errorlevel
+            </summary>
+        </member>
+        <member name="M:BLTools.MVVM.AMVVM.NotifyExecutionError(System.String,BLTools.ErrorLevel)">
+            <summary>
+            Sends an message to indicate an error
+            </summary>
+            <param name="message">The message</param>
+            <param name="errorlevel">The optional errorlevel (will be filtered by MinTraceLevel)</param>
+        </member>
+        <member name="E:BLTools.MVVM.AMVVM.PropertyChanged">
+            <summary>
+            Event handler for when a property was changed
+            </summary>
+        </member>
+        <member name="M:BLTools.MVVM.AMVVM.NotifyPropertyChanged(System.String)">
+            <summary>
+            Calls any hook when the property was changed
+            </summary>
+            <param name="propertyName"></param>
+        </member>
+        <member name="T:BLTools.MVVM.ObservableObject">
+            <summary>
+            Enable a class to notify of property changed
+            </summary>
+        </member>
+        <member name="E:BLTools.MVVM.ObservableObject.PropertyChanged">
+            <summary>
+            Event handler for when a property was changed
+            </summary>
+        </member>
+        <member name="M:BLTools.MVVM.ObservableObject.NotifyPropertyChanged(System.String)">
+            <summary>
+            Calls any hook when the property was changed
+            </summary>
+            <param name="propertyName"></param>
+        </member>
+        <member name="T:BLTools.Encryption.TRSACryptographyExtension">
+            <summary>
+            Manage RSA asymmetric encryption
+            </summary>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.EncryptToRSABase64(System.String,BLTools.Encryption.TRSAPublicKey)">
+            <summary>
+            Encrypt a string to base64 using RSA and Encoding.UTF8
+            </summary>
+            <param name="source">The string to encrypt</param>
+            <param name="targetPublicKeyXml">The public key to use, in XML string format</param>
+            <returns>The encrypted base64 string</returns>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.EncryptToRSABase64(System.String,BLTools.Encryption.TRSAPublicKey,System.Text.Encoding)">
+            <summary>
+            Encrypt a string to base64 using RSA
+            </summary>
+            <param name="source">The string to encrypt</param>
+            <param name="targetPublicKeyXml">The public key to use, in XML string format</param>
+            <param name="encoding">The encoding used in the source string</param>
+            <returns>The encrypted base64 string</returns>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.EncryptToRSABase64(System.String,System.Security.Cryptography.RSAParameters)">
+            <summary>
+            Encrypt a string to base64 using RSA and Encoding.UTF8
+            </summary>
+            <param name="source">The string to encrypt</param>
+            <param name="publicKey">The public key to use, in RSAParameters format</param>
+            <returns>The encrypted base64 string</returns>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.EncryptToRSABase64(System.String,System.Security.Cryptography.RSAParameters,System.Text.Encoding)">
+            <summary>
+            Encrypt a string to base64 using RSA
+            </summary>
+            <param name="source">The string to encrypt</param>
+            <param name="publicKey">The public key to use, in RSAParameters format</param>
+            <param name="encoding">The encoding used in the source string</param>
+            <returns>The encrypted base64 string</returns>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.DecryptFromRSABase64(System.String,BLTools.Encryption.TRSAPrivateKey)">
+            <summary>
+            Decrypt a base64 RSA encrypted string using Encoding.UTF8
+            </summary>
+            <param name="base64Source">The base64 string to decrypt</param>
+            <param name="privateKey">The private key to use</param>
+            <returns>The decrypted string</returns>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.DecryptFromRSABase64(System.String,BLTools.Encryption.TRSAPrivateKey,System.Text.Encoding)">
+            <summary>
+            Decrypt a base64 RSA encrypted string
+            </summary>
+            <param name="base64Source">The base64 string to decrypt</param>
+            <param name="privateKey">The private key to use</param>
+            <param name="encoding">The encoding to use with the decrypted string</param>
+            <returns>The decrypted string</returns>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.DecryptFromRSABase64(System.String,System.Security.Cryptography.RSAParameters)">
+            <summary>
+            Decrypt a base64 RSA encrypted string using Encoding.UTF8
+            </summary>
+            <param name="base64Source">The base64 string to decrypt</param>
+            <param name="privateKey">The private key to use, in RSAParameters format</param>
+            <returns>The decrypted string</returns>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.DecryptFromRSABase64(System.String,System.Security.Cryptography.RSAParameters,System.Text.Encoding)">
+            <summary>
+            Decrypt a base64 RSA encrypted string
+            </summary>
+            <param name="base64Source">The base64 string to decrypt</param>
+            <param name="privateKey">The private key to use, in RSAParameters format</param>
+            <param name="encoding">The encoding to use with the decrypted string</param>
+            <returns>The decrypted string</returns>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.SignToRSABase64(System.String,BLTools.Encryption.TRSAPrivateKey)">
+            <summary>
+            Generate a signature in base64 using RSA and Encoding.UTF8
+            </summary>
+            <param name="source">The text to sign</param>
+            <param name="privateKey">The private key to use</param>
+            <returns>A signature in base64</returns>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.SignToRSABase64(System.String,BLTools.Encryption.TRSAPrivateKey,System.Text.Encoding)">
+            <summary>
+            Generate a signature in base64 using RSA
+            </summary>
+            <param name="source">The text to sign</param>
+            <param name="privateKey">The private key to use</param>
+            <param name="encoding">The encoding used in the text to sign</param>
+            <returns>A signature in base64</returns>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.SignToRSABase64(System.String,System.Security.Cryptography.RSAParameters)">
+            <summary>
+            Generate a signature in base64 using RSA and Encoding.UTF8
+            </summary>
+            <param name="source">The text to sign</param>
+            <param name="privateKey">The private key to use, in RSAParameters format</param>
+            <returns>A signature in base64</returns>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.SignToRSABase64(System.String,System.Security.Cryptography.RSAParameters,System.Text.Encoding)">
+            <summary>
+            Generate a signature in base64 using RSA
+            </summary>
+            <param name="source">The text to sign</param>
+            <param name="privateKey">The private key to use, in RSAParameters format</param>
+            <param name="encoding">The encoding used in the text to sign</param>
+            <returns>A signature in base64</returns>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.IsSignatureRSABase64Valid(System.String,System.String,BLTools.Encryption.TRSAPublicKey)">
+            <summary>
+            Validate a base64 signature using RSA and Encoding.UTF8
+            </summary>
+            <param name="source">The original text that was signed</param>
+            <param name="signatureBase64ToValidate">The base64 signature to validate</param>
+            <param name="publicKey">The public key to use</param>
+            <returns>True if the signature is valid and original text has not been tampered. False otherwise.</returns>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.IsSignatureRSABase64Valid(System.String,System.String,BLTools.Encryption.TRSAPublicKey,System.Text.Encoding)">
+            <summary>
+            Validate a base64 signature using RSA
+            </summary>
+            <param name="source">The original text that was signed</param>
+            <param name="signatureBase64ToValidate">The base64 signature to validate</param>
+            <param name="publicKey">The public key to use</param>
+            <param name="encoding">The encoding used in the original text</param>
+            <returns>True if the signature is valid and original text has not been tampered. False otherwise.</returns>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.IsSignatureRSABase64Valid(System.String,System.String,System.Security.Cryptography.RSAParameters)">
+            <summary>
+            Validate a base64 signature using RSA and Encoding.UTF8
+            </summary>
+            <param name="source">The original text that was signed</param>
+            <param name="signatureBase64ToValidate">The base64 signature to validate</param>
+            <param name="publicKey">The public key to use, in RSAParameters format</param>
+            <returns>True if the signature is valid and original text has not been tampered. False otherwise.</returns>
+        </member>
+        <member name="M:BLTools.Encryption.TRSACryptographyExtension.IsSignatureRSABase64Valid(System.String,System.String,System.Security.Cryptography.RSAParameters,System.Text.Encoding)">
+            <summary>
+            Validate a base64 signature using RSA
+            </summary>
+            <param name="source">The original text that was signed</param>
+            <param name="signatureBase64ToValidate">The base64 signature to validate</param>
+            <param name="publicKey">The public key to use, in RSAParameters format</param>
+            <param name="encoding">The encoding used in the original text</param>
+            <returns>True if the signature is valid and original text has not been tampered. False otherwise.</returns>
+        </member>
+        <member name="T:BLTools.ArgElement">
+            <summary>
+            Single element of arguments : Id(position), Name, Value
+            </summary>
+        </member>
+        <member name="T:BLTools.SplitArgs">
+            <summary>
+            Splits arguments of CommandLine. You can use either / or - as parameter prefix or nothing but the keyword.
+            If values are specified, they are separated from the keyword by an = sign.
+            (c) 2004-2012 Luc Bolly
+            </summary>
+        </member>
+        <member name="P:BLTools.SplitArgs.CurrentCultureInfo">
+            <summary>
+            Get or Set the CultureInfo used to parse DateTime and numbers (decimal point)
+            </summary>
+        </member>
+        <member name="F:BLTools.SplitArgs.IsCaseSensitive">
+            <summary>
+            Get or Set the parameters name case sensitivity
+            </summary>
+        </member>
+        <member name="F:BLTools.SplitArgs.Separator">
+            <summary>
+            Get or Set the separator used when reading an array from parameters (default value is ',')
+            </summary>
+        </member>
+        <member name="F:BLTools.SplitArgs.KeyValueSeparator">
+            <summary>
+            Separator between a key and its value
+            </summary>
+        </member>
+        <member name="M:BLTools.SplitArgs.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a dictonnary of command line arguments from the args parameters list provided to Main function
+            </summary>
+            <param name="arrayOfValues">An array of parameters</param>
+        </member>
+        <member name="M:BLTools.SplitArgs.#ctor(System.String)">
+            <summary>
+            Creates a dictionnary of command line parameters from a given command line 
+            </summary>
+            <param name="cmdLine">The command line</param>
+        </member>
+        <member name="M:BLTools.SplitArgs.#ctor(BLTools.SplitArgs)">
+            <summary>
+            Copy constructor
+            </summary>
+            <param name="otherSpliArgs"></param>
+        </member>
+        <member name="M:BLTools.SplitArgs.#ctor(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Create a dictionnary of url parameters from a Request.QueryString
+            </summary>
+            <param name="queryStringItems">A Request.QueryString</param>
+        </member>
+        <member name="P:BLTools.SplitArgs.Item(System.Int32)">
+            <summary>
+            Obtain an argument by its index instead of its name
+            </summary>
+            <param name="index">The index of the argument obtain (first is zero)</param>
+            <returns>An ArgElement</returns>
+        </member>
+        <member name="M:BLTools.SplitArgs.IsDefined(System.String)">
+            <summary>
+            Indicate if a key was part of the arguments (whatever it has a value or not)
+            </summary>
+            <param name="key">the key to test</param>
+            <returns>true if the key was defined, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.SplitArgs.GetValue``1(System.String)">
+            <summary>
+            Generic version of GetValue
+            </summary>
+            <typeparam name="T">The type of the returned value</typeparam>
+            <param name="key">The key name of the value</param>
+            <returns>The value</returns>
+        </member>
+        <member name="M:BLTools.SplitArgs.GetValue``1(System.String,``0)">
+            <summary>
+            Generic version of GetValue
+            </summary>
+            <typeparam name="T">The type of the returned value</typeparam>
+            <param name="key">The key name of the value</param>
+            <param name="defaultValue">The default value to be returned if the key name is invalid</param>
+            <returns>The value</returns>
+        </member>
+        <member name="M:BLTools.SplitArgs.GetValue``1(System.String,``0,System.Globalization.CultureInfo)">
+            <summary>
+            Generic version of GetValue
+            </summary>
+            <typeparam name="T">The type of the returned value</typeparam>
+            <param name="key">The key name of the value</param>
+            <param name="defaultValue">The default value to be returned if the key name is invalid</param>
+            <returns>The value</returns>
+        </member>
+        <member name="M:BLTools.SplitArgs.GetValue``1(System.Int32)">
+            <summary>
+            Generic version of GetValue
+            </summary>
+            <typeparam name="T">The type of the returned value</typeparam>
+            <param name="position">The position (counted from 0) of the value</param>
+            <returns>The value</returns>
+        </member>
+        <member name="M:BLTools.SplitArgs.GetValue``1(System.Int32,``0)">
+            <summary>
+            Generic version of GetValue
+            </summary>
+            <typeparam name="T">The type of the returned value</typeparam>
+            <param name="position">The position (counted from 0) of the value</param>
+            <param name="defaultValue">The default value to be returned if the position is invalid</param>
+            <returns>The value</returns>
+        </member>
+        <member name="M:BLTools.SplitArgs.GetValue``1(System.Int32,``0,System.Globalization.CultureInfo)">
+            <summary>
+            Generic version of GetValue
+            </summary>
+            <typeparam name="T">The type of the returned value</typeparam>
+            <param name="position">The position (counted from 0) of the value</param>
+            <param name="defaultValue">The default value to be returned if the key name is invalid</param>
+            <returns>The value</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBox.BuildDynamicIBM(System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char)">
+            <summary>
+            Generate a box with the message inside it. The width of the box is dynamically calculated. The border is filled with IBM boxes characters
+            </summary>
+            <param name="sourceString">The message</param>
+            <param name="margin">The margin around the message within the box</param>
+            <param name="alignment">The alignment of the message within the box</param>
+            <param name="filler">The character used to full the extra space aound the message within the box</param>
+            <returns>A string containing the message in the box</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBox.BuildDynamic(System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char,System.String)">
+            <summary>
+            Generate a box with the message inside it. The width of the box is dynamically calculated.
+            </summary>
+            <param name="sourceString">The message</param>
+            <param name="margin">The margin around the message within the box</param>
+            <param name="alignment">The alignment of the message within the box</param>
+            <param name="filler">The character used to full the extra space aound the message within the box</param>
+            <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
+            <returns>A string containing the message in the box</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBox.BuildFixedWidth(System.String,BLTools.Text.TextBox.EStringAlignment,System.Char,System.String)">
+            <summary>
+            Generate a box with the message inside it. The width of the box is DEFAULT_FIXED_WIDTH. If the message is larger than the box, it is split in several lines
+            </summary>
+            <param name="sourceString">The message</param>
+            <param name="alignment">The alignment of the message within the box</param>
+            <param name="filler">The character used to full the extra space aound the message within the box</param>
+            <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
+            <returns>A string with the box and the message</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBox.BuildFixedWidth(System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char,System.String)">
+            <summary>
+            Generate a box with the message inside it. The width of the box is fixed. If the message is larger than the box, it is split in several lines
+            </summary>
+            <param name="sourceString">The message</param>
+            <param name="width">The width of the box</param>
+            <param name="alignment">The alignment of the message within the box</param>
+            <param name="filler">The character used to full the extra space aound the message within the box</param>
+            <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
+            <returns>A string with the box and the message</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBox.BuildFixedWidthIBM(System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char)">
+            <summary>
+            Generate a box with the message inside it. The width of the box is fixed. If the message is larger than the box, it is split in several lines.
+            IBM characters are used for the border
+            </summary>
+            <param name="sourceString">The message</param>
+            <param name="width">The width of the box</param>
+            <param name="alignment">The alignment of the message within the box</param>
+            <param name="filler">The character used to full the extra space aound the message within the box</param>
+            <returns>A string with the box and the message</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBox.BoxIBM(System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char)">
+            <summary>
+            Generate a box with the message inside it. The width of the box is dynamically calculated. The border is filled with IBM boxes characters
+            </summary>
+            <param name="sourceString">The message</param>
+            <param name="margin">The margin around the message within the box</param>
+            <param name="alignment">The alignment of the message within the box</param>
+            <param name="filler">The character used to full the extra space aound the message within the box</param>
+            <returns>A string containing the message in the box</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBox.Box(System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char,System.String)">
+            <summary>
+            Generate a box with the message inside it. The width of the box is dynamically calculated.
+            </summary>
+            <param name="sourceString">The message</param>
+            <param name="margin">The margin around the message within the box</param>
+            <param name="alignment">The alignment of the message within the box</param>
+            <param name="filler">The character used to full the extra space aound the message within the box</param>
+            <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
+            <returns>A string containing the message in the box</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBox.BuildHorizontalRow">
+            <summary>
+            Build a string figuring an horizontal line. The length of the line is current console width.
+            </summary>
+            <returns>A string containing the horizontal line</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBox.BuildHorizontalRow(BLTools.Text.TextBox.EHorizontalRowType)">
+            <summary>
+            Build a string figuring an horizontal line. The length of the line is current console width.
+            </summary>
+            <param name="rowType">The type of char to use for the drawing</param>
+            <returns>A string containing the horizontal line</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBox.BuildHorizontalRow(System.Int32,BLTools.Text.TextBox.EHorizontalRowType)">
+            <summary>
+            Build a string figuring an horizontal line.
+            </summary>
+            <param name="width">The length of the line. -1 means current console width</param>
+            <param name="rowType">The type of char to use for the drawing</param>
+            <returns>A string containing the horizontal line</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBox.BuildHorizontalRowWithText(System.String,BLTools.Text.TextBox.EHorizontalRowType)">
+            <summary>
+            Build a string figuring an horizontal line, with a message in it.  The length of the line is current console width.
+            </summary>
+            <param name="message">The text message</param>
+            <param name="rowType">The type of char to use for the drawing</param>
+            <returns>A string containing the horizontal line with the message embedded</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBox.BuildHorizontalRowWithText(System.String,System.Int32,BLTools.Text.TextBox.EHorizontalRowType)">
+            <summary>
+            Build a string figuring an horizontal line, with a message in it
+            </summary>
+            <param name="message">The text message</param>
+            <param name="width">The length of the line. -1 means current console width. If the message is bigger than the width, it is truncated.</param>
+            <param name="rowType">The type of char to use for the drawing</param>
+            <returns>A string containing the horizontal line with the message embedded</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBox.Spaces(System.Int32)">
+            <summary>
+            Generate a string of spaces
+            </summary>
+            <param name="number">The number of spaces</param>
+            <returns>A string of spaces</returns>
+        </member>
+        <member name="F:BLTools.BLConverter.TraceError">
+            <summary>
+            Set to true to obtain additional debug info
+            </summary>
+        </member>
+        <member name="M:BLTools.BLConverter.BLConvert``1(System.Object,System.Globalization.CultureInfo,``0)">
+            <summary>
+            Convert a value from one type to another (possibly through an evaluation of the value : e.g. "0", "True", "T" all becomes True)
+            </summary>
+            <typeparam name="T">Requested output type</typeparam>
+            <param name="source">Data source</param>
+            <param name="culture">Culture used to performed certain conversions</param>
+            <param name="defaultValue">What to return when unable to convert</param>
+            <returns>The source value converted to a new type</returns>
+        </member>
+    </members>
+</doc>

@@ -22,16 +22,16 @@ namespace BLTools.Security.Authorization {
     }
 
     public TSecurityUserCollection(XElement users) {
-      foreach (XElement UserItem in users.Elements("user")) {
-        Add(new TSecurityUser(UserItem));
-      }
+      FromXml(users);
     }
 
     public TSecurityUserCollection(IEnumerable<XElement> users) {
       foreach (XElement UserItem in users) {
         Add(new TSecurityUser(UserItem));
       }
-    } 
+    }
+
+    
     #endregion Constructor(s)
 
     #region Converters
@@ -49,7 +49,13 @@ namespace BLTools.Security.Authorization {
         RetVal.Add(UserItem.ToXml());
       }
       return RetVal;
-    } 
+    }
+
+    public void FromXml(XElement source) {
+      foreach (XElement UserItem in source.Elements("user")) {
+        Add(new TSecurityUser(UserItem));
+      }
+    }
     #endregion Converters
 
   }

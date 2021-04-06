@@ -28,7 +28,12 @@ namespace BLTools.Security.Authorization {
     }
 
     public TSecurityGroupCollection(XElement groups) {
-      foreach (XElement GroupItem in groups.Elements("group")) {
+      FromXml(groups);
+    }
+
+    public void FromXml(XElement source) {
+      Clear();
+      foreach (XElement GroupItem in source.Elements("group")) {
         Add(new TSecurityGroup(GroupItem));
       }
     }

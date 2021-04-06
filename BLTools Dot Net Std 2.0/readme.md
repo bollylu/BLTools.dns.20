@@ -1,4 +1,4 @@
-﻿# BLTOOLS
+﻿ BLTOOLS
 Library of classes for generic support in .NET
 
 ## Compiled for 
@@ -7,7 +7,8 @@ Library of classes for generic support in .NET
 - .NET 5.0
 
 ## Content
-- ### Extension methods
+  ### Extension methods
+  > Extends various existing classes with methods and functions
   - #### ByteArray
   - #### Dictionnary
   - #### IEnumerable by blocks
@@ -22,6 +23,7 @@ Library of classes for generic support in .NET
   - #### .NET Reflection
   - #### Strings and chars
   - #### XML
+   
 - ### Logging
 - ### Command line arguments
   - #### SplitArgs
@@ -45,4 +47,11 @@ Library of classes for generic support in .NET
 - ### Data structures
 - ### Debugging
 - ### MVVM
+- ### Interfaces
+  - #### IToXml
+    > The class must be able to transform itself to Xml (XElement) and to fill its content from a source Xml (XElement)
+  - #### IToCsv
+    > The class must be able to transform itself to Csv (string) and to fill its content from a source Csv (string)
+  - #### IToJson
+    > The class must be able to transform itself to Json (string) and to fill its content from a source Json (string)
 
