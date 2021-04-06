@@ -56,7 +56,7 @@ namespace BLTools.UnitTest
         private async Task<int> GetValue()
         {
             Random R = new Random(DateTime.Now.Millisecond);
-            await Task.Delay(R.Next(5, 50));
+            await Task.Delay(R.Next(5, 50)).ConfigureAwait(false);
             return AsyncI++;
         }
     }

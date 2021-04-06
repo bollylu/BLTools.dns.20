@@ -295,6 +295,11 @@
             Stop the monitoring
             </summary>
         </member>
+        <member name="T:BLTools.TRepeatAction">
+            <summary>
+            Repeat an action in background
+            </summary>
+        </member>
         <member name="P:BLTools.TRepeatAction.ToDo">
             <summary>
             The action to execute every occurence of the delay
@@ -312,9 +317,13 @@
             WARNING : Monitoring is done in a background thread, beware of UI
             </summary>
             <param name="name">A name for the mmonitor</param>
-            <param name="predicate">The condition to evaluate. When true, triggers the action</param>
-            <param name="action">The action to execute when condition is met</param>
+            <param name="todo">The action to execute</param>
             <param name="delay">The delay between two evaluation of the condition</param>
+        </member>
+        <member name="M:BLTools.TRepeatAction.Start">
+            <summary>
+            Start the loop
+            </summary>
         </member>
         <member name="M:BLTools.TRepeatAction.Cancel">
             <summary>
@@ -327,6 +336,12 @@
             </summary>
             <param name="timeout">The timeout for the loop to be stopped, default is delay * 10</param>
         </member>
+        <member name="T:BLTools.TRepeatAction`1">
+            <summary>
+            Repeat an action with a parameter in background
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
         <member name="P:BLTools.TRepeatAction`1.ToDo">
             <summary>
             The action to execute when the condition is met (the reference of the monitored item is passed to it)
@@ -338,15 +353,26 @@
             WARNING : Monitoring is done in a background thread, beware of UI
             </summary>
         </member>
-        <member name="M:BLTools.TRepeatAction`1.#ctor(System.String,System.Action{`0},System.Predicate{`0},System.Int32)">
+        <member name="M:BLTools.TRepeatAction`1.#ctor(System.String,System.Action{`0},System.Int32)">
             <summary>
             Monitor a condition, triggering an action when condition is met
             WARNING : Monitoring is done in a background thread, beware of UI
             </summary>
             <param name="name">A name for the mmonitor</param>
-            <param name="predicate">The condition to evaluate. When true, triggers the action</param>
-            <param name="action">The action to execute when condition is met</param>
+            <param name="todo">The action to execute</param>
             <param name="delay">The delay between two evaluation of the condition</param>
+        </member>
+        <member name="M:BLTools.TRepeatAction`1.Dispose(System.Boolean)">
+            <summary>
+            Dispose of the RepeatAction
+            </summary>
+            <param name="disposing">true if already disposing, false otherwise</param>
+        </member>
+        <member name="M:BLTools.TRepeatAction`1.Start(`0)">
+            <summary>
+            Start the loop
+            </summary>
+            <param name="obj"></param>
         </member>
         <member name="M:BLTools.TRepeatAction`1.Cancel">
             <summary>
