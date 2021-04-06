@@ -7,7 +7,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <Version>4.5.19.0</Version>
+    <Version>4.5.19.1</Version>
     <PackageReleaseNotes>
       Fixed IsNumeric() with negative numbers
       Moved Spaces to TextBox
@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
-    <DocumentationFile>I:\dev.git\BLTools.dns.20\BLTools Dot Net Std 2.0\BLTools.xml</DocumentationFile>
+    <DocumentationFile>.\# Doc\BLTools.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,13 +1,10 @@
 <?xml version="1.0"?>
-<!--<?xml-stylesheet type="text/xsl" href="ViewDoc.xsl"?>-->
-<?xml-stylesheet type="text/css" href="DocXml.css"?>
-
 <doc>
     <assembly>
         <name>BLTools</name>
     </assembly>
     <members>
-        <member name="M:BLTools.TActionManager.AddFunc``2 (System.String,System.Predicate{``0},System.Func{``0,``1})">
+        <member name="M:BLTools.TActionManager.AddFunc``2(System.String,System.Predicate{``0},System.Func{``0,``1})">
             <summary>
             Add a function to calculate some results if a predicate is true
             </summary>
@@ -1819,6 +1816,162 @@
             <param name="culture">The culture info used to convert the return value</param>
             <returns>The inner XElement value in the requested type or the specified default value</returns>
         </member>
+        <member name="T:BLTools.IFileCsv">
+            <summary>
+            Allows the reading or saving in csv
+            </summary>
+        </member>
+        <member name="M:BLTools.IFileCsv.SaveCsv(System.String,System.Boolean)">
+            <summary>
+            Save the item in an csv file
+            </summary>
+            <param name="filename">The filename for the save</param>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.IFileCsv.SaveCsvAsync(System.String,System.Boolean)">
+            <summary>
+            Save the item in an csv file asynchronously
+            </summary>
+            <param name="filename">The filename for the save</param>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.IFileCsv.LoadCsv(System.String)">
+            <summary>
+            Load the content of an csv file
+            </summary>
+            <param name="filename">The file to load</param>
+            <returns>true if load is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.IFileCsv.LoadCsvAsync(System.String)">
+            <summary>
+            Load the content of an csv file asynchronously
+            </summary>
+            <param name="filename">The file to load</param>
+            <returns>true if load is successfull, false otherwise</returns>
+        </member>
+        <member name="T:BLTools.IFileJson">
+            <summary>
+            Allows the reading or saving in json
+            </summary>
+        </member>
+        <member name="M:BLTools.IFileJson.SaveJson(System.String,System.Boolean)">
+            <summary>
+            Save the item in an json file
+            </summary>
+            <param name="filename">The filename for the save</param>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.IFileJson.SaveJsonAsync(System.String,System.Boolean)">
+            <summary>
+            Save the item in an json file asynchronously
+            </summary>
+            <param name="filename">The filename for the save</param>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.IFileJson.LoadJson(System.String)">
+            <summary>
+            Load the content of an json file
+            </summary>
+            <param name="filename">The file to load</param>
+            <returns>true if load is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.IFileJson.LoadJsonAsync(System.String)">
+            <summary>
+            Load the content of an json file asynchronously
+            </summary>
+            <param name="filename">The file to load</param>
+            <returns>true if load is successfull, false otherwise</returns>
+        </member>
+        <member name="T:BLTools.IFileXml">
+            <summary>
+            Allows the reading or saving in xml
+            </summary>
+        </member>
+        <member name="M:BLTools.IFileXml.SaveXml(System.String,System.Boolean)">
+            <summary>
+            Save the item in an xml file
+            </summary>
+            <param name="filename">The filename for the save</param>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.IFileXml.SaveXmlAsync(System.String,System.Boolean)">
+            <summary>
+            Save the item in an xml file asynchronously
+            </summary>
+            <param name="filename">The filename for the save</param>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.IFileXml.LoadXml(System.String)">
+            <summary>
+            Load the content of an xml file
+            </summary>
+            <param name="filename">The file to load</param>
+            <returns>true if load is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.IFileXml.LoadXmlAsync(System.String)">
+            <summary>
+            Load the content of an xml file asynchronously
+            </summary>
+            <param name="filename">The file to load</param>
+            <returns>true if load is successfull, false otherwise</returns>
+        </member>
+        <member name="T:BLTools.IToCsv">
+            <summary>
+            Convert item to/from csv
+            </summary>
+        </member>
+        <member name="M:BLTools.IToCsv.ToCsv">
+            <summary>
+            Transform the item into csv
+            </summary>
+            <returns>The csv representation of the item</returns>
+        </member>
+        <member name="M:BLTools.IToCsv.FromCsv(System.String)">
+            <summary>
+            Fill the item from a csv source
+            </summary>
+            <param name="source">The data source in csv format</param>
+        </member>
+        <member name="T:BLTools.IToJson">
+            <summary>
+            Convert an item to/from json
+            </summary>
+        </member>
+        <member name="M:BLTools.IToJson.ToJson">
+            <summary>
+            Transform the item in json
+            </summary>
+            <returns>The json representation of the item</returns>
+        </member>
+        <member name="M:BLTools.IToJson.FromJson(System.String)">
+            <summary>
+            Fill the item from a json source
+            </summary>
+            <param name="source"></param>
+        </member>
+        <member name="T:BLTools.IToXml">
+            <summary>
+            Convert item to/from xml
+            </summary>
+        </member>
+        <member name="M:BLTools.IToXml.ToXml">
+            <summary>
+            Transform the item into Xml
+            </summary>
+            <returns>The Xml represention of the item</returns>
+        </member>
+        <member name="M:BLTools.IToXml.FromXml(System.Xml.Linq.XElement)">
+            <summary>
+            Fill the item from an Xml source
+            </summary>
+            <param name="source">The data source in Xml format</param>
+        </member>
         <member name="F:BLTools.Diagnostic.Logging.ALogger.TIMEOUT">
             <summary>
             Maximum amount of ms to wait for a log line to be written
@@ -2129,6 +2282,12 @@
             Calls any hook when the property was changed
             </summary>
             <param name="propertyName"></param>
+        </member>
+        <member name="M:BLTools.Encryption.ARSAKey.LoadXml(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.ARSAKey.LoadXmlAsync(System.String)">
+            <inheritdoc/>
         </member>
         <member name="T:BLTools.Encryption.TRSACryptographyExtension">
             <summary>
