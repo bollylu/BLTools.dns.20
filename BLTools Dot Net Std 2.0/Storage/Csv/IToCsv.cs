@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using BLTools.Storage.Csv;
+
 namespace BLTools {
   /// <summary>
   /// Convert item to/from csv
@@ -13,12 +15,12 @@ namespace BLTools {
     /// Transform the item into csv
     /// </summary>
     /// <returns>The csv representation of the item</returns>
-    string ToCsv();
+    IRowCsv ToCsv();
 
     /// <summary>
     /// Fill the item from a csv source
     /// </summary>
     /// <param name="source">The data source in csv format</param>
-    void FromCsv(string source);
+    void FromCsv(IRowCsv source);
   }
 }

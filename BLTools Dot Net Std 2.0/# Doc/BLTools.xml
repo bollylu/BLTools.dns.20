@@ -2779,6 +2779,13 @@
         <member name="T:BLTools.Storage.Csv.IRowCsv">
             <summary>
             Represent a metadata row
+            <list type="bullet">
+            <item>First field is row type (i.e. Header, Data, Footer)</item>
+            <item>Second field is row Id (e.g. "Test", "Line", "Result")</item>
+            <item>All other fields are data fields</item>
+            </list>
+            <example><code> => "Header";"Title";"My document summary"</code></example>
+            <example><code> => "Data";"Curve";1;9;15;63;2</code></example>
             </summary>
         </member>
         <member name="P:BLTools.Storage.Csv.IRowCsv.SEPARATOR">
@@ -3166,7 +3173,7 @@
             </summary>
             <returns>The csv representation of the item</returns>
         </member>
-        <member name="M:BLTools.IToCsv.FromCsv(System.String)">
+        <member name="M:BLTools.IToCsv.FromCsv(BLTools.Storage.Csv.IRowCsv)">
             <summary>
             Fill the item from a csv source
             </summary>

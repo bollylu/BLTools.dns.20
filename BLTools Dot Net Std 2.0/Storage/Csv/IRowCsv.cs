@@ -9,6 +9,13 @@ namespace BLTools.Storage.Csv {
 
   /// <summary>
   /// Represent a metadata row
+  /// <list type="bullet">
+  /// <item>First field is row type (i.e. Header, Data, Footer)</item>
+  /// <item>Second field is row Id (e.g. "Test", "Line", "Result")</item>
+  /// <item>All other fields are data fields</item>
+  /// </list>
+  /// <example><code> => "Header";"Title";"My document summary"</code></example>
+  /// <example><code> => "Data";"Curve";1;9;15;63;2</code></example>
   /// </summary>
   public interface IRowCsv {
 

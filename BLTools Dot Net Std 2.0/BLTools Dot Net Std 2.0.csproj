@@ -7,7 +7,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <Version>4.5.20</Version>
+    <Version>4.5.20.1</Version>
     <PackageReleaseNotes>
       Added Csv storage
     </PackageReleaseNotes>
