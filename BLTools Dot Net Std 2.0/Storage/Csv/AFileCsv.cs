@@ -15,24 +15,79 @@ namespace BLTools.Storage.Csv {
   public abstract class AFileCsv : ALoggable, IFileCsv {
 
     /// <summary>
+    /// The name of file
+    /// </summary>
+    public string Filename { get; protected set; }
+
+    /// <summary>
     /// The list of rows from the file
     /// </summary>
     protected List<IRowCsv> _Content = new List<IRowCsv>();
 
+    #region --- Constructor(s) ---------------------------------------------------------------------------------
+    protected AFileCsv() { }
+    protected AFileCsv(string filename) {
+      Filename = filename;
+    }
+    #endregion --- Constructor(s) ------------------------------------------------------------------------------
+
     /// <inheritdoc/>
-    public virtual bool Load(string filename) {
-      throw new NotImplementedException();
+    public override string ToString() {
+      StringBuilder RetVal = new StringBuilder();
+      RetVal.AppendLine($"Csv file : {Filename}, {_Content.Count} rows");
+      foreach(IRowCsv RowItem in _Content) {
+        RetVal.AppendLine(RowItem.ToString());
+      }
+      return RetVal.ToString();
+    }
+
+    #region --- Sync I/O methods --------------------------------------------
+    /// <inheritdoc/>
+    public virtual bool Load() {
+      return Load(Filename);
     }
 
     /// <inheritdoc/>
-    public virtual Task<bool> LoadAsync(string filename) {
-      throw new NotImplementedException();
+    public virtual bool Load(string filename) {
+      #region === Validate parameters ===
+      _EnsureFilename(filename);
+      _EnsureFileExists(filename);
+      if (Filename != filename) {
+        Filename = filename;
+      }
+      #endregion === Validate parameters ===
+
+      _Content.Clear();
+
+      try {
+        using (FileStream SourceStream = new FileStream(Filename, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+          using (TCsvReader Reader = new TCsvReader(SourceStream)) {
+            _Content.AddRange(Reader.ReadAll());
+            return true;
+          }
+        }
+      } catch (Exception ex) {
+        LogError($"Unable to read content of {Filename} : {ex.Message}");
+        return false;
+      }
+
+    }
+
+    /// <inheritdoc/>
+    public virtual bool LoadHeader() {
+      return LoadHeader(Filename);
     }
 
     /// <inheritdoc/>
     public virtual bool LoadHeader(string filename) {
+      #region === Validate parameters ===
       _EnsureFilename(filename);
       _EnsureFileExists(filename);
+
+      if (Filename != filename) {
+        Filename = filename;
+      }
+      #endregion === Validate parameters ===
 
       _Content.Clear();
 
@@ -40,8 +95,9 @@ namespace BLTools.Storage.Csv {
         using (FileStream ReadStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read)) {
           using (TCsvReader Reader = new TCsvReader(ReadStream, Encoding.UTF8)) {
             IRowCsv NextRow = Reader.ReadHeader(true);
-            while(NextRow != null) {
+            while (NextRow != null) {
               _Content.Add(NextRow);
+              NextRow = Reader.ReadHeader(true);
             }
           }
         }
@@ -53,9 +109,72 @@ namespace BLTools.Storage.Csv {
     }
 
     /// <inheritdoc/>
+    public virtual bool Save(bool overwrite = true) {
+      return SaveAs(Filename, overwrite);
+    }
+
+    /// <inheritdoc/>
+    public virtual bool SaveAs(string filename, bool overwrite = true) {
+      #region === Validate parameters ===
+      _EnsureFilename(filename);
+
+      if (Filename != filename) {
+        Filename = filename;
+      }
+
+      if (_Content.IsEmpty()) {
+        return true;
+      } 
+      #endregion === Validate parameters ===
+
+      try {
+        if (overwrite && File.Exists(Filename)) {
+          File.Delete(Filename);
+        }
+
+        using (FileStream TargetStream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None)) {
+          using (TCsvWriter Writer = new TCsvWriter(TargetStream, true)) {
+            foreach (IRowCsv RowItem in _Content) {
+              Writer.WriteRow(RowItem);
+            }
+          }
+        }
+
+      } catch (Exception ex) {
+        LogError($"Unable to save csv to {Filename} : {ex.Message}");
+        return false;
+      }
+
+      return true;
+    } 
+    #endregion --- Sync I/O methods --------------------------------------------
+
+    #region --- Async I/O methods --------------------------------------------
+    /// <inheritdoc/>
+    public virtual async Task<bool> LoadAsync() {
+      return await LoadAsync(Filename).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public virtual Task<bool> LoadAsync(string filename) {
+      throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public virtual async Task<bool> LoadHeaderAsync() {
+      return await LoadHeaderAsync(Filename).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
     public virtual Task<bool> LoadHeaderAsync(string filename) {
+      #region === Validate parameters ===
       _EnsureFilename(filename);
       _EnsureFileExists(filename);
+
+      if (Filename != filename) {
+        Filename = filename;
+      }
+      #endregion === Validate parameters ===
 
       _Content.Clear();
 
@@ -76,15 +195,15 @@ namespace BLTools.Storage.Csv {
     }
 
     /// <inheritdoc/>
-    public virtual bool Save(string filename, bool overwrite = true) {
-      throw new NotImplementedException();
+    public virtual async Task<bool> SaveAsync(bool overwrite = true) {
+      return await SaveAsAsync(Filename, overwrite).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
-    public virtual Task<bool> SaveAsync(string filename, bool overwrite = true) {
+    public virtual Task<bool> SaveAsAsync(string filename, bool overwrite = true) {
       throw new NotImplementedException();
-    }
-
+    } 
+    #endregion --- Async I/O methods --------------------------------------------
 
     /************************************************************************************/
 
@@ -110,6 +229,52 @@ namespace BLTools.Storage.Csv {
         LogError(Message);
         throw new ArgumentException(Message, nameof(filename));
       }
+    }
+
+    /************************************************************************************/
+
+    /// <inheritdoc/>
+    public IRowCsv[] GetAll() {
+      if (_Content.IsEmpty()) {
+        return new IRowCsv[0];
+      }
+      return _Content.ToArray();
+    }
+
+    /// <inheritdoc/>
+    public IRowCsv[] GetHeaders() {
+      if (_Content.IsEmpty()) {
+        return new IRowCsv[0];
+      }
+      return _Content.OfType<TRowCsvHeader>().ToArray();
+    }
+
+    /// <inheritdoc/>
+    public IRowCsv[] GetData() {
+      if (_Content.IsEmpty()) {
+        return new IRowCsv[0];
+      }
+      return _Content.OfType<TRowCsvData>().ToArray();
+    }
+
+    /// <inheritdoc/>
+    public IRowCsv[] GetFooters() {
+      if (_Content.IsEmpty()) {
+        return new IRowCsv[0];
+      }
+      return _Content.OfType<TRowCsvFooter>().ToArray();
+    }
+
+    /// <inheritdoc/>
+    public IRowCsv GetRow(ERowCsvType rowType, string id) {
+      if (_Content.IsEmpty()) {
+        return null;
+      }
+      return _Content.FirstOrDefault(r => r.RowType == rowType && r.Id.Equals(id, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    public void AddRow(IRowCsv row) {
+      _Content.Add(row);
     }
   }
 }

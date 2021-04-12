@@ -14,6 +14,9 @@ namespace BLTools.Storage.Csv {
   /// </summary>
   public class TCsvReader : BinaryReader, ILoggable {
 
+    /// <summary>
+    /// The encoding for the reader
+    /// </summary>
     public Encoding ReaderEncoding { get; private set; }
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
@@ -21,7 +24,8 @@ namespace BLTools.Storage.Csv {
     /// Create a new csv reader
     /// </summary>
     /// <param name="inputStream">The stream to read from</param>
-    public TCsvReader(Stream inputStream) : base(inputStream, Encoding.UTF8) {
+    /// <param name="leaveOpen">tue to leave the stream open when closing the reader</param>
+    public TCsvReader(Stream inputStream, bool leaveOpen = true) : base(inputStream, Encoding.UTF8, leaveOpen) {
       ReaderEncoding = Encoding.UTF8;
     }
 
@@ -30,7 +34,8 @@ namespace BLTools.Storage.Csv {
     /// </summary>
     /// <param name="inputStream">The stream to read from</param>
     /// <param name="encoding">the encoding of the stream</param>
-    public TCsvReader(Stream inputStream, Encoding encoding) : base(inputStream, encoding) {
+    /// <param name="leaveOpen">tue to leave the stream open when closing the reader</param>
+    public TCsvReader(Stream inputStream, Encoding encoding, bool leaveOpen = true) : base(inputStream, encoding, leaveOpen) {
       ReaderEncoding = encoding;
     }
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
@@ -46,20 +51,23 @@ namespace BLTools.Storage.Csv {
       if (RawData is null) {
         return null;
       }
-      return _Parse(RawData);
+      return ARowCsv.Parse(RawData);
     }
 
-    ///// <summary>
-    ///// Obtain the next row
-    ///// </summary>
-    ///// <returns></returns>
-    //public async Task<IRowCsv> ReadRowAsync() {
-    //  string RawData = await ReadLineAsync().WithTimeout(1000).ConfigureAwait(false);
-    //  if (RawData is null) {
-    //    return null;
-    //  }
-    //  return _Parse(RawData);
-    //}
+    /// <summary>
+    /// Read all the up to EOF
+    /// </summary>
+    /// <returns></returns>
+    public IRowCsv[] ReadAll() {
+      List<IRowCsv> RetVal = new List<IRowCsv>();
+      string RawData = ReadLine();
+      while (RawData != null) {
+        IRowCsv NewRow = ARowCsv.Parse(RawData);
+        RetVal.Add(NewRow);
+        RawData = ReadLine();
+      }
+      return RetVal.ToArray();
+    }
     #endregion --- Read any row --------------------------------------------
 
     #region --- Read header --------------------------------------------
@@ -74,7 +82,7 @@ namespace BLTools.Storage.Csv {
         switch (RowType) {
           case ERowCsvType.Header: {
               string RawData = ReadLine();
-              return _Parse(RawData);
+              return ARowCsv.Parse(RawData);
             }
           case ERowCsvType.Data:
           case ERowCsvType.Footer:
@@ -148,7 +156,7 @@ namespace BLTools.Storage.Csv {
         switch (RowType) {
           case ERowCsvType.Footer: {
               string RawData = ReadLine();
-              return _Parse(RawData);
+              return ARowCsv.Parse(RawData);
             }
           case ERowCsvType.Data:
           case ERowCsvType.Header:
@@ -183,31 +191,7 @@ namespace BLTools.Storage.Csv {
       }
       return RetVal.ToArray();
     }
-    ///// <summary>
-    ///// Obtain the next row footer
-    ///// </summary>
-    ///// <returns></returns>
-    //public async Task<IRowCsv> ReadFooterAsync(bool findIt = false) {
-    //  ERowCsvType RowType = PeekNextRow();
-    //  while (RowType != ERowCsvType.None) {
-    //    switch (RowType) {
-    //      case ERowCsvType.Footer:
-    //        string RawData = await ReadLineAsync().WithTimeout(1000).ConfigureAwait(false);
-    //        return _Parse(RawData);
-    //      case ERowCsvType.Data:
-    //      case ERowCsvType.Header:
-    //      case ERowCsvType.Unknown:
-    //        if (findIt) {
-    //          await ReadLineAsync().WithTimeout(1000).ConfigureAwait(false);
-    //        } else {
-    //          return null;
-    //        }
-    //        break;
-    //    }
-    //    RowType = PeekNextRow();
-    //  }
-    //  return null;
-    //}
+
     #endregion --- Read footer --------------------------------------------
 
     #region --- Read data --------------------------------------------
@@ -223,7 +207,7 @@ namespace BLTools.Storage.Csv {
         switch (RowType) {
           case ERowCsvType.Data: {
               string RawData = ReadLine();
-              return _Parse(RawData);
+              return ARowCsv.Parse(RawData);
             }
           case ERowCsvType.Header:
           case ERowCsvType.Footer:
@@ -477,26 +461,7 @@ namespace BLTools.Storage.Csv {
 
     /**************************************************************************************/
 
-    private IRowCsv _Parse(string rawData) {
-      if (rawData is null) {
-        return null;
-      }
-
-      ERowCsvType RowType = (ERowCsvType)Enum.Parse(typeof(ERowCsvType), rawData.Before(ARowCsv.SEPARATOR).RemoveExternalQuotes());
-      string RowId = rawData.After(ARowCsv.SEPARATOR).Before(ARowCsv.SEPARATOR).RemoveExternalQuotes();
-      string Content = rawData.After(ARowCsv.SEPARATOR).After(ARowCsv.SEPARATOR);
-
-      switch (RowType) {
-        case ERowCsvType.Header:
-          return new TRowCsvHeader() { Id = RowId, RawContent = Content };
-        case ERowCsvType.Footer:
-          return new TRowCsvFooter() { Id = RowId, RawContent = Content };
-        case ERowCsvType.Data:
-          return new TRowCsvData() { Id = RowId, RawContent = Content };
-        default:
-          return null;
-      }
-    }
+    
 
   }
 }

@@ -63,11 +63,8 @@ namespace BLTools.UnitTest.Storage {
       $"{ERowCsvType.Header.ToString().WithQuotes()}{ARowCsv.SEPARATOR}{"Description".WithQuotes()}{ARowCsv.SEPARATOR}{"18F curve 2".WithQuotes()}",
       $"{ERowCsvType.Data.ToString().WithQuotes()}{ARowCsv.SEPARATOR}{"Channels".WithQuotes()}{ARowCsv.SEPARATOR}{"1;2;3;4;5;6"}",
       $"{ERowCsvType.Data.ToString().WithQuotes()}{ARowCsv.SEPARATOR}{"Energies".WithQuotes()}{ARowCsv.SEPARATOR}{"28;34;47;92;66;26"}",
-      $"{ERowCsvType.Footer.ToString().WithQuotes()}{ARowCsv.SEPARATOR}{"Title".WithQuotes()}{ARowCsv.SEPARATOR}{"18F".WithQuotes()}",
-      $"{ERowCsvType.Footer.ToString().WithQuotes()}{ARowCsv.SEPARATOR}{"Name".WithQuotes()}{ARowCsv.SEPARATOR}{"Total".WithQuotes()}",
-      $"{ERowCsvType.Footer.ToString().WithQuotes()}{ARowCsv.SEPARATOR}{"Description".WithQuotes()}{ARowCsv.SEPARATOR}{"18F total curve".WithQuotes()}",
-      $"{ERowCsvType.Data.ToString().WithQuotes()}{ARowCsv.SEPARATOR}{"Channels".WithQuotes()}{ARowCsv.SEPARATOR}{"1;2;3;4;5;6"}",
-      $"{ERowCsvType.Data.ToString().WithQuotes()}{ARowCsv.SEPARATOR}{"Energies".WithQuotes()}{ARowCsv.SEPARATOR}{"53;70;90;176;121;52"}",
+      $"{ERowCsvType.Footer.ToString().WithQuotes()}{ARowCsv.SEPARATOR}{"Channels".WithQuotes()}{ARowCsv.SEPARATOR}{"1;2;3;4;5;6"}",
+      $"{ERowCsvType.Footer.ToString().WithQuotes()}{ARowCsv.SEPARATOR}{"Energies".WithQuotes()}{ARowCsv.SEPARATOR}{"53;70;90;176;121;52"}",
       };
       return RetVal;
     }

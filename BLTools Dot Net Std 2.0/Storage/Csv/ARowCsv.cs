@@ -404,5 +404,36 @@ namespace BLTools.Storage.Csv {
       _RawContent = Data.ToString();
     }
     #endregion --- Set --------------------------------------------
+
+    /// <summary>
+    /// Convert raw data to the appropriate IRowCsv (i.e. Header, Data, Footer)
+    /// </summary>
+    /// <param name="rawData">The raw data</param>
+    /// <returns>A correct IRowCsv, null in case of trouble</returns>
+    public static IRowCsv Parse(string rawData) {
+      if (rawData is null) {
+        return null;
+      }
+
+      try {
+        ERowCsvType RowType = (ERowCsvType)Enum.Parse(typeof(ERowCsvType), rawData.Before(ARowCsv.SEPARATOR).RemoveExternalQuotes());
+        string RowId = rawData.After(ARowCsv.SEPARATOR).Before(ARowCsv.SEPARATOR).RemoveExternalQuotes();
+        string Content = rawData.After(ARowCsv.SEPARATOR).After(ARowCsv.SEPARATOR);
+
+        switch (RowType) {
+          case ERowCsvType.Header:
+            return new TRowCsvHeader() { Id = RowId, RawContent = Content };
+          case ERowCsvType.Footer:
+            return new TRowCsvFooter() { Id = RowId, RawContent = Content };
+          case ERowCsvType.Data:
+            return new TRowCsvData() { Id = RowId, RawContent = Content };
+          default:
+            return null;
+        }
+      } catch {
+        return null;
+
+      }
+    }
   }
 }

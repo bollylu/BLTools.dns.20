@@ -7,7 +7,7 @@ using BLTools.Storage.Csv;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BLTools.UnitTest.Storage {
+namespace BLTools.UnitTest.Storage.csv.row {
 
   [TestClass]
   public class TRowTest {

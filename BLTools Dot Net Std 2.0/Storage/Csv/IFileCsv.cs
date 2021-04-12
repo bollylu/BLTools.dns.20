@@ -12,12 +12,31 @@ namespace BLTools.Storage.Csv {
   public interface IFileCsv {
 
     /// <summary>
+    /// The filename for save/load
+    /// </summary>
+    string Filename { get; }
+
+    /// <summary>
+    /// Save the item in an csv file using the internal filename
+    /// </summary>
+    /// <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+    /// <returns>true if save is successfull, false otherwise</returns>
+    bool Save(bool overwrite = true);
+
+    /// <summary>
     /// Save the item in an csv file
     /// </summary>
     /// <param name="filename">The filename for the save</param>
     /// <param name="overwrite">true to overwrite any existing file, false otherwise</param>
     /// <returns>true if save is successfull, false otherwise</returns>
-    bool Save(string filename, bool overwrite = true);
+    bool SaveAs(string filename, bool overwrite = true);
+
+    /// <summary>
+    /// Save the item in an csv file asynchronously using the internal filename
+    /// </summary>
+    /// <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+    /// <returns>true if save is successfull, false otherwise</returns>
+    Task<bool> SaveAsync(bool overwrite = true);
 
     /// <summary>
     /// Save the item in an csv file asynchronously
@@ -25,7 +44,13 @@ namespace BLTools.Storage.Csv {
     /// <param name="filename">The filename for the save</param>
     /// <param name="overwrite">true to overwrite any existing file, false otherwise</param>
     /// <returns>true if save is successfull, false otherwise</returns>
-    Task<bool> SaveAsync(string filename, bool overwrite = true);
+    Task<bool> SaveAsAsync(string filename, bool overwrite = true);
+
+    /// <summary>
+    /// Load the content of an csv file using the internal filename
+    /// </summary>
+    /// <returns>true if load is successfull, false otherwise</returns>
+    bool Load();
 
     /// <summary>
     /// Load the content of an csv file
@@ -35,11 +60,23 @@ namespace BLTools.Storage.Csv {
     bool Load(string filename);
 
     /// <summary>
+    /// Load the content of an csv file asynchronously using the internal filename
+    /// </summary>
+    /// <returns>true if load is successfull, false otherwise</returns>
+    Task<bool> LoadAsync();
+
+    /// <summary>
     /// Load the content of an csv file asynchronously
     /// </summary>
     /// <param name="filename">The file to load</param>
     /// <returns>true if load is successfull, false otherwise</returns>
     Task<bool> LoadAsync(string filename);
+
+    /// <summary>
+    /// Load the header of the csv file using the internal filename
+    /// </summary>
+    /// <returns>true if load is successfull, false otherwise</returns>
+    bool LoadHeader();
 
     /// <summary>
     /// Load the header of the csv file
@@ -49,10 +86,48 @@ namespace BLTools.Storage.Csv {
     bool LoadHeader(string filename);
 
     /// <summary>
+    /// Load the header of the csv file asynchronously using the internal filename
+    /// </summary>
+    /// <returns>true if load is successfull, false otherwise</returns>
+    Task<bool> LoadHeaderAsync();
+
+    /// <summary>
     /// Load the header of the csv file asynchronously
     /// </summary>
     /// <param name="filename">The file to load</param>
     /// <returns>true if load is successfull, false otherwise</returns>
     Task<bool> LoadHeaderAsync(string filename);
+
+    /// <summary>
+    /// Obtain all the rows from csv file
+    /// </summary>
+    /// <returns></returns>
+    IRowCsv[] GetAll();
+
+    /// <summary>
+    /// Obtain all the headers from csv file
+    /// </summary>
+    /// <returns></returns>
+    IRowCsv[] GetHeaders();
+
+    /// <summary>
+    /// Obtain all the data
+    /// </summary>
+    /// <returns></returns>
+    IRowCsv[] GetData();
+
+    /// <summary>
+    /// Obtain all the footer
+    /// </summary>
+    /// <returns></returns>
+    IRowCsv[] GetFooters();
+
+    /// <summary>
+    /// Obtain a specific row
+    /// </summary>
+    /// <param name="rowType">Type of row (i.e. header, data, footer)</param>
+    /// <param name="Id">The id of the row</param>
+    /// <returns>The requested row or null if the row doesn't exist</returns>
+    IRowCsv GetRow(ERowCsvType rowType, string Id);
   }
 }

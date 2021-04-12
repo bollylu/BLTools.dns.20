@@ -10,21 +10,32 @@ namespace BLTools.Storage.Csv {
   /// <summary>
   /// Writer for Csv
   /// </summary>
-  public class TCsvWriter : StreamWriter {
+  public class TCsvWriter : BinaryWriter {
+
+    /// <summary>
+    /// The encoding for the reader
+    /// </summary>
+    public Encoding WriterEncoding { get; private set; }
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
     /// <summary>
     /// Create a new csv reader
     /// </summary>
     /// <param name="outputStream">The stream to write to</param>
-    public TCsvWriter(Stream outputStream) : base(outputStream, Encoding.UTF8) { }
+    /// <param name="leaveOpen">tue to leave the stream open when closing the writer</param>
+    public TCsvWriter(Stream outputStream, bool leaveOpen = true) : base(outputStream, Encoding.UTF8, leaveOpen) {
+      WriterEncoding = Encoding.UTF8;
+    }
 
     /// <summary>
     /// Create a new csv reader
     /// </summary>
     /// <param name="outputStream">The stream to write to</param>
     /// <param name="encoding">the encoding of the stream</param>
-    public TCsvWriter(Stream outputStream, Encoding encoding) : base(outputStream, encoding) { } 
+    /// <param name="leaveOpen">tue to leave the stream open when closing the writer</param>
+    public TCsvWriter(Stream outputStream, Encoding encoding, bool leaveOpen = true) : base(outputStream, encoding, leaveOpen) {
+      WriterEncoding = encoding;
+    }
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
     /// <summary>
@@ -35,7 +46,7 @@ namespace BLTools.Storage.Csv {
       if (row is null) {
         return;
       }
-      WriteLine(row.Render());
+      Write(WriterEncoding.GetBytes($"{row.Render()}{Environment.NewLine}"));
     }
 
   }

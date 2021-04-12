@@ -119,7 +119,7 @@ namespace BLTools.UnitTest.Storage.csv {
           TraceRows(FooterSection);
 
           Assert.IsFalse(FooterSection.IsEmpty());
-          Assert.AreEqual(3, FooterSection.Count());
+          Assert.AreEqual(2, FooterSection.Count());
         }
       }
     }
@@ -152,12 +152,7 @@ namespace BLTools.UnitTest.Storage.csv {
           IEnumerable<IRowCsv> FooterSection = Reader.ReadFooterSection(true);
           TraceRows(FooterSection);
           Assert.IsFalse(FooterSection.IsEmpty());
-          Assert.AreEqual(3, FooterSection.Count());
-
-          IEnumerable<IRowCsv> DataSection3 = Reader.ReadDataSection(true);
-          TraceRows(DataSection3);
-          Assert.IsFalse(DataSection3.IsEmpty());
-          Assert.AreEqual(2, DataSection3.Count());
+          Assert.AreEqual(2, FooterSection.Count());
         }
       }
     }
