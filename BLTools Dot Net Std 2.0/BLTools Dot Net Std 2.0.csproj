@@ -7,9 +7,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <Version>4.5.20.1</Version>
+    <Version>4.5.20.2</Version>
     <PackageReleaseNotes>
-      Added Csv storage
+      IToCsv returns array, not item
     </PackageReleaseNotes>
   </PropertyGroup>
 

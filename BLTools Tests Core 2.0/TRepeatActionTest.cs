@@ -26,7 +26,6 @@ namespace BLTools.UnitTest {
       int i = 0;
       TRepeatAction Repeat = new TRepeatAction();
       Repeat.ToDo = () => {
-
         Result.Add(i++.ToString());
       };
       Repeat.Delay = 20;

@@ -15,12 +15,12 @@ namespace BLTools {
     /// Transform the item into csv
     /// </summary>
     /// <returns>The csv representation of the item</returns>
-    IRowCsv ToCsv();
+    IRowCsv[] ToCsv();
 
     /// <summary>
     /// Fill the item from a csv source
     /// </summary>
     /// <param name="source">The data source in csv format</param>
-    void FromCsv(IRowCsv source);
+    void FromCsv(IRowCsv[] source);
   }
 }
