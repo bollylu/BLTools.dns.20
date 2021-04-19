@@ -14,10 +14,17 @@ namespace BLTools.Storage.Csv {
   /// </summary>
   public abstract class AFileCsv : ALoggable, IFileCsv {
 
-    /// <summary>
-    /// The name of file
-    /// </summary>
+    /// <inheritdoc/>
     public string Filename { get; protected set; }
+
+#if NETSTANDARD2_0 || NETSTANDARD2_1
+    /// <inheritdoc/>
+    public Encoding FileEncoding { get; set; } = Encoding.UTF8;
+#else
+    /// <inheritdoc/>
+    public Encoding FileEncoding { get; init; } = Encoding.UTF8;
+#endif
+
 
     /// <summary>
     /// The list of rows from the file
@@ -35,7 +42,7 @@ namespace BLTools.Storage.Csv {
     public override string ToString() {
       StringBuilder RetVal = new StringBuilder();
       RetVal.AppendLine($"Csv file : {Filename}, {_Content.Count} rows");
-      foreach(IRowCsv RowItem in _Content) {
+      foreach (IRowCsv RowItem in _Content) {
         RetVal.AppendLine(RowItem.ToString());
       }
       return RetVal.ToString();
@@ -61,7 +68,7 @@ namespace BLTools.Storage.Csv {
 
       try {
         using (FileStream SourceStream = new FileStream(Filename, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-          using (TCsvReader Reader = new TCsvReader(SourceStream)) {
+          using (TCsvReader Reader = new TCsvReader(SourceStream) { ReaderEncoding = FileEncoding }) {
             _Content.AddRange(Reader.ReadAll());
             return true;
           }
@@ -93,7 +100,7 @@ namespace BLTools.Storage.Csv {
 
       try {
         using (FileStream ReadStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-          using (TCsvReader Reader = new TCsvReader(ReadStream, Encoding.UTF8)) {
+          using (TCsvReader Reader = new TCsvReader(ReadStream) { ReaderEncoding = FileEncoding }) {
             IRowCsv NextRow = Reader.ReadHeader(true);
             while (NextRow != null) {
               _Content.Add(NextRow);
@@ -124,7 +131,7 @@ namespace BLTools.Storage.Csv {
 
       if (_Content.IsEmpty()) {
         return true;
-      } 
+      }
       #endregion === Validate parameters ===
 
       try {
@@ -133,7 +140,7 @@ namespace BLTools.Storage.Csv {
         }
 
         using (FileStream TargetStream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None)) {
-          using (TCsvWriter Writer = new TCsvWriter(TargetStream, true)) {
+          using (TCsvWriter Writer = new TCsvWriter(TargetStream, true) { WriterEncoding = FileEncoding }) {
             foreach (IRowCsv RowItem in _Content) {
               Writer.WriteRow(RowItem);
             }
@@ -146,7 +153,7 @@ namespace BLTools.Storage.Csv {
       }
 
       return true;
-    } 
+    }
     #endregion --- Sync I/O methods --------------------------------------------
 
     #region --- Async I/O methods --------------------------------------------
@@ -157,7 +164,32 @@ namespace BLTools.Storage.Csv {
 
     /// <inheritdoc/>
     public virtual Task<bool> LoadAsync(string filename) {
-      throw new NotImplementedException();
+      #region === Validate parameters ===
+      _EnsureFilename(filename);
+      _EnsureFileExists(filename);
+
+      if (Filename != filename) {
+        Filename = filename;
+      }
+      #endregion === Validate parameters ===
+
+      _Content.Clear();
+
+      try {
+        using (FileStream ReadStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read, 16000, true)) {
+          using (TCsvReader Reader = new TCsvReader(ReadStream, Encoding.UTF8)) {
+            IRowCsv NextRow = Reader.ReadRow();
+            while (NextRow != null) {
+              _Content.Add(NextRow);
+              NextRow = Reader.ReadRow();
+            }
+          }
+        }
+        return Task.FromResult(true);
+      } catch (Exception ex) {
+        LogError($"Unable to load header for file {filename} : {ex.Message}");
+        throw;
+      }
     }
 
     /// <inheritdoc/>
@@ -179,11 +211,12 @@ namespace BLTools.Storage.Csv {
       _Content.Clear();
 
       try {
-        using (FileStream ReadStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+        using (FileStream ReadStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read, 16000, true)) {
           using (TCsvReader Reader = new TCsvReader(ReadStream, Encoding.UTF8)) {
             IRowCsv NextRow = Reader.ReadHeader(true);
             while (NextRow != null) {
               _Content.Add(NextRow);
+              NextRow = Reader.ReadHeader(true);
             }
           }
         }
@@ -201,8 +234,38 @@ namespace BLTools.Storage.Csv {
 
     /// <inheritdoc/>
     public virtual Task<bool> SaveAsAsync(string filename, bool overwrite = true) {
-      throw new NotImplementedException();
-    } 
+      #region === Validate parameters ===
+      _EnsureFilename(filename);
+
+      if (Filename != filename) {
+        Filename = filename;
+      }
+
+      if (_Content.IsEmpty()) {
+        return Task.FromResult(true);
+      }
+      #endregion === Validate parameters ===
+
+      try {
+        if (overwrite && File.Exists(Filename)) {
+          File.Delete(Filename);
+        }
+
+        using (FileStream TargetStream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None, 16000, true)) {
+          using (TCsvWriter Writer = new TCsvWriter(TargetStream, true) { WriterEncoding = FileEncoding }) {
+            foreach (IRowCsv RowItem in _Content) {
+              Writer.WriteRow(RowItem);
+            }
+          }
+        }
+
+      } catch (Exception ex) {
+        LogError($"Unable to save csv to {Filename} : {ex.Message}");
+        return Task.FromResult(false);
+      }
+
+      return Task.FromResult(true);
+    }
     #endregion --- Async I/O methods --------------------------------------------
 
     /************************************************************************************/
@@ -213,9 +276,9 @@ namespace BLTools.Storage.Csv {
     /// <param name="filename"></param>
     protected void _EnsureFilename(string filename) {
       if (string.IsNullOrWhiteSpace(filename)) {
-        const string Message = "Unable to work with file : filename is missing";
-        LogError(Message);
-        throw new ArgumentException(Message, nameof(filename));
+        const string MESSAGE = "Unable to work with file : filename is missing";
+        LogError(MESSAGE);
+        throw new ArgumentException(MESSAGE, nameof(filename));
       }
     }
 
@@ -233,6 +296,7 @@ namespace BLTools.Storage.Csv {
 
     /************************************************************************************/
 
+    #region --- Memory content --------------------------------------------
     /// <inheritdoc/>
     public IRowCsv[] GetAll() {
       if (_Content.IsEmpty()) {
@@ -273,8 +337,10 @@ namespace BLTools.Storage.Csv {
       return _Content.FirstOrDefault(r => r.RowType == rowType && r.Id.Equals(id, StringComparison.InvariantCultureIgnoreCase));
     }
 
+    /// <inheritdoc/>
     public void AddRow(IRowCsv row) {
       _Content.Add(row);
     }
+    #endregion --- Memory content --------------------------------------------
   }
 }

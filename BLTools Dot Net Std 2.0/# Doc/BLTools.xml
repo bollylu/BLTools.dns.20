@@ -2432,9 +2432,10 @@
             </summary>
         </member>
         <member name="P:BLTools.Storage.Csv.AFileCsv.Filename">
-            <summary>
-            The name of file
-            </summary>
+            <inheritdoc/>
+        </member>
+        <member name="P:BLTools.Storage.Csv.AFileCsv.FileEncoding">
+            <inheritdoc/>
         </member>
         <member name="F:BLTools.Storage.Csv.AFileCsv._Content">
             <summary>
@@ -2506,6 +2507,160 @@
         </member>
         <member name="M:BLTools.Storage.Csv.AFileCsv.GetRow(BLTools.Storage.Csv.ERowCsvType,System.String)">
             <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Storage.Csv.AFileCsv.AddRow(BLTools.Storage.Csv.IRowCsv)">
+            <inheritdoc/>
+        </member>
+        <member name="T:BLTools.Storage.Csv.IFileCsv">
+            <summary>
+            Allows the reading or saving in csv
+            </summary>
+        </member>
+        <member name="P:BLTools.Storage.Csv.IFileCsv.Filename">
+            <summary>
+            The filename for save/load
+            </summary>
+        </member>
+        <member name="P:BLTools.Storage.Csv.IFileCsv.FileEncoding">
+            <summary>
+            The encoding for save/load
+            </summary>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.Save(System.Boolean)">
+            <summary>
+            Save the item in an csv file using the internal filename
+            </summary>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.SaveAs(System.String,System.Boolean)">
+            <summary>
+            Save the item in an csv file
+            </summary>
+            <param name="filename">The filename for the save</param>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.SaveAsync(System.Boolean)">
+            <summary>
+            Save the item in an csv file asynchronously using the internal filename
+            </summary>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.SaveAsAsync(System.String,System.Boolean)">
+            <summary>
+            Save the item in an csv file asynchronously
+            </summary>
+            <param name="filename">The filename for the save</param>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.Load">
+            <summary>
+            Load the content of an csv file using the internal filename
+            </summary>
+            <returns>true if load is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.Load(System.String)">
+            <summary>
+            Load the content of an csv file
+            </summary>
+            <param name="filename">The file to load</param>
+            <returns>true if load is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.LoadHeader">
+            <summary>
+            Load the header of the csv file using the internal filename
+            </summary>
+            <returns>true if load is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.LoadHeader(System.String)">
+            <summary>
+            Load the header of the csv file
+            </summary>
+            <param name="filename">The file to load</param>
+            <returns>true if load is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.LoadAsync">
+            <summary>
+            Load the content of an csv file asynchronously using the internal filename
+            </summary>
+            <returns>true if load is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.LoadAsync(System.String)">
+            <summary>
+            Load the content of an csv file asynchronously
+            </summary>
+            <param name="filename">The file to load</param>
+            <returns>true if load is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.LoadHeaderAsync">
+            <summary>
+            Load the header of the csv file asynchronously using the internal filename
+            </summary>
+            <returns>true if load is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.LoadHeaderAsync(System.String)">
+            <summary>
+            Load the header of the csv file asynchronously
+            </summary>
+            <param name="filename">The file to load</param>
+            <returns>true if load is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.GetAll">
+            <summary>
+            Obtain all the rows from csv file
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.GetHeaders">
+            <summary>
+            Obtain all the headers
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.GetData">
+            <summary>
+            Obtain all the data
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.GetFooters">
+            <summary>
+            Obtain all the footers 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.GetRow(BLTools.Storage.Csv.ERowCsvType,System.String)">
+            <summary>
+            Obtain a specific row
+            </summary>
+            <param name="rowType">Type of row (i.e. header, data, footer)</param>
+            <param name="Id">The id of the row (case insensitive)</param>
+            <returns>The requested row or null if the row doesn't exist</returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IFileCsv.AddRow(BLTools.Storage.Csv.IRowCsv)">
+            <summary>
+            Add a ICsvRow to the file content in memory
+            </summary>
+            <param name="row">The ICsvRow to add</param>
+        </member>
+        <member name="T:BLTools.Storage.Csv.TFileCsv">
+            <summary>
+            Implementation for IFileCsv
+            </summary>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TFileCsv.#ctor">
+            <summary>
+            Create a new csv storage
+            </summary>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TFileCsv.#ctor(System.String)">
+            <summary>
+            Create a new csv storage with a filename
+            </summary>
+            <param name="filename">The filename to store data</param>
         </member>
         <member name="T:BLTools.Storage.Csv.ARowCsv">
             <summary>
@@ -2651,130 +2806,6 @@
             <summary>
             No row type
             </summary>
-        </member>
-        <member name="T:BLTools.Storage.Csv.IFileCsv">
-            <summary>
-            Allows the reading or saving in csv
-            </summary>
-        </member>
-        <member name="P:BLTools.Storage.Csv.IFileCsv.Filename">
-            <summary>
-            The filename for save/load
-            </summary>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.Save(System.Boolean)">
-            <summary>
-            Save the item in an csv file using the internal filename
-            </summary>
-            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
-            <returns>true if save is successfull, false otherwise</returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.SaveAs(System.String,System.Boolean)">
-            <summary>
-            Save the item in an csv file
-            </summary>
-            <param name="filename">The filename for the save</param>
-            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
-            <returns>true if save is successfull, false otherwise</returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.SaveAsync(System.Boolean)">
-            <summary>
-            Save the item in an csv file asynchronously using the internal filename
-            </summary>
-            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
-            <returns>true if save is successfull, false otherwise</returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.SaveAsAsync(System.String,System.Boolean)">
-            <summary>
-            Save the item in an csv file asynchronously
-            </summary>
-            <param name="filename">The filename for the save</param>
-            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
-            <returns>true if save is successfull, false otherwise</returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.Load">
-            <summary>
-            Load the content of an csv file using the internal filename
-            </summary>
-            <returns>true if load is successfull, false otherwise</returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.Load(System.String)">
-            <summary>
-            Load the content of an csv file
-            </summary>
-            <param name="filename">The file to load</param>
-            <returns>true if load is successfull, false otherwise</returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.LoadAsync">
-            <summary>
-            Load the content of an csv file asynchronously using the internal filename
-            </summary>
-            <returns>true if load is successfull, false otherwise</returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.LoadAsync(System.String)">
-            <summary>
-            Load the content of an csv file asynchronously
-            </summary>
-            <param name="filename">The file to load</param>
-            <returns>true if load is successfull, false otherwise</returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.LoadHeader">
-            <summary>
-            Load the header of the csv file using the internal filename
-            </summary>
-            <returns>true if load is successfull, false otherwise</returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.LoadHeader(System.String)">
-            <summary>
-            Load the header of the csv file
-            </summary>
-            <param name="filename">The file to load</param>
-            <returns>true if load is successfull, false otherwise</returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.LoadHeaderAsync">
-            <summary>
-            Load the header of the csv file asynchronously using the internal filename
-            </summary>
-            <returns>true if load is successfull, false otherwise</returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.LoadHeaderAsync(System.String)">
-            <summary>
-            Load the header of the csv file asynchronously
-            </summary>
-            <param name="filename">The file to load</param>
-            <returns>true if load is successfull, false otherwise</returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.GetAll">
-            <summary>
-            Obtain all the rows from csv file
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.GetHeaders">
-            <summary>
-            Obtain all the headers from csv file
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.GetData">
-            <summary>
-            Obtain all the data
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.GetFooters">
-            <summary>
-            Obtain all the footer
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:BLTools.Storage.Csv.IFileCsv.GetRow(BLTools.Storage.Csv.ERowCsvType,System.String)">
-            <summary>
-            Obtain a specific row
-            </summary>
-            <param name="rowType">Type of row (i.e. header, data, footer)</param>
-            <param name="Id">The id of the row</param>
-            <returns>The requested row or null if the row doesn't exist</returns>
         </member>
         <member name="T:BLTools.Storage.Csv.IRowCsv">
             <summary>
@@ -2978,6 +3009,36 @@
             <param name="value">The IEnumerable of values to assign</param>
             <param name="cultureInfo">The CultureInfo for the string conversion</param>
         </member>
+        <member name="T:BLTools.Storage.Csv.TRowCsvData">
+            <summary>
+            Implementation of a data row
+            </summary>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TRowCsvData.#ctor">
+            <summary>
+            Create a new data row
+            </summary>
+        </member>
+        <member name="T:BLTools.Storage.Csv.TRowCsvFooter">
+            <summary>
+            Implementation of a footer row
+            </summary>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TRowCsvFooter.#ctor">
+            <summary>
+            Create a new footer row
+            </summary>
+        </member>
+        <member name="T:BLTools.Storage.Csv.TRowCsvHeader">
+            <summary>
+            Implementation of a header row
+            </summary>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TRowCsvHeader.#ctor">
+            <summary>
+            Create a new header row
+            </summary>
+        </member>
         <member name="T:BLTools.Storage.Csv.TCsvReader">
             <summary>
             Reader for csv
@@ -2986,6 +3047,11 @@
         <member name="P:BLTools.Storage.Csv.TCsvReader.ReaderEncoding">
             <summary>
             The encoding for the reader
+            </summary>
+        </member>
+        <member name="P:BLTools.Storage.Csv.TCsvReader.EOL">
+            <summary>
+            The end-of-line definition (default to Environment.NewLine)
             </summary>
         </member>
         <member name="M:BLTools.Storage.Csv.TCsvReader.#ctor(System.IO.Stream,System.Boolean)">
@@ -3021,6 +3087,7 @@
             </summary>
             <returns></returns>
         </member>
+        <!-- Badly formed XML comment ignored for member "M:BLTools.Storage.Csv.TCsvReader.ReadHeaderAsync(System.Boolean)" -->
         <member name="M:BLTools.Storage.Csv.TCsvReader.ReadHeaderSection(System.Boolean)">
             <summary>
             Read a whole header section
@@ -3047,7 +3114,7 @@
             If not in data section, read until end or first data row
             </summary>
             <param name="findIt">true to continue reading until next data or EOS</param>
-            <returns></returns>
+            <returns>A csv formatted row</returns>
         </member>
         <member name="M:BLTools.Storage.Csv.TCsvReader.ReadDataSection(System.Boolean)">
             <summary>
@@ -3057,6 +3124,12 @@
             <returns></returns>
         </member>
         <member name="M:BLTools.Storage.Csv.TCsvReader.PeekRowType">
+            <summary>
+            Read the next row type without moving the stream pointer
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvReader.PeekRowTypeAsync">
             <summary>
             Read the next row type without moving the stream pointer
             </summary>
@@ -3079,6 +3152,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:BLTools.Storage.Csv.TCsvReader.ReadLineAsync">
+            <summary>
+            Read a line from stream
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvReader.ReadNextItem">
+            <summary>
+            Read next item in current line
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:BLTools.Storage.Csv.TCsvReader.ReadRowType">
             <summary>
             Read a the row type from stream
@@ -3093,6 +3178,11 @@
         <member name="P:BLTools.Storage.Csv.TCsvWriter.WriterEncoding">
             <summary>
             The encoding for the reader
+            </summary>
+        </member>
+        <member name="P:BLTools.Storage.Csv.TCsvWriter.EOL">
+            <summary>
+            The end-of-line definition (default to Environment.NewLine)
             </summary>
         </member>
         <member name="M:BLTools.Storage.Csv.TCsvWriter.#ctor(System.IO.Stream,System.Boolean)">
@@ -3112,55 +3202,190 @@
         </member>
         <member name="M:BLTools.Storage.Csv.TCsvWriter.WriteRow(BLTools.Storage.Csv.IRowCsv)">
             <summary>
-            Write a row in the stream
+            Write a full ICsvRow + EOL
             </summary>
             <param name="row">The IRowCsv to write</param>
         </member>
-        <member name="T:BLTools.Storage.Csv.TFileCsv">
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(BLTools.Storage.Csv.ERowCsvType)">
             <summary>
-            Implementation for IFileCsv
+            Write a row type (i.e. Header, Data, Footer)
             </summary>
         </member>
-        <member name="M:BLTools.Storage.Csv.TFileCsv.#ctor">
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.WriteSeparator">
             <summary>
-            Create a new csv storage
+            Write a separator
             </summary>
         </member>
-        <member name="M:BLTools.Storage.Csv.TFileCsv.#ctor(System.String)">
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.WriteLine">
             <summary>
-            Create a new csv storage with a filename
-            </summary>
-            <param name="filename">The filename to store data</param>
-        </member>
-        <member name="T:BLTools.Storage.Csv.TRowCsvData">
-            <summary>
-            Implementation of a data row
+            Write a EOL
             </summary>
         </member>
-        <member name="M:BLTools.Storage.Csv.TRowCsvData.#ctor">
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.String)">
             <summary>
-            Create a new data row
+            Write a string item
             </summary>
+            <param name="data">The string item</param>
         </member>
-        <member name="T:BLTools.Storage.Csv.TRowCsvFooter">
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Int32)">
             <summary>
-            Implementation of a footer row
+            Write an int item
             </summary>
+            <param name="data">The int item</param>
         </member>
-        <member name="M:BLTools.Storage.Csv.TRowCsvFooter.#ctor">
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Int64)">
             <summary>
-            Create a new footer row
+            Write a long item
             </summary>
+            <param name="data">The long item</param>
         </member>
-        <member name="T:BLTools.Storage.Csv.TRowCsvHeader">
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Single)">
             <summary>
-            Implementation of a header row
+            Write a float item using invariant culture info
             </summary>
+            <param name="data">The float item</param>
         </member>
-        <member name="M:BLTools.Storage.Csv.TRowCsvHeader.#ctor">
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Single,System.Globalization.CultureInfo)">
             <summary>
-            Create a new header row
+            Write a float item using culture info
             </summary>
+            <param name="data">The float item</param>
+            <param name="cultureInfo">The culture info to use</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Double)">
+            <summary>
+            Write a double item using invariant culture info
+            </summary>
+            <param name="data">The double item</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Double,System.Globalization.CultureInfo)">
+            <summary>
+            Write a double item using culture info
+            </summary>
+            <param name="data">The double item</param>
+            <param name="cultureInfo">The culture info to use</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Decimal)">
+            <summary>
+            Write a decimal item using invariant culture info
+            </summary>
+            <param name="data">The decimal item</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Decimal,System.Globalization.CultureInfo)">
+            <summary>
+            Write a decimal item using culture info
+            </summary>
+            <param name="data">The decimal item</param>
+            <param name="cultureInfo">The culture info to use</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.DateTime)">
+            <summary>
+            Write a DateTime item using invariant culture info
+            </summary>
+            <param name="data">The DateTime item</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.DateTime,System.Globalization.CultureInfo)">
+            <summary>
+            Write a DateTime item using culture info
+            </summary>
+            <param name="data">The DateTime item</param>
+            <param name="cultureInfo">The culture info to use</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Boolean)">
+            <summary>
+            Write a bool item using invariant culture info
+            </summary>
+            <param name="data">The bool item</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Boolean,System.Globalization.CultureInfo)">
+            <summary>
+            Write a bool item using culture info
+            </summary>
+            <param name="data">The bool item</param>
+            <param name="cultureInfo">The culture info to use</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            Write a sequence of int items
+            </summary>
+            <param name="data">The enumerable int items</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary>
+            Write a sequence of long items
+            </summary>
+            <param name="data">The enumerable long items</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Write a sequence of string items
+            </summary>
+            <param name="data">The enumerable string items</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Collections.Generic.IEnumerable{System.Single})">
+            <summary>
+            Write a sequence of float items with invariant culture info
+            </summary>
+            <param name="data">The enumerable float items</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Collections.Generic.IEnumerable{System.Single},System.Globalization.CultureInfo)">
+            <summary>
+            Write a sequence of float items with culture info
+            </summary>
+            <param name="data">The enumerable float items</param>
+            <param name="cultureInfo">The culture info to use</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Collections.Generic.IEnumerable{System.Double})">
+            <summary>
+            Write a sequence of double items with invariant culture info
+            </summary>
+            <param name="data">The enumerable double items</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Collections.Generic.IEnumerable{System.Double},System.Globalization.CultureInfo)">
+            <summary>
+            Write a sequence of double items with culture info
+            </summary>
+            <param name="data">The enumerable double items</param>
+            <param name="cultureInfo">The culture info to use</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Collections.Generic.IEnumerable{System.Decimal})">
+            <summary>
+            Write a sequence of decimal items with invariant culture info
+            </summary>
+            <param name="data">The enumerable decimal items</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Collections.Generic.IEnumerable{System.Decimal},System.Globalization.CultureInfo)">
+            <summary>
+            Write a sequence of decimal items with culture info
+            </summary>
+            <param name="data">The enumerable decimal items</param>
+            <param name="cultureInfo">The culture info to use</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Collections.Generic.IEnumerable{System.DateTime})">
+            <summary>
+            Write a sequence of DateTime items with invariant culture info
+            </summary>
+            <param name="data">The enumerable DateTime items</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Collections.Generic.IEnumerable{System.DateTime},System.Globalization.CultureInfo)">
+            <summary>
+            Write a sequence of DateTime items with culture info
+            </summary>
+            <param name="data">The enumerable DateTime items</param>
+            <param name="cultureInfo">The culture info to use</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Collections.Generic.IEnumerable{System.Boolean})">
+            <summary>
+            Write a sequence of bool items with Invariant culture info
+            </summary>
+            <param name="data">The enumerable bool items</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Collections.Generic.IEnumerable{System.Boolean},System.Globalization.CultureInfo)">
+            <summary>
+            Write a sequence of bool items with culture info
+            </summary>
+            <param name="data">The enumerable bool items</param>
+            <param name="cultureInfo">The culture info to use</param>
         </member>
         <member name="T:BLTools.IToCsv">
             <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -72,7 +73,7 @@ namespace BLTools.UnitTest.Storage.csv {
           Writer.WriteRow(HeaderRow);
 
           IRowCsv DataRow = new TRowCsvData() { Id = "Curve" };
-          DataRow.Set(12,35,65,98);
+          DataRow.Set(12, 35, 65, 98);
           Writer.WriteRow(DataRow);
 
         }
@@ -89,6 +90,69 @@ namespace BLTools.UnitTest.Storage.csv {
           IRowCsv[] DataSection = Reader.ReadDataSection();
           Assert.IsFalse(DataSection.IsEmpty());
         }
+      }
+    }
+
+    [TestMethod]
+    public void CsvWriter_WriteInt_ResultOk() {
+      using (MemoryStream DataStream = new MemoryStream()) {
+        using (TCsvWriter Writer = new TCsvWriter(DataStream, true)) {
+          Writer.Write(42);
+        }
+        byte[] Target = DataStream.ToArray();
+
+        Assert.AreEqual(42, int.Parse(Encoding.UTF8.GetString(Target)));
+      }
+    }
+
+    [TestMethod]
+    public void CsvWriter_WriteString_ResultOk() {
+      using (MemoryStream DataStream = new MemoryStream()) {
+        using (TCsvWriter Writer = new TCsvWriter(DataStream, true)) {
+          Writer.Write("Hello world");
+        }
+        byte[] Target = DataStream.ToArray();
+
+        Assert.AreEqual("\"Hello world\"", Encoding.UTF8.GetString(Target));
+      }
+    }
+
+    [TestMethod]
+    public void CsvWriter_WriteMulti_ResultOk() {
+      using (MemoryStream DataStream = new MemoryStream()) {
+        using (TCsvWriter Writer = new TCsvWriter(DataStream, true)) {
+          Writer.Write("Hello world");
+          Writer.WriteSeparator();
+          Writer.Write(42);
+          Writer.WriteLine();
+          Writer.Write("It's me");
+          Writer.WriteSeparator();
+          Writer.Write(55);
+          Writer.WriteLine();
+        }
+        byte[] Target = DataStream.ToArray();
+
+        Assert.AreEqual($"\"Hello world\";42{Environment.NewLine}\"It's me\";55{Environment.NewLine}", Encoding.UTF8.GetString(Target));
+      }
+    }
+
+    [TestMethod]
+    public void CsvWriter_WriteMultiForLinux_ResultOk() {
+      const string TestEOL = "\r";
+      using (MemoryStream DataStream = new MemoryStream()) {
+        using (TCsvWriter Writer = new TCsvWriter(DataStream, true) { EOL = TestEOL }) {
+          Writer.Write("Hello world");
+          Writer.WriteSeparator();
+          Writer.Write(42);
+          Writer.WriteLine();
+          Writer.Write("It's me");
+          Writer.WriteSeparator();
+          Writer.Write(55);
+          Writer.WriteLine();
+        }
+        byte[] Target = DataStream.ToArray();
+
+        Assert.AreEqual($"\"Hello world\";42{TestEOL}\"It's me\";55{TestEOL}", Encoding.UTF8.GetString(Target));
       }
     }
   }

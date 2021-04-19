@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -94,7 +95,7 @@ namespace BLTools.Storage.Csv {
     }
 
     /// <inheritdoc/>
-    public string Render() {
+    public virtual string Render() {
       StringBuilder RetVal = new StringBuilder();
       RetVal.Append($"{RowType.ToString().WithQuotes()}");
       RetVal.Append($"{SEPARATOR}{_Id}{SEPARATOR}{RawContent}");
@@ -170,13 +171,14 @@ namespace BLTools.Storage.Csv {
     #region --- Set --------------------------------------------
     /// <inheritdoc/>
     public void Set(params object[] content) {
-      if (content is null) {
+      if (content is null || content.IsEmpty()) {
         return;
       }
+
+#if NETSTANDARD2_0 || NETSTANDARD2_1
       StringBuilder Data = new StringBuilder();
       foreach (object ContentItem in content) {
 
-#if NETSTANDARD2_0 || NETSTANDARD2_1
         switch (ContentItem.GetType().Name.ToLowerInvariant()) {
           case "int":
           case "long":
@@ -204,7 +206,15 @@ namespace BLTools.Storage.Csv {
         }
         Data.Append(SEPARATOR);
 
+      }
+      Data.Truncate(1);
+      _RawContent = Data.ToString();
+    }
+
 #else
+      StringBuilder Data = new StringBuilder();
+      foreach (object ContentItem in content) {
+
         switch (ContentItem) {
           case int:
           case long:
@@ -233,11 +243,12 @@ namespace BLTools.Storage.Csv {
 
         Data.Append(SEPARATOR);
 
-#endif
       }
       Data.Truncate(1);
       _RawContent = Data.ToString();
     }
+#endif
+
 
     /// <inheritdoc/>
     public void Set(int value) {

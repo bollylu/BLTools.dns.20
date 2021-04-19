@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using BLTools.Diagnostic.Logging;
@@ -14,10 +15,50 @@ namespace BLTools.Storage.Csv {
   /// </summary>
   public class TCsvReader : BinaryReader, ILoggable {
 
+    static private readonly byte[] _FIELD_SEPARATOR = new byte[] { (byte)ARowCsv.SEPARATOR };
+
+    private const char DOUBLE_QUOTE = '\"';
+
+#if NETSTANDARD2_0 || NETSTANDARD2_1
     /// <summary>
     /// The encoding for the reader
     /// </summary>
-    public Encoding ReaderEncoding { get; private set; }
+    public Encoding ReaderEncoding { get; set; } = Encoding.UTF8;
+
+    /// <summary>
+    /// The end-of-line definition (default to Environment.NewLine)
+    /// </summary>
+    public string EOL {
+      get {
+        return string.Join("", _EOL.Cast<char>());
+      }
+      set {
+        _EOL = value.ToByteArray();
+        _EOL_Length = _EOL.Length;
+      }
+    }
+#else
+    /// <summary>
+    /// The encoding for the reader
+    /// </summary>
+    public Encoding ReaderEncoding { get; init; } = Encoding.UTF8;
+
+    /// <summary>
+    /// The end-of-line definition (default to Environment.NewLine)
+    /// </summary>
+    public string EOL {
+      get {
+        return string.Join("", _EOL.Cast<char>());
+      }
+      init {
+        _EOL = value.ToByteArray();
+        _EOL_Length = _EOL.Length;
+      }
+    }
+#endif
+
+    private byte[] _EOL;
+    private int _EOL_Length;
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
     /// <summary>
@@ -27,6 +68,7 @@ namespace BLTools.Storage.Csv {
     /// <param name="leaveOpen">tue to leave the stream open when closing the reader</param>
     public TCsvReader(Stream inputStream, bool leaveOpen = true) : base(inputStream, Encoding.UTF8, leaveOpen) {
       ReaderEncoding = Encoding.UTF8;
+      EOL = Environment.NewLine;
     }
 
     /// <summary>
@@ -37,6 +79,7 @@ namespace BLTools.Storage.Csv {
     /// <param name="leaveOpen">tue to leave the stream open when closing the reader</param>
     public TCsvReader(Stream inputStream, Encoding encoding, bool leaveOpen = true) : base(inputStream, encoding, leaveOpen) {
       ReaderEncoding = encoding;
+      EOL = Environment.NewLine;
     }
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
@@ -101,6 +144,32 @@ namespace BLTools.Storage.Csv {
 
     }
 
+    // <summary>
+    /// Obtain the next row header
+    /// </summary>
+    /// <returns></returns>
+    public async Task<IRowCsv> ReadHeaderAsync(bool findIt = false) {
+      ERowCsvType RowType = await PeekRowTypeAsync().ConfigureAwait(false);
+      while (RowType != ERowCsvType.None) {
+        switch (RowType) {
+          case ERowCsvType.Header:
+            string RawData = await ReadLineAsync().ConfigureAwait(false);
+            return ARowCsv.Parse(RawData);
+          case ERowCsvType.Data:
+          case ERowCsvType.Footer:
+          case ERowCsvType.Unknown:
+            if (findIt) {
+              await ReadLineAsync().ConfigureAwait(false);
+            } else {
+              return null;
+            }
+            break;
+        }
+        RowType = await PeekRowTypeAsync().ConfigureAwait(false);
+      }
+      return null;
+    }
+
     /// <summary>
     /// Read a whole header section
     /// </summary>
@@ -118,31 +187,7 @@ namespace BLTools.Storage.Csv {
       return RetVal.ToArray();
     }
 
-    ///// <summary>
-    ///// Obtain the next row header
-    ///// </summary>
-    ///// <returns></returns>
-    //public async Task<IRowCsv> ReadHeaderAsync(bool findIt = false) {
-    //  ERowCsvType RowType = PeekNextRow();
-    //  while (RowType != ERowCsvType.None) {
-    //    switch (RowType) {
-    //      case ERowCsvType.Header:
-    //        string RawData = await ReadLineAsync().WithTimeout(1000).ConfigureAwait(false);
-    //        return _Parse(RawData);
-    //      case ERowCsvType.Data:
-    //      case ERowCsvType.Footer:
-    //      case ERowCsvType.Unknown:
-    //        if (findIt) {
-    //          await ReadLineAsync().WithTimeout(1000).ConfigureAwait(false);
-    //        } else {
-    //          return null;
-    //        }
-    //        break;
-    //    }
-    //    RowType = PeekNextRow();
-    //  }
-    //  return null;
-    //}
+    
     #endregion --- Read header --------------------------------------------
 
     #region --- Read footer --------------------------------------------
@@ -200,7 +245,7 @@ namespace BLTools.Storage.Csv {
     /// If not in data section, read until end or first data row
     /// </summary>
     /// <param name="findIt">true to continue reading until next data or EOS</param>
-    /// <returns></returns>
+    /// <returns>A csv formatted row</returns>
     public IRowCsv ReadData(bool findIt = false) {
       ERowCsvType RowType = PeekRowType();
       while (RowType != ERowCsvType.None) {
@@ -241,6 +286,7 @@ namespace BLTools.Storage.Csv {
       }
       return RetVal.ToArray();
     }
+
     ///// <summary>
     ///// Obtain the next row of data
     ///// </summary>
@@ -270,30 +316,6 @@ namespace BLTools.Storage.Csv {
     #endregion --- Read data --------------------------------------------
 
     #region --- Peek row type --------------------------------------------
-    ///// <summary>
-    ///// Return the next row type without moving the stream pointer
-    ///// </summary>
-    ///// <returns></returns>
-    //public ERowCsvType PeekNextRow() {
-    //  Logger.Log($"Position = {BaseStream.Position}");
-    //  long SavedPosition = BaseStream.Position;
-    //  try {
-    //    string RawData = ReadLine();
-    //    if (RawData is null) {
-    //      return ERowCsvType.None;
-    //    }
-    //    ERowCsvType RowType = (ERowCsvType)Enum.Parse(typeof(ERowCsvType), RawData.Before(ARowCsv.SEPARATOR).RemoveExternalQuotes());
-    //    Logger.Log($"Next row is {RawData}");
-    //    Logger.Log($"Next row type is {RowType}");
-    //    return RowType;
-    //  } catch (Exception ex) {
-    //    Logger.LogError($"Unable to peek next row : {ex.Message}");
-    //    return ERowCsvType.Unknown;
-    //  } finally {
-    //    BaseStream.Position = SavedPosition;
-    //  }
-    //}
-
     /// <summary>
     /// Read the next row type without moving the stream pointer
     /// </summary>
@@ -315,7 +337,7 @@ namespace BLTools.Storage.Csv {
             TempStream.WriteByte(ReadByte());
             byte[] Buffer = TempStream.ToArray();
 
-            if (Buffer.EndsWith(FIELD_SEPARATOR)) {
+            if (Buffer.EndsWith(_FIELD_SEPARATOR)) {
               byte[] Bytes = Buffer.Take(Buffer.Length - 1).ToArray();
               string Keyword = ReaderEncoding.GetString(Bytes);
               ERowCsvType RetVal = (ERowCsvType)Enum.Parse(typeof(ERowCsvType), Keyword.RemoveExternalQuotes());
@@ -335,28 +357,13 @@ namespace BLTools.Storage.Csv {
       }
     }
 
-    ///// <summary>
-    ///// Return the next row type without moving the stream pointer
-    ///// </summary>
-    ///// <returns></returns>
-    //public async Task<ERowCsvType> PeekNextRowAsync() {
-    //  long SavedPosition = BaseStream.Position;
-    //  try {
-    //    string RawData = ReadLine();
-    //    if (RawData is null) {
-    //      return ERowCsvType.None;
-    //    }
-    //    ERowCsvType RowType = (ERowCsvType)Enum.Parse(typeof(ERowCsvType), RawData.Before(ARowCsv.SEPARATOR).RemoveExternalQuotes());
-    //    Logger.Log($"Next row is {RawData}");
-    //    Logger.Log($"Next row type is {RowType}");
-    //    return RowType;
-    //  } catch (Exception ex) {
-    //    Logger.LogError($"Unable to peek next row : {ex.Message}");
-    //    return ERowCsvType.Unknown;
-    //  } finally {
-    //    BaseStream.Position = SavedPosition;
-    //  }
-    //}
+    /// <summary>
+    /// Read the next row type without moving the stream pointer
+    /// </summary>
+    /// <returns></returns>
+    public async Task<ERowCsvType> PeekRowTypeAsync() {
+      return await Task.Run<ERowCsvType>(() => PeekRowType(), new CancellationTokenSource(1000).Token).ConfigureAwait(false);
+    }
     #endregion --- Peek row type --------------------------------------------
 
     #region --- ILoggable --------------------------------------------
@@ -374,14 +381,18 @@ namespace BLTools.Storage.Csv {
     }
     #endregion --- ILoggable --------------------------------------------
 
-    private static readonly byte[] _EOL = Environment.NewLine.ToByteArray();
-    private static readonly int _EOL_LENGTH = _EOL.Length;
+
 
     /// <summary>
     /// Read a line from stream
     /// </summary>
     /// <returns></returns>
     public string ReadLine() {
+      // Test for EOS
+      if (PeekChar() == -1) {
+        return null;
+      }
+
       try {
         using (MemoryStream TempStream = new MemoryStream()) {
 
@@ -389,10 +400,10 @@ namespace BLTools.Storage.Csv {
           while (PeekChar() != -1) {
             TempStream.WriteByte(ReadByte());
             byte[] Buffer = TempStream.ToArray();
-            if (Buffer.Length >= _EOL_LENGTH) {
-              IEnumerable<byte> LastBytes = Buffer.TakeLast(_EOL_LENGTH);
+            if (Buffer.Length >= _EOL_Length) {
+              IEnumerable<byte> LastBytes = Buffer.TakeLast(_EOL_Length);
               if (LastBytes.SequenceEqual(_EOL)) {
-                byte[] Line = Buffer.Take(Buffer.Length - _EOL_LENGTH).ToArray();
+                byte[] Line = Buffer.Take(Buffer.Length - _EOL_Length).ToArray();
                 string RetVal = ReaderEncoding.GetString(Line);
                 Logger.LogDebug(RetVal);
                 return RetVal;
@@ -418,37 +429,176 @@ namespace BLTools.Storage.Csv {
 
     }
 
-    static private byte[] FIELD_SEPARATOR = new byte[] { (byte)ARowCsv.SEPARATOR };
-
     /// <summary>
-    /// Read a the row type from stream
+    /// Read a line from stream
     /// </summary>
     /// <returns></returns>
-    public string ReadRowType() {
+    public async Task<string> ReadLineAsync() {
+      return await Task.Run<string>(() => ReadLine(), new CancellationTokenSource(1000).Token).ConfigureAwait(false);
+    }
+
+
+    ///// <summary>
+    ///// Read a line from stream
+    ///// </summary>
+    ///// <returns></returns>
+    //public async Task<string> ReadLineAsync() {
+    //  // Test for EOS
+    //  if (PeekChar() == -1) {
+    //    return null;
+    //  }
+
+    //  try {
+
+
+    //    using (MemoryStream TempStream = new MemoryStream()) {
+    //      await BaseStream.CopyToAsync(TempStream);
+    //      ReadOnlyMemory<byte> Data = new ReadOnlyMemory<byte>(TempStream.ToArray());
+
+    //      int MaxLength = Data.Length;
+    //      int Counter = 0;
+
+    //      while (Counter < MaxLength) {
+    //        ReadOnlyMemory<byte> TestEOL = Data.Slice(0, Counter);
+    //        ReadOnlyMemory<byte> PossibleEOL = TestEOL.Slice(TestEOL.Length - _EOL_Length, TestEOL.Length);
+    //        if (PossibleEOL.ToArray().SequenceEqual(_EOL)) {
+    //          string RetVal = ReaderEncoding.GetString(TestEOL.Slice(0, TestEOL.Length-_EOL_Length).ToArray());
+    //          return RetVal;
+    //        }
+    //        Counter++;
+    //      }
+
+    //      //// Read up to EOL or EOF
+    //      //while (PeekChar() != -1) {
+    //      //  TempStream.WriteByte(ReadByte());
+    //      //  byte[] Buffer = TempStream.ToArray();
+    //      //  if (Buffer.Length >= _EOL_Length) {
+    //      //    IEnumerable<byte> LastBytes = Buffer.TakeLast(_EOL_Length);
+    //      //    if (LastBytes.SequenceEqual(_EOL)) {
+    //      //      byte[] Line = Buffer.Take(Buffer.Length - _EOL_Length).ToArray();
+    //      //      string RetVal = ReaderEncoding.GetString(Line);
+    //      //      Logger.LogDebug(RetVal);
+    //      //      return RetVal;
+    //      //    }
+    //      //  }
+    //      //}
+
+    //      // If here, EOL was not reached. Any byte in buffer ?
+    //      if (TempStream.Length > 0) {
+    //        return ReaderEncoding.GetString(TempStream.ToArray());
+    //      } else {
+    //        return null;
+    //      }
+
+    //    }
+    //  } catch (EndOfStreamException) {
+    //    return null;
+
+    //  } catch (Exception ex) {
+    //    Logger.LogError($"Unable to read line from stream : {ex.Message}");
+    //    throw;
+    //  }
+
+    //}
+
+
+    /// <summary>
+    /// Read next item in current line
+    /// </summary>
+    /// <returns></returns>
+    public string ReadNextItem() {
+      // Test for EOS
+      if (PeekChar() == -1) {
+        return null;
+      }
+
+      // Ok, something left to read
       try {
         using (MemoryStream TempStream = new MemoryStream()) {
+          bool IsAString = false;
+          if (PeekChar() == DOUBLE_QUOTE) {
+            IsAString = true;
+          }
 
-          // Read up to EOL or EOF
+#if NETSTANDARD2_0
+          // Read up to SEPARATOR or EOL or EOF
           while (PeekChar() != -1) {
-            TempStream.WriteByte(ReadByte());
-            byte[] Buffer = TempStream.ToArray();
 
-            if (Buffer.EndsWith(FIELD_SEPARATOR)) {
-              byte[] Line = Buffer.Take(Buffer.Length - 1).ToArray();
-              string RetVal = ReaderEncoding.GetString(Line);
+            TempStream.WriteByte(ReadByte());
+            byte[] Bytes = TempStream.ToArray();
+
+            if (Bytes.EndsWith(_FIELD_SEPARATOR)) {
+              int UsefulDataCount = Bytes.Length - 1;
+              byte[] Item = new byte[UsefulDataCount];
+              Buffer.BlockCopy(Bytes, 0, Item, 0, UsefulDataCount);
+              string RetVal = ReaderEncoding.GetString(Item);
               Logger.LogDebug(RetVal);
-              return RetVal;
+              if (IsAString) {
+                return RetVal.RemoveExternalQuotes();
+              } else {
+                return RetVal;
+              }
+            }
+
+            if (Bytes.EndsWith(_FIELD_SEPARATOR)) {
+              int UsefulDataCount = Bytes.Length - 1;
+              byte[] Item = new byte[UsefulDataCount];
+              Buffer.BlockCopy(Bytes, 0, Item, 0, UsefulDataCount);
+              string RetVal = ReaderEncoding.GetString(Item);
+              Logger.LogDebug(RetVal);
+              if (IsAString) {
+                return RetVal.RemoveExternalQuotes();
+              } else {
+                return RetVal;
+              }
             }
           }
 
-          // If here, EOL was not reached. Any byte in buffer ?
+#else
+          // Read up to SEPARATOR or EOL or EOF
+          while (PeekChar() != -1) {
+
+            TempStream.WriteByte(ReadByte());
+            byte[] Bytes = TempStream.ToArray();
+
+            if (Bytes.EndsWith(_FIELD_SEPARATOR)) {
+              int UsefulDataCount = Bytes.Length - 1;
+              string RetVal = ReaderEncoding.GetString(Bytes.AsSpan(0, UsefulDataCount));
+              Logger.LogDebug(RetVal);
+              if (IsAString) {
+                return RetVal.RemoveExternalQuotes();
+              } else {
+                return RetVal;
+              }
+            }
+
+            if (Bytes.EndsWith(_EOL)) {
+              int UsefulDataCount = Bytes.Length - _EOL_Length;
+              byte[] Item = new byte[UsefulDataCount];
+              string RetVal = ReaderEncoding.GetString(Bytes.AsSpan(0, UsefulDataCount));
+              Logger.LogDebug(RetVal);
+              if (IsAString) {
+                return RetVal.RemoveExternalQuotes();
+              } else {
+                return RetVal;
+              }
+            }
+          }
+#endif
+          // If here, EOL was not reached and we are EOS. Any byte in buffer ?
           if (TempStream.Length > 0) {
-            return ReaderEncoding.GetString(TempStream.ToArray());
+            string RetVal = ReaderEncoding.GetString(TempStream.ToArray());
+            if (IsAString) {
+              return RetVal.RemoveExternalQuotes();
+            } else {
+              return RetVal;
+            }
           } else {
             return null;
           }
 
         }
+
       } catch (EndOfStreamException) {
         return null;
 
@@ -456,12 +606,21 @@ namespace BLTools.Storage.Csv {
         Logger.LogError($"Unable to read rowType from stream : {ex.Message}");
         throw;
       }
+    }
+
+    /// <summary>
+    /// Read a the row type from stream
+    /// </summary>
+    /// <returns></returns>
+    public string ReadRowType() {
+
+      return ReadNextItem();
 
     }
 
     /**************************************************************************************/
 
-    
+
 
   }
 }
