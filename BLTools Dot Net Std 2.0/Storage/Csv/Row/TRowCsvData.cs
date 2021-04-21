@@ -16,5 +16,15 @@ namespace BLTools.Storage.Csv {
     /// </summary>
     public TRowCsvData() : base(ERowCsvType.Data) { }
 
+    /// <summary>
+    /// Create a new data row with an Id and a string value
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="value"></param>
+    public TRowCsvData(string id, string value) : base(ERowCsvType.Data) {
+      Id = id;
+      Set(value);
+    }
+
   }
 }

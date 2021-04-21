@@ -16,5 +16,15 @@ namespace BLTools.Storage.Csv {
     /// </summary>
     public TRowCsvHeader() : base(ERowCsvType.Header) { }
 
+    /// <summary>
+    /// Create a new header row with an Id and a string value
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="value"></param>
+    public TRowCsvHeader(string id, string value) : base(ERowCsvType.Header) {
+      Id = id;
+      Set(value);
+    }
+
   }
 }
