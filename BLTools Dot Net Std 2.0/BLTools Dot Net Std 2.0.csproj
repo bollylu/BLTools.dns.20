@@ -9,7 +9,7 @@
     <Company>Luc Bolly</Company>
     <Version>4.5.21.1</Version>
     <PackageReleaseNotes>
-      IToCsv returns array, not item
+      Added constructors for IRowCsv classes
     </PackageReleaseNotes>
   </PropertyGroup>
 
