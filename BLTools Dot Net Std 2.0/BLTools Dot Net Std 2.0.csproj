@@ -7,9 +7,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <Version>4.5.21.2</Version>
+    <Version>4.5.22.0</Version>
     <PackageReleaseNotes>
-      Added constructors for IRowCsv classes
+      FileXml changes
     </PackageReleaseNotes>
   </PropertyGroup>
 
