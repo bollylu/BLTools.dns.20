@@ -8,28 +8,43 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 
 namespace BLTools.Encryption {
-  public class TRSAPrivateKey : ARSAKey {
 
-    #region Public properties
-    public override string Filename {
-      get {
-        return $"{Name}-pvt.blkey";
-      }
-    }
-    #endregion Public properties
+  /// <summary>
+  /// Implementation of a RSA private key
+  /// </summary>
+  public class TRSAPrivateKey : ARsaKey {
 
     #region Constructor(s)
+    /// <summary>
+    /// Create a new empty private key
+    /// </summary>
     public TRSAPrivateKey() : base() {
     }
 
-    public TRSAPrivateKey(string name) : base(name) {
+    /// <summary>
+    /// Create a new named private key container
+    /// </summary>
+    /// <param name="name">The name of the private key</param>
+    /// <param name="storagePath">The path to store the key</param>
+    public TRSAPrivateKey(string name, string storagePath = "") : base(name) {
+      StoragePath = storagePath;
+      Filename = Path.Combine(storagePath, $"{Name}-pvt.blkey");
     }
 
-    public TRSAPrivateKey(string name, RSAParameters parameters) : base(name, parameters) {
+    /// <summary>
+    /// Create a new named private key with parameters
+    /// </summary>
+    /// <param name="name">The name of the key</param>
+    /// <param name="parameters">The parameters for the key</param>
+    /// <param name="storagePath">The path to store the key</param>
+    public TRSAPrivateKey(string name, RSAParameters parameters, string storagePath = "") : base(name, parameters) {
+      StoragePath = storagePath;
+      Filename = Path.Combine(storagePath, $"{Name}-pvt.blkey");
     }
     #endregion Constructor(s)
 
     #region Converters
+    /// <inheritdoc/>
     public override string ToString() {
       StringBuilder RetVal = new StringBuilder();
       RetVal.Append("Private Key :");
@@ -40,20 +55,58 @@ namespace BLTools.Encryption {
     #endregion Converters
 
     #region Public methods
-    public override void Save(string pathname) {
+    /// <inheritdoc/>
+    public override bool Save(bool overwrite = true) {
+      //Root = ToXml();
 
       try {
-        base.Save(pathname);
-      } catch ( Exception ex ) {
+        base.Save(Path.Combine(StoragePath, Filename));
+        return true;
+      } catch (Exception ex) {
         Trace.WriteLine(string.Format("Error while saving private key : {0}", ex.Message), Severity.Error);
+        return false;
       }
     }
 
-    public override void Load(string pathname) {
+    /// <inheritdoc/>
+    public override bool Save(string filename, bool overwrite = true) {
+      //Root = ToXml();
+
+      StoragePath = Path.GetDirectoryName(filename);
+      Filename = Path.GetFileName(filename);
+
       try {
-        base.Load(pathname);
-      } catch ( Exception ex ) {
+        base.Save(Path.Combine(StoragePath, Filename));
+        return true;
+      } catch (Exception ex) {
+        Trace.WriteLine(string.Format("Error while saving private key : {0}", ex.Message), Severity.Error);
+        return false;
+      }
+    }
+
+    /// <inheritdoc/>
+    public override XElement Load() {
+
+      try {
+        Root = base.Load(Path.Combine(StoragePath, Filename));
+        FromXml(Root);
+        return Root;
+      } catch (Exception ex) {
         Trace.WriteLine(string.Format("Error while reading private key : {0}", ex.Message), Severity.Error);
+        return null;
+      }
+    }
+
+    /// <inheritdoc/>
+    public override XElement Load(string filename) {
+      Filename = filename;
+      try {
+        Root = base.Load(filename);
+        FromXml(Root);
+        return Root;
+      } catch (Exception ex) {
+        Trace.WriteLine(string.Format("Error while reading private key : {0}", ex.Message), Severity.Error);
+        return null;
       }
     }
     #endregion Public methods

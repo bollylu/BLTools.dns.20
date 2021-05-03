@@ -32,7 +32,15 @@ namespace BLTools.Storage.Csv {
     protected List<IRowCsv> _Content = new List<IRowCsv>();
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
+    /// <summary>
+    /// Create a new FileCsv
+    /// </summary>
     protected AFileCsv() { }
+
+    // <summary>
+    /// Create a new FileCsv with a name
+    /// </summary>
+    /// <param name="filename">The filename for storing the data</param>
     protected AFileCsv(string filename) {
       Filename = filename;
     }

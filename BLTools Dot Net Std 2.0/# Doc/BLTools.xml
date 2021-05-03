@@ -2153,10 +2153,72 @@
             </summary>
             <param name="propertyName"></param>
         </member>
-        <member name="M:BLTools.Encryption.ARSAKey.LoadXml(System.String)">
+        <member name="T:BLTools.Encryption.ARsaKey">
+            <summary>
+            Abstract implementation of a RSA key (public or private)
+            </summary>
+        </member>
+        <member name="P:BLTools.Encryption.ARsaKey.Name">
+            <summary>
+            Name of the key
+            </summary>
+        </member>
+        <member name="P:BLTools.Encryption.ARsaKey.Parameters">
+            <summary>
+            Parameters for the key
+            </summary>
+        </member>
+        <member name="P:BLTools.Encryption.ARsaKey.StoragePath">
+            <summary>
+            Path to store the key
+            </summary>
+        </member>
+        <member name="M:BLTools.Encryption.ARsaKey.#ctor">
+            <summary>
+            Create new empty RSA key
+            </summary>
+        </member>
+        <member name="M:BLTools.Encryption.ARsaKey.#ctor(System.String)">
+            <summary>
+            Create a new named RSA key
+            </summary>
+            <param name="name">The name of the key</param>
+        </member>
+        <member name="M:BLTools.Encryption.ARsaKey.#ctor(System.String,System.Security.Cryptography.RSAParameters)">
+            <summary>
+            Create a new named RSA key with parameters
+            </summary>
+            <param name="name">The name of the key</param>
+            <param name="parameters">The key parameters</param>
+        </member>
+        <member name="M:BLTools.Encryption.ARsaKey.ToString">
             <inheritdoc/>
         </member>
-        <member name="M:BLTools.Encryption.ARSAKey.LoadXmlAsync(System.String)">
+        <member name="M:BLTools.Encryption.ARsaKey.ToXml">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.ARsaKey.FromXml(System.Xml.Linq.XElement)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.ARsaKey.Save(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.ARsaKey.SaveAsync(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.ARsaKey.Load(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.ARsaKey.LoadAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.ARsaKey.Equals(BLTools.Encryption.ARsaKey)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.ARsaKey.Equals(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.ARsaKey.GetHashCode">
             <inheritdoc/>
         </member>
         <member name="T:BLTools.Encryption.TRSACryptographyExtension">
@@ -2304,6 +2366,95 @@
             <param name="encoding">The encoding used in the original text</param>
             <returns>True if the signature is valid and original text has not been tampered. False otherwise.</returns>
         </member>
+        <member name="M:BLTools.Encryption.TRSAKeyPair.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAKeyPair.Save(System.String)">
+            <summary>
+            Save both private and public keys into separate files
+            </summary>
+            <param name="pathname">The path to store the files</param>
+        </member>
+        <member name="T:BLTools.Encryption.TRSAPrivateKey">
+            <summary>
+            Implementation of a RSA private key
+            </summary>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPrivateKey.#ctor">
+            <summary>
+            Create a new empty private key
+            </summary>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPrivateKey.#ctor(System.String,System.String)">
+            <summary>
+            Create a new named private key container
+            </summary>
+            <param name="name">The name of the private key</param>
+            <param name="storagePath">The path to store the key</param>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPrivateKey.#ctor(System.String,System.Security.Cryptography.RSAParameters,System.String)">
+            <summary>
+            Create a new named private key with parameters
+            </summary>
+            <param name="name">The name of the key</param>
+            <param name="parameters">The parameters for the key</param>
+            <param name="storagePath">The path to store the key</param>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPrivateKey.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPrivateKey.Save(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPrivateKey.Save(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPrivateKey.Load">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPrivateKey.Load(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:BLTools.Encryption.TRSAPublicKey">
+            <summary>
+            Implementation of a RSA public key
+            </summary>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPublicKey.#ctor">
+            <summary>
+            Create a new empty public key
+            </summary>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPublicKey.#ctor(System.String,System.String)">
+            <summary>
+            Create a new named public key
+            </summary>
+            <param name="name">The name of the key</param>
+            <param name="storagePath">The path to store the key</param>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPublicKey.#ctor(System.String,System.Security.Cryptography.RSAParameters,System.String)">
+            <summary>
+            Create a new named public key with parameters
+            </summary>
+            <param name="name">The name of the key</param>
+            <param name="parameters">The parameters for the key</param>
+            <param name="storagePath">The path to store the key</param>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPublicKey.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPublicKey.Save(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPublicKey.Save(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPublicKey.Load">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Encryption.TRSAPublicKey.Load(System.String)">
+            <inheritdoc/>
+        </member>
         <member name="T:BLTools.ArgElement">
             <summary>
             Single element of arguments : Id(position), Name, Value
@@ -2442,6 +2593,12 @@
             The list of rows from the file
             </summary>
         </member>
+        <member name="M:BLTools.Storage.Csv.AFileCsv.#ctor">
+            <summary>
+            Create a new FileCsv
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:BLTools.Storage.Csv.AFileCsv.#ctor(System.String)" -->
         <member name="M:BLTools.Storage.Csv.AFileCsv.ToString">
             <inheritdoc/>
         </member>
@@ -3019,6 +3176,13 @@
             Create a new data row
             </summary>
         </member>
+        <member name="M:BLTools.Storage.Csv.TRowCsvData.#ctor(System.String,System.String)">
+            <summary>
+            Create a new data row with an Id and a string value
+            </summary>
+            <param name="id"></param>
+            <param name="value"></param>
+        </member>
         <member name="T:BLTools.Storage.Csv.TRowCsvFooter">
             <summary>
             Implementation of a footer row
@@ -3029,6 +3193,13 @@
             Create a new footer row
             </summary>
         </member>
+        <member name="M:BLTools.Storage.Csv.TRowCsvFooter.#ctor(System.String,System.String)">
+            <summary>
+            Create a new footer row with an Id and a string value
+            </summary>
+            <param name="id"></param>
+            <param name="value"></param>
+        </member>
         <member name="T:BLTools.Storage.Csv.TRowCsvHeader">
             <summary>
             Implementation of a header row
@@ -3038,6 +3209,13 @@
             <summary>
             Create a new header row
             </summary>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TRowCsvHeader.#ctor(System.String,System.String)">
+            <summary>
+            Create a new header row with an Id and a string value
+            </summary>
+            <param name="id"></param>
+            <param name="value"></param>
         </member>
         <member name="T:BLTools.Storage.Csv.TCsvReader">
             <summary>
@@ -3387,6 +3565,111 @@
             <param name="data">The enumerable bool items</param>
             <param name="cultureInfo">The culture info to use</param>
         </member>
+        <member name="T:BLTools.Storage.Xml.AFileXml">
+            <summary>
+            Handle reading/writing to/from an xml file
+            </summary>
+        </member>
+        <member name="F:BLTools.Storage.Xml.AFileXml.XML_ROOT_ELEMENT">
+            <summary>
+            The name of the root in xml file
+            </summary>
+        </member>
+        <member name="F:BLTools.Storage.Xml.AFileXml.TIMEOUT">
+            <summary>
+            Timeout for reading/writing the file content
+            </summary>
+        </member>
+        <member name="F:BLTools.Storage.Xml.AFileXml._XmlDeclaration">
+            <summary>
+            A predefinition of the XDeclaration
+            </summary>
+        </member>
+        <member name="P:BLTools.Storage.Xml.AFileXml.Filename">
+            <inheritdoc/>
+        </member>
+        <member name="P:BLTools.Storage.Xml.AFileXml.FileEncoding">
+            <inheritdoc/>
+        </member>
+        <member name="P:BLTools.Storage.Xml.AFileXml.Root">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml.#ctor">
+            <summary>
+            Create a new FileXml
+            </summary>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml.#ctor(System.String)">
+            <summary>
+            Create a new FileXml with a name
+            </summary>
+            <param name="filename">The filename for storing the data</param>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml.Load">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml.Load(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml.LoadAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml.LoadAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml.Save(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml.Save(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml.Save(System.Xml.Linq.XElement,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml.Save(System.String,System.Xml.Linq.XElement,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml.SaveAsync(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml.SaveAsync(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml.SaveAsync(System.Xml.Linq.XElement,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml.SaveAsync(System.String,System.Xml.Linq.XElement,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml._EnsureFilename(System.String)">
+            <summary>
+            Ensure that the filename is passed
+            </summary>
+            <param name="filename"></param>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml._EnsureRoot(System.Xml.Linq.XElement)">
+            <summary>
+            Ensure that the xml root is passed
+            </summary>
+            <param name="root">The root to validate</param>
+        </member>
+        <member name="M:BLTools.Storage.Xml.AFileXml._EnsureFileExists(System.String)">
+            <summary>
+            Ensure that the filename exists
+            </summary>
+            <param name="filename"></param>
+        </member>
+        <member name="M:BLTools.Storage.Xml.TFileXml.#ctor">
+            <summary>
+            Create a new xml storage
+            </summary>
+        </member>
+        <member name="M:BLTools.Storage.Xml.TFileXml.#ctor(System.String)">
+            <summary>
+            Create a new xml storage with a filename
+            </summary>
+            <param name="filename">The filename to store data</param>
+        </member>
         <member name="T:BLTools.IToCsv">
             <summary>
             Convert item to/from csv
@@ -3461,15 +3744,61 @@
             Allows the reading or saving in xml
             </summary>
         </member>
-        <member name="M:BLTools.IFileXml.SaveXml(System.String,System.Boolean)">
+        <member name="P:BLTools.IFileXml.Filename">
             <summary>
-            Save the item in an xml file
+            The filename for save/load
+            </summary>
+        </member>
+        <member name="P:BLTools.IFileXml.FileEncoding">
+            <summary>
+            The encoding for save/load
+            </summary>
+        </member>
+        <member name="P:BLTools.IFileXml.Root">
+            <summary>
+            The root of the file content
+            </summary>
+        </member>
+        <member name="M:BLTools.IFileXml.Save(System.Boolean)">
+            <summary>
+            Save the item in Filename
+            </summary>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.IFileXml.Save(System.String,System.Xml.Linq.XElement,System.Boolean)">
+            <summary>
+            Save the XElement in an xml file
+            </summary>
+            <param name="filename">The filename for the save</param>
+            <param name="root">The root element to save</param>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.IFileXml.Save(System.String,System.Boolean)">
+            <summary>
+            Save the Root in an xml file
             </summary>
             <param name="filename">The filename for the save</param>
             <param name="overwrite">true to overwrite any existing file, false otherwise</param>
             <returns>true if save is successfull, false otherwise</returns>
         </member>
-        <member name="M:BLTools.IFileXml.SaveXmlAsync(System.String,System.Boolean)">
+        <member name="M:BLTools.IFileXml.Save(System.Xml.Linq.XElement,System.Boolean)">
+            <summary>
+            Save the XElement in Filename
+            </summary>
+            <param name="root">The root element to save</param>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.IFileXml.SaveAsync(System.Boolean)">
+            <summary>
+            Save the item in Filename asynchronously
+            </summary>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.IFileXml.SaveAsync(System.String,System.Boolean)">
             <summary>
             Save the item in an xml file asynchronously
             </summary>
@@ -3477,19 +3806,48 @@
             <param name="overwrite">true to overwrite any existing file, false otherwise</param>
             <returns>true if save is successfull, false otherwise</returns>
         </member>
-        <member name="M:BLTools.IFileXml.LoadXml(System.String)">
+        <member name="M:BLTools.IFileXml.SaveAsync(System.String,System.Xml.Linq.XElement,System.Boolean)">
+            <summary>
+            Save the XElement in an xml file asynchronously
+            </summary>
+            <param name="filename">The filename for the save</param>
+            <param name="root">The root element to save</param>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.IFileXml.SaveAsync(System.Xml.Linq.XElement,System.Boolean)">
+            <summary>
+            Save the XElement in Filename asynchronously
+            </summary>
+            <param name="root">The root element to save</param>
+            <param name="overwrite">true to overwrite any existing file, false otherwise</param>
+            <returns>true if save is successfull, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.IFileXml.Load">
+            <summary>
+            Load the content of Filename
+            </summary>
+            <returns>The root of the xml file, null if anything wrong</returns>
+        </member>
+        <member name="M:BLTools.IFileXml.Load(System.String)">
             <summary>
             Load the content of an xml file
             </summary>
             <param name="filename">The file to load</param>
-            <returns>true if load is successfull, false otherwise</returns>
+            <returns>The root of the xml file, null if anything wrong</returns>
         </member>
-        <member name="M:BLTools.IFileXml.LoadXmlAsync(System.String)">
+        <member name="M:BLTools.IFileXml.LoadAsync">
+            <summary>
+            Load the content of Filename asynchronously
+            </summary>
+            <returns>The root of the xml file, null if anything wrong</returns>
+        </member>
+        <member name="M:BLTools.IFileXml.LoadAsync(System.String)">
             <summary>
             Load the content of an xml file asynchronously
             </summary>
             <param name="filename">The file to load</param>
-            <returns>true if load is successfull, false otherwise</returns>
+            <returns>The root of the xml file, null if anything wrong</returns>
         </member>
         <member name="T:BLTools.IToXml">
             <summary>

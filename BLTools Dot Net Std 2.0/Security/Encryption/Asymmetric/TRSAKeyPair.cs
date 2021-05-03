@@ -34,6 +34,8 @@ namespace BLTools.Encryption {
       Name = keyname;
       KeyLength = keyLength;
       KeyType = EKeyType.Random;
+      PrivateKey.Name = keyname;
+      PublicKey.Name = keyname;
       using (RSACryptoServiceProvider RSACSP = new RSACryptoServiceProvider(keyLength)) {
         RSAParameters TempParams = RSACSP.ExportParameters(true);
         PublicKey = new TRSAPublicKey(Name, TempParams);
@@ -44,6 +46,7 @@ namespace BLTools.Encryption {
     #endregion Constructor(s)
 
     #region Converters
+    /// <inheritdoc/>
     public override string ToString() {
       StringBuilder RetVal = new StringBuilder();
       RetVal.AppendLine(PublicKey.ToString());
@@ -53,14 +56,22 @@ namespace BLTools.Encryption {
 
     #endregion Converters
 
+    /// <summary>
+    /// Save both private and public keys into separate files
+    /// </summary>
+    /// <param name="pathname">The path to store the files</param>
     public void Save(string pathname) {
-      PublicKey.Save(pathname);
-      PrivateKey.Save(pathname);
+      PrivateKey.StoragePath = pathname;
+      PublicKey.StoragePath = pathname;
+      PrivateKey.Save();
+      PublicKey.Save();
     }
 
     public void Load(string pathname) {
-      PublicKey.Load(pathname);
-      PrivateKey.Load(pathname);
+      PrivateKey.StoragePath = pathname;
+      PublicKey.StoragePath = pathname;
+      PublicKey.Load();
+      PrivateKey.Load();
     }
 
     public static TRSAKeyPair Load(string keyname, string pathname) {

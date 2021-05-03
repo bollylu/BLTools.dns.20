@@ -98,8 +98,6 @@ namespace BLTools.UnitTest.Security {
       string Keyname = "testkey";
       TRSAKeyPair KeyPair1 = new TRSAKeyPair(Keyname, 1024);
       TRSAKeyPair KeyPair2 = new TRSAKeyPair(Keyname, 1024);
-      //Trace.WriteLine(KeyPair1.ToString());
-      //Trace.WriteLine(KeyPair2.ToString());
       Assert.IsFalse(KeyPair1.PublicKey.Equals(KeyPair2.PublicKey));
     }
 
@@ -107,18 +105,27 @@ namespace BLTools.UnitTest.Security {
     public void TRSAKeyPair_KeysAreSaved_FilesExist() {
       string Keyname = "testkey";
       string Pathname = Path.GetTempPath();
-
       TRSAKeyPair KeyPair1 = new TRSAKeyPair(Keyname, 1024);
-      KeyPair1.Save(Pathname);
-
       string PvtKeyfile = Path.Combine(Pathname, KeyPair1.PrivateKey.Filename);
       string PubKeyfile = Path.Combine(Pathname, KeyPair1.PublicKey.Filename);
 
-      Assert.IsTrue(File.Exists(PvtKeyfile));
-      Assert.IsTrue(File.Exists(PubKeyfile));
+      TestContext.WriteLine(KeyPair1.ToString());
 
-      File.Delete(PvtKeyfile);
-      File.Delete(PubKeyfile);
+      try {
+        KeyPair1.Save(Pathname);
+        Assert.IsTrue(File.Exists(PvtKeyfile));
+        TestContext.WriteLine("PvtFile =>");
+        TestContext.WriteLine(File.ReadAllText(PvtKeyfile));
+        Assert.IsTrue(File.Exists(PubKeyfile));
+        TestContext.WriteLine("PubFile =>");
+        TestContext.WriteLine(File.ReadAllText(PubKeyfile));
+      } finally {
+        File.Delete(PvtKeyfile);
+        File.Delete(PubKeyfile);
+      }
+      
+
+      
     }
 
     [TestMethod(), TestCategory("RSA")]
@@ -130,6 +137,7 @@ namespace BLTools.UnitTest.Security {
       TRSAKeyPair KeyPair2 = new TRSAKeyPair(Keyname);
 
       KeyPair1.Save(Pathname);
+
       KeyPair2.Load(Pathname);
       Assert.IsTrue(KeyPair1.PrivateKey.Equals(KeyPair2.PrivateKey));
       Assert.IsTrue(KeyPair1.PublicKey.Equals(KeyPair2.PublicKey));

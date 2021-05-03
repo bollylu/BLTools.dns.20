@@ -10,12 +10,17 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace BLTools.Encryption {
-  public abstract class ARSAKey : IToXml, IFileXml, IEquatable<ARSAKey> {
+using BLTools.Storage.Xml;
 
+namespace BLTools.Encryption {
+
+  /// <summary>
+  /// Abstract implementation of a RSA key (public or private)
+  /// </summary>
+  public abstract class ARsaKey : AFileXml, IToXml, IEquatable<ARsaKey> {
 
     #region --- XML constants ----------------------------------------------------------------------------------
-    public const string XML_THIS_ELEMENT = "Key";
+    public const string XML_THIS_ELEMENT = "RsaKey";
     public const string XML_ATTRIBUTE_P = "P";
     public const string XML_ATTRIBUTE_Q = "Q";
     public const string XML_ATTRIBUTE_DP = "DP";
@@ -27,27 +32,49 @@ namespace BLTools.Encryption {
     #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region Public properties
-    public string Name { get; set; }
+    /// <summary>
+    /// Name of the key
+    /// </summary>
+    public string Name { get; set; } = "";
+
+    /// <summary>
+    /// Parameters for the key
+    /// </summary>
     public RSAParameters Parameters { get; set; }
-    public abstract string Filename { get; }
+
+    /// <summary>
+    /// Path to store the key
+    /// </summary>
+    public string StoragePath { get; set; } = "";
     #endregion Public properties
 
     #region Constructor(s)
-    public ARSAKey() {
-      Name = "";
-    }
+    /// <summary>
+    /// Create new empty RSA key
+    /// </summary>
+    protected ARsaKey() { }
 
-    public ARSAKey(string name) {
+    /// <summary>
+    /// Create a new named RSA key
+    /// </summary>
+    /// <param name="name">The name of the key</param>
+    protected ARsaKey(string name) {
       Name = name;
     }
 
-    public ARSAKey(string name, RSAParameters parameters) {
+    /// <summary>
+    /// Create a new named RSA key with parameters
+    /// </summary>
+    /// <param name="name">The name of the key</param>
+    /// <param name="parameters">The key parameters</param>
+    protected ARsaKey(string name, RSAParameters parameters) {
       Name = name;
       Parameters = parameters;
     }
     #endregion Constructor(s)
 
     #region Converters
+    /// <inheritdoc/>
     public override string ToString() {
       StringBuilder RetVal = new StringBuilder();
       RetVal.Append($" P({Parameters.P.ToHexString()})");
@@ -61,6 +88,7 @@ namespace BLTools.Encryption {
       return RetVal.ToString();
     }
 
+    /// <inheritdoc/>
     public XElement ToXml() {
       XElement RetVal = new XElement(XML_THIS_ELEMENT);
       RetVal.SetAttributeValue(XML_ATTRIBUTE_P, Convert.ToBase64String(Parameters.P));
@@ -74,6 +102,7 @@ namespace BLTools.Encryption {
       return RetVal;
     }
 
+    /// <inheritdoc/>
     public void FromXml(XElement source) {
       if (source is null) {
         return;
@@ -92,46 +121,68 @@ namespace BLTools.Encryption {
     }
     #endregion Converters
 
-    #region Public methods
 
-    [Obsolete("Use SaveXml() or SaveXmlAsync()")]
-    public virtual void Save(string pathname) {
-      string FullName = Path.Combine(pathname, Filename);
-      try {
-        XDocument XmlPublicKeyFile = new XDocument();
-        XmlPublicKeyFile.Declaration = new XDeclaration("1.0", "UTF-8", "yes");
-        XmlPublicKeyFile.Add(new XElement("root"));
-        XmlPublicKeyFile.Root.Add(this.ToXml());
-        TextWriter XmlWriter = new StreamWriter(FullName, false, Encoding.UTF8);
-        XmlPublicKeyFile.Save(XmlWriter, SaveOptions.None);
-        XmlWriter.Close();
-      } catch (Exception ex) {
-        Trace.WriteLine(string.Format("Error while saving public key : {0}", ex.Message), Severity.Error);
-      }
+    #region --- RSA key I/O --------------------------------------------
+    /// <inheritdoc/>
+    public override bool Save(string filename, bool overwrite = true) {
+      Root = ToXml();
+      return base.Save(filename, overwrite);
     }
 
-    [Obsolete("Use LoadXml() or LoadXmlAsync()")]
-    public virtual void Load(string pathname) {
-      string FullName = Path.Combine(pathname, Filename);
+    /// <inheritdoc/>
+    public override async Task<bool> SaveAsync(string filename, bool overwrite = true) {
+      Root = ToXml();
+      return await base.SaveAsync(filename, overwrite);
+    }
+
+    /// <inheritdoc/>
+    public override XElement Load(string filename) {
+
+      #region === Validate parameters ===
+      if (string.IsNullOrWhiteSpace(filename)) {
+        return null;
+      }
+      #endregion === Validate parameters ===
+
+      XElement RetVal = null;
+
       try {
-        XDocument XmlFile = XDocument.Load(FullName);
-        XElement Key = XmlFile.Root.SafeReadElement(XML_THIS_ELEMENT);
-        Parameters = new RSAParameters() {
-          P = Convert.FromBase64String(Key.SafeReadAttribute<string>(XML_ATTRIBUTE_P, "")),
-          Q = Convert.FromBase64String(Key.SafeReadAttribute<string>(XML_ATTRIBUTE_Q, "")),
-          DP = Convert.FromBase64String(Key.SafeReadAttribute<string>(XML_ATTRIBUTE_DP, "")),
-          DQ = Convert.FromBase64String(Key.SafeReadAttribute<string>(XML_ATTRIBUTE_DQ, "")),
-          InverseQ = Convert.FromBase64String(Key.SafeReadAttribute<string>(XML_ATTRIBUTE_INVERSEQ, "")),
-          D = Convert.FromBase64String(Key.SafeReadAttribute<string>(XML_ATTRIBUTE_D, "")),
-          Modulus = Convert.FromBase64String(Key.SafeReadAttribute<string>(XML_ATTRIBUTE_MODULUS, "")),
-          Exponent = Convert.FromBase64String(Key.SafeReadAttribute<string>(XML_ATTRIBUTE_EXPONENT, ""))
-        };
+        XElement RootKey = base.Load(filename);
+        RetVal = RootKey.Element(XML_THIS_ELEMENT);
+        FromXml(RetVal);
+        return RetVal;
       } catch (Exception ex) {
         Trace.WriteLine(string.Format("Error while reading public key : {0}", ex.Message), Severity.Error);
+        return RetVal;
       }
     }
 
-    public bool Equals(ARSAKey other) {
+    /// <inheritdoc/>
+    public override async Task<XElement> LoadAsync(string filename) {
+      #region === Validate parameters ===
+      if (string.IsNullOrWhiteSpace(filename)) {
+        return null;
+      }
+      #endregion === Validate parameters ===
+
+      XElement RetVal = null;
+
+      try {
+        XElement RootKey = await base.LoadAsync(filename).ConfigureAwait(false);
+        RetVal = RootKey.Element(XML_THIS_ELEMENT);
+        FromXml(RetVal);
+        return RetVal;
+      } catch (Exception ex) {
+        Trace.WriteLine(string.Format("Error while reading public key : {0}", ex.Message), Severity.Error);
+        return RetVal;
+      }
+    }
+
+    #endregion --- RSA key I/O --------------------------------------------
+
+
+    /// <inheritdoc/>
+    public bool Equals(ARsaKey other) {
       if (other == null) {
         return false;
       }
@@ -169,114 +220,14 @@ namespace BLTools.Encryption {
       return true;
     }
 
-    public bool SaveXml(string filename, bool overwrite = true) {
-
-      #region === Validate parameters ===
-      if (string.IsNullOrWhiteSpace(filename)) {
-        return false;
-      }
-      #endregion === Validate parameters ===
-
-      try {
-        XDocument XmlPublicKeyFile = new XDocument();
-        XmlPublicKeyFile.Declaration = new XDeclaration("1.0", "UTF-8", "yes");
-        XmlPublicKeyFile.Add(new XElement("root"));
-        XmlPublicKeyFile.Root.Add(this.ToXml());
-        using (TextWriter XmlWriter = new StreamWriter(filename, false, Encoding.UTF8)) {
-          XmlPublicKeyFile.Save(XmlWriter, SaveOptions.None);
-          XmlWriter.Close();
-        }
-        return true;
-      } catch (Exception ex) {
-        Trace.WriteLine(string.Format("Error while saving public key : {0}", ex.Message), Severity.Error);
-        return false;
-      }
-    }
-
-    public async Task<bool> SaveXmlAsync(string filename, bool overwrite = true) {
-      #region === Validate parameters ===
-      if (string.IsNullOrWhiteSpace(filename)) {
-        return false;
-      }
-      #endregion === Validate parameters ===
-
-      try {
-        XDocument XmlPublicKeyFile = new XDocument();
-        XmlPublicKeyFile.Declaration = new XDeclaration("1.0", "UTF-8", "yes");
-        XmlPublicKeyFile.Add(new XElement("root"));
-        XmlPublicKeyFile.Root.Add(this.ToXml());
-#if NETSTANDARD2_0
-        using (TextWriter XmlWriter = new StreamWriter(filename, false, Encoding.UTF8)) {
-          XmlPublicKeyFile.Save(XmlWriter, SaveOptions.None);
-          await Task.Yield();
-          XmlWriter.Close();
-        }
-        return true;
-#else
-        using (FileStream OutputStream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None)) {
-          await XmlPublicKeyFile.SaveAsync(OutputStream, SaveOptions.None, new CancellationTokenSource(1000).Token).ConfigureAwait(false);
-
-        }
-        return true;
-#endif
-      } catch (Exception ex) {
-        Trace.WriteLine(string.Format("Error while saving public key : {0}", ex.Message), Severity.Error);
-        return false;
-      }
+    /// <inheritdoc/>
+    public override bool Equals(object obj) {
+      return base.Equals(obj as ARsaKey);
     }
 
     /// <inheritdoc/>
-    public bool LoadXml(string filename) {
-      #region === Validate parameters ===
-      if (string.IsNullOrWhiteSpace(filename)) {
-        return false;
-      }
-      #endregion === Validate parameters ===
-
-      try {
-        XDocument XmlFile = XDocument.Load(filename);
-        XElement Key = XmlFile.Root.SafeReadElement(XML_THIS_ELEMENT);
-        FromXml(Key);
-        return true;
-      } catch (Exception ex) {
-        Trace.WriteLine(string.Format("Error while reading public key : {0}", ex.Message), Severity.Error);
-        return false;
-      }
+    public override int GetHashCode() {
+      return Parameters.GetHashCode() + Name.GetHashCode();
     }
-
-    /// <inheritdoc/>
-    public async Task<bool> LoadXmlAsync(string filename) {
-      #region === Validate parameters ===
-      if (string.IsNullOrWhiteSpace(filename)) {
-        return false;
-      }
-      #endregion === Validate parameters ===
-
-      try {
-
-#if NETSTANDARD2_0
-        XDocument XmlFile = XDocument.Load(filename);
-        await Task.Yield();
-        XElement Key = XmlFile.Root.SafeReadElement(XML_THIS_ELEMENT);
-        FromXml(Key);
-#else
-        using (FileStream InputStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-          XDocument XmlFile = await XDocument.LoadAsync(InputStream, LoadOptions.None, new CancellationTokenSource(1000).Token).ConfigureAwait(false);
-          XElement Key = XmlFile.Root.SafeReadElement(XML_THIS_ELEMENT);
-          FromXml(Key);
-        }
-#endif
-
-        return true;
-      } catch (Exception ex) {
-        Trace.WriteLine(string.Format("Error while reading public key : {0}", ex.Message), Severity.Error);
-        return false;
-      }
-    }
-
-
-    #endregion Public methods
-
-
   }
 }
