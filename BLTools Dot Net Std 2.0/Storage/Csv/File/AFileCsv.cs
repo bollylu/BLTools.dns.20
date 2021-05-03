@@ -37,7 +37,7 @@ namespace BLTools.Storage.Csv {
     /// </summary>
     protected AFileCsv() { }
 
-    // <summary>
+    /// <summary>
     /// Create a new FileCsv with a name
     /// </summary>
     /// <param name="filename">The filename for storing the data</param>

@@ -144,7 +144,7 @@ namespace BLTools.Storage.Csv {
 
     }
 
-    // <summary>
+    /// <summary>
     /// Obtain the next row header
     /// </summary>
     /// <returns></returns>
