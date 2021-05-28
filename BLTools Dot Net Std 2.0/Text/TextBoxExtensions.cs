@@ -17,7 +17,7 @@ namespace BLTools.Text {
     /// <param name="alignment">The alignment of the message within the box</param>
     /// <param name="filler">The character used to full the extra space aound the message within the box</param>
     /// <returns>A string containing the message in the box</returns>
-    public static string BoxIBM(this string source, int margin = 0, TextBox.EStringAlignment alignment = TextBox.EStringAlignment.Left, char filler = '.') {
+    public static string BoxIBM(this string source, int margin = 0, TextBox.EStringAlignment alignment = TextBox.EStringAlignment.Left, char filler = ' ') {
       return TextBox.BuildDynamicIBM(source, margin, alignment, filler);
     }
 
@@ -30,7 +30,7 @@ namespace BLTools.Text {
     /// <param name="filler">The character used to full the extra space aound the message within the box</param>
     /// <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
     /// <returns>A string containing the message in the box</returns>
-    public static string Box(this string source, int margin = 0, TextBox.EStringAlignment alignment = TextBox.EStringAlignment.Left, char filler = '.', string border = "") {
+    public static string Box(this string source, int margin = 0, TextBox.EStringAlignment alignment = TextBox.EStringAlignment.Left, char filler = ' ', string border = "") {
       return TextBox.BuildDynamic(source, margin, alignment, filler, border);
     }
 
@@ -44,7 +44,7 @@ namespace BLTools.Text {
     /// <param name="filler">The character used to full the extra space aound the message within the box</param>
     /// <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
     /// <returns>A string containing the message in the box</returns>
-    public static string Box(this string source, string title, int margin = 0, TextBox.EStringAlignment alignment = TextBox.EStringAlignment.Left, char filler = '.', string border = "") {
+    public static string Box(this string source, string title, int margin = 0, TextBox.EStringAlignment alignment = TextBox.EStringAlignment.Left, char filler = ' ', string border = "") {
       return TextBox.BuildDynamicWithTitle(source, title, margin, alignment, filler, border);
 
     }
