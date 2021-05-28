@@ -55,5 +55,27 @@ namespace BLTools.UnitTest.TextBox {
       Console.WriteLine(Target);
       Assert.AreEqual("+-[Test box]--------------------+", Target.Split('\n', '\r').First());
     }
+
+    [TestMethod]
+    public void TextBoxFixedWidth_SimpleTitle_ResultIsOk() {
+      string Title = "Test box";
+      string Content = "blabla vldozid zerdo fizf";
+
+      string Target = Content.BoxFixedWidth(Title, 40);
+
+      Console.WriteLine(Target);
+      Assert.AreEqual("+-[Test box]---------------------------+", Target.Split('\n', '\r').First());
+    }
+
+    [TestMethod]
+    public void TextBoxFixedWidth_VeryLargeTitle_ResultIsOk() {
+      string Title = "Test box very large title, bigger than box";
+      string Content = "blabla vldozid zerdo fizf";
+
+      string Target = Content.BoxFixedWidth(Title, 40);
+
+      Console.WriteLine(Target);
+      Assert.AreEqual("+-[Test box very large title, bigger ]-+", Target.Split('\n', '\r').First());
+    }
   }
 }

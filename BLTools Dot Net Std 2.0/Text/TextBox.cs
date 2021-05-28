@@ -65,7 +65,7 @@ namespace BLTools.Text {
     /// <summary>
     /// Default width for text boxes
     /// </summary>
-    public static int DEFAULT_FIXED_WIDTH = 80;
+    public const int DEFAULT_FIXED_WIDTH = 80;
 
     static private readonly Dictionary<EHorizontalRowType, char> _CharFinder = new Dictionary<EHorizontalRowType, char> {
       { EHorizontalRowType.Single, '-' },
@@ -341,6 +341,94 @@ namespace BLTools.Text {
     }
 
     /// <summary>
+    /// Generate a box with the message inside it. The width of the box is fixed. If the message is larger than the box, it is split in several lines
+    /// </summary>
+    /// <param name="sourceString">The message</param>
+    /// <param name="title">The title</param>
+    /// <param name="width">The width of the box</param>
+    /// <param name="alignment">The alignment of the message within the box</param>
+    /// <param name="filler">The character used to full the extra space aound the message within the box</param>
+    /// <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
+    /// <returns>A string with the box and the message</returns>
+    public static string BuildFixedWidth(string sourceString, string title, int width, EStringAlignment alignment = EStringAlignment.Center, char filler = ' ', string border = "") {
+      #region Validate parameters
+      if (sourceString is null) {
+        return null;
+      }
+      if (title is null) {
+        title = "";
+      }
+
+      if (width <= 0) {
+        width = DEFAULT_FIXED_WIDTH;
+      }
+      #endregion Validate parameters
+
+      string CompletedBorder = string.Format("{0}+-+|+-+|", border).Left(8);
+
+      char TopLeft = CompletedBorder[0];
+      char TopBar = CompletedBorder[1];
+      char TopRight = CompletedBorder[2];
+      char LeftBar = CompletedBorder[7];
+      char RightBar = CompletedBorder[3];
+      char BottomLeft = CompletedBorder[6];
+      char BottomBar = CompletedBorder[5];
+      char BottomRight = CompletedBorder[4];
+
+      int InnerWidth = width - 4;
+      string PreProcessedSourceString = sourceString.Replace(CRLF, NEWLINE);
+
+      StringBuilder RetVal = new StringBuilder();
+
+      if (title.Length > InnerWidth-2) {
+        title = title.Left(InnerWidth - 2);
+      }
+
+      if (title.IsEmpty()) {
+        RetVal.AppendLine($"{TopLeft}{new string(TopBar, InnerWidth + 2)}{TopRight}");
+      } else {
+        RetVal.Append(TopLeft);
+        RetVal.Append($"{TopBar}[");
+        RetVal.Append(title);
+        RetVal.Append(']');
+        RetVal.Append(new string(TopBar, InnerWidth - title.Length - 1));
+        RetVal.Append(TopRight);
+        RetVal.AppendLine();
+      }
+
+      foreach (string StringItem in PreProcessedSourceString.Split(CHAR_LF)) {
+        int StartPtr = 0;
+        while (StartPtr < StringItem.Length) {
+          string WorkString = StringItem.Substring(StartPtr, Math.Min(StringItem.Length - StartPtr, InnerWidth));
+          StartPtr += WorkString.Length;
+
+          int LeftPadding = 0;
+          int RightPadding = 0;
+
+          switch (alignment) {
+            case EStringAlignment.Left:
+              RightPadding = Math.Max(InnerWidth - WorkString.Length, 0);
+              RetVal.AppendLine($"{LeftBar} {WorkString} {new string(filler, RightPadding)}{RightBar}");
+              break;
+            case EStringAlignment.Right:
+              LeftPadding = Math.Max(InnerWidth - WorkString.Length, 0);
+              RetVal.AppendLine($"{LeftBar}{new string(filler, LeftPadding)} {WorkString} {RightBar}");
+              break;
+            case EStringAlignment.Center:
+              LeftPadding = Math.Max(Convert.ToInt32(Math.Floor((InnerWidth - WorkString.Length) / 2d)), 0);
+              RightPadding = Math.Max(InnerWidth - WorkString.Length - LeftPadding, 0);
+              RetVal.AppendLine($"{LeftBar}{new string(filler, LeftPadding)} {WorkString} {new string(filler, RightPadding)}{RightBar}");
+              break;
+          }
+
+
+        }
+      }
+      RetVal.Append($"{BottomLeft}{new string(BottomBar, InnerWidth + 2)}{BottomRight}");
+      return RetVal.ToString();
+    }
+
+    /// <summary>
     /// Generate a box with the message inside it. The width of the box is fixed. If the message is larger than the box, it is split in several lines.
     /// IBM characters are used for the border
     /// </summary>
@@ -458,5 +546,5 @@ namespace BLTools.Text {
 
   }
 
-  
+
 }

@@ -3997,6 +3997,18 @@
             <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
             <returns>A string with the box and the message</returns>
         </member>
+        <member name="M:BLTools.Text.TextBox.BuildFixedWidth(System.String,System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char,System.String)">
+            <summary>
+            Generate a box with the message inside it. The width of the box is fixed. If the message is larger than the box, it is split in several lines
+            </summary>
+            <param name="sourceString">The message</param>
+            <param name="title">The title</param>
+            <param name="width">The width of the box</param>
+            <param name="alignment">The alignment of the message within the box</param>
+            <param name="filler">The character used to full the extra space aound the message within the box</param>
+            <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
+            <returns>A string with the box and the message</returns>
+        </member>
         <member name="M:BLTools.Text.TextBox.BuildFixedWidthIBM(System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char)">
             <summary>
             Generate a box with the message inside it. The width of the box is fixed. If the message is larger than the box, it is split in several lines.
@@ -4079,6 +4091,17 @@
             <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
             <returns>A string containing the message in the box</returns>
         </member>
+        <member name="M:BLTools.Text.TextBoxExtensions.BoxFixedWidth(System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char,System.String)">
+            <summary>
+            Generate a box with the message inside it. The width of the box is dynamically calculated.
+            </summary>
+            <param name="source">The message</param>
+            <param name="width">The width of the box</param>
+            <param name="alignment">The alignment of the message within the box</param>
+            <param name="filler">The character used to full the extra space aound the message within the box</param>
+            <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
+            <returns>A string containing the message in the box</returns>
+        </member>
         <member name="M:BLTools.Text.TextBoxExtensions.Box(System.String,System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char,System.String)">
             <summary>
             Generate a box with the message inside it. The width of the box is dynamically calculated. The title is in the border
@@ -4086,6 +4109,18 @@
             <param name="source">The message</param>
             <param name="title">The title</param>
             <param name="margin">The margin around the message within the box</param>
+            <param name="alignment">The alignment of the message within the box</param>
+            <param name="filler">The character used to full the extra space aound the message within the box</param>
+            <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
+            <returns>A string containing the message in the box</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBoxExtensions.BoxFixedWidth(System.String,System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char,System.String)">
+            <summary>
+            Generate a box with the message inside it. The width of the box is fixed. The title is in the border
+            </summary>
+            <param name="source">The message</param>
+            <param name="title">The title</param>
+            <param name="width">The width of the box</param>
             <param name="alignment">The alignment of the message within the box</param>
             <param name="filler">The character used to full the extra space aound the message within the box</param>
             <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>

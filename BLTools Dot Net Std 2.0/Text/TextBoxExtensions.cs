@@ -35,6 +35,19 @@ namespace BLTools.Text {
     }
 
     /// <summary>
+    /// Generate a box with the message inside it. The width of the box is dynamically calculated.
+    /// </summary>
+    /// <param name="source">The message</param>
+    /// <param name="width">The width of the box</param>
+    /// <param name="alignment">The alignment of the message within the box</param>
+    /// <param name="filler">The character used to full the extra space aound the message within the box</param>
+    /// <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
+    /// <returns>A string containing the message in the box</returns>
+    public static string BoxFixedWidth(this string source, int width = TextBox.DEFAULT_FIXED_WIDTH, TextBox.EStringAlignment alignment = TextBox.EStringAlignment.Left, char filler = ' ', string border = "") {
+      return TextBox.BuildFixedWidth(source, width, alignment, filler, border);
+    }
+
+    /// <summary>
     /// Generate a box with the message inside it. The width of the box is dynamically calculated. The title is in the border
     /// </summary>
     /// <param name="source">The message</param>
@@ -46,6 +59,20 @@ namespace BLTools.Text {
     /// <returns>A string containing the message in the box</returns>
     public static string Box(this string source, string title, int margin = 0, TextBox.EStringAlignment alignment = TextBox.EStringAlignment.Left, char filler = ' ', string border = "") {
       return TextBox.BuildDynamicWithTitle(source, title, margin, alignment, filler, border);
+    }
+
+    /// <summary>
+    /// Generate a box with the message inside it. The width of the box is fixed. The title is in the border
+    /// </summary>
+    /// <param name="source">The message</param>
+    /// <param name="title">The title</param>
+    /// <param name="width">The width of the box</param>
+    /// <param name="alignment">The alignment of the message within the box</param>
+    /// <param name="filler">The character used to full the extra space aound the message within the box</param>
+    /// <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
+    /// <returns>A string containing the message in the box</returns>
+    public static string BoxFixedWidth(this string source, string title, int width = 0, TextBox.EStringAlignment alignment = TextBox.EStringAlignment.Left, char filler = ' ', string border = "") {
+      return TextBox.BuildFixedWidth(source, title, width, alignment, filler, border);
 
     }
   }
