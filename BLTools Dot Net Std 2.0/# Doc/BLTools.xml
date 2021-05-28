@@ -619,18 +619,50 @@
         </member>
         <member name="M:BLTools.Debugging.ApplicationInfo.ApplicationStart">
             <summary>
-            Generate a banner with startup information and send it to Trace
+            Generate a banner with startup information and send it to Logger
             </summary>
         </member>
-        <member name="M:BLTools.Debugging.ApplicationInfo.ApplicationStop">
+        <member name="M:BLTools.Debugging.ApplicationInfo.ApplicationStart(BLTools.Diagnostic.Logging.ILogger)">
+            <summary>
+            Generate a banner with startup information and send it to Logger
+            </summary>
+        </member>
+        <member name="M:BLTools.Debugging.ApplicationInfo.ApplicationStop(System.String)">
             <summary>
             Generate a banner to confirm that application is stopping and send it to Trace
             </summary>
+            <param name="message">An optional message</param>
+        </member>
+        <member name="M:BLTools.Debugging.ApplicationInfo.ApplicationStop(BLTools.Diagnostic.Logging.ILogger,System.String)">
+            <summary>
+            Log a message indicating the application if completed
+            </summary>
+            <param name="logger">The logger for the message</param>
+            <param name="message">An optional message</param>
         </member>
         <member name="M:BLTools.Debugging.ApplicationInfo.TraceRuntimeInfo">
             <summary>
             Send a banner with runtime info to Trace
             </summary>
+        </member>
+        <member name="F:BLTools.Debugging.ApplicationInfo.ExcludedAssemblies">
+            <summary>
+            List of prefixes to ignore when asking for list of referenced assemblies
+            </summary>
+        </member>
+        <member name="M:BLTools.Debugging.ApplicationInfo.BuildStartupInfo(System.Boolean)">
+            <summary>
+            Builds a string with startup information
+            </summary>
+            <returns>Startup info</returns>
+        </member>
+        <member name="M:BLTools.Debugging.ApplicationInfo.GetReferencedAssembliesList(System.Reflection.Assembly,System.Boolean)">
+            <summary>
+            Get a list of referenced assemblies, filtered or not
+            </summary>
+            <param name="assembly">The parent assembly</param>
+            <param name="fullDetails">true to obtain full list, false for a filtered list (default is false)</param>
+            <returns></returns>
         </member>
         <member name="M:BLTools.Debugging.ApplicationInfo.BuildRuntimeInfo">
             <summary>
@@ -2598,7 +2630,12 @@
             Create a new FileCsv
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:BLTools.Storage.Csv.AFileCsv.#ctor(System.String)" -->
+        <member name="M:BLTools.Storage.Csv.AFileCsv.#ctor(System.String)">
+            <summary>
+            Create a new FileCsv with a name
+            </summary>
+            <param name="filename">The filename for storing the data</param>
+        </member>
         <member name="M:BLTools.Storage.Csv.AFileCsv.ToString">
             <inheritdoc/>
         </member>
@@ -3265,7 +3302,12 @@
             </summary>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:BLTools.Storage.Csv.TCsvReader.ReadHeaderAsync(System.Boolean)" -->
+        <member name="M:BLTools.Storage.Csv.TCsvReader.ReadHeaderAsync(System.Boolean)">
+            <summary>
+            Obtain the next row header
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:BLTools.Storage.Csv.TCsvReader.ReadHeaderSection(System.Boolean)">
             <summary>
             Read a whole header section
@@ -3866,6 +3908,41 @@
             </summary>
             <param name="source">The data source in Xml format</param>
         </member>
+        <member name="T:BLTools.Text.TextBox">
+            <summary>
+            Helpers and extensions for text formatting
+            </summary>
+        </member>
+        <member name="T:BLTools.Text.TextBox.EStringAlignment">
+            <summary>
+            How the content is aligned within the text box
+            </summary>
+        </member>
+        <member name="T:BLTools.Text.TextBox.EHorizontalRowType">
+            <summary>
+            How will look the horizontal row
+            </summary>
+        </member>
+        <member name="F:BLTools.Text.TextBox.EHorizontalRowType.Single">
+            <summary>
+            -
+            </summary>
+        </member>
+        <member name="F:BLTools.Text.TextBox.EHorizontalRowType.Double">
+            <summary>
+            =
+            </summary>
+        </member>
+        <member name="F:BLTools.Text.TextBox.EHorizontalRowType.FullLight">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:BLTools.Text.TextBox.DEFAULT_FIXED_WIDTH">
+            <summary>
+            Default width for text boxes
+            </summary>
+        </member>
         <member name="M:BLTools.Text.TextBox.BuildDynamicIBM(System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char)">
             <summary>
             Generate a box with the message inside it. The width of the box is dynamically calculated. The border is filled with IBM boxes characters
@@ -3881,6 +3958,18 @@
             Generate a box with the message inside it. The width of the box is dynamically calculated.
             </summary>
             <param name="sourceString">The message</param>
+            <param name="margin">The margin around the message within the box</param>
+            <param name="alignment">The alignment of the message within the box</param>
+            <param name="filler">The character used to full the extra space aound the message within the box</param>
+            <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
+            <returns>A string containing the message in the box</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBox.BuildDynamicWithTitle(System.String,System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char,System.String)">
+            <summary>
+            Generate a box with the message inside it. The width of the box is dynamically calculated.
+            </summary>
+            <param name="sourceString">The message</param>
+            <param name="title">The optional title of the box</param>
             <param name="margin">The margin around the message within the box</param>
             <param name="alignment">The alignment of the message within the box</param>
             <param name="filler">The character used to full the extra space aound the message within the box</param>
@@ -3918,27 +4007,6 @@
             <param name="alignment">The alignment of the message within the box</param>
             <param name="filler">The character used to full the extra space aound the message within the box</param>
             <returns>A string with the box and the message</returns>
-        </member>
-        <member name="M:BLTools.Text.TextBox.BoxIBM(System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char)">
-            <summary>
-            Generate a box with the message inside it. The width of the box is dynamically calculated. The border is filled with IBM boxes characters
-            </summary>
-            <param name="sourceString">The message</param>
-            <param name="margin">The margin around the message within the box</param>
-            <param name="alignment">The alignment of the message within the box</param>
-            <param name="filler">The character used to full the extra space aound the message within the box</param>
-            <returns>A string containing the message in the box</returns>
-        </member>
-        <member name="M:BLTools.Text.TextBox.Box(System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char,System.String)">
-            <summary>
-            Generate a box with the message inside it. The width of the box is dynamically calculated.
-            </summary>
-            <param name="sourceString">The message</param>
-            <param name="margin">The margin around the message within the box</param>
-            <param name="alignment">The alignment of the message within the box</param>
-            <param name="filler">The character used to full the extra space aound the message within the box</param>
-            <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
-            <returns>A string containing the message in the box</returns>
         </member>
         <member name="M:BLTools.Text.TextBox.BuildHorizontalRow">
             <summary>
@@ -3984,6 +4052,44 @@
             </summary>
             <param name="number">The number of spaces</param>
             <returns>A string of spaces</returns>
+        </member>
+        <member name="T:BLTools.Text.TextBoxExtensions">
+            <summary>
+            Extensions to ease the use of TextBox
+            </summary>
+        </member>
+        <member name="M:BLTools.Text.TextBoxExtensions.BoxIBM(System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char)">
+            <summary>
+            Generate a box with the message inside it. The width of the box is dynamically calculated. The border is filled with IBM boxes characters
+            </summary>
+            <param name="source">The message</param>
+            <param name="margin">The margin around the message within the box</param>
+            <param name="alignment">The alignment of the message within the box</param>
+            <param name="filler">The character used to full the extra space aound the message within the box</param>
+            <returns>A string containing the message in the box</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBoxExtensions.Box(System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char,System.String)">
+            <summary>
+            Generate a box with the message inside it. The width of the box is dynamically calculated.
+            </summary>
+            <param name="source">The message</param>
+            <param name="margin">The margin around the message within the box</param>
+            <param name="alignment">The alignment of the message within the box</param>
+            <param name="filler">The character used to full the extra space aound the message within the box</param>
+            <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
+            <returns>A string containing the message in the box</returns>
+        </member>
+        <member name="M:BLTools.Text.TextBoxExtensions.Box(System.String,System.String,System.Int32,BLTools.Text.TextBox.EStringAlignment,System.Char,System.String)">
+            <summary>
+            Generate a box with the message inside it. The width of the box is dynamically calculated. The title is in the border
+            </summary>
+            <param name="source">The message</param>
+            <param name="title">The title</param>
+            <param name="margin">The margin around the message within the box</param>
+            <param name="alignment">The alignment of the message within the box</param>
+            <param name="filler">The character used to full the extra space aound the message within the box</param>
+            <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
+            <returns>A string containing the message in the box</returns>
         </member>
         <member name="F:BLTools.BLConverter.TraceError">
             <summary>

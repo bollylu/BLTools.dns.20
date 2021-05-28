@@ -8,17 +8,37 @@ using System.Threading;
 using System.Reflection;
 
 namespace BLTools.Text {
+
+  /// <summary>
+  /// Helpers and extensions for text formatting
+  /// </summary>
   public static class TextBox {
 
     #region --- Enums --------------------------------------------
+    /// <summary>
+    /// How the content is aligned within the text box
+    /// </summary>
     public enum EStringAlignment {
       Left,
       Center,
       Right
     }
+
+    /// <summary>
+    /// How will look the horizontal row
+    /// </summary>
     public enum EHorizontalRowType {
+      /// <summary>
+      /// -
+      /// </summary>
       Single,
+      /// <summary>
+      /// =
+      /// </summary>
       Double,
+      /// <summary>
+      /// 
+      /// </summary>
       FullLight,
       FullMedium,
       FullBold,
@@ -36,12 +56,15 @@ namespace BLTools.Text {
     #endregion --- Enums --------------------------------------------
 
     #region --- Constants --------------------------------------------
-    public const char CHAR_CR = '\r';
-    public const char CHAR_LF = '\n';
-    public const string CRLF = "\r\n";
-    public const string NEWLINE = "\n";
+    internal const char CHAR_CR = '\r';
+    internal const char CHAR_LF = '\n';
+    internal const string CRLF = "\r\n";
+    internal const string NEWLINE = "\n";
     #endregion --- Constants --------------------------------------------
 
+    /// <summary>
+    /// Default width for text boxes
+    /// </summary>
     public static int DEFAULT_FIXED_WIDTH = 80;
 
     static private readonly Dictionary<EHorizontalRowType, char> _CharFinder = new Dictionary<EHorizontalRowType, char> {
@@ -110,9 +133,11 @@ namespace BLTools.Text {
 
       string PreProcessedSourceString = sourceString.Replace(CRLF, NEWLINE);
 
+      string[] SourceStringLines = PreProcessedSourceString.Split(CHAR_LF);
+
       // Find larger string
       int MaxLength = 0;
-      foreach (string StringItem in PreProcessedSourceString.Split(CHAR_LF)) {
+      foreach (string StringItem in SourceStringLines) {
         if (StringItem.Length > MaxLength) {
           MaxLength = StringItem.Length;
         }
@@ -120,7 +145,97 @@ namespace BLTools.Text {
 
       RetVal.AppendLine($"{TopLeft}{new string(TopBar, MaxLength + (margin * 2) + 2)}{TopRight}");
 
-      foreach (string StringItem in PreProcessedSourceString.Split(CHAR_LF)) {
+      foreach (string StringItem in SourceStringLines) {
+        int LeftPadding = 0;
+        int RightPadding = 0;
+
+        switch (alignment) {
+          case EStringAlignment.Left:
+            RightPadding = MaxLength - StringItem.Length;
+            break;
+          case EStringAlignment.Right:
+            LeftPadding = MaxLength - StringItem.Length;
+            break;
+          case EStringAlignment.Center:
+            LeftPadding = Convert.ToInt32(Math.Floor((MaxLength - StringItem.Length) / 2d));
+            RightPadding = MaxLength - StringItem.Length - LeftPadding;
+            break;
+        }
+
+        RetVal.AppendLine($"{LeftBar}{new string(filler, margin)}{new string(filler, LeftPadding)} {StringItem} {new string(filler, RightPadding)}{new string(filler, margin)}{RightBar}");
+      }
+      RetVal.Append($"{BottomLeft}{new string(BottomBar, MaxLength + (margin * 2) + 2)}{BottomRight}");
+
+      return RetVal.ToString();
+    }
+
+    /// <summary>
+    /// Generate a box with the message inside it. The width of the box is dynamically calculated.
+    /// </summary>
+    /// <param name="sourceString">The message</param>
+    /// <param name="title">The optional title of the box</param>
+    /// <param name="margin">The margin around the message within the box</param>
+    /// <param name="alignment">The alignment of the message within the box</param>
+    /// <param name="filler">The character used to full the extra space aound the message within the box</param>
+    /// <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
+    /// <returns>A string containing the message in the box</returns>
+    public static string BuildDynamicWithTitle(string sourceString, string title, int margin = 0, EStringAlignment alignment = EStringAlignment.Center, char filler = ' ', string border = "") {
+      #region Validate parameters
+      if (sourceString is null) {
+        return null;
+      }
+
+      if (title is null) {
+        title = "";
+      }
+
+      if (margin < 0) {
+        margin = 0;
+      }
+      #endregion Validate parameters
+
+      string CompletedBorder = $"{border}+-+|+-+|".Left(8);
+
+      char TopLeft = CompletedBorder[0];
+      char TopBar = CompletedBorder[1];
+      char TopRight = CompletedBorder[2];
+      char LeftBar = CompletedBorder[7];
+      char RightBar = CompletedBorder[3];
+      char BottomLeft = CompletedBorder[6];
+      char BottomBar = CompletedBorder[5];
+      char BottomRight = CompletedBorder[4];
+
+      StringBuilder RetVal = new StringBuilder();
+
+      string PreProcessedSourceString = sourceString.Replace(CRLF, NEWLINE);
+
+      string[] SourceStringLines = PreProcessedSourceString.Split(CHAR_LF);
+
+      // Find larger string
+      int MaxLength = 0;
+      foreach (string StringItem in SourceStringLines) {
+        if (StringItem.Length > MaxLength) {
+          MaxLength = StringItem.Length;
+        }
+      }
+
+      if (title.Length > MaxLength + margin * 2 - 2) {
+        title = title.Left(MaxLength + margin * 2 - 2);
+      }
+
+      if (title.IsEmpty()) {
+        RetVal.AppendLine($"{TopLeft}{new string(TopBar, MaxLength + (margin * 2) + 2)}{TopRight}");
+      } else {
+        RetVal.Append(TopLeft);
+        RetVal.Append($"{TopBar}[");
+        RetVal.Append(title);
+        RetVal.Append(']');
+        RetVal.Append(new string(TopBar, MaxLength + (margin * 2) - 1 - title.Length));
+        RetVal.Append(TopRight);
+        RetVal.AppendLine();
+      }
+
+      foreach (string StringItem in SourceStringLines) {
         int LeftPadding = 0;
         int RightPadding = 0;
 
@@ -237,32 +352,8 @@ namespace BLTools.Text {
     public static string BuildFixedWidthIBM(string sourceString, int width = 0, EStringAlignment alignment = EStringAlignment.Center, char filler = '·') {
       return BuildFixedWidth(sourceString, width, alignment, filler, "╒═╕│╛═╘│");
     }
+
     #endregion --- Boxes --------------------------------------------
-
-    /// <summary>
-    /// Generate a box with the message inside it. The width of the box is dynamically calculated. The border is filled with IBM boxes characters
-    /// </summary>
-    /// <param name="sourceString">The message</param>
-    /// <param name="margin">The margin around the message within the box</param>
-    /// <param name="alignment">The alignment of the message within the box</param>
-    /// <param name="filler">The character used to full the extra space aound the message within the box</param>
-    /// <returns>A string containing the message in the box</returns>
-    public static string BoxIBM(this string source, int margin = 0, EStringAlignment alignment = EStringAlignment.Center, char filler = '.') {
-      return BuildDynamicIBM(source, margin, alignment, filler);
-    }
-
-    /// <summary>
-    /// Generate a box with the message inside it. The width of the box is dynamically calculated.
-    /// </summary>
-    /// <param name="sourceString">The message</param>
-    /// <param name="margin">The margin around the message within the box</param>
-    /// <param name="alignment">The alignment of the message within the box</param>
-    /// <param name="filler">The character used to full the extra space aound the message within the box</param>
-    /// <param name="border">The border string (top-left/top/top-right/right/bottom-right/bottom/bottom-left/left)</param>
-    /// <returns>A string containing the message in the box</returns>
-    public static string Box(this string source, int margin = 0, EStringAlignment alignment = EStringAlignment.Center, char filler = '.', string border = "") {
-      return BuildDynamic(source, margin, alignment, filler, border);
-    }
 
     #region --- Lines --------------------------------------------
     /// <summary>
@@ -308,8 +399,8 @@ namespace BLTools.Text {
     /// <param name="message">The text message</param>
     /// <param name="rowType">The type of char to use for the drawing</param>
     /// <returns>A string containing the horizontal line with the message embedded</returns>
-    public static string BuildHorizontalRowWithText(string sourceString, EHorizontalRowType rowType = EHorizontalRowType.Single) {
-      return BuildHorizontalRowWithText(sourceString, -1, rowType);
+    public static string BuildHorizontalRowWithText(string message, EHorizontalRowType rowType = EHorizontalRowType.Single) {
+      return BuildHorizontalRowWithText(message, -1, rowType);
     }
 
     /// <summary>
@@ -366,4 +457,6 @@ namespace BLTools.Text {
     #endregion --- Lines --------------------------------------------
 
   }
+
+  
 }

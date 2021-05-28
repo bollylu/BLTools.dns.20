@@ -1,7 +1,9 @@
 ﻿using BLTools;
 using BLTools.Json;
 using BLTools.Text;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -173,7 +175,7 @@ namespace BLTools.UnitTest.Json {
       JsonInt Source2 = new JsonInt(TEST_INT);
       JsonArray Actual = new JsonArray(Source1, Source2);
       Assert.AreEqual(2, Actual.Count());
-      Trace.WriteLine(TextBox.BuildDynamic(Actual.RenderAsString(true), 0, TextBox.EStringAlignment.Left));
+      Trace.WriteLine(Actual.RenderAsString(true).Box(0, BLTools.Text.TextBox.EStringAlignment.Left));
       Assert.AreEqual($"[{CRLF}  {TEST_STRING_JSON},{CRLF}  {TEST_INT_JSON}{CRLF}]", Actual.RenderAsString(true));
     }
 
@@ -185,7 +187,7 @@ namespace BLTools.UnitTest.Json {
       JsonArray SourceArray2 = new JsonArray(Source2, Source1);
       JsonArray SourceArray3 = new JsonArray(SourceArray1, SourceArray2);
       JsonArray Actual = new JsonArray(SourceArray1, SourceArray2, SourceArray3);
-      Trace.WriteLine(TextBox.BuildDynamic(Actual.RenderAsString(true), 0, TextBox.EStringAlignment.Left));
+      Trace.WriteLine(Actual.RenderAsString(true).Box(0, BLTools.Text.TextBox.EStringAlignment.Left));
 
       Assert.AreEqual(3, Actual.Count());
     }
