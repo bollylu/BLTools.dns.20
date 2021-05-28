@@ -75,10 +75,10 @@ namespace BLTools.Debugging {
       string Message = Text.ToString().TrimEnd(Environment.NewLine.ToCharArray());
 
       if (logger is null) {
-        Trace.WriteLine(Message.Box(80));
+        Trace.WriteLine(Message.BoxFixedWidth(80));
         Trace.Flush();
       } else {
-        logger.Log(Message.Box(80));
+        logger.Log(Message.BoxFixedWidth(80));
       }
 
     }
