@@ -187,12 +187,19 @@ namespace BLTools.Debugging {
     /// <returns></returns>
     public static string BuildRuntimeInfo() {
       StringBuilder RetVal = new StringBuilder();
-      RetVal.AppendLine($"Working folder = \"{Environment.CurrentDirectory}\"");
-      RetVal.AppendLine($"Operating system = \"{Environment.OSVersion.VersionString}\"");
-      RetVal.AppendLine($"Current user = \"{Environment.UserName}\"");
-      RetVal.AppendLine($"Current domain user = \"{Environment.UserDomainName}\"");
+      RetVal.AppendLine($"Working folder = {Environment.CurrentDirectory.WithQuotes()}");
+      RetVal.AppendLine($"Operating system = {Environment.OSVersion.VersionString}");
+      RetVal.AppendLine($"Current user = {Environment.UserName.WithQuotes()}");
+      RetVal.AppendLine($"Current domain user = {Environment.UserDomainName.WithQuotes()}");
       RetVal.AppendLine($"Is 64 bits OS = {Environment.Is64BitOperatingSystem}");
-      return TextBox.BuildDynamic(RetVal.ToString().TrimEnd(Environment.NewLine.ToCharArray()), 0, TextBox.EStringAlignment.Left);
+      RetVal.AppendLine($"Is 64 bits process = {Environment.Is64BitProcess}");
+      RetVal.AppendLine($"Processor count = {Environment.ProcessorCount}");
+#if NET5_0_OR_GREATER
+      RetVal.AppendLine($"Process id = {Environment.ProcessId}");
+#endif
+      RetVal.AppendLine($"Command line = {Environment.CommandLine.WithQuotes()}");
+
+      return RetVal.ToString().TrimEnd(Environment.NewLine.ToCharArray());
 
     }
 
