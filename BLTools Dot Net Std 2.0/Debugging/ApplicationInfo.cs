@@ -27,15 +27,15 @@ namespace BLTools.Debugging {
     /// <summary>
     /// Generate a banner with startup information and send it to Logger
     /// </summary>
-    public static void ApplicationStart(ILogger logger) {
+    public static void ApplicationStart(ILogger logger, bool fullDetails = false) {
 
       if (logger is null) {
         Trace.IndentSize = 2;
         Trace.AutoFlush = true;
-        Trace.WriteLine(BuildStartupInfo().Box("Startup info"));
+        Trace.WriteLine(BuildStartupInfo(fullDetails).Box("Startup info"));
         Trace.WriteLine(BuildRuntimeInfo().Box("Runtime info"));
       } else {
-        logger.Log(BuildStartupInfo().Box("Startup info"));
+        logger.Log(BuildStartupInfo(fullDetails).Box("Startup info"));
         logger.Log(BuildRuntimeInfo().Box("Runtime info"));
       }
     }

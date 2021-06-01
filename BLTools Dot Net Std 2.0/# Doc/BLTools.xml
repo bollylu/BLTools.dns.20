@@ -622,7 +622,7 @@
             Generate a banner with startup information and send it to Logger
             </summary>
         </member>
-        <member name="M:BLTools.Debugging.ApplicationInfo.ApplicationStart(BLTools.Diagnostic.Logging.ILogger)">
+        <member name="M:BLTools.Debugging.ApplicationInfo.ApplicationStart(BLTools.Diagnostic.Logging.ILogger,System.Boolean)">
             <summary>
             Generate a banner with startup information and send it to Logger
             </summary>
