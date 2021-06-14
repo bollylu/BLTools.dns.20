@@ -54,7 +54,7 @@ namespace BLTools.UnitTest {
       Repeat.Cancel();
 
       TestContext.WriteLine(string.Join(",", Result.Select(x => x.ToString())));
-      Assert.AreEqual(i, Result.Count());
+      Assert.IsTrue(Result.Count() <= i);
     }
 
     private int AsyncI = 0;

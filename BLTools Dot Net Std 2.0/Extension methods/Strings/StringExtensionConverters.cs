@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -22,11 +24,11 @@ namespace BLTools {
     /// <returns>A bool as represented by the string (default=false)</returns>
     public static bool ToBool(this string booleanString) {
       #region Validate parameters
-      if ( booleanString == null ) {
+      if (booleanString == null) {
         return false;
       }
       #endregion Validate parameters
-      switch ( booleanString.Trim().ToLower() ) {
+      switch (booleanString.Trim().ToLower()) {
         case "0":
         case "false":
         case "no":
@@ -52,7 +54,7 @@ namespace BLTools {
     /// <returns>A bool as represented by the string (default=false)</returns>
     public static bool ToBool(this string booleanString, string trueValue = "true", string falseValue = "false", bool isCaseSensitive = false) {
       #region Validate parameters
-      if ( string.IsNullOrWhiteSpace(booleanString) ) {
+      if (string.IsNullOrWhiteSpace(booleanString)) {
         return false;
       }
       #endregion Validate parameters
@@ -61,7 +63,7 @@ namespace BLTools {
       string TrueValue;
       string FalseValue;
 
-      if ( !isCaseSensitive ) {
+      if (!isCaseSensitive) {
         ValueToCompare = booleanString.ToLowerInvariant();
         TrueValue = trueValue.ToLowerInvariant();
         FalseValue = falseValue.ToLowerInvariant();
@@ -71,11 +73,11 @@ namespace BLTools {
         FalseValue = falseValue;
       }
 
-      if ( ValueToCompare == TrueValue ) {
+      if (ValueToCompare == TrueValue) {
         return true;
       }
 
-      if ( ValueToCompare == FalseValue ) {
+      if (ValueToCompare == FalseValue) {
         return false;
       }
 
@@ -91,11 +93,60 @@ namespace BLTools {
     /// <returns>The array of bytes</returns>
     public static byte[] ToByteArray(this string sourceString) {
       #region Validate parameters
-      if ( sourceString == null ) {
+      if (sourceString == null) {
         return null;
       }
       #endregion Validate parameters
       return sourceString.Select<char, byte>(c => (byte)c).ToArray();
+    }
+
+    /// <summary>
+    /// Convert a string to an array of bytes
+    /// </summary>
+    /// <param name="sourceString">The source string</param>
+    /// <returns>The array of bytes</returns>
+    public static byte[] ToByteArrayFromHex(this string sourceString, bool cleanupSource = true) {
+      #region Validate parameters
+      if (sourceString == null) {
+        return null;
+      }
+
+      if (sourceString.IsEmpty()) {
+        return Array.Empty<byte>();
+
+      }
+
+      string ProcessedSource;
+
+      if (cleanupSource) {
+        ProcessedSource = sourceString.Replace(" ", "")
+                                      .Replace(":", "")
+                                      .Replace("-", "")
+                                      .Replace(";", "")
+                                      .Replace(",", "");
+      } else {
+        ProcessedSource = sourceString;
+      }
+
+      if ((ProcessedSource.Length % 2) != 0) {
+        throw new FormatException($"Length of source string is not valid for conversion : {ProcessedSource.Length}");
+      }
+      #endregion Validate parameters
+
+      try {
+        using (MemoryStream RetVal = new MemoryStream()) {
+          for (int i = 0; i < ProcessedSource.Length; i += 2) {
+            string HexByte = ProcessedSource.Substring(i, 2);
+            byte ConvertedValue = byte.Parse(HexByte, NumberStyles.HexNumber);
+            RetVal.WriteByte(ConvertedValue);
+          }
+          RetVal.Flush();
+          return RetVal.ToArray();
+        }
+      } catch (Exception ex) {
+        throw new FormatException($"Invalid data for conversion : {ProcessedSource}", ex);
+      }
+
     }
 
     /// <summary>
@@ -104,7 +155,7 @@ namespace BLTools {
     /// <param name="securePassword">The source SecureString</param>
     /// <returns>The string</returns>
     public static string ConvertToUnsecureString(this SecureString securePassword) {
-      if ( securePassword == null ) {
+      if (securePassword == null) {
         return null;
       }
 
@@ -123,11 +174,11 @@ namespace BLTools {
     /// <param name="unsecureString">The source string</param>
     /// <returns>The SecureString</returns>
     public static SecureString ConvertToSecureString(this string unsecureString) {
-      if ( unsecureString == null ) {
+      if (unsecureString == null) {
         return null;
       }
       SecureString RetVal = new SecureString();
-      foreach ( char CharItem in unsecureString ) {
+      foreach (char CharItem in unsecureString) {
         RetVal.AppendChar(CharItem);
       }
       RetVal.MakeReadOnly();

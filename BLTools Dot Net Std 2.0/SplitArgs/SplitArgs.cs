@@ -12,15 +12,19 @@ namespace BLTools {
   /// If values are specified, they are separated from the keyword by an = sign.
   /// (c) 2004-2012 Luc Bolly
   /// </summary>
+  [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "")]
   public class SplitArgs : List<ArgElement>, ISplitArgs {
 
+    /// <summary>
+    /// Default culture for conversions
+    /// </summary>
     public readonly static CultureInfo DEFAULT_CULTURE = CultureInfo.InvariantCulture;
 
-    #region Public static properties
+    #region Public properties
     /// <summary>
     /// Get or Set the CultureInfo used to parse DateTime and numbers (decimal point)
     /// </summary>
-    public static CultureInfo CurrentCultureInfo {
+    public CultureInfo CurrentCultureInfo {
       get {
         if (_CurrentCultureInfo == null) {
           return DEFAULT_CULTURE;
@@ -31,34 +35,40 @@ namespace BLTools {
         _CurrentCultureInfo = value;
       }
     }
-    private static CultureInfo _CurrentCultureInfo;
+    private CultureInfo _CurrentCultureInfo;
 
     /// <summary>
     /// Get or Set the parameters name case sensitivity
     /// </summary>
-    public static bool IsCaseSensitive = false;
+    public bool IsCaseSensitive { get; set; } = false;
 
     /// <summary>
     /// Get or Set the separator used when reading an array from parameters (default value is ',')
     /// </summary>
-    public static char Separator = ',';
+    public char Separator { get; set; } = ';';
 
     /// <summary>
     /// Separator between a key and its value
     /// </summary>
-    public static char KeyValueSeparator = '=';
-    #endregion Public static properties
+    public char KeyValueSeparator { get; set; } = '=';
+    #endregion Public properties
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
+    /// <summary>
+    /// Creates an empty  dictonnary of command line arguments
+    /// </summary>
+    public SplitArgs() {
+    }
+
     /// <summary>
     /// Creates a dictonnary of command line arguments from the args parameters list provided to Main function
     /// </summary>
     /// <param name="arrayOfValues">An array of parameters</param>
     public SplitArgs(IEnumerable<string> arrayOfValues) {
       if (arrayOfValues == null) {
-        throw new ArgumentNullException("arrayOfValues", "you must pass a valid IEnumerable[] arrayOfValues argument");
+        throw new ArgumentNullException(nameof(arrayOfValues), "you must pass a valid IEnumerable[] arrayOfValues argument");
       }
-      _ParseValues(arrayOfValues);
+      Parse(arrayOfValues);
     }
 
     /// <summary>
@@ -118,14 +128,14 @@ namespace BLTools {
         CmdLineValues.Add(TempStr.ToString());
       }
 
-      _ParseValues(CmdLineValues.ToArray());
+      Parse(CmdLineValues.ToArray());
 
     }
 
     /// <summary>
     /// Copy constructor
     /// </summary>
-    /// <param name="otherSpliArgs"></param>
+    /// <param name="otherSplitArgs"></param>
     public SplitArgs(SplitArgs otherSplitArgs) {
       this.AddRange(otherSplitArgs);
     }
@@ -147,7 +157,7 @@ namespace BLTools {
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
     #region Private methods
-    private void _ParseValues(IEnumerable<string> arrayOfValues) {
+    public void Parse(IEnumerable<string> arrayOfValues) {
       int Position = 0;
       foreach (string ValueItem in arrayOfValues) {
         if (ValueItem.StartsWith("/") || ValueItem.StartsWith("-")) {
@@ -251,6 +261,7 @@ namespace BLTools {
     /// <typeparam name="T">The type of the returned value</typeparam>
     /// <param name="key">The key name of the value</param>
     /// <param name="defaultValue">The default value to be returned if the key name is invalid</param>
+    /// <param name="culture"></param>
     /// <returns>The value</returns>
     public T GetValue<T>(string key, T defaultValue, CultureInfo culture) {
       if (key == null || this.IsEmpty()) {
@@ -303,6 +314,7 @@ namespace BLTools {
     /// <typeparam name="T">The type of the returned value</typeparam>
     /// <param name="position">The position (counted from 0) of the value</param>
     /// <param name="defaultValue">The default value to be returned if the key name is invalid</param>
+    /// <param name="culture"></param>
     /// <returns>The value</returns>
     public T GetValue<T>(int position, T defaultValue, CultureInfo culture) {
       if (this.IsEmpty() || position < 0 || position > this.Count) {

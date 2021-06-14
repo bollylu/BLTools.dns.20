@@ -7,10 +7,11 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <Version>4.5.24.0</Version>
+    <Version>4.5.25.0</Version>
     <PackageReleaseNotes>
-      Changes in TextBox
-      Changes in diagnostics
+      Added convert hex string to byte[]
+      Fixes in SplitArgs for IsCaseSensitive
+      Fixes in BLConverter
     </PackageReleaseNotes>
   </PropertyGroup>
 

@@ -197,7 +197,7 @@ namespace BLTools.UnitTest.Utils {
     ///</summary>
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericStringArray_IsTrue() {
-      IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=val1,val2,val3", "/verbose" };
+      IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=val1;val2;val3", "/verbose" };
       SplitArgs target = new SplitArgs(arrayOfValues);
       string[] DataRead = target.GetValue<string[]>("par1", null);
       Assert.IsTrue(DataRead[0] == "val1");
@@ -209,7 +209,7 @@ namespace BLTools.UnitTest.Utils {
     ///</summary>
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericIntArray_IsTrue() {
-      IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=18,4568,123", "/verbose" };
+      IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=18;4568;123", "/verbose" };
       SplitArgs target = new SplitArgs(arrayOfValues);
       int[] DataRead = target.GetValue<int[]>("par1", null);
       Assert.IsTrue(DataRead[0] == 18);
@@ -221,7 +221,7 @@ namespace BLTools.UnitTest.Utils {
     ///</summary>
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericLongArray_IsTrue() {
-      IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=456879,9874563,123654789", "/verbose" };
+      IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=456879;9874563;123654789", "/verbose" };
       SplitArgs target = new SplitArgs(arrayOfValues);
       long[] DataRead = target.GetValue<long[]>("par1", null);
       Assert.IsTrue(DataRead[0] == 456879);
@@ -251,9 +251,9 @@ namespace BLTools.UnitTest.Utils {
     ///</summary>
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericDouble_IsTrue() {
-      IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", 
-                                                               $"/par1=1236{CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator}2365", 
-                                                               "/verbose" 
+      IEnumerable<string> arrayOfValues = new List<string>() { "program.exe",
+                                                               $"/par1=1236{CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator}2365",
+                                                               "/verbose"
                                                               };
       SplitArgs target = new SplitArgs(arrayOfValues);
       Assert.IsTrue(target.GetValue<double>("par1", 0, CultureInfo.CurrentCulture) == 1236.2365D);
@@ -509,8 +509,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericStringCaseSensitive_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/Par1=val1", "/par1=val1b" };
-      SplitArgs.IsCaseSensitive = true;
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      SplitArgs target = new SplitArgs() { IsCaseSensitive = true };
+      target.Parse(arrayOfValues);
       Assert.IsTrue(target.GetValue<string>("Par1", "") == "val1");
       Assert.IsTrue(target.GetValue<string>("par1", "") == "val1b");
     }

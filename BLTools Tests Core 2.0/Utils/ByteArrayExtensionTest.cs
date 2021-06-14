@@ -1,5 +1,7 @@
 ﻿using BLTools;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using System;
 
 namespace BLTools.UnitTest.Extensions {
@@ -118,6 +120,67 @@ namespace BLTools.UnitTest.Extensions {
       string actual;
       actual = rawData.ToCharString();
       Assert.AreEqual(expected, actual);
+    }
+
+    /// <summary>
+    ///A test for building a byte array from a hex string
+    ///</summary>
+    [TestMethod(), TestCategory("Array")]
+    public void ToByteArrayFromHexString_InputOk_ResultOK() {
+      string Source = "2365A2B7";
+      byte[] Target = Source.ToByteArrayFromHex();
+      string Compare = Target.ToHexString("");
+      Console.WriteLine(Compare);
+      Assert.AreEqual(Source, Compare);
+    }
+
+    /// <summary>
+    ///A test for building a byte array from a hex string
+    ///</summary>
+    [TestMethod(), TestCategory("Array")]
+    public void ToByteArrayFromHexString_InputEmpty_ResultOK() {
+      string Source = "";
+      byte[] Target = Source.ToByteArrayFromHex();
+      Assert.AreEqual(0, Target.Length);
+    }
+
+    /// <summary>
+    ///A test for building a byte array from a hex string
+    ///</summary>
+    [TestMethod(), TestCategory("Array")]
+    [ExpectedException(typeof(FormatException))]
+    public void ToByteArrayFromHexString_InputInvalidLength_Exception() {
+      string Source = "A3A";
+      byte[] Target = Source.ToByteArrayFromHex();
+    }
+
+    /// <summary>
+    ///A test for building a byte array from a hex string
+    ///</summary>
+    [TestMethod(), TestCategory("Array")]
+    [ExpectedException(typeof(FormatException))]
+    public void ToByteArrayFromHexString_InputInvalid_Exception() {
+      try {
+        string Source = "A3Z4";
+        byte[] Target = Source.ToByteArrayFromHex();
+      } catch (Exception ex) {
+        Console.WriteLine(ex.Message);
+        Console.WriteLine(ex.InnerException.Message);
+        throw;
+      }
+
+    }
+
+    /// <summary>
+    ///A test for building a byte array from a hex string
+    ///</summary>
+    [TestMethod(), TestCategory("Array")]
+    public void ToByteArrayFromHexString_InputMAC_ResultOK() {
+      string Source = "A3:B4:DE:34:67:1C";
+      byte[] Target = Source.ToByteArrayFromHex();
+      string Compare = Target.ToHexString(":");
+      Console.WriteLine(Compare);
+      Assert.AreEqual(Source, Compare);
     }
   }
 }
