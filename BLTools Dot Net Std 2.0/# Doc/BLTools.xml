@@ -2499,6 +2499,44 @@
             Single element of arguments : Id(position), Name, Value
             </summary>
         </member>
+        <member name="P:BLTools.ArgElement.Id">
+            <summary>
+            The position within the command line
+            </summary>
+        </member>
+        <member name="P:BLTools.ArgElement.Name">
+            <summary>
+            The key name
+            </summary>
+        </member>
+        <member name="P:BLTools.ArgElement.Value">
+            <summary>
+            The value (stored as a string)
+            </summary>
+        </member>
+        <member name="M:BLTools.ArgElement.#ctor(System.Int32,System.String,System.String)">
+            <summary>
+            Builds a key/pair value with an ID
+            </summary>
+            <param name="id"></param>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:BLTools.ArgElement.Equals(BLTools.ArgElement)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.ArgElement.Equals(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.ArgElement.GetHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.ArgElement.HasValue">
+            <summary>
+            Test if the value exists
+            </summary>
+            <returns>true if the value is not null, false otherwise</returns>
+        </member>
         <member name="T:BLTools.ISplitArgs">
             <summary>
             Used to parse a command line or similar into parameters
@@ -2506,16 +2544,42 @@
         </member>
         <member name="M:BLTools.ISplitArgs.Parse(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
-            Parse the array of string values from a command line
+            Parse an array of string (command line alike, i.e. prog p1=v p2=vv)
             </summary>
             <param name="arrayOfValues"></param>
         </member>
+        <member name="M:BLTools.ISplitArgs.Parse(System.String)">
+            <summary>
+            Parse the command line
+            </summary>
+            <param name="cmdLine"></param>
+        </member>
+        <member name="M:BLTools.ISplitArgs.Parse(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Parse a NameValueCollection (e.g. from url)
+            </summary>
+            <param name="queryStringItems"></param>
+        </member>
         <member name="M:BLTools.ISplitArgs.IsDefined(System.String)">
             <summary>
-            Indicates if a key is defined
+            Indicate if a key was part of the arguments (whatever it has a value or not)
             </summary>
             <param name="key">The key to check</param>
             <returns>true if the key is defined, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.ISplitArgs.HasValue(System.String)">
+            <summary>
+            Indicates if the key exists and has any associated value
+            </summary>
+            <param name="key">The key to check</param>
+            <returns><see langword="true"/>if any value exists, false if null</returns>
+        </member>
+        <member name="M:BLTools.ISplitArgs.HasValue(System.Int32)">
+            <summary>
+            Indicates if the key exists and has any associated value
+            </summary>
+            <param name="index">The index of the key to check</param>
+            <returns><see langword="true"/>if any value exists, false if null</returns>
         </member>
         <member name="M:BLTools.ISplitArgs.GetValue``1(System.String)">
             <summary>
@@ -2524,6 +2588,18 @@
             <typeparam name="T">The type of data</typeparam>
             <param name="key">The key to retrieve</param>
             <returns></returns>
+        </member>
+        <member name="P:BLTools.ISplitArgs.Item(System.Int32)">
+            <summary>
+            Retrieve the argument at specific index
+            </summary>
+            <param name="index">The position of the key/value pair in the input data</param>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.ISplitArgs.Clear">
+            <summary>
+            Clear all the key/value pairs
+            </summary>
         </member>
         <member name="T:BLTools.SplitArgs">
             <summary>
@@ -2559,7 +2635,7 @@
         </member>
         <member name="M:BLTools.SplitArgs.#ctor">
             <summary>
-            Creates an empty  dictonnary of command line arguments
+            Creates an empty dictonnary of command line arguments
             </summary>
         </member>
         <member name="M:BLTools.SplitArgs.#ctor(System.Collections.Generic.IEnumerable{System.String})">
@@ -2586,6 +2662,15 @@
             </summary>
             <param name="queryStringItems">A Request.QueryString</param>
         </member>
+        <member name="M:BLTools.SplitArgs.Parse(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.SplitArgs.Parse(System.Collections.Generic.IEnumerable{System.String})">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.SplitArgs.Parse(System.Collections.Specialized.NameValueCollection)">
+            <inheritdoc/>
+        </member>
         <member name="P:BLTools.SplitArgs.Item(System.Int32)">
             <summary>
             Obtain an argument by its index instead of its name
@@ -2594,11 +2679,13 @@
             <returns>An ArgElement</returns>
         </member>
         <member name="M:BLTools.SplitArgs.IsDefined(System.String)">
-            <summary>
-            Indicate if a key was part of the arguments (whatever it has a value or not)
-            </summary>
-            <param name="key">the key to test</param>
-            <returns>true if the key was defined, false otherwise</returns>
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.SplitArgs.HasValue(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.SplitArgs.HasValue(System.Int32)">
+            <inheritdoc/>
         </member>
         <member name="M:BLTools.SplitArgs.GetValue``1(System.String)">
             <summary>

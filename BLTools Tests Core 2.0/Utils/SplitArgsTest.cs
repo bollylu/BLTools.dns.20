@@ -1,12 +1,11 @@
-﻿using BLTools;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.Web;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BLTools.UnitTest.Utils {
 
@@ -70,7 +69,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void SplitArgsConstructor_CommandLine_Gets3Args() {
       string cmdLine = "program.exe par1=val1 par2=val2";
-      SplitArgs target = new SplitArgs(cmdLine);
+      SplitArgs target = new SplitArgs();
+      target.Parse(cmdLine);
       Assert.AreEqual(3, target.Count);
     }
 
@@ -80,7 +80,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void SplitArgsConstructor_CommandLineWithSpaces_Gets3Args() {
       string cmdLine = "program.exe par1=\"val1 with spaces\" par2=val2";
-      SplitArgs target = new SplitArgs(cmdLine);
+      SplitArgs target = new SplitArgs();
+      target.Parse(cmdLine);
       Assert.AreEqual(3, target.Count);
     }
 
@@ -90,7 +91,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void SplitArgsConstructor_CommandLine_FirstArgIsProgram() {
       string cmdLine = "program.exe par1=val1 par2=val2";
-      SplitArgs target = new SplitArgs(cmdLine);
+      SplitArgs target = new SplitArgs();
+      target.Parse(cmdLine);
       Assert.AreEqual("program.exe", target[0].Name);
     }
 
@@ -100,7 +102,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void SplitArgsConstructor_CommandLine_ContainsArgElement() {
       string cmdLine = "program.exe par1=val1 par2=val2";
-      SplitArgs target = new SplitArgs(cmdLine);
+      SplitArgs target = new SplitArgs();
+      target.Parse(cmdLine);
       Assert.IsTrue(target.Contains(new ArgElement(1, "par1", "val1")));
     }
 
@@ -110,7 +113,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void SplitArgsConstructor_FromArray_Gets3Args() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "par1=val1", "par2=val2" };
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      SplitArgs target = new SplitArgs();
+      target.Parse(arrayOfValues);
       Assert.AreEqual(3, target.Count);
     }
 
@@ -120,7 +124,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void SplitArgsConstructor_FromArray_FirstArgIsProgram() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "par1=val1", "par2=val2" };
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      SplitArgs target = new SplitArgs();
+      target.Parse(arrayOfValues);
       Assert.AreEqual("program.exe", target[0].Name);
     }
 
@@ -130,7 +135,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void SplitArgsConstructor_FromArray_ContainsArgElement() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "par1=val1", "par2=val2" };
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      SplitArgs target = new SplitArgs();
+      target.Parse(arrayOfValues);
       Assert.IsTrue(target.Contains(new ArgElement(1, "par1", "val1")));
     }
 
@@ -142,7 +148,8 @@ namespace BLTools.UnitTest.Utils {
     public void SplitArgsConstructor_FromUrl_ContainsArgElement() {
       string Url = "arg1=value1";
       NameValueCollection TestCollection = HttpUtility.ParseQueryString(Url);
-      SplitArgs target = new SplitArgs(TestCollection);
+      SplitArgs target = new SplitArgs();
+      target.Parse(TestCollection);
       Assert.IsTrue(target.Contains(new ArgElement(0, "arg1", "value1")));
     }
 
@@ -153,7 +160,8 @@ namespace BLTools.UnitTest.Utils {
     public void SplitArgsConstructor_FromUrlTwoArgs_ContainsArgElement() {
       string Url = "arg1=value1&arg2=value2";
       NameValueCollection TestCollection = HttpUtility.ParseQueryString(Url);
-      SplitArgs target = new SplitArgs(TestCollection);
+      SplitArgs target = new SplitArgs();
+      target.Parse(TestCollection);
       Assert.IsTrue(target.Contains(new ArgElement(0, "arg2", "value2")));
     }
 #endif
@@ -167,7 +175,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void IsDefined_ValidParam_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=val1", "/verbose" };
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      SplitArgs target = new SplitArgs();
+      target.Parse(arrayOfValues);
       Assert.IsTrue(target.IsDefined("verbose"));
     }
 
@@ -177,7 +186,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void IsDefined_BadParam_IsFalse() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=val1", "/verbose" };
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      SplitArgs target = new SplitArgs();
+      target.Parse(arrayOfValues);
       Assert.IsFalse(target.IsDefined("otherthanverbose"));
     }
     #endregion Tests for IsDefined
@@ -189,7 +199,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericString_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=val1", "/verbose" };
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      SplitArgs target = new SplitArgs();
+      target.Parse(arrayOfValues);
       Assert.IsTrue(target.GetValue<string>("par1", "") == "val1");
     }
     /// <summary>
@@ -198,7 +209,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericStringArray_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=val1;val2;val3", "/verbose" };
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      SplitArgs target = new SplitArgs();
+      target.Parse(arrayOfValues);
       string[] DataRead = target.GetValue<string[]>("par1", null);
       Assert.IsTrue(DataRead[0] == "val1");
       Assert.IsTrue(DataRead[1] == "val2");
@@ -210,7 +222,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericIntArray_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=18;4568;123", "/verbose" };
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      SplitArgs target = new SplitArgs();
+      target.Parse(arrayOfValues);
       int[] DataRead = target.GetValue<int[]>("par1", null);
       Assert.IsTrue(DataRead[0] == 18);
       Assert.IsTrue(DataRead[1] == 4568);
@@ -222,7 +235,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericLongArray_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=456879;9874563;123654789", "/verbose" };
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      SplitArgs target = new SplitArgs();
+      target.Parse(arrayOfValues);
       long[] DataRead = target.GetValue<long[]>("par1", null);
       Assert.IsTrue(DataRead[0] == 456879);
       Assert.IsTrue(DataRead[1] == 9874563);
@@ -234,7 +248,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericStringWithSpaces_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=val1 complex", "/verbose" };
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      SplitArgs target = new SplitArgs();
+      target.Parse(arrayOfValues);
       Assert.IsTrue(target.GetValue<string>("par1", "") == "val1 complex");
     }
     /// <summary>
@@ -243,7 +258,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericInt_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=1236", "/verbose" };
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      SplitArgs target = new SplitArgs();
+      target.Parse(arrayOfValues);
       Assert.IsTrue(target.GetValue<int>("par1", 0) == 1236);
     }
     /// <summary>
@@ -264,7 +280,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericLong_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=654321987", "/verbose" };
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      SplitArgs target = new SplitArgs();
+      target.Parse(arrayOfValues);
       Assert.IsTrue(target.GetValue<long>("par1", 0) == 654321987L, target.GetValue<float>("par1", 0).ToString());
     }
     /// <summary>
@@ -276,7 +293,8 @@ namespace BLTools.UnitTest.Utils {
                                                                $"/par1=1236{CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator}23",
                                                                "/verbose"
                                                              };
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      SplitArgs target = new SplitArgs();
+      target.Parse(arrayOfValues);
       Assert.IsTrue(target.GetValue<float>("par1", 0, CultureInfo.CurrentCulture) == 1236.23F, target.GetValue<float>("par1", 0).ToString());
     }
     /// <summary>
@@ -288,7 +306,8 @@ namespace BLTools.UnitTest.Utils {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe",
                                                                "/par1=12/6/1998",
                                                                "/verbose" };
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      SplitArgs target = new SplitArgs();
+      target.Parse(arrayOfValues);
       Assert.IsTrue(target.GetValue<DateTime>("par1", DateTime.MinValue, CultureInfo.GetCultureInfo("FR-BE")) == new DateTime(1998, 6, 12),
                     target.GetValue<DateTime>("par1", DateTime.MinValue).ToString());
     }
@@ -502,9 +521,8 @@ namespace BLTools.UnitTest.Utils {
     }
     #endregion Tests for GetValue<T>(1, default, culture)
 
-    #region Tests for GetValue<T>(key, default) (case sensitive)
     /// <summary>
-    ///A test for GetValue&st;string&gt;
+    ///A test for GetValue&st;string&gt; with case sensitivity
     ///</summary>
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericStringCaseSensitive_IsTrue() {
@@ -515,7 +533,24 @@ namespace BLTools.UnitTest.Utils {
       Assert.IsTrue(target.GetValue<string>("par1", "") == "val1b");
     }
 
-    #endregion Tests for GetValue<T>(key, default)  (case sensitive)
+    [TestMethod()]
+    public void SplitArgs_OnlyKeyTestIndex_HasNoValue() {
+      ISplitArgs Target = new SplitArgs();
+      Assert.IsFalse(Target.HasValue(2));
+    }
+
+    [TestMethod()]
+    public void SplitArgs_OnlyKeyTestKey_HasNoValue() {
+      ISplitArgs Target = new SplitArgs();
+      Assert.IsFalse(Target.HasValue("test"));
+    }
+
+    [TestMethod()]
+    public void SplitArgs_OnlyKeyTestKey_HasValue() {
+      ISplitArgs Target = new SplitArgs();
+      Target.Parse("prog.exe test=value");
+      Assert.IsTrue(Target.HasValue("test"));
+    }
 
   }
 }

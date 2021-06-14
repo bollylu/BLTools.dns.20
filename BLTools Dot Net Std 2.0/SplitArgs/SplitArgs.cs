@@ -55,7 +55,7 @@ namespace BLTools {
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
     /// <summary>
-    /// Creates an empty  dictonnary of command line arguments
+    /// Creates an empty dictonnary of command line arguments
     /// </summary>
     public SplitArgs() {
     }
@@ -64,6 +64,7 @@ namespace BLTools {
     /// Creates a dictonnary of command line arguments from the args parameters list provided to Main function
     /// </summary>
     /// <param name="arrayOfValues">An array of parameters</param>
+    [Obsolete("Use empty constructor + Parse(args)")]
     public SplitArgs(IEnumerable<string> arrayOfValues) {
       if (arrayOfValues == null) {
         throw new ArgumentNullException(nameof(arrayOfValues), "you must pass a valid IEnumerable[] arrayOfValues argument");
@@ -75,16 +76,45 @@ namespace BLTools {
     /// Creates a dictionnary of command line parameters from a given command line 
     /// </summary>
     /// <param name="cmdLine">The command line</param>
+    [Obsolete("Use empty constructor + Parse(cmdLine)")]
     public SplitArgs(string cmdLine) {
+      Parse(cmdLine);
+    }
+
+    /// <summary>
+    /// Copy constructor
+    /// </summary>
+    /// <param name="otherSplitArgs"></param>
+    public SplitArgs(SplitArgs otherSplitArgs) {
+      Separator = otherSplitArgs.Separator;
+      KeyValueSeparator = otherSplitArgs.KeyValueSeparator;
+      IsCaseSensitive = otherSplitArgs.IsCaseSensitive;
+      CurrentCultureInfo = otherSplitArgs.CurrentCultureInfo;
+      this.AddRange(otherSplitArgs);
+    }
+
+    /// <summary>
+    /// Create a dictionnary of url parameters from a Request.QueryString
+    /// </summary>
+    /// <param name="queryStringItems">A Request.QueryString</param>
+    [Obsolete("Use empty constructor + Parse(queryStringItems)")]
+    public SplitArgs(NameValueCollection queryStringItems) {
+      Parse(queryStringItems);
+    }
+    #endregion --- Constructor(s) ------------------------------------------------------------------------------
+
+    #region --- Parse input --------------------------------------------
+    /// <inheritdoc/>
+    public void Parse(string cmdLine) {
       #region Validate parameters
       if (cmdLine == null) {
-        throw new ArgumentNullException("cmdLine", "you must pass a valid string cmdLine argument");
+        throw new ArgumentNullException(nameof(cmdLine), "you must pass a valid string cmdLine argument");
       }
       #endregion Validate parameters
 
       string PreprocessedLine = cmdLine.Trim();
       List<string> CmdLineValues = new List<string>();
-      StringBuilder TempStr = new StringBuilder("");
+      StringBuilder TempStr = new StringBuilder();
 
       int i = 0;
       bool InQuote = false;
@@ -124,39 +154,14 @@ namespace BLTools {
 
       }
 
-      if (!(TempStr.Length == 0)) {
+      if (TempStr.Length != 0) {
         CmdLineValues.Add(TempStr.ToString());
       }
 
       Parse(CmdLineValues.ToArray());
-
     }
 
-    /// <summary>
-    /// Copy constructor
-    /// </summary>
-    /// <param name="otherSplitArgs"></param>
-    public SplitArgs(SplitArgs otherSplitArgs) {
-      this.AddRange(otherSplitArgs);
-    }
-
-    /// <summary>
-    /// Create a dictionnary of url parameters from a Request.QueryString
-    /// </summary>
-    /// <param name="queryStringItems">A Request.QueryString</param>
-    public SplitArgs(NameValueCollection queryStringItems) {
-      #region === Validate parameters ===
-      if (queryStringItems == null || queryStringItems.Count == 0) {
-        return;
-      }
-      #endregion === Validate parameters ===
-      foreach (string QueryStringItem in queryStringItems) {
-        this.Add(new ArgElement(0, QueryStringItem, queryStringItems[QueryStringItem]));
-      }
-    }
-    #endregion --- Constructor(s) ------------------------------------------------------------------------------
-
-    #region Private methods
+    /// <inheritdoc/>
     public void Parse(IEnumerable<string> arrayOfValues) {
       int Position = 0;
       foreach (string ValueItem in arrayOfValues) {
@@ -192,9 +197,21 @@ namespace BLTools {
         Position++;
       }
     }
-    #endregion Private methods
 
-    #region Public properties
+    /// <inheritdoc/>
+    public void Parse(NameValueCollection queryStringItems) {
+      #region === Validate parameters ===
+      if (queryStringItems == null || queryStringItems.Count == 0) {
+        return;
+      }
+      #endregion === Validate parameters ===
+      foreach (string QueryStringItem in queryStringItems) {
+        this.Add(new ArgElement(0, QueryStringItem, queryStringItems[QueryStringItem]));
+      }
+    }
+    #endregion --- Parse input --------------------------------------------
+
+    #region --- Indexer --------------------------------------------
     /// <summary>
     /// Obtain an argument by its index instead of its name
     /// </summary>
@@ -210,13 +227,10 @@ namespace BLTools {
         }
       }
     }
-    #endregion Public properties
+    #endregion --- Indexer --------------------------------------------
 
-    /// <summary>
-    /// Indicate if a key was part of the arguments (whatever it has a value or not)
-    /// </summary>
-    /// <param name="key">the key to test</param>
-    /// <returns>true if the key was defined, false otherwise</returns>
+    #region --- Tests on keys/values --------------------------------------------
+    /// <inheritdoc/>
     public bool IsDefined(string key) {
       if (key == null || this.IsEmpty()) {
         return false;
@@ -231,6 +245,43 @@ namespace BLTools {
       }
       return CurrentElement != null;
     }
+
+    /// <inheritdoc/>
+    public bool HasValue(string key) {
+      #region === Validate parameters ===
+      if (string.IsNullOrWhiteSpace(key) || !IsDefined(key)) {
+        return false;
+      }
+      #endregion === Validate parameters ===
+
+      ArgElement CurrentElement;
+
+      if (IsCaseSensitive) {
+        CurrentElement = this.FirstOrDefault(a => a.Name == key);
+      } else {
+        CurrentElement = this.FirstOrDefault(a => a.Name.ToLower(CurrentCultureInfo) == key.ToLower(CurrentCultureInfo));
+
+      }
+      return CurrentElement?.HasValue() ?? false;
+
+    }
+
+    /// <inheritdoc/>
+    public bool HasValue(int index) {
+      if (this.IsEmpty()) {
+        return false;
+      }
+
+      if (index < 0 || index > (this.Count - 1)) {
+        return false;
+      }
+
+      ArgElement CurrentElement = this[index];
+
+      return CurrentElement?.HasValue() ?? false;
+
+    }
+    #endregion --- Tests on keys/values --------------------------------------------
 
     #region Generic version of the GetValue
 
