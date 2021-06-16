@@ -47,6 +47,7 @@ namespace BLTools {
     /// <param name="source">Data source</param>
     /// <param name="culture">Culture used to performed certain conversions</param>
     /// <param name="defaultValue">What to return when unable to convert</param>
+    /// <param name="separatorForMultipleItems"></param>
     /// <returns>A converted value of type T or the default value</returns>
     public static T BLConvert<T>(object source, CultureInfo culture, T defaultValue, char separatorForMultipleItems = ';') {
       try {

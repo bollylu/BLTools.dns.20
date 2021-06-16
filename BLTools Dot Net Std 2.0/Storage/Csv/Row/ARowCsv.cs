@@ -262,7 +262,7 @@ namespace BLTools.Storage.Csv {
 
     /// <inheritdoc/>
     public void Set(float value) {
-      _RawContent = value.ToString(CultureInfo.InvariantCulture);
+      Set(value, CultureInfo.InvariantCulture);
     }
 
     /// <inheritdoc/>
@@ -272,7 +272,7 @@ namespace BLTools.Storage.Csv {
 
     /// <inheritdoc/>
     public void Set(double value) {
-      _RawContent = value.ToString(CultureInfo.InvariantCulture);
+      Set(value, CultureInfo.InvariantCulture);
     }
 
     /// <inheritdoc/>
@@ -282,7 +282,7 @@ namespace BLTools.Storage.Csv {
 
     /// <inheritdoc/>
     public void Set(decimal value) {
-      _RawContent = value.ToString(CultureInfo.InvariantCulture);
+      Set(value, CultureInfo.InvariantCulture);
     }
 
     /// <inheritdoc/>
@@ -292,7 +292,7 @@ namespace BLTools.Storage.Csv {
 
     /// <inheritdoc/>
     public void Set(DateTime value) {
-      _RawContent = value.ToString(CultureInfo.InvariantCulture);
+      _RawContent = value.ToString("s", CultureInfo.InvariantCulture);
     }
 
     /// <inheritdoc/>
@@ -310,10 +310,23 @@ namespace BLTools.Storage.Csv {
       _RawContent = value.WithQuotes();
     }
 
+
+    /// <inheritdoc/>
+    public void Set(IEnumerable<DateTime> values) {
+      _RawContent = string.Join($"{SEPARATOR}", values.Select(x => x.ToString("s", CultureInfo.InvariantCulture)));
+    }
+
+    /// <inheritdoc/>
+    public void Set(IEnumerable<DateTime> values, CultureInfo cultureInfo) {
+      _RawContent = string.Join($"{SEPARATOR}", values.Select(x => x.ToString(cultureInfo)));
+    }
+
     /// <inheritdoc/>
     public void Set<T>(IEnumerable<T> value) {
       Set(value, CultureInfo.InvariantCulture);
     }
+
+
 
     /// <inheritdoc/>
     public void Set<T>(IEnumerable<T> value, CultureInfo cultureInfo) {

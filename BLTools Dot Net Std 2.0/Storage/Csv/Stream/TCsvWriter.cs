@@ -178,11 +178,11 @@ namespace BLTools.Storage.Csv {
     }
 
     /// <summary>
-    /// Write a DateTime item using invariant culture info
+    /// Write a DateTime item using format ISO 8601
     /// </summary>
     /// <param name="data">The DateTime item</param>
     public void Write(DateTime data) {
-      Write(data, CultureInfo.InvariantCulture);
+      Write(WriterEncoding.GetBytes(data.ToString("s")));
     }
 
     /// <summary>
@@ -316,15 +316,20 @@ namespace BLTools.Storage.Csv {
     }
 
     /// <summary>
-    /// Write a sequence of DateTime items with invariant culture info
+    /// Write a sequence of DateTime items using format ISO 8601
     /// </summary>
     /// <param name="data">The enumerable DateTime items</param>
     public void Write(IEnumerable<DateTime> data) {
-      Write(data, CultureInfo.InvariantCulture);
+      if (data is null || data.IsEmpty()) {
+        return;
+      }
+
+      string Joined = string.Join($"{ARowCsv.SEPARATOR}", data.Select(x => x.ToString("s", CultureInfo.InvariantCulture)));
+      Write(WriterEncoding.GetBytes(Joined));
     }
 
     /// <summary>
-    /// Write a sequence of DateTime items with culture info
+    /// Write a sequence of DateTime items using culture info
     /// </summary>
     /// <param name="data">The enumerable DateTime items</param>
     /// <param name="cultureInfo">The culture info to use</param>

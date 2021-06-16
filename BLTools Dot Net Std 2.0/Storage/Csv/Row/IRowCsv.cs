@@ -234,17 +234,30 @@ namespace BLTools.Storage.Csv {
 
     #region --- IEnumerable<T> --------------------------------------------
     /// <summary>
+    /// Assign an enumerable of DateTime using format ISO 8601
+    /// </summary>
+    /// <param name="values">The source values</param>
+    void Set(IEnumerable<DateTime> values);
+
+    /// <summary>
+    /// Assign an enumerable of DateTime using culture info
+    /// </summary>
+    /// <param name="values"></param>
+    /// <param name="cultureInfo"></param>
+    void Set(IEnumerable<DateTime> values, CultureInfo cultureInfo);
+
+    /// <summary>
     /// Assign IEnumerable&lt;T&gt; values as the content. The CultureInfo is CultureInfo.InvariantCulture
     /// </summary>
-    /// <param name="value">The IEnumerable of values to assign</param>
-    void Set<T>(IEnumerable<T> value);
+    /// <param name="values">The IEnumerable of values to assign</param>
+    void Set<T>(IEnumerable<T> values);
 
     /// <summary>
     /// Assign IEnumerable&lt;T&gt; values as the content.
     /// </summary>
-    /// <param name="value">The IEnumerable of values to assign</param>
+    /// <param name="values">The IEnumerable of values to assign</param>
     /// <param name="cultureInfo">The CultureInfo for the string conversion</param>
-    void Set<T>(IEnumerable<T> value, CultureInfo cultureInfo);
+    void Set<T>(IEnumerable<T> values, CultureInfo cultureInfo);
     #endregion --- IEnumerable<T> -------------------------------------------- 
     #endregion Public methods
 

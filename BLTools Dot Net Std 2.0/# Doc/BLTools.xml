@@ -3090,6 +3090,12 @@
         <member name="M:BLTools.Storage.Csv.ARowCsv.Set(System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:BLTools.Storage.Csv.ARowCsv.Set(System.Collections.Generic.IEnumerable{System.DateTime})">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.Storage.Csv.ARowCsv.Set(System.Collections.Generic.IEnumerable{System.DateTime},System.Globalization.CultureInfo)">
+            <inheritdoc/>
+        </member>
         <member name="M:BLTools.Storage.Csv.ARowCsv.Set``1(System.Collections.Generic.IEnumerable{``0})">
             <inheritdoc/>
         </member>
@@ -3322,17 +3328,30 @@
             </summary>
             <param name="value">The value to assign</param>
         </member>
+        <member name="M:BLTools.Storage.Csv.IRowCsv.Set(System.Collections.Generic.IEnumerable{System.DateTime})">
+            <summary>
+            Assign an enumerable of DateTime using format ISO 8601
+            </summary>
+            <param name="values">The source values</param>
+        </member>
+        <member name="M:BLTools.Storage.Csv.IRowCsv.Set(System.Collections.Generic.IEnumerable{System.DateTime},System.Globalization.CultureInfo)">
+            <summary>
+            Assign an enumerable of DateTime using culture info
+            </summary>
+            <param name="values"></param>
+            <param name="cultureInfo"></param>
+        </member>
         <member name="M:BLTools.Storage.Csv.IRowCsv.Set``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
             Assign IEnumerable&lt;T&gt; values as the content. The CultureInfo is CultureInfo.InvariantCulture
             </summary>
-            <param name="value">The IEnumerable of values to assign</param>
+            <param name="values">The IEnumerable of values to assign</param>
         </member>
         <member name="M:BLTools.Storage.Csv.IRowCsv.Set``1(System.Collections.Generic.IEnumerable{``0},System.Globalization.CultureInfo)">
             <summary>
             Assign IEnumerable&lt;T&gt; values as the content.
             </summary>
-            <param name="value">The IEnumerable of values to assign</param>
+            <param name="values">The IEnumerable of values to assign</param>
             <param name="cultureInfo">The CultureInfo for the string conversion</param>
         </member>
         <member name="T:BLTools.Storage.Csv.TRowCsvData">
@@ -3632,7 +3651,7 @@
         </member>
         <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.DateTime)">
             <summary>
-            Write a DateTime item using invariant culture info
+            Write a DateTime item using format ISO 8601
             </summary>
             <param name="data">The DateTime item</param>
         </member>
@@ -3715,13 +3734,13 @@
         </member>
         <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Collections.Generic.IEnumerable{System.DateTime})">
             <summary>
-            Write a sequence of DateTime items with invariant culture info
+            Write a sequence of DateTime items using format ISO 8601
             </summary>
             <param name="data">The enumerable DateTime items</param>
         </member>
         <member name="M:BLTools.Storage.Csv.TCsvWriter.Write(System.Collections.Generic.IEnumerable{System.DateTime},System.Globalization.CultureInfo)">
             <summary>
-            Write a sequence of DateTime items with culture info
+            Write a sequence of DateTime items using culture info
             </summary>
             <param name="data">The enumerable DateTime items</param>
             <param name="cultureInfo">The culture info to use</param>
@@ -4293,6 +4312,7 @@
             <param name="source">Data source</param>
             <param name="culture">Culture used to performed certain conversions</param>
             <param name="defaultValue">What to return when unable to convert</param>
+            <param name="separatorForMultipleItems"></param>
             <returns>A converted value of type T or the default value</returns>
         </member>
     </members>

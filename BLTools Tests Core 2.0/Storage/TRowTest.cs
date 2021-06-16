@@ -92,7 +92,7 @@ namespace BLTools.UnitTest.Storage.csv.row {
     [TestMethod]
     public void RowDataContent_SingleDateTime_AllIsOk() {
       const string ID = "Birth";
-      DateTime VALUE = DateTime.Parse("1966-04-28 12:26:34");
+      DateTime VALUE = DateTime.Parse("1966-04-28T12:26:34");
       IRowCsv Row = new TRowCsvData() { Id = ID };
       Assert.AreEqual(ID, Row.Id);
       Row.Set(VALUE);
