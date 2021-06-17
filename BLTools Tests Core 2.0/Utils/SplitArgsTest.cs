@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Globalization;
+using System.Linq;
 using System.Web;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -69,9 +70,9 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void SplitArgsConstructor_CommandLine_Gets3Args() {
       string cmdLine = "program.exe par1=val1 par2=val2";
-      SplitArgs target = new SplitArgs();
+      ISplitArgs target = new SplitArgs();
       target.Parse(cmdLine);
-      Assert.AreEqual(3, target.Count);
+      Assert.AreEqual(3, target.Count());
     }
 
     /// <summary>
@@ -80,9 +81,9 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void SplitArgsConstructor_CommandLineWithSpaces_Gets3Args() {
       string cmdLine = "program.exe par1=\"val1 with spaces\" par2=val2";
-      SplitArgs target = new SplitArgs();
+      ISplitArgs target = new SplitArgs();
       target.Parse(cmdLine);
-      Assert.AreEqual(3, target.Count);
+      Assert.AreEqual(3, target.Count());
     }
 
     /// <summary>
@@ -104,7 +105,7 @@ namespace BLTools.UnitTest.Utils {
       string cmdLine = "program.exe par1=val1 par2=val2";
       SplitArgs target = new SplitArgs();
       target.Parse(cmdLine);
-      Assert.IsTrue(target.Contains(new ArgElement(1, "par1", "val1")));
+      Assert.IsTrue(target.GetAll().Contains(new ArgElement(1, "par1", "val1")));
     }
 
     /// <summary>
@@ -115,7 +116,7 @@ namespace BLTools.UnitTest.Utils {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "par1=val1", "par2=val2" };
       SplitArgs target = new SplitArgs();
       target.Parse(arrayOfValues);
-      Assert.AreEqual(3, target.Count);
+      Assert.AreEqual(3, target.Count());
     }
 
     /// <summary>
@@ -137,7 +138,7 @@ namespace BLTools.UnitTest.Utils {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "par1=val1", "par2=val2" };
       SplitArgs target = new SplitArgs();
       target.Parse(arrayOfValues);
-      Assert.IsTrue(target.Contains(new ArgElement(1, "par1", "val1")));
+      Assert.IsNotNull(target.GetAll().Contains(new ArgElement(1, "par1", "val1")));
     }
 
 #if NETCOREAPP
@@ -150,7 +151,7 @@ namespace BLTools.UnitTest.Utils {
       NameValueCollection TestCollection = HttpUtility.ParseQueryString(Url);
       SplitArgs target = new SplitArgs();
       target.Parse(TestCollection);
-      Assert.IsTrue(target.Contains(new ArgElement(0, "arg1", "value1")));
+      Assert.IsTrue(target.GetAll().Contains(new ArgElement(0, "arg1", "value1")));
     }
 
     /// <summary>
@@ -162,7 +163,7 @@ namespace BLTools.UnitTest.Utils {
       NameValueCollection TestCollection = HttpUtility.ParseQueryString(Url);
       SplitArgs target = new SplitArgs();
       target.Parse(TestCollection);
-      Assert.IsTrue(target.Contains(new ArgElement(0, "arg2", "value2")));
+      Assert.IsTrue(target.GetAll().Contains(new ArgElement(0, "arg2", "value2")));
     }
 #endif
 
@@ -428,7 +429,7 @@ namespace BLTools.UnitTest.Utils {
                                                                $"/par1=1236{CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator}2365",
                                                                "/verbose",
                                                                $"/par2=654789{CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator}123456" };
-      SplitArgs target = new SplitArgs();
+      ISplitArgs target = new SplitArgs();
       target.Parse(arrayOfValues);
       Assert.IsTrue(target.GetValue<double>(3, 0, CultureInfo.CurrentCulture) == 654789.123456D);
     }
@@ -438,7 +439,7 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_Pos3GenericLong_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=654321987", "/verbose", "/par2=987641234" };
-      SplitArgs target = new SplitArgs();
+      ISplitArgs target = new SplitArgs();
       target.Parse(arrayOfValues);
       Assert.IsTrue(target.GetValue<long>(3, 0) == 987641234L);
     }
@@ -448,7 +449,8 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_Pos3GenericFloat_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", string.Format("/par1=1236{0}2365", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator), "/verbose", string.Format("/par2=98764{0}1234", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator) };
-      SplitArgs target = new SplitArgs(arrayOfValues);
+      ISplitArgs target = new SplitArgs();
+      target.Parse(arrayOfValues);
       Assert.IsTrue(target.GetValue<float>(3, 0, CultureInfo.CurrentCulture) == 98764.1234F);
     }
     /// <summary>
@@ -458,7 +460,7 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_Pos3GenericDateTime_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=12/6/1998", "/verbose", "/par2=28/04/1966" };
-      SplitArgs target = new SplitArgs();
+      ISplitArgs target = new SplitArgs();
       target.Parse(arrayOfValues);
       Assert.IsTrue(target.GetValue<DateTime>(3, DateTime.MinValue, CultureInfo.GetCultureInfo("FR-BE")) == new DateTime(1966, 4, 28));
     }
@@ -471,7 +473,7 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericDoubleCultureUs_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=1236.2365", "/verbose" };
-      SplitArgs target = new SplitArgs();
+      ISplitArgs target = new SplitArgs();
       target.Parse(arrayOfValues);
       Assert.IsTrue(target.GetValue<double>("par1", 0, CultureInfo.GetCultureInfo("en-us")) == 1236.2365D);
     }
@@ -481,7 +483,7 @@ namespace BLTools.UnitTest.Utils {
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericFloatCultureUs_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=1236.23", "/verbose" };
-      SplitArgs target = new SplitArgs();
+      ISplitArgs target = new SplitArgs();
       target.Parse(arrayOfValues);
       Assert.IsTrue(target.GetValue<float>("par1", 0, CultureInfo.GetCultureInfo("en-us")) == 1236.23F);
     }
@@ -498,7 +500,6 @@ namespace BLTools.UnitTest.Utils {
     /// <summary>
     ///A test for GetValue&st;DateTime&gt;
     ///</summary>
-    ///
     [TestMethod(), TestCategory("SplitArgs")]
     public void GetValue_KeyGenericDateTimeCultureUs_IsTrue() {
       IEnumerable<string> arrayOfValues = new List<string>() { "program.exe", "/par1=6/12/1998", "/verbose" };

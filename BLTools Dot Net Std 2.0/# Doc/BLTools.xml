@@ -1332,6 +1332,94 @@
             <param name="direction">The direction to align the number (default to lower, meaning closer to zero)</param>
             <returns>The aligned value</returns>
         </member>
+        <member name="M:BLTools.NumberExtension.IsInRange(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Checks if the value is in the given range (both ends count into the range)
+            </summary>
+            <param name="source">The value to test</param>
+            <param name="min">The minimum value of the range (included)</param>
+            <param name="max">The maximum value of the range (included)</param>
+            <returns>true if the value is comprised within the range, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.IsInRange(System.Int64,System.Int64,System.Int64)">
+            <summary>
+            Checks if the value is in the given range (both ends count into the range)
+            </summary>
+            <param name="source">The value to test</param>
+            <param name="min">The minimum value of the range (included)</param>
+            <param name="max">The maximum value of the range (included)</param>
+            <returns>true if the value is comprised within the range, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.IsInRange(System.Single,System.Single,System.Single)">
+            <summary>
+            Checks if the value is in the given range (both ends count into the range)
+            </summary>
+            <param name="source">The value to test</param>
+            <param name="min">The minimum value of the range (included)</param>
+            <param name="max">The maximum value of the range (included)</param>
+            <returns>true if the value is comprised within the range, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.IsInRange(System.Double,System.Double,System.Double)">
+            <summary>
+            Checks if the value is in the given range (both ends count into the range)
+            </summary>
+            <param name="source">The value to test</param>
+            <param name="min">The minimum value of the range (included)</param>
+            <param name="max">The maximum value of the range (included)</param>
+            <returns>true if the value is comprised within the range, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.IsOutsideRange(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Checks if the value is outside the given range (both ends count into the range)
+            </summary>
+            <param name="source">The value to test</param>
+            <param name="min">The minimum value of the range (included)</param>
+            <param name="max">The maximum value of the range (included)</param>
+            <returns>true if outside of range, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.IsOutsideRange(System.Int64,System.Int64,System.Int64)">
+            <summary>
+            Checks if the value is outside the given range (both ends count into the range)
+            </summary>
+            <param name="source">The value to test</param>
+            <param name="min">The minimum value of the range (included)</param>
+            <param name="max">The maximum value of the range (included)</param>
+            <returns>true if outside of range, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.IsOutsideRange(System.Single,System.Single,System.Single)">
+            <summary>
+            Checks if the value is outside the given range (both ends count into the range)
+            </summary>
+            <param name="source">The value to test</param>
+            <param name="min">The minimum value of the range (included)</param>
+            <param name="max">The maximum value of the range (included)</param>
+            <returns>true if outside of range, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.IsOutsideRange(System.Double,System.Double,System.Double)">
+            <summary>
+            Checks if the value is outside the given range (both ends count into the range)
+            </summary>
+            <param name="source">The value to test</param>
+            <param name="min">The minimum value of the range (included)</param>
+            <param name="max">The maximum value of the range (included)</param>
+            <returns>true if outside of range, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.IsOutsideRange(System.Int32,System.Range)">
+            <summary>
+            Checks if the value is outside the given range (both ends count into the range)
+            </summary>
+            <param name="source">The value to test</param>
+            <param name="range">The range to check against (both ends included)</param>
+            <returns>true if outside of range, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.NumberExtension.IsInRange(System.Int32,System.Range)">
+            <summary>
+            Checks if the value is in the given range (both ends count into the range)
+            </summary>
+            <param name="source">The value to test</param>
+            <param name="range">The range to check against (both ends included)</param>
+            <returns>true if the value is comprised within the range, false otherwise</returns>
+        </member>
         <member name="T:BLTools.IPAddressExtension">
             <summary>
             Extensions for IPAddress
@@ -2522,7 +2610,7 @@
             <param name="name"></param>
             <param name="value"></param>
         </member>
-        <member name="M:BLTools.ArgElement.Equals(BLTools.ArgElement)">
+        <member name="M:BLTools.ArgElement.HasValue">
             <inheritdoc/>
         </member>
         <member name="M:BLTools.ArgElement.Equals(System.Object)">
@@ -2531,7 +2619,42 @@
         <member name="M:BLTools.ArgElement.GetHashCode">
             <inheritdoc/>
         </member>
-        <member name="M:BLTools.ArgElement.HasValue">
+        <member name="M:BLTools.ArgElement.Equals(BLTools.IArgElement)">
+            <summary>
+            Compare two IArgElements using StringComparison.CurrentCulture
+            </summary>
+            <param name="other">The other IArgElement to compare with</param>
+            <returns>true if same, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.ArgElement.Equals(BLTools.IArgElement,System.StringComparison)">
+            <summary>
+            Compare two IArgElements
+            </summary>
+            <param name="other">The other IArgElement to compare with</param>
+            <param name="comparison">How to compare the strings</param>
+            <returns>true if same, false otherwise</returns>
+        </member>
+        <member name="T:BLTools.IArgElement">
+            <summary>
+            Interface for an element with ID, name, value as string
+            </summary>
+        </member>
+        <member name="P:BLTools.IArgElement.Id">
+            <summary>
+            The position within the command line
+            </summary>
+        </member>
+        <member name="P:BLTools.IArgElement.Name">
+            <summary>
+            The key name
+            </summary>
+        </member>
+        <member name="P:BLTools.IArgElement.Value">
+            <summary>
+            The value (stored as a string)
+            </summary>
+        </member>
+        <member name="M:BLTools.IArgElement.HasValue">
             <summary>
             Test if the value exists
             </summary>
@@ -2540,6 +2663,26 @@
         <member name="T:BLTools.ISplitArgs">
             <summary>
             Used to parse a command line or similar into parameters
+            </summary>
+        </member>
+        <member name="P:BLTools.ISplitArgs.CurrentCultureInfo">
+            <summary>
+            Get or Set the CultureInfo used to parse DateTime and numbers (decimal point)
+            </summary>
+        </member>
+        <member name="P:BLTools.ISplitArgs.IsCaseSensitive">
+            <summary>
+            Get or Set the parameters name case sensitivity
+            </summary>
+        </member>
+        <member name="P:BLTools.ISplitArgs.Separator">
+            <summary>
+            Get or Set the separator used when reading an array from parameters (default value is ',')
+            </summary>
+        </member>
+        <member name="P:BLTools.ISplitArgs.KeyValueSeparator">
+            <summary>
+            Separator between a key and its value
             </summary>
         </member>
         <member name="M:BLTools.ISplitArgs.Parse(System.Collections.Generic.IEnumerable{System.String})">
@@ -2572,14 +2715,46 @@
             Indicates if the key exists and has any associated value
             </summary>
             <param name="key">The key to check</param>
-            <returns><see langword="true"/>if any value exists, false if null</returns>
+            <returns>true if any value exists, false otherwise</returns>
         </member>
         <member name="M:BLTools.ISplitArgs.HasValue(System.Int32)">
             <summary>
             Indicates if the key exists and has any associated value
             </summary>
             <param name="index">The index of the key to check</param>
-            <returns><see langword="true"/>if any value exists, false if null</returns>
+            <returns>true if any value exists, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.ISplitArgs.IsEmpty">
+            <summary>
+            Indicates if no keys at all are in the object
+            </summary>
+            <returns>true if the object contains no key at all, false otherwise</returns>
+        </member>
+        <member name="M:BLTools.ISplitArgs.Any">
+            <summary>
+            Indicates if any key is the object
+            </summary>
+            <returns>true if the object contains at least one key (with or without value), false otherwise</returns>
+        </member>
+        <member name="M:BLTools.ISplitArgs.GetAll">
+            <summary>
+            Returns all the elements
+            </summary>
+            <returns>The enumeration of current elements</returns>
+        </member>
+        <member name="P:BLTools.ISplitArgs.Item(System.Int32)">
+            <summary>
+            Retrieve one element by index
+            </summary>
+            <param name="position">The position in the source string used to parse (starts at 0)</param>
+            <returns>The element or null</returns>
+        </member>
+        <member name="P:BLTools.ISplitArgs.Item(System.String)">
+            <summary>
+            Retrieve one element by key
+            </summary>
+            <param name="key">The key name in the source string used to parse</param>
+            <returns>The element or null</returns>
         </member>
         <member name="M:BLTools.ISplitArgs.GetValue``1(System.String)">
             <summary>
@@ -2589,17 +2764,68 @@
             <param name="key">The key to retrieve</param>
             <returns></returns>
         </member>
-        <member name="P:BLTools.ISplitArgs.Item(System.Int32)">
+        <member name="M:BLTools.ISplitArgs.GetValue``1(System.String,``0)">
             <summary>
-            Retrieve the argument at specific index
+            Retrieve to typed value associated with a key with a optional default value, using current culture info
             </summary>
-            <param name="index">The position of the key/value pair in the input data</param>
-            <returns></returns>
+            <typeparam name="T">The type of the returned value</typeparam>
+            <param name="key">The key name of the value</param>
+            <param name="defaultValue">The default value to be returned if the key name is invalid or conversion fails</param>
+            <returns>The value</returns>
+        </member>
+        <member name="M:BLTools.ISplitArgs.GetValue``1(System.String,``0,System.Globalization.CultureInfo)">
+            <summary>
+            Retrieve to typed value associated with a key with a optional default value, using a specific culture info
+            </summary>
+            <typeparam name="T">The type of the returned value</typeparam>
+            <param name="key">The key name of the value</param>
+            <param name="defaultValue">The default value to be returned if the key name is invalid or conversion fails</param>
+            <param name="cultureInfo">The CultureInfo for the conversion</param>
+            <returns>The value</returns>
+        </member>
+        <member name="M:BLTools.ISplitArgs.GetValue``1(System.Int32)">
+            <summary>
+            Retrieve to typed value at given position (0 based)
+            </summary>
+            <typeparam name="T">The type of the returned value</typeparam>
+            <param name="position">The position (counted from 0) of the value</param>
+            <returns>The value</returns>
+        </member>
+        <member name="M:BLTools.ISplitArgs.GetValue``1(System.Int32,``0)">
+            <summary>
+            Retrieve to typed value at given position (0 based), with an optional default value, using current culture info
+            </summary>
+            <typeparam name="T">The type of the returned value</typeparam>
+            <param name="position">The position (counted from 0) of the value</param>
+            <param name="defaultValue">The default value to be returned if the position is invalid or conversion fails</param>
+            <returns>The value</returns>
+        </member>
+        <member name="M:BLTools.ISplitArgs.GetValue``1(System.Int32,``0,System.Globalization.CultureInfo)">
+            <summary>
+            Retrieve to typed value at given position (0 based), with an optional default value, using a specific culture info
+            </summary>
+            <typeparam name="T">The type of the returned value</typeparam>
+            <param name="position">The position (counted from 0) of the value</param>
+            <param name="defaultValue">The default value to be returned if the key name is invalid or conversion fails</param>
+            <param name="cultureInfo">The CultureInfo for the conversion</param>
+            <returns>The value</returns>
         </member>
         <member name="M:BLTools.ISplitArgs.Clear">
             <summary>
             Clear all the key/value pairs
             </summary>
+        </member>
+        <member name="M:BLTools.ISplitArgs.Add(BLTools.IArgElement)">
+            <summary>
+            Manually add a new ArgElement
+            </summary>
+            <param name="element">The element to add</param>
+        </member>
+        <member name="M:BLTools.ISplitArgs.Count">
+            <summary>
+            Count the items
+            </summary>
+            <returns>The count of items</returns>
         </member>
         <member name="T:BLTools.SplitArgs">
             <summary>
@@ -2608,30 +2834,27 @@
             (c) 2004-2012 Luc Bolly
             </summary>
         </member>
+        <member name="F:BLTools.SplitArgs._Items">
+            <summary>
+            The keys/values internal storage
+            </summary>
+        </member>
         <member name="F:BLTools.SplitArgs.DEFAULT_CULTURE">
             <summary>
             Default culture for conversions
             </summary>
         </member>
         <member name="P:BLTools.SplitArgs.CurrentCultureInfo">
-            <summary>
-            Get or Set the CultureInfo used to parse DateTime and numbers (decimal point)
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="P:BLTools.SplitArgs.IsCaseSensitive">
-            <summary>
-            Get or Set the parameters name case sensitivity
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="P:BLTools.SplitArgs.Separator">
-            <summary>
-            Get or Set the separator used when reading an array from parameters (default value is ',')
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="P:BLTools.SplitArgs.KeyValueSeparator">
-            <summary>
-            Separator between a key and its value
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="M:BLTools.SplitArgs.#ctor">
             <summary>
@@ -2650,7 +2873,7 @@
             </summary>
             <param name="cmdLine">The command line</param>
         </member>
-        <member name="M:BLTools.SplitArgs.#ctor(BLTools.SplitArgs)">
+        <member name="M:BLTools.SplitArgs.#ctor(BLTools.ISplitArgs)">
             <summary>
             Copy constructor
             </summary>
@@ -2671,12 +2894,23 @@
         <member name="M:BLTools.SplitArgs.Parse(System.Collections.Specialized.NameValueCollection)">
             <inheritdoc/>
         </member>
+        <member name="M:BLTools.SplitArgs.Clear">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.SplitArgs.Count">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.SplitArgs.Add(BLTools.IArgElement)">
+            <inheritdoc/>
+        </member>
         <member name="P:BLTools.SplitArgs.Item(System.Int32)">
-            <summary>
-            Obtain an argument by its index instead of its name
-            </summary>
-            <param name="index">The index of the argument obtain (first is zero)</param>
-            <returns>An ArgElement</returns>
+            <inheritdoc/>
+        </member>
+        <member name="P:BLTools.SplitArgs.Item(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.SplitArgs.GetAll">
+            <inheritdoc/>
         </member>
         <member name="M:BLTools.SplitArgs.IsDefined(System.String)">
             <inheritdoc/>
@@ -2687,59 +2921,29 @@
         <member name="M:BLTools.SplitArgs.HasValue(System.Int32)">
             <inheritdoc/>
         </member>
+        <member name="M:BLTools.SplitArgs.Any">
+            <inheritdoc/>
+        </member>
+        <member name="M:BLTools.SplitArgs.IsEmpty">
+            <inheritdoc/>
+        </member>
         <member name="M:BLTools.SplitArgs.GetValue``1(System.String)">
-            <summary>
-            Generic version of GetValue
-            </summary>
-            <typeparam name="T">The type of the returned value</typeparam>
-            <param name="key">The key name of the value</param>
-            <returns>The value</returns>
+            <inheritdoc/>
         </member>
         <member name="M:BLTools.SplitArgs.GetValue``1(System.String,``0)">
-            <summary>
-            Generic version of GetValue
-            </summary>
-            <typeparam name="T">The type of the returned value</typeparam>
-            <param name="key">The key name of the value</param>
-            <param name="defaultValue">The default value to be returned if the key name is invalid</param>
-            <returns>The value</returns>
+            <inheritdoc/>
         </member>
         <member name="M:BLTools.SplitArgs.GetValue``1(System.String,``0,System.Globalization.CultureInfo)">
-            <summary>
-            Generic version of GetValue
-            </summary>
-            <typeparam name="T">The type of the returned value</typeparam>
-            <param name="key">The key name of the value</param>
-            <param name="defaultValue">The default value to be returned if the key name is invalid</param>
-            <param name="culture"></param>
-            <returns>The value</returns>
+            <inheritdoc/>
         </member>
         <member name="M:BLTools.SplitArgs.GetValue``1(System.Int32)">
-            <summary>
-            Generic version of GetValue
-            </summary>
-            <typeparam name="T">The type of the returned value</typeparam>
-            <param name="position">The position (counted from 0) of the value</param>
-            <returns>The value</returns>
+            <inheritdoc/>
         </member>
         <member name="M:BLTools.SplitArgs.GetValue``1(System.Int32,``0)">
-            <summary>
-            Generic version of GetValue
-            </summary>
-            <typeparam name="T">The type of the returned value</typeparam>
-            <param name="position">The position (counted from 0) of the value</param>
-            <param name="defaultValue">The default value to be returned if the position is invalid</param>
-            <returns>The value</returns>
+            <inheritdoc/>
         </member>
         <member name="M:BLTools.SplitArgs.GetValue``1(System.Int32,``0,System.Globalization.CultureInfo)">
-            <summary>
-            Generic version of GetValue
-            </summary>
-            <typeparam name="T">The type of the returned value</typeparam>
-            <param name="position">The position (counted from 0) of the value</param>
-            <param name="defaultValue">The default value to be returned if the key name is invalid</param>
-            <param name="culture"></param>
-            <returns>The value</returns>
+            <inheritdoc/>
         </member>
         <member name="T:BLTools.Storage.Csv.AFileCsv">
             <summary>
