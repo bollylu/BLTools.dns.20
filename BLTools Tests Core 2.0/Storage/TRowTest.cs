@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 using BLTools.Storage.Csv;
@@ -177,6 +178,23 @@ namespace BLTools.UnitTest.Storage.csv.row {
       Assert.AreEqual(6, Row.Get().Split(ARowCsv.SEPARATOR).Length); //Count of items
       Assert.AreEqual(6.7, Row.Get<double>(5)); // The last item
       Assert.AreEqual(-1d, Row.Get<double>(10, -1d)); // After the last item, hence default value
+    }
+
+    [TestMethod]
+    public void RowDataContent_EnumerableDateTime_AllIsOk() {
+      const string ID = "Channels";
+      DateTime[] When = new DateTime[] { DateTime.Parse("1966-04-28T12:36:15"), DateTime.Parse("1972-06-13T03:28:48") };
+
+      IRowCsv Row = new TRowCsvData() { Id = ID };
+      Assert.AreEqual(ID, Row.Id);
+
+      Row.Set(When);
+
+      TestContext.WriteLine(Row.Render());
+
+      Assert.AreEqual(2, Row.Get().Split(ARowCsv.SEPARATOR).Length); //Count of items
+      Assert.AreEqual(DateTime.Parse("1966-04-28T12:36:15"), Row.Get<DateTime[]>().First()); // The first item
+      Assert.AreEqual(DateTime.Parse("1972-06-13T03:28:48"), Row.Get<DateTime[]>().Last()); // After the last item, hence default value
     }
   }
 }

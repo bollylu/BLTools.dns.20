@@ -7,7 +7,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Luc Bolly</Authors>
     <Company>Luc Bolly</Company>
-    <Version>4.5.27-CI</Version>
+    <Version>4.5.27.1-CI</Version>
     <PackageReleaseNotes>
       SplitArgs/ISplitArgs/IArgElement
     </PackageReleaseNotes>

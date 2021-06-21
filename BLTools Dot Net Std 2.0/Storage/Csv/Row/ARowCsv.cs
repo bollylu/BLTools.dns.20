@@ -128,6 +128,17 @@ namespace BLTools.Storage.Csv {
       switch (typeof(T).Name.ToLowerInvariant()) {
         case "string":
           return (T)Convert.ChangeType(RawContent.RemoveExternalQuotes(), typeof(T));
+        case "datetime[]":
+          try {
+            List<DateTime> RetVal = new List<DateTime>();
+            foreach (string RawItem in RawContent.Split(SEPARATOR)) {
+              RetVal.Add(DateTime.Parse(RawItem, cultureInfo));
+            }
+            return (T)Convert.ChangeType(RetVal.ToArray(), typeof(T));
+          } catch (Exception) {
+            return defaultValue;
+            throw;
+          }
         default:
           return BLConverter.BLConvert<T>(RawContent, cultureInfo, defaultValue);
       }
@@ -195,7 +206,7 @@ namespace BLTools.Storage.Csv {
             Data.Append(((decimal)ContentItem).ToString(CultureInfo.InvariantCulture));
             break;
           case "datetime":
-            Data.Append(((DateTime)ContentItem).ToString(CultureInfo.InvariantCulture));
+            Data.Append(((DateTime)ContentItem).ToString("s", CultureInfo.InvariantCulture));
             break;
           case "string":
             Data.Append(((string)ContentItem).WithQuotes());
@@ -212,7 +223,7 @@ namespace BLTools.Storage.Csv {
     }
 
 #else
-      StringBuilder Data = new StringBuilder();
+      StringBuilder Data = new();
       foreach (object ContentItem in content) {
 
         switch (ContentItem) {
@@ -231,7 +242,7 @@ namespace BLTools.Storage.Csv {
             Data.Append(Value.ToString(CultureInfo.InvariantCulture));
             break;
           case DateTime Value:
-            Data.Append(Value.ToString(CultureInfo.InvariantCulture));
+            Data.Append(Value.ToString("s", CultureInfo.InvariantCulture));
             break;
           case string Value:
             Data.Append(Value.WithQuotes());
