@@ -1705,6 +1705,7 @@
             Capitalize the first letter of each word and uncapitalize other chars
             </summary>
             <param name="sourceValue">The source string</param>
+            <param name="delimiter"></param>
             <returns>The proper string</returns>
         </member>
         <member name="M:BLTools.StringExtension.RemoveExternalQuotes(System.String)">
@@ -1712,7 +1713,111 @@
             Removes external quotes from a string (ex. "\"MyString\"" => "MyString")
             </summary>
             <param name="sourceValue">The source string</param>
-            <returns>The string without quotes</returns>
+            <returns>The string without inner quotes</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.WithQuotes(System.String)">
+            <summary>
+            Get a new string surrounded by double quotes
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>a new string surrounded by double quotes, or null if the source is null</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.ReplaceControlChars(System.String)">
+            <summary>
+            Get a new string with control chars replaced by escape sequence
+            </summary>
+            <param name="sourceValue">The source string</param>
+            <returns>a new string with control chars replaced by escape sequence</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.AlignedRight(System.String,System.Int32,System.Char)">
+            <summary>
+            Aligns the source string to the right of a string of width length, filling any remaining places with the filler
+            </summary>
+            <param name="source">The source string to align</param>
+            <param name="width">The width of the result string</param>
+            <param name="filler">The filler for the missing characters</param>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.StringExtension.AlignedLeft(System.String,System.Int32,System.Char)">
+            <summary>
+            Aligns the source string to the left of a string of width length, filling any remaining places with the filler
+            </summary>
+            <param name="source">The source string to align</param>
+            <param name="width">The width of the result string</param>
+            <param name="filler">The filler for the missing characters</param>
+            <returns></returns>
+        </member>
+        <member name="M:BLTools.StringExtension.AlignedCenter(System.String,System.Int32,System.Char)">
+            <summary>
+            Centers the source string in a string of width length, filling any remaining places with the filler
+            </summary>
+            <param name="source">The source string to align</param>
+            <param name="width">The width of the result string</param>
+            <param name="filler">The filler for the missing characters</param>
+            <returns>The new string, limited to <paramref name="width"/> characters</returns>
+        </member>
+        <member name="T:BLTools.StringExtension.EStringMatch">
+            <summary>
+            How to do a match when looking for a string in a list
+            </summary>
+        </member>
+        <member name="F:BLTools.StringExtension.EStringMatch.ExactMatch">
+            <summary>
+            The comparison take all characters into account
+            </summary>
+        </member>
+        <member name="F:BLTools.StringExtension.EStringMatch.PartialMatch">
+            <summary>
+            The comparison can be partial (e.g. "filename.txt.sample" => true for ".txt.", true for "name", false for "nice")
+            </summary>
+        </member>
+        <member name="F:BLTools.StringExtension.EStringMatch.StartsWith">
+            <summary>
+            The searched string must be at the start of one string in the list
+            </summary>
+        </member>
+        <member name="F:BLTools.StringExtension.EStringMatch.EndsWith">
+            <summary>
+            The searched string must be at the end of one string in the list
+            </summary>
+        </member>
+        <member name="M:BLTools.StringExtension.IsIn(System.String,System.Collections.Generic.IEnumerable{System.String},BLTools.StringExtension.EStringMatch)">
+            <summary>
+            Indicates if a string is in a list of string, using CultureInvariantIgnoreCase
+            </summary>
+            <param name="source">The string to look for</param>
+            <param name="listOfMatches">The list of strings to compare with</param>
+            <param name="match">How the match if done (default to an exact match)</param>
+            <returns>true if the string is in the list, false otherwise. If any of the source or the list is null/empty, false</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.IsIn(System.String,System.Collections.Generic.IEnumerable{System.String},System.StringComparison,BLTools.StringExtension.EStringMatch)">
+            <summary>
+            Indicates if a string is in a list of string
+            </summary>
+            <param name="source">The string to look for</param>
+            <param name="listOfMatches">The list of strings to compare with</param>
+            <param name="comparison">How the comparison is done</param>
+            <param name="match">How the match if done (default to an exact match)</param>
+            <returns>true if the string is in the list, false otherwise. If any of the source or the list is null/empty, false</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.IsNotIn(System.String,System.Collections.Generic.IEnumerable{System.String},BLTools.StringExtension.EStringMatch)">
+            <summary>
+            Indicates if a string is NOT in a list of string, using CultureInvariantIgnoreCase
+            </summary>
+            <param name="source">The string to look for</param>
+            <param name="listOfMatches">The list of strings to compare with</param>
+            <param name="match">How the match if done (default to an exact match)</param>
+            <returns>true if the string is not in the list, false otherwise. If any of the source or the list is null/empty, false</returns>
+        </member>
+        <member name="M:BLTools.StringExtension.IsNotIn(System.String,System.Collections.Generic.IEnumerable{System.String},System.StringComparison,BLTools.StringExtension.EStringMatch)">
+            <summary>
+            Indicates if a string is NOT in a list of string
+            </summary>
+            <param name="source">The string to look for</param>
+            <param name="listOfMatches">The list of strings to compare with</param>
+            <param name="comparison">How the comparison is done</param>
+            <param name="match">How the match if done (default to an exact match)</param>
+            <returns>true if the string is not in the list, false otherwise. If any of the source or the list is null/empty, false</returns>
         </member>
         <member name="M:BLTools.StringExtension.ToBool(System.String)">
             <summary>
@@ -1743,6 +1848,7 @@
             Convert a string to an array of bytes
             </summary>
             <param name="sourceString">The source string</param>
+            <param name="cleanupSource">When true, the source string will be preprocessed by removing any space, colon, dash, semi-colon and comma</param>
             <returns>The array of bytes</returns>
         </member>
         <member name="M:BLTools.StringExtension.ConvertToUnsecureString(System.Security.SecureString)">
@@ -3643,7 +3749,13 @@
             <summary>
             Obtain the next row
             </summary>
-            <returns></returns>
+            <returns>The next IRowCsv or null</returns>
+        </member>
+        <member name="M:BLTools.Storage.Csv.TCsvReader.ReadRowAsync">
+            <summary>
+            Obtain the next row asynchronously
+            </summary>
+            <returns>The next IRowCsv or null</returns>
         </member>
         <member name="M:BLTools.Storage.Csv.TCsvReader.ReadAll">
             <summary>

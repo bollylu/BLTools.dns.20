@@ -22,15 +22,15 @@ namespace BLTools {
     /// <returns>The selected portion of the string. If Length > Length of the string, returns the string.</returns>
     public static string Left(this string sourceString, int length) {
       #region Validate parameters
-      if ( sourceString == null ) {
+      if (sourceString == null) {
         return null;
       }
-      if ( length < 0 ) {
+      if (length < 0) {
         return sourceString;
       }
       #endregion Validate parameters
 
-      if ( sourceString.Length >= length ) {
+      if (sourceString.Length >= length) {
         return sourceString.Substring(0, length);
       }
 
@@ -45,15 +45,15 @@ namespace BLTools {
     /// <returns>The selected portion of the string. If Length > Length of the string, returns the string.</returns>
     public static string Right(this string sourceString, int length) {
       #region Validate parameters
-      if ( sourceString == null ) {
+      if (sourceString == null) {
         return null;
       }
-      if ( length < 0 ) {
+      if (length < 0) {
         return sourceString;
       }
       #endregion Validate parameters
 
-      if ( sourceString.Length >= length ) {
+      if (sourceString.Length >= length) {
         return sourceString.Substring(sourceString.Length - length);
       }
 
@@ -69,19 +69,19 @@ namespace BLTools {
     /// <returns>The selected portion of the string after the delimiter</returns>
     public static string After(this string sourceString, string delimiter, StringComparison stringComparison = StringComparison.CurrentCulture) {
       #region Validate parameters
-      if ( sourceString == null ) {
+      if (sourceString == null) {
         return null;
       }
-      if ( string.IsNullOrEmpty(delimiter) ) {
+      if (string.IsNullOrEmpty(delimiter)) {
         return sourceString;
       }
       #endregion Validate parameters
 
-      if ( sourceString == delimiter ) {
+      if (sourceString == delimiter) {
         return "";
       }
       int Index = sourceString.IndexOf(delimiter, 0, stringComparison);
-      if ( Index == -1 ) {
+      if (Index == -1) {
         return "";
       }
 
@@ -96,13 +96,13 @@ namespace BLTools {
     /// <returns>The selected portion of the string after the delimiter</returns>
     public static string After(this string sourceString, char delimiter) {
       #region Validate parameters
-      if ( sourceString == null ) {
+      if (sourceString == null) {
         return null;
       }
       #endregion Validate parameters
 
       int Index = sourceString.IndexOf(delimiter);
-      if ( Index == -1 ) {
+      if (Index == -1) {
         return "";
       }
 
@@ -118,19 +118,19 @@ namespace BLTools {
     /// <returns>The selected portion of the string after the last occurence of a delimiter</returns>
     public static string AfterLast(this string sourceString, string delimiter, StringComparison stringComparison = StringComparison.CurrentCulture) {
       #region Validate parameters
-      if ( sourceString == null ) {
+      if (sourceString == null) {
         return null;
       }
-      if ( string.IsNullOrEmpty(delimiter) ) {
+      if (string.IsNullOrEmpty(delimiter)) {
         return sourceString;
       }
       #endregion Validate parameters
 
-      if ( sourceString == delimiter ) {
+      if (sourceString == delimiter) {
         return "";
       }
       int Index = sourceString.LastIndexOf(delimiter, sourceString.Length - 1, stringComparison);
-      if ( Index == -1 ) {
+      if (Index == -1) {
         return "";
       }
 
@@ -145,13 +145,13 @@ namespace BLTools {
     /// <returns>The selected portion of the string after the last occurence of a delimiter</returns>
     public static string AfterLast(this string sourceString, char delimiter) {
       #region Validate parameters
-      if ( sourceString == null ) {
+      if (sourceString == null) {
         return null;
       }
       #endregion Validate parameters
 
       int Index = sourceString.LastIndexOf(delimiter);
-      if ( Index == -1 ) {
+      if (Index == -1) {
         return "";
       }
 
@@ -167,22 +167,22 @@ namespace BLTools {
     /// <returns>The selected portion of the string before the delimiter</returns>
     public static string Before(this string sourceString, string delimiter, StringComparison stringComparison = StringComparison.CurrentCulture) {
       #region Validate parameters
-      if ( sourceString == null ) {
+      if (sourceString == null) {
         return null;
       }
-      if ( string.IsNullOrEmpty(delimiter) ) {
+      if (string.IsNullOrEmpty(delimiter)) {
         return sourceString;
       }
       #endregion Validate parameters
 
-      if ( sourceString == delimiter ) {
+      if (sourceString == delimiter) {
         return "";
       }
       int Index = sourceString.IndexOf(delimiter, stringComparison);
       //if ( Index == -1 ) {
       //  return sourceString;
       //}
-      if ( Index < 1 ) {
+      if (Index < 1) {
         return "";
       }
 
@@ -197,7 +197,7 @@ namespace BLTools {
     /// <returns>The selected portion of the string before the delimiter</returns>
     public static string Before(this string sourceString, char delimiter) {
       #region Validate parameters
-      if ( sourceString == null ) {
+      if (sourceString == null) {
         return null;
       }
       #endregion Validate parameters
@@ -206,7 +206,7 @@ namespace BLTools {
       //if ( Index == -1 ) {
       //  return sourceString;
       //}
-      if ( Index < 1 ) {
+      if (Index < 1) {
         return "";
       }
 
@@ -222,22 +222,22 @@ namespace BLTools {
     /// <returns>The selected portion of the string before the last occurence of the delimiter</returns>
     public static string BeforeLast(this string sourceString, string delimiter, StringComparison stringComparison = StringComparison.CurrentCulture) {
       #region Validate parameters
-      if ( sourceString == null ) {
+      if (sourceString == null) {
         return null;
       }
-      if ( string.IsNullOrEmpty(delimiter) ) {
+      if (string.IsNullOrEmpty(delimiter)) {
         return sourceString;
       }
       #endregion Validate parameters
 
-      if ( sourceString == delimiter ) {
+      if (sourceString == delimiter) {
         return "";
       }
       int Index = sourceString.LastIndexOf(delimiter, stringComparison);
       //if ( Index == -1 ) {
       //  return sourceString;
       //}
-      if ( Index < 1 ) {
+      if (Index < 1) {
         return "";
       }
 
@@ -252,7 +252,7 @@ namespace BLTools {
     /// <returns>The selected portion of the string before the last occurence of the delimiter</returns>
     public static string BeforeLast(this string sourceString, char delimiter) {
       #region Validate parameters
-      if ( sourceString == null ) {
+      if (sourceString == null) {
         return null;
       }
       #endregion Validate parameters
@@ -261,7 +261,7 @@ namespace BLTools {
       //if ( Index == -1 ) {
       //  return sourceString;
       //}
-      if ( Index < 1 ) {
+      if (Index < 1) {
         return "";
       }
 
@@ -276,16 +276,16 @@ namespace BLTools {
     /// <returns>The cleaned string</returns>
     public static string Except(this string sourceString, string dataToRemove) {
       #region Validate parameters
-      if ( sourceString == null ) {
+      if (sourceString == null) {
         return null;
       }
-      if ( string.IsNullOrEmpty(dataToRemove) ) {
+      if (string.IsNullOrEmpty(dataToRemove)) {
         return sourceString;
       }
       #endregion Validate parameters
 
       int Index = sourceString.IndexOf(dataToRemove);
-      if ( Index == 0 ) {
+      if (Index == 0) {
         return sourceString;
       }
 
@@ -324,20 +324,20 @@ namespace BLTools {
     /// <returns>A list of items found between both delimiters</returns>
     public static IEnumerable<string> ItemsBetween(this string sourceString, string firstDelimiter = "[", string secondDelimiter = "]", StringComparison stringComparison = StringComparison.CurrentCulture) {
       #region Validate parameters
-      if ( string.IsNullOrEmpty(sourceString) ) {
+      if (string.IsNullOrEmpty(sourceString)) {
         yield break;
       }
-      if ( firstDelimiter == "" ) {
+      if (firstDelimiter == "") {
         yield break;
       }
-      if ( secondDelimiter == "" ) {
+      if (secondDelimiter == "") {
         yield break;
       }
       #endregion Validate parameters
 
       string ProcessedString = sourceString;
 
-      while ( ProcessedString != "" && ProcessedString.IndexOf(firstDelimiter, stringComparison) != -1 && ProcessedString.IndexOf(secondDelimiter, stringComparison) != -1 ) {
+      while (ProcessedString != "" && ProcessedString.IndexOf(firstDelimiter, stringComparison) != -1 && ProcessedString.IndexOf(secondDelimiter, stringComparison) != -1) {
         yield return ProcessedString.After(firstDelimiter, stringComparison).Before(secondDelimiter, stringComparison);
         ProcessedString = ProcessedString.After(secondDelimiter, stringComparison);
       }
@@ -355,14 +355,14 @@ namespace BLTools {
     /// <returns>A list of items found between both delimiters</returns>
     public static IEnumerable<string> ItemsBetween(this string sourceString, char firstDelimiter = '[', char secondDelimiter = ']') {
       #region Validate parameters
-      if ( string.IsNullOrEmpty(sourceString) ) {
+      if (string.IsNullOrEmpty(sourceString)) {
         yield break;
       }
       #endregion Validate parameters
 
       string ProcessedString = sourceString;
 
-      while ( ProcessedString != "" && ProcessedString.IndexOf(firstDelimiter) != -1 && ProcessedString.IndexOf(secondDelimiter) != -1 ) {
+      while (ProcessedString != "" && ProcessedString.IndexOf(firstDelimiter) != -1 && ProcessedString.IndexOf(secondDelimiter) != -1) {
         yield return ProcessedString.After(firstDelimiter).Before(secondDelimiter);
         ProcessedString = ProcessedString.After(secondDelimiter);
       }
@@ -374,14 +374,14 @@ namespace BLTools {
 
     public static IEnumerable<string> GetItems(this string sourceString, string delimiter = ";", StringSplitOptions stringSplitOptions = StringSplitOptions.None) {
       #region === Validate parameters ===
-      if ( string.IsNullOrEmpty(sourceString) ) {
+      if (string.IsNullOrEmpty(sourceString)) {
         yield break;
       }
-      if ( delimiter == "" ) {
+      if (delimiter == "") {
         yield return sourceString;
       }
       #endregion === Validate parameters ===
-      foreach ( string SplitItem in sourceString.Split(new string[] { delimiter }, stringSplitOptions) ) {
+      foreach (string SplitItem in sourceString.Split(new string[] { delimiter }, stringSplitOptions)) {
         yield return SplitItem;
       }
     }
@@ -394,16 +394,17 @@ namespace BLTools {
     /// Capitalize the first letter of each word and uncapitalize other chars
     /// </summary>
     /// <param name="sourceValue">The source string</param>
+    /// <param name="delimiter"></param>
     /// <returns>The proper string</returns>
     public static string Proper(this string sourceValue, char delimiter = ' ') {
-      if ( string.IsNullOrWhiteSpace(sourceValue) ) {
+      if (string.IsNullOrWhiteSpace(sourceValue)) {
         return "";
       }
 
       StringBuilder RetVal = new StringBuilder();
 
       string[] Words = sourceValue.Split(delimiter);
-      foreach ( string WordItem in Words ) {
+      foreach (string WordItem in Words) {
         RetVal.Append($"{WordItem.Left(1).ToUpper()}{WordItem.Substring(1).ToLower()}{delimiter}");
       }
       RetVal.Truncate(1);
@@ -415,29 +416,34 @@ namespace BLTools {
     /// Removes external quotes from a string (ex. "\"MyString\"" => "MyString")
     /// </summary>
     /// <param name="sourceValue">The source string</param>
-    /// <returns>The string without quotes</returns>
+    /// <returns>The string without inner quotes</returns>
     public static string RemoveExternalQuotes(this string sourceValue) {
-      if ( string.IsNullOrWhiteSpace(sourceValue) ) {
+      if (string.IsNullOrWhiteSpace(sourceValue)) {
         return "";
       }
 
-      if ( !sourceValue.Contains('"') ) {
+      if (!sourceValue.Contains('"')) {
         return sourceValue;
       }
 
       StringBuilder RetVal = new StringBuilder(sourceValue);
 
-      if ( sourceValue.StartsWith("\"") ) {
+      if (sourceValue.StartsWith("\"")) {
         RetVal.Remove(0, 1);
       }
 
-      if ( sourceValue.EndsWith("\"") ) {
+      if (sourceValue.EndsWith("\"")) {
         RetVal.Truncate(1);
       }
 
       return RetVal.ToString();
     }
 
+    /// <summary>
+    /// Get a new string surrounded by double quotes
+    /// </summary>
+    /// <param name="sourceValue">The source string</param>
+    /// <returns>a new string surrounded by double quotes, or null if the source is null</returns>
     public static string WithQuotes(this string sourceValue) {
       if (sourceValue is null) {
         return null;
@@ -445,10 +451,17 @@ namespace BLTools {
       return $"\"{sourceValue}\"";
     }
 
+    /// <summary>
+    /// Get a new string with control chars replaced by escape sequence
+    /// </summary>
+    /// <param name="sourceValue">The source string</param>
+    /// <returns>a new string with control chars replaced by escape sequence</returns>
     public static string ReplaceControlChars(this string sourceValue) {
-      if ( string.IsNullOrWhiteSpace(sourceValue) ) {
+      #region === Validate parameters ===
+      if (string.IsNullOrWhiteSpace(sourceValue)) {
         return "";
       }
+      #endregion === Validate parameters ===
 
       StringBuilder RetVal = new StringBuilder(sourceValue.Length);
 
@@ -457,24 +470,24 @@ namespace BLTools {
       bool InQuotes = false;
       bool NextCharIsControlChar = false;
 
-      while ( i < SourceLength ) {
+      while (i < SourceLength) {
 
         char CurrentChar = sourceValue[i];
 
-        if ( !InQuotes && !NextCharIsControlChar && CurrentChar == '\\' ) {
+        if (!InQuotes && !NextCharIsControlChar && CurrentChar == '\\') {
           NextCharIsControlChar = true;
           i++;
           continue;
         }
 
-        if ( !InQuotes && NextCharIsControlChar && "\"\\\t\b\r\n\f".Contains(CurrentChar) ) {
+        if (!InQuotes && NextCharIsControlChar && "\"\\\t\b\r\n\f".Contains(CurrentChar)) {
           NextCharIsControlChar = false;
           RetVal.Append(CurrentChar);
           i++;
           continue;
         }
 
-        if ( CurrentChar == '"' ) {
+        if (CurrentChar == '"') {
           RetVal.Append(CurrentChar);
           InQuotes = !InQuotes;
           i++;
@@ -488,19 +501,157 @@ namespace BLTools {
       return RetVal.ToString();
     }
 
-    
+    /// <summary>
+    /// Aligns the source string to the right of a string of width length, filling any remaining places with the filler
+    /// </summary>
+    /// <param name="source">The source string to align</param>
+    /// <param name="width">The width of the result string</param>
+    /// <param name="filler">The filler for the missing characters</param>
+    /// <returns></returns>
     public static string AlignedRight(this string source, int width, char filler = ' ') {
+      #region === Validate parameters ===
+      if (width <= 0) {
+        width = source.Length;
+      }
+      #endregion === Validate parameters ===
       return source.PadLeft(width, filler).Left(width);
     }
 
+    /// <summary>
+    /// Aligns the source string to the left of a string of width length, filling any remaining places with the filler
+    /// </summary>
+    /// <param name="source">The source string to align</param>
+    /// <param name="width">The width of the result string</param>
+    /// <param name="filler">The filler for the missing characters</param>
+    /// <returns></returns>
     public static string AlignedLeft(this string source, int width, char filler = ' ') {
+      #region === Validate parameters ===
+      if (width <= 0) {
+        width = source.Length;
+      }
+      #endregion === Validate parameters ===
       return source.PadRight(width, filler).Left(width);
     }
 
+    /// <summary>
+    /// Centers the source string in a string of width length, filling any remaining places with the filler
+    /// </summary>
+    /// <param name="source">The source string to align</param>
+    /// <param name="width">The width of the result string</param>
+    /// <param name="filler">The filler for the missing characters</param>
+    /// <returns>The new string, limited to <paramref name="width"/> characters</returns>
     public static string AlignedCenter(this string source, int width, char filler = ' ') {
+      #region === Validate parameters ===
+      if (width <= 0) {
+        width = source.Length;
+      }
+      #endregion === Validate parameters ===
       string LeftPart = new string(filler, width / 2 - source.Length / 2);
       return $"{LeftPart}{source}".PadRight(width, filler).Left(width);
     }
+
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP
+    /// <summary>
+    /// How to do a match when looking for a string in a list
+    /// </summary>
+    public enum EStringMatch {
+      /// <summary>
+      /// The comparison take all characters into account
+      /// </summary>
+      ExactMatch,
+      /// <summary>
+      /// The comparison can be partial (e.g. "filename.txt.sample" => true for ".txt.", true for "name", false for "nice")
+      /// </summary>
+      PartialMatch,
+      /// <summary>
+      /// The searched string must be at the start of one string in the list
+      /// </summary>
+      StartsWith,
+      /// <summary>
+      /// The searched string must be at the end of one string in the list
+      /// </summary>
+      EndsWith
+    }
+
+    /// <summary>
+    /// Indicates if a string is in a list of string, using CultureInvariantIgnoreCase
+    /// </summary>
+    /// <param name="source">The string to look for</param>
+    /// <param name="listOfMatches">The list of strings to compare with</param>
+    /// <param name="match">How the match if done (default to an exact match)</param>
+    /// <returns>true if the string is in the list, false otherwise. If any of the source or the list is null/empty, false</returns>
+    public static bool IsIn(this string source, IEnumerable<string> listOfMatches, EStringMatch match = EStringMatch.ExactMatch) {
+      return IsIn(source, listOfMatches, StringComparison.InvariantCultureIgnoreCase, match);
+    }
+
+
+    /// <summary>
+    /// Indicates if a string is in a list of string
+    /// </summary>
+    /// <param name="source">The string to look for</param>
+    /// <param name="listOfMatches">The list of strings to compare with</param>
+    /// <param name="comparison">How the comparison is done</param>
+    /// <param name="match">How the match if done (default to an exact match)</param>
+    /// <returns>true if the string is in the list, false otherwise. If any of the source or the list is null/empty, false</returns>
+    public static bool IsIn(this string source, IEnumerable<string> listOfMatches, StringComparison comparison, EStringMatch match = EStringMatch.ExactMatch) {
+    #region === Validate parameters ===
+      if (source is null) {
+        return false;
+      }
+      if (listOfMatches is null || listOfMatches.IsEmpty()) {
+        return false;
+      }
+    #endregion === Validate parameters ===
+
+      return match switch {
+        EStringMatch.PartialMatch => listOfMatches.Any(x => x.Contains(source, comparison)),
+        EStringMatch.StartsWith => listOfMatches.Any(x => x.StartsWith(source, comparison)),
+        EStringMatch.EndsWith => listOfMatches.Any(x => x.EndsWith(source, comparison)),
+        EStringMatch.ExactMatch => listOfMatches.Any(x => x.Equals(source, comparison)),
+        _ => throw new NotImplementedException()
+      };
+
+    }
+
+
+    /// <summary>
+    /// Indicates if a string is NOT in a list of string, using CultureInvariantIgnoreCase
+    /// </summary>
+    /// <param name="source">The string to look for</param>
+    /// <param name="listOfMatches">The list of strings to compare with</param>
+    /// <param name="match">How the match if done (default to an exact match)</param>
+    /// <returns>true if the string is not in the list, false otherwise. If any of the source or the list is null/empty, false</returns>
+    public static bool IsNotIn(this string source, IEnumerable<string> listOfMatches, EStringMatch match = EStringMatch.ExactMatch) {
+      return IsNotIn(source, listOfMatches, StringComparison.InvariantCultureIgnoreCase, match);
+    }
+
+    /// <summary>
+    /// Indicates if a string is NOT in a list of string
+    /// </summary>
+    /// <param name="source">The string to look for</param>
+    /// <param name="listOfMatches">The list of strings to compare with</param>
+    /// <param name="comparison">How the comparison is done</param>
+    /// <param name="match">How the match if done (default to an exact match)</param>
+    /// <returns>true if the string is not in the list, false otherwise. If any of the source or the list is null/empty, false</returns>
+    public static bool IsNotIn(this string source, IEnumerable<string> listOfMatches, StringComparison comparison, EStringMatch match = EStringMatch.ExactMatch) {
+    #region === Validate parameters ===
+      if (source is null) {
+        return true;
+      }
+      if (listOfMatches is null || listOfMatches.IsEmpty()) {
+        return true;
+      } 
+    #endregion === Validate parameters ===
+
+      return match switch {
+        EStringMatch.PartialMatch => listOfMatches.All(x => !x.Contains(source, comparison)),
+        EStringMatch.StartsWith => listOfMatches.All(x => !x.StartsWith(source, comparison)),
+        EStringMatch.EndsWith => listOfMatches.All(x => !x.EndsWith(source, comparison)),
+        EStringMatch.ExactMatch => listOfMatches.All(x => !x.Equals(source, comparison)),
+        _ => throw new NotImplementedException()
+      };
+    }
+#endif
 
   }
 }

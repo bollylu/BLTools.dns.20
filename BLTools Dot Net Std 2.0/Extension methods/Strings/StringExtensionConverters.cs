@@ -104,6 +104,7 @@ namespace BLTools {
     /// Convert a string to an array of bytes
     /// </summary>
     /// <param name="sourceString">The source string</param>
+    /// <param name="cleanupSource">When true, the source string will be preprocessed by removing any space, colon, dash, semi-colon and comma</param>
     /// <returns>The array of bytes</returns>
     public static byte[] ToByteArrayFromHex(this string sourceString, bool cleanupSource = true) {
       #region Validate parameters

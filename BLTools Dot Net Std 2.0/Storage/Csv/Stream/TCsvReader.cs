@@ -88,9 +88,21 @@ namespace BLTools.Storage.Csv {
     /// <summary>
     /// Obtain the next row
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The next IRowCsv or null</returns>
     public IRowCsv ReadRow() {
       string RawData = ReadLine();
+      if (RawData is null) {
+        return null;
+      }
+      return ARowCsv.Parse(RawData);
+    }
+
+    /// <summary>
+    /// Obtain the next row asynchronously
+    /// </summary>
+    /// <returns>The next IRowCsv or null</returns>
+    public async Task<IRowCsv> ReadRowAsync() {
+      string RawData = await ReadLineAsync();
       if (RawData is null) {
         return null;
       }
