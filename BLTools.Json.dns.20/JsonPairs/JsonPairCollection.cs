@@ -4,7 +4,7 @@ using System.Text;
 using System.Linq;
 
 namespace BLTools.Json {
-  internal class JsonPairCollection : List<IJsonPair>, IDisposable {
+  internal class TJsonPairCollection : List<IJsonPair>, IDisposable {
 
     public void Dispose() {
       foreach(IJsonPair ItemItem in this) {
@@ -25,10 +25,10 @@ namespace BLTools.Json {
 
     public IJsonPair this[string key] {
       get {
-        if ( key == null ) {
+        if ( key is null ) {
           return null;
         }
-        int Index = this.FindIndex(x => x.Key == key);
+        int Index = FindIndex(x => x.Key == key);
         if (Index==-1) {
           return null;
         }

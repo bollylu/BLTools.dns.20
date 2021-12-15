@@ -2688,6 +2688,28 @@
         <member name="M:BLTools.Encryption.TRSAPublicKey.Load(System.String)">
             <inheritdoc/>
         </member>
+        <member name="T:BLTools.Encryption.StringExtensionsNet5AndUp">
+            <summary>
+            Extension methods for calculation of hashes
+            </summary>
+        </member>
+        <member name="M:BLTools.Encryption.StringExtensionsNet5AndUp.HashToBase64(System.String,BLTools.Encryption.EHashingMethods)">
+            <summary>
+            Calculate the hash of a given string
+            </summary>
+            <param name="source">The source string</param>
+            <param name="hashMethod">The security method to calculate the hash</param>
+            <returns>A base64 string containing the hash value</returns>
+        </member>
+        <member name="M:BLTools.Encryption.StringExtensionsNet5AndUp.VerifyHashFromBase64(System.String,System.String,BLTools.Encryption.EHashingMethods)">
+            <summary>
+            Check the hash of a string against a known hash
+            </summary>
+            <param name="source">The source string to verify the hash</param>
+            <param name="base64Hash">The known hash</param>
+            <param name="hashMethod">The security method to calculate the hash</param>
+            <returns>true if both hashes match, false otherwise</returns>
+        </member>
         <member name="T:BLTools.ArgElement">
             <summary>
             Single element of arguments : Id(position), Name, Value

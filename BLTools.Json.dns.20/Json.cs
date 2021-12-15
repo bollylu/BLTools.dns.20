@@ -36,7 +36,7 @@ namespace BLTools.Json {
 
     public static string JsonEncode(this string source) {
 
-      if ( source == null ) {
+      if ( source is null ) {
         return null;
       }
 
@@ -59,7 +59,7 @@ namespace BLTools.Json {
 
     public static string JsonDecode(this string source) {
 
-      if ( source == null ) {
+      if ( source is null ) {
         return null;
       }
 
